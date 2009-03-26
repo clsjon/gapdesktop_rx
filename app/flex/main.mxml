@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:display="flash.display.*" 
+	xmlns:events="flash.events.*" layout="absolute" creationComplete="creationCompleteHandler()" applicationComplete="applicationCompleteHandler()" width="550" height="400">
+	<mx:Style source="/assets/css/styles.css"/>
+<mx:Script>
+	<![CDATA[
+		import mx.controls.Image;
+		import mx.core.Application;
+		import mx.rpc.events.FaultEvent;
+		import mx.rpc.events.ResultEvent;
+		import mx.collections.XMLListCollection;
+		import mx.controls.Alert;
+		import air.update.events.UpdateEvent;
+		import flash.filesystem.File;
+		import air.update.ApplicationUpdaterUI;
+		import mx.events.ListEvent;
+		import mx.events.ItemClickEvent;
+		import gapdesktoprx.components.main.*;
+	
+//		[Embed(source="config/initialgraphs.xml")]
+		[Bindable]
+		private var initialGraphs:XMLListCollection;
+		
+		[Bindable]
+		[Embed(source="assets/icons/world.png")]
+		public var world:Class;
+		
+		[Bindable]
+		[Embed(source="assets/icons/fourbig.png")]
+		public var fourbig:Class;
+		
+		private var initialWidth:Number;
+		private var initialHeight:Number;
+		private var initialX:Number;
+		private var initialY:Number;
+		
+		
+		private var updater:ApplicationUpdaterUI = new ApplicationUpdaterUI();
+	
+		private function creationCompleteHandler():void
+		{
+			var initialGraphsLoader:URLLoader = new URLLoader();
+			var request:URLRequest = new URLRequest("app:/config/initialgraphs.xml");
+			//updater.configurationFile= new File("app:/config/updaterConfig.xml");
+			updater.updateURL = "http://www.gapminder.org/desktop/update.xml";
+			updater.addEventListener(UpdateEvent.INITIALIZED,updaterInitialized);
+			updater.addEventListener(ErrorEvent.ERROR,onError);
+			updater.initialize();
+			initialGraphsLoader.addEventListener(Event.COMPLETE,initialGraphsResultHandler);
+			initialGraphsLoader.addEventListener(IOErrorEvent.IO_ERROR,initialGraphsFaultHandler);
+			initialGraphsLoader.load(request);
+		}
+		
+		private function applicationCompleteHandler():void {
+			//stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+		}
+		
+		private function initialGraphsResultHandler(event:Event):void {
+			var initXML:XML = new XML(event.target.data);
+			initialGraphs = new XMLListCollection(initXML..graph);
+			//graphList.invalidateList();
+			 
+		}
+		
+		private function initialGraphsFaultHandler(event:IOErrorEvent):void {
+			Alert.show("Could not load information on initial graphs. Exiting application.");
+			Application.application.exit();
+		}
+		
+		private function updaterInitialized(event:UpdateEvent):void {
+			currentVersion.text = event.target.currentVersion;
+		}
+		
+		private function onError(event:ErrorEvent):void {
+    		Alert.show(event.toString());
+		}
+
+		private function button_clickHandler(event:MouseEvent):void 
+		{
+			var url:String = new String();
+			var label:String = new String();
+			switch(event.target.id) {
+				case "worldButton":
+				url="app:/assets/graphs/world/index.html";
+				label="Gapminder World";
+				break;
+				case "chinaButton":
+				url="app:/assets/graphs/china/index.html";
+				label="Gapminder China";
+				break;
+				case "fourbigButton":
+				url="app:/assets/graphs/fourbig/index.html";
+				label="Gapminder China, India, Russia, US";
+				break;
+			}
+			trace(url);
+			var graph:GraphBrowser;
+			graph = new GraphBrowser();
+			graph.open();
+			graph.title = label;
+			graph.graphBrowser.location = url;
+			graph.nativeWindow.x = 0;
+			graph.nativeWindow.y = 0;
+		}
+		protected function openNew_clickHandler(event:MouseEvent):void
+		{
+			var uploadWindow:UploadGraphFromUrl;
+			uploadWindow = new UploadGraphFromUrl;
+			uploadWindow.open();
+		}
+	
+	]]>
+</mx:Script>
+	<mx:VBox id="mainBox">
+	<mx:Image source="/assets/icons/banner.png"/>
+	<mx:HBox>
+		
+	<mx:Button
+		id="worldButton"
+		upSkin="@Embed(source='/assets/icons/world.png')"
+		overSkin="@Embed(source='/assets/icons/world_over.png')"
+		downSkin="@Embed(source='/assets/icons/world.png')"	
+		click="button_clickHandler(event)"
+	/>
+	<mx:VBox>
+		<mx:Button
+		id="fourbigButton"
+		upSkin="@Embed(source='/assets/icons/fourbig.png')"
+		overSkin="@Embed(source='/assets/icons/fourbig_over.png')"
+		downSkin="@Embed(source='/assets/icons/fourbig.png')"
+		click="button_clickHandler(event)"	
+	/>
+	<mx:Button
+		id="chinaButton"
+		upSkin="@Embed(source='/assets/icons/china.png')"
+		overSkin="@Embed(source='/assets/icons/china_over.png')"
+		downSkin="@Embed(source='/assets/icons/china.png')"
+		click="button_clickHandler(event)"	
+	/>
+		
+	</mx:VBox>
+	</mx:HBox>
+	<mx:HBox>
+	<mx:Button id="checkNowButton" click="updater.checkNow();" label="Check for update" visible="true" skin="{null}"/>
+		
+	
+	<mx:Label id="currentVersion" text="Current version" visible="false"/>
+	<mx:Button id="openNew" click="openNew_clickHandler(event)" label="More graphs" visible="true" skin="{null}"/>
+	</mx:HBox>
+	
+</mx:VBox>
+</mx:WindowedApplication>
