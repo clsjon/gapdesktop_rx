@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" label="Submitter"
+  xmlns:rx="org.restfulx.components.rx.*">
+  <mx:Script><![CDATA[
+    import org.restfulx.Rx;
+    import org.restfulx.utils.RxUtils;
+    import gapdesktoprx.models.Submitter;
+
+    [Bindable]
+    private var submitter:Submitter = new Submitter();
+
+    private function newSubmitter():void {
+      submitter = new Submitter();
+      submittersList.selectedIndex = -1;
+    }
+
+    private function saveSubmitter():void {
+      updateModelProperties();
+      if (submitter.id) {
+        submitter.update({onSuccess: onSubmitterUpdate});
+      } else {
+        submitter.create({onSuccess: onSubmitterCreate});
+      }
+    }
+  
+    private function updateModelProperties():void {
+      submitter.name = nameTextInput.text;
+      submitter.email = emailTextInput.text;
+
+    }
+
+    private function destroySubmitter():void {
+      submitter.destroy({onSuccess: onSubmitterDestroy});
+    }
+  
+    private function onSubmitterSelect():void {
+      submitter = RxUtils.clone(submittersList.selectedItem) as Submitter;
+    }
+  
+    private function onSubmitterCreate(result:Submitter):void {
+      submitter = new Submitter;
+    }
+  
+    private function onSubmitterUpdate(result:Submitter):void {
+      submittersList.selectedItem = result;
+      onSubmitterSelect();
+    }
+  
+    private function onSubmitterDestroy(result:Submitter):void {
+      onSubmitterCreate(result);
+    }
+  ]]></mx:Script>
+  <mx:Panel id="submittersPanel"
+    title="Submitters" cornerRadius="0" dropShadowEnabled="false" borderStyle="solid" 
+    borderThickness="1" backgroundColor="#EEEEEE" width="25%" height="100%">
+    <mx:List id="submittersList"
+      width="100%" height="100%"
+      dataProvider="{Rx.models.index(Submitter)}"
+      change="onSubmitterSelect()"/>
+    <mx:ControlBar width="100%">
+      <mx:Button label="New Submitter" width="100%" height="30"
+        click="newSubmitter()"/>
+    </mx:ControlBar>
+  </mx:Panel>
+  <mx:Panel title="Edit Submitter" cornerRadius="0" dropShadowEnabled="false" borderStyle="solid" 
+    borderThickness="1" backgroundColor="#EEEEEE" width="75%" height="100%">
+    <mx:Form width="100%" height="100%">
+      <mx:FormItem label="Name" width="100%">
+        <mx:TextInput id="nameTextInput" width="100%" text="{submitter.name}"/>
+      </mx:FormItem>
+      <mx:FormItem label="Email" width="100%">
+        <mx:TextInput id="emailTextInput" width="100%" text="{submitter.email}"/>
+      </mx:FormItem>
+    </mx:Form>
+    <mx:ControlBar width="100%">
+      <mx:Button label="Save Submitter" width="50%" height="30"
+        click="saveSubmitter()"/>
+      <mx:Button label="Delete Submitter" width="50%" height="30"
+        enabled="{RxUtils.canDeleteModel(submitter)}"
+        click="destroySubmitter()"/>
+    </mx:ControlBar>
+  </mx:Panel>
+</mx:HBox>

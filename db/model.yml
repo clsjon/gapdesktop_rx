@@ -1,0 +1,19 @@
+graph:
+    download_key: string
+    local_path: string
+    downloaded_date: date
+    has_many: [examples]
+
+example:
+    heading: string
+    desc_short: string
+    desc_long: string
+    url_hash: string
+    belongs_to: [graph]
+    belongs_to: [submitter]
+
+submitter:
+    name: string
+    email: string
+    
+    
