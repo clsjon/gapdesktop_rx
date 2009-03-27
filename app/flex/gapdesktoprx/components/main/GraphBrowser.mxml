@@ -2,8 +2,54 @@
 <mx:Window xmlns:mx="http://www.adobe.com/2006/mxml" width="{Capabilities.screenResolutionX}" height="{Capabilities.screenResolutionY}" backgroundColor="#CEDCE3" systemChrome="none">
 <mx:Script>
 	<![CDATA[
+		import org.restfulx.Rx;
+		import org.restfulx.utils.RxUtils;
+		import gapdesktoprx.models.Graph;
+		import gapdesktoprx.models.Example;
+		
 		[Bindable]
-		[Embed(source="assets/icons/closebutton.png")]
+   	 	private var graph:Graph = new Graph();
+	
+	
+		[Bindable]
+		private var hash:String = "";
+		
+		private function updateHash(newHash:String):void {
+			this.hash=newHash;
+		}
+		public function setGraph(inGraph:Graph):void {
+			graph = RxUtils.clone(inGraph) as Graph;		
+		}
+		
+		private function newGraph():void {
+      graph = new Graph();
+      graphsList.selectedIndex = -1;
+    }
+
+  
+    
+    private function destroyGraph():void {
+      graph.destroy({onSuccess: onGraphDestroy});
+    }
+  
+  	   private function onGraphSelect():void {
+      graph = RxUtils.clone(graphsList.selectedItem) as Graph;
+    }
+  
+    private function onGraphCreate(result:Graph):void {
+      graph = new Graph;
+    }
+  
+    private function onGraphUpdate(result:Graph):void {
+      graphsList.selectedItem = result;
+      onGraphSelect();
+    }
+  
+    private function onGraphDestroy(result:Graph):void {
+      onGraphCreate(result);
+    }
+
+		
 		public var closebutton:Class;
 
 		private function fullScreenButtonHandler(event:MouseEvent):void
@@ -23,19 +69,43 @@
 
 		}
 		
+		private function addBookmarkButtonHandler(event:MouseEvent):void {
+			
+		}
+		
+		private function showGraphList_handler(event:MouseEvent):void {
+			graphsList.visible=true;
+			this.invalidateDisplayList();
+		}
+		
+		private function graphBrowser_completeHandler(event:Event):void
+		{
+			graphBrowser.htmlLoader.window.updateHash = this.updateHash;
+		}
 				
+		private function test_handler(event:MouseEvent):void {
+			updateHash("Hello");
+		}
 	]]>
 </mx:Script>
 <mx:HBox>
 		<mx:Image id="closeButton" click="this.close()" source="@Embed(source='/assets/icons/closebutton.png')"/>
 		<mx:Image id="fullScreenButton" click="fullScreenButtonHandler(event)" source="@Embed(source='/assets/icons/fullscreen.png')"/>
+		<mx:Image id="addBookmarkButton" click="addBookmarkButtonHandler(event)" source="@Embed(source='/assets/icons/add_bookmark.png"/>
+		<mx:Button id="showGraphListButton" click="showGraphList_handler(event)" label = "Show graph list"/>
+		<mx:Button id="test" click="test_handler(event)" label="Update hash"/>
 </mx:HBox>
 <mx:Canvas height="100%" width="100%">
 	
-	<mx:HTML id="graphBrowser" location="" x="0" y="0" width="100%" height="100%" borderColor="#FFFFFF" uncaughtScriptException="htmlErrorHandler(event)"/>
+	<mx:HTML id="graphBrowser" location="{graph.localPath}" x="0" y="0" width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)"/>
 	
 	
 </mx:Canvas>
-	
-</mx:Window>
 
+<mx:Canvas id="graphListCanvas" height="400" width="400" visible="true" x="0" y="0">
+	<mx:List id="graphsList" dataProvider="{Rx.models.index(Graph)}" width="100%" height="100%"/>
+	<mx:TextInput text="{hash}"/>
+	<mx:TextInput id="loc" text="{graphBrowser.location}" enter="graphBrowser.location = loc.text" />
+</mx:Canvas>
+
+</mx:Window>

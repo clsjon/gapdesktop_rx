@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:display="flash.display.*" 
-	xmlns:events="flash.events.*" layout="absolute" creationComplete="creationCompleteHandler()" applicationComplete="applicationCompleteHandler()" width="550" height="400">
+	xmlns:events="flash.events.*" layout="absolute" initialize="init()" creationComplete="creationCompleteHandler()" applicationComplete="applicationCompleteHandler()" width="550" height="400">
 	<mx:Style source="/assets/css/styles.css"/>
 <mx:Script>
 	<![CDATA[
@@ -17,6 +17,17 @@
 		import mx.events.ItemClickEvent;
 		import gapdesktoprx.components.main.*;
 	
+	
+	    import org.restfulx.services.air.AIRServiceProvider;
+      	import org.restfulx.services.http.XMLHTTPServiceProvider;
+      	import org.restfulx.Rx;
+      	import gapdesktoprx.controllers.ApplicationController;
+
+	    private function init():void {
+    		ApplicationController.initialize([AIRServiceProvider], 
+        	AIRServiceProvider.ID, "gapdesktoprx");
+      	}
+
 //		[Embed(source="config/initialgraphs.xml")]
 		[Bindable]
 		private var initialGraphs:XMLListCollection;
@@ -108,6 +119,12 @@
 			uploadWindow = new UploadGraphFromUrl;
 			uploadWindow.open();
 		}
+		
+		private function admin_clickHandler(event:MouseEvent):void {
+			var gdrx:GapdesktopRx;
+			gdrx = new GapdesktopRx;
+			gdrx.open();
+		}
 	
 	]]>
 </mx:Script>
@@ -142,7 +159,7 @@
 	</mx:HBox>
 	<mx:HBox>
 	<mx:Button id="checkNowButton" click="updater.checkNow();" label="Check for update" visible="true" skin="{null}"/>
-		
+	<mx:Button id="adminButton" click="admin_clickHandler(event)" label="Admin"/>	
 	
 	<mx:Label id="currentVersion" text="Current version" visible="false"/>
 	<mx:Button id="openNew" click="openNew_clickHandler(event)" label="More graphs" visible="true" skin="{null}"/>

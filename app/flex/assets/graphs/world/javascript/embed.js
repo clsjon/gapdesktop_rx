@@ -24,7 +24,8 @@
 		function updateUrl(newUrl){
 			if (newUrl.length > 1 ) {
 				unFocus.History.addHistory(newUrl);
-				window.runtime.trace("updateURL: " + newUrl);
+		//		window.runtime.trace("updateURL: " + newUrl);
+				window.updateHash(newUrl);
 		    }
 		}
 		// IE history fix
