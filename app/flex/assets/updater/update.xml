@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <update xmlns="http://ns.adobe.com/air/framework/update/description/1.0">
-	<version>0.7</version>
+	<version>0.9</version>
 	<url>http://www.gapminder.org/desktop/gapminderdesktop.air</url>
 	<description><![CDATA[Interface improvements 
 		]]>
