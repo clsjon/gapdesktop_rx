@@ -22,10 +22,10 @@
       	import org.restfulx.services.http.XMLHTTPServiceProvider;
       	import org.restfulx.Rx;
       	import gapdesktoprx.controllers.ApplicationController;
-
-	    private function init():void {
+		private function init():void {
+			trace ();
     		ApplicationController.initialize([AIRServiceProvider], 
-        	AIRServiceProvider.ID, "gapdesktoprx");
+        	AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
       	}
 
 //		[Embed(source="config/initialgraphs.xml")]
