@@ -102,7 +102,7 @@
 	
 </mx:Canvas>
 
-<mx:Canvas id="graphListCanvas" height="400" width="400" visible="true" x="0" y="0">
+<mx:Canvas id="graphListCanvas" height="400" width="400" visible="false" x="0" y="0">
 	<mx:List id="graphsList" dataProvider="{Rx.models.index(Graph)}" width="100%" height="100%"/>
 	<mx:TextInput text="{hash}"/>
 	<mx:TextInput id="loc" text="{graphBrowser.location}" enter="graphBrowser.location = loc.text" />
