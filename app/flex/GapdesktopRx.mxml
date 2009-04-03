@@ -3,7 +3,7 @@
   xmlns:generated="gapdesktoprx.components.generated.*"
   paddingBottom="8" paddingLeft="8" paddingRight="8" paddingTop="8"
   width="600" height="600"
-  layout="horizontal" styleName="plain" initialize="init()">
+  layout="horizontal" styleName="plain" initialize="init()" xmlns:main="gapdesktoprx.components.main.*">
   <mx:Script>
     <![CDATA[
      ]]>
@@ -14,5 +14,7 @@
     <generated:ExampleBox/>
     <generated:GraphBox/>
     <generated:SubmitterBox/>
+    <main:AddExample/>
+    <main:ExampleBox/>
   </mx:ViewStack>
 </mx:Window>

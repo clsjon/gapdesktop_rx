@@ -1,4 +1,5 @@
 graph:
+    name: string
     download_key: string
     local_path: string
     downloaded_date: date
@@ -15,5 +16,7 @@ example:
 submitter:
     name: string
     email: string
+    has_many: [examples]
     
+
     

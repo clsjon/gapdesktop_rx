@@ -1,4 +1,5 @@
 package gapdesktoprx.models {
+  import org.restfulx.collections.ModelsCollection;
   import org.restfulx.models.RxModel;
   
   [Resource(name="submitters")]
@@ -10,6 +11,9 @@ package gapdesktoprx.models {
 
     public var email:String = "";
 
+    [HasMany]
+    public var examples:ModelsCollection;
+    
     public function Submitter() {
       super(LABEL);
     }

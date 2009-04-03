@@ -16,6 +16,7 @@
 			window.runtime.trace("embedApplication");
 			
 		}
+		
 		// called initially by movie
 		function getCurrentHash(){
 			 return unFocus.History.getCurrent();
@@ -41,6 +42,7 @@
 		// send url changes to flash movie
 		function historyChange(change){
 			if (change.length > 1) {
+				window.runtime.trace("Calling onHashChanged, change=" + change); 
 				so.call('onHashChanged', change);
 				lastHash=change;
 			}else{
@@ -49,7 +51,7 @@
 		}
 
 		// start listening to the url
-		unFocus.History.addEventListener('historyChange', historyChange);
+		//unFocus.History.addEventListener('historyChange', historyChange);
 		
 		
 		function openURL(url){

@@ -4,7 +4,7 @@ package gapdesktoprx.models {
   [Resource(name="examples")]
   [Bindable]
   public class Example extends RxModel {
-    public static const LABEL:String = "urlHash";
+    public static const LABEL:String = "descShort";
 
     public var urlHash:String = "";
 
@@ -16,6 +16,9 @@ package gapdesktoprx.models {
 
     [BelongsTo]
     public var submitter:Submitter;
+    
+    [BelongsTo]
+    public var graph:Graph;
 
     public function Example() {
       super(LABEL);

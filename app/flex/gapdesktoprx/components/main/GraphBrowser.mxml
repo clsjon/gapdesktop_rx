@@ -8,45 +8,57 @@
 		import gapdesktoprx.models.Example;
 		
 		[Bindable]
-   	 	private var graph:Graph = new Graph();
+   	 	private var example:Example = new Example();
 	
 	
 		[Bindable]
 		private var hash:String = "";
 		
 		private function updateHash(newHash:String):void {
-			this.hash=newHash;
+			trace("Incoming hash from swf is: " + newHash);
+			hash = newHash;
 		}
-		public function setGraph(inGraph:Graph):void {
-			graph = RxUtils.clone(inGraph) as Graph;		
+		public function setExample(inExample:Example):void {
+			examplesList.selectedItem = inExample;
+			onExampleSelect();		
 		}
 		
-		private function newGraph():void {
-      graph = new Graph();
-      graphsList.selectedIndex = -1;
-    }
+		private function newExample():void {
+			if (!RxUtils.isEmpty(hash)) {
+      			example = new Example();
+      			example.urlHash = hash;
+      			
+      			examplesList.selectedIndex = -1;
+   			}
+    	}
 
+	    private function destroyExample():void {
+    	  example.destroy({onSuccess: onExampleDestroy});
+    	}
   
-    
-    private function destroyGraph():void {
-      graph.destroy({onSuccess: onGraphDestroy});
+  		private function onExampleSelect():void {
+     	 	example = RxUtils.clone(examplesList.selectedItem) as Example;
+     	 	trace (example.graph.localPath + example.urlHash);
+     		graphBrowser.location = example.graph.localPath + "#" + example.urlHash;
+     		//trace(graphBrowser.htmlLoader.window.so);
+     		//graphBrowser.htmlLoader.window.so.call('onHashChanged',example.urlHash);
+     		graphBrowser.htmlLoader.window.historyChange(example.urlHash);
+     		//graphBrowser.htmlLoader.load(new URLRequest(example.graph.localPath + example.urlHash));
+     		//graphBrowser.reload();
+     	 	//graphBrowser.location = example.graph.localPath + example.urlHash; 
+    	}
+  
+    private function onExampleCreate(result:Example):void {
+      example = new Example;
     }
   
-  	   private function onGraphSelect():void {
-      graph = RxUtils.clone(graphsList.selectedItem) as Graph;
+    private function onExampleUpdate(result:Example):void {
+      examplesList.selectedItem = result;
+      onExampleSelect();
     }
   
-    private function onGraphCreate(result:Graph):void {
-      graph = new Graph;
-    }
-  
-    private function onGraphUpdate(result:Graph):void {
-      graphsList.selectedItem = result;
-      onGraphSelect();
-    }
-  
-    private function onGraphDestroy(result:Graph):void {
-      onGraphCreate(result);
+    private function onExampleDestroy(result:Example):void {
+      onExampleCreate(result);
     }
 
 		
@@ -74,7 +86,7 @@
 		}
 		
 		private function showGraphList_handler(event:MouseEvent):void {
-			graphsList.visible=true;
+			examplesList.visible=true;
 			this.invalidateDisplayList();
 		}
 		
@@ -83,29 +95,25 @@
 			graphBrowser.htmlLoader.window.updateHash = this.updateHash;
 		}
 				
-		private function test_handler(event:MouseEvent):void {
-			updateHash("Hello");
-		}
 	]]>
 </mx:Script>
 <mx:HBox>
 		<mx:Image id="closeButton" click="this.close()" source="@Embed(source='/assets/icons/closebutton.png')"/>
 		<mx:Image id="fullScreenButton" click="fullScreenButtonHandler(event)" source="@Embed(source='/assets/icons/fullscreen.png')"/>
-		<mx:Image id="addBookmarkButton" click="addBookmarkButtonHandler(event)" source="@Embed(source='/assets/icons/add_bookmark.png"/>
+		<mx:Button id="addBookmarkButton" click="addBookmarkButtonHandler(event)" label="Add favorite" enabled="{RxUtils.isEmpty(hash)}"/>
 		<mx:Button id="showGraphListButton" click="showGraphList_handler(event)" label = "Show graph list"/>
-		<mx:Button id="test" click="test_handler(event)" label="Update hash"/>
 </mx:HBox>
 <mx:Canvas height="100%" width="100%">
 	
-	<mx:HTML id="graphBrowser" location="{graph.localPath}" x="0" y="0" width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)"/>
+	<mx:HTML id="graphBrowser" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)"/>
 	
 	
 </mx:Canvas>
 
-<mx:Canvas id="graphListCanvas" height="400" width="400" visible="false" x="0" y="0">
-	<mx:List id="graphsList" dataProvider="{Rx.models.index(Graph)}" width="100%" height="100%"/>
+<mx:VBox id="exampleListCanvas" height="400" width="100%" visible="true" x="0" y="0">
+	<mx:List id="examplesList" dataProvider="{Rx.models.index(Example, {NestedBy: [Graph]})}" change="onExampleSelect()" width="100%" height="100%"/>
 	<mx:TextInput text="{hash}"/>
 	<mx:TextInput id="loc" text="{graphBrowser.location}" enter="graphBrowser.location = loc.text" />
-</mx:Canvas>
+</mx:VBox>
 
 </mx:Window>

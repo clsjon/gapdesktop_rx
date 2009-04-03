@@ -5,7 +5,9 @@ package gapdesktoprx.models {
   [Resource(name="graphs")]
   [Bindable]
   public class Graph extends RxModel {
-    public static const LABEL:String = "downloadKey";
+    public static const LABEL:String = "name";
+
+    public var name:String = "";
 
     public var downloadKey:String = "";
 

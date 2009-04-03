@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" label="Graph"
-  xmlns:rx="org.restfulx.components.rx.*" xmlns:collections="org.restfulx.collections.*">
+  xmlns:rx="org.restfulx.components.rx.*">
   <mx:Script><![CDATA[
     import org.restfulx.Rx;
     import org.restfulx.utils.RxUtils;
@@ -8,10 +8,6 @@
 
     [Bindable]
     private var graph:Graph = new Graph();
-	
-	public function setGraph(inGraph:Graph):void {
-		graph = RxUtils.clone(inGraph) as Graph;		
-	}
 
     private function newGraph():void {
       graph = new Graph();
@@ -28,6 +24,7 @@
     }
   
     private function updateModelProperties():void {
+      graph.name = nameTextInput.text;
       graph.downloadKey = downloadKeyTextInput.text;
       graph.downloadedDate = downloadedDateDateField.selectedDate;
       graph.localPath = localPathTextInput.text;
@@ -54,14 +51,13 @@
     private function onGraphDestroy(result:Graph):void {
       onGraphCreate(result);
     }
-    
   ]]></mx:Script>
   <mx:Panel id="graphsPanel"
     title="Graphs" cornerRadius="0" dropShadowEnabled="false" borderStyle="solid" 
     borderThickness="1" backgroundColor="#EEEEEE" width="25%" height="100%">
     <mx:List id="graphsList"
       width="100%" height="100%"
-      dataProvider="Rx.models.index(Graph)"
+      dataProvider="{Rx.models.index(Graph)}"
       change="onGraphSelect()"/>
     <mx:ControlBar width="100%">
       <mx:Button label="New Graph" width="100%" height="30"
@@ -71,6 +67,9 @@
   <mx:Panel title="Edit Graph" cornerRadius="0" dropShadowEnabled="false" borderStyle="solid" 
     borderThickness="1" backgroundColor="#EEEEEE" width="75%" height="100%">
     <mx:Form width="100%" height="100%">
+      <mx:FormItem label="Name" width="100%">
+        <mx:TextInput id="nameTextInput" width="100%" text="{graph.name}"/>
+      </mx:FormItem>
       <mx:FormItem label="DownloadKey" width="100%">
         <mx:TextInput id="downloadKeyTextInput" width="100%" text="{graph.downloadKey}"/>
       </mx:FormItem>
