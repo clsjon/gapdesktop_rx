@@ -40,16 +40,16 @@
      	 	example = RxUtils.clone(examplesList.selectedItem) as Example;
      	 	trace (example.graph.localPath + example.urlHash);
      	 	var url:String = example.graph.localPath + "#" + example.urlHash;
-     		graphBrowser.location = url;
-     		graphBrowser.htmlLoader.window.embedApplication(url);
+     		//graphBrowser.location = url;
+     		//graphBrowser.htmlLoader.window.embedApplication(url);
      		//trace(graphBrowser.htmlLoader.window.so);
      		//graphBrowser.htmlLoader.window.so.call('onHashChanged',example.urlHash);
      		//graphBrowser.htmlLoader.window.so.call('onHashChanged',example.urlHash);
      		//graphBrowser.htmlLoader.window.so.call('onHashChanged',example.urlHash);
      		//graphBrowser.htmlLoader.window.historyChange(example.urlHash);
-     		//graphBrowser.htmlLoader.load(new URLRequest(example.graph.localPath + example.urlHash));
+     		graphBrowser.htmlLoader.load(new URLRequest(example.graph.localPath + example.urlHash));
      		//graphBrowser.reload();
-     	 	//graphBrowser.location = example.graph.localPath + example.urlHash; 
+     	 	graphBrowser.location = example.graph.localPath + example.urlHash; 
     	}
   
     private function onExampleCreate(result:Example):void {
