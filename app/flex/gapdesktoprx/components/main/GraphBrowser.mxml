@@ -104,8 +104,8 @@
 <mx:HBox>
 		<mx:Image id="closeButton" click="this.close()" source="@Embed(source='/assets/icons/closebutton.png')"/>
 		<mx:Image id="fullScreenButton" click="fullScreenButtonHandler(event)" source="@Embed(source='/assets/icons/fullscreen.png')"/>
-		<mx:Button id="addBookmarkButton" click="addBookmarkButtonHandler(event)" label="Add favorite" enabled="{RxUtils.isEmpty(hash)}"/>
-		<mx:Button id="showGraphListButton" click="showGraphList_handler(event)" label = "Show graph list"/>
+		<mx:Button id="addBookmarkButton" visible="false" click="addBookmarkButtonHandler(event)" label="Add favorite" enabled="{RxUtils.isEmpty(hash)}"/>
+		<mx:Button id="showGraphListButton" visible="false" click="showGraphList_handler(event)" label = "Show graph list"/>
 </mx:HBox>
 <mx:Canvas height="100%" width="100%">
 	
@@ -114,7 +114,7 @@
 	
 </mx:Canvas>
 
-<mx:VBox id="exampleListCanvas" height="400" width="100%" visible="true" x="0" y="0">
+<mx:VBox id="exampleListCanvas" height="0" width="0" visible="false" x="0" y="0">
 	<mx:List id="examplesList" dataProvider="{Rx.models.index(Example, {NestedBy: [Graph]})}" change="onExampleSelect()" width="100%" height="100%"/>
 	<mx:TextInput text="{hash}"/>
 	<mx:TextInput id="loc" text="{graphBrowser.location}" enter="graphBrowser.location = loc.text" />

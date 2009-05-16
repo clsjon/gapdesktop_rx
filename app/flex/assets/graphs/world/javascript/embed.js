@@ -1,4 +1,4 @@
-    var title = "Gapminder World Downloaded: 2009-01-13";
+    var title = "Gapminder World Downloaded: 2009-04-27";
     		
 		function reloadPage(){
 			window.location.hash = "";
@@ -9,7 +9,7 @@
 		function embedApplication(url){
 			so = new SWFObject(url, "uid" , "100%", "100%", "7", "#FFFFFF", false,"high", null, "noflash.html");
 			so.setProxy(null, 'javascript/swfobject_js_gateway.swf');
-			so.addVariable('chartTitle', escape(window.location.href));
+			so.addVariable('chartTitle', title);
 			so.addVariable('href', escape(window.location.href));
 			so.addParam("scale", "default");
 			so.write("flashcontent");

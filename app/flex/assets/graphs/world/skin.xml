@@ -4,21 +4,21 @@
 	 
 		enableAnchorForNonSelected ="false"
 		
-		color="0xFFFFFF"
+		color="0xFFFF00"
 		light="0xFFFFFF"
-		dark="0x000000"
+		dark="0x010625"
 	
-		tint="0"
-		brightness="70" 
+		tint="26"
+		brightness="50" 
 	 
-		color1 = "10"
-		color2 = "20"
-		color3 = "30"
-		color4 = "40"
-		color5 = "50"
-		color6 = "60"
-		color7 = "70"
-		color8 = "80"
+		color1 = "20"
+		color2 = "30"
+		color3 = "42"
+		color4 = "53"
+		color5 = "62"
+		color6 = "69"
+		color7 = "77"
+		color8 = "90"
 		color9 = "90"
 		color10 = "100"
 		
