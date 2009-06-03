@@ -1,4 +1,4 @@
-    var title = "Gapminder World Downloaded: 2009-04-27";
+    var title = "Gapminder World Downloaded: 2009-05-16";
     		
 		function reloadPage(){
 			window.location.hash = "";
@@ -13,10 +13,8 @@
 			so.addVariable('href', escape(window.location.href));
 			so.addParam("scale", "default");
 			so.write("flashcontent");
-			window.runtime.trace("embedApplication");
 			
 		}
-		
 		// called initially by movie
 		function getCurrentHash(){
 			 return unFocus.History.getCurrent();
@@ -25,8 +23,6 @@
 		function updateUrl(newUrl){
 			if (newUrl.length > 1 ) {
 				unFocus.History.addHistory(newUrl);
-		//		window.runtime.trace("updateURL: " + newUrl);
-				window.updateHash(newUrl);
 		    }
 		}
 		// IE history fix
@@ -42,7 +38,6 @@
 		// send url changes to flash movie
 		function historyChange(change){
 			if (change.length > 1) {
-				window.runtime.trace("Calling onHashChanged, change=" + change); 
 				so.call('onHashChanged', change);
 				lastHash=change;
 			}else{
@@ -51,7 +46,7 @@
 		}
 
 		// start listening to the url
-		//unFocus.History.addEventListener('historyChange', historyChange);
+		unFocus.History.addEventListener('historyChange', historyChange);
 		
 		
 		function openURL(url){

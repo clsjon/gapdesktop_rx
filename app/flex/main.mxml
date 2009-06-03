@@ -96,7 +96,7 @@
 				label="Gapminder World";
 				break;
 				case "chinaButton":
-				url="app:/assets/graphs/china/index.html";
+				url="app:/assets/graphs/mirror/index.html";
 				label="Gapminder China";
 				break;
 				case "fourbigButton":
