@@ -89,7 +89,7 @@
 		private function button_clickHandler(event:MouseEvent):void 
 		{
 			var url:String = new String();
-			var label:String = new String();
+			vsafaar label:String = new String();
 			switch(event.target.id) {
 				case "worldButton":
 				url="app:/assets/graphs/world/index.html";
@@ -97,11 +97,11 @@
 				break;
 				case "chinaButton":
 				url="app:/assets/graphs/mirror/index.html";
-				label="Gapminder China";
+				label="Gapminder Mirror";
 				break;
 				case "fourbigButton":
-				url="app:/assets/graphs/fourbig/index.html";
-				label="Gapminder China, India, Russia, US";
+				url="app:/assets/graphs/projections/index.html";
+				label="Projections";
 				break;
 			}
 			trace(url);
