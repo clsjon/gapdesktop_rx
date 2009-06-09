@@ -1,8 +1,9 @@
 package gapdesktoprx.controllers {
   import gapdesktoprx.models.*;
-  import gapdesktoprx.commands.*;
-
-	import mx.core.Application;		
+  
+  import mx.core.Application;
+  import mx.core.FlexGlobals;
+  
   import org.restfulx.Rx;
   import org.restfulx.controllers.RxApplicationController;
   import org.restfulx.utils.RxUtils;
@@ -29,8 +30,8 @@ package gapdesktoprx.controllers {
       if (!RxUtils.isEmpty(airDatabaseName)) Rx.airDatabaseName = airDatabaseName;
       controller = new ApplicationController(new SingletonEnforcer, 
         extraServices, defaultServiceId);
-			Rx.sessionToken = Application.application.parameters.session_token;
-			Rx.authenticityToken = Application.application.parameters.authenticity_token;
+			Rx.sessionToken = FlexGlobals.topLevelApplication.parameters.session_token;
+			Rx.authenticityToken = FlexGlobals.topLevelApplication.parameters.authenticity_token;
     }
   }
 }

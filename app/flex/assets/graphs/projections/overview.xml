@@ -1,0 +1,363 @@
+<metadata>
+  <mapProperties imageFile="http://graphs.gapminder.org/world/worldmap.jpg" timeDisplayX="0" timeDisplayY="0" scaleImage="true"/>
+  <collectionInfo>
+    <caption url="http://www.gapminder.org">Gapminder World Mirror 2.0</caption>
+  </collectionInfo>
+  <indicators>
+    <i id="p8SIY47PNEw4TgTkrmIVIXA" displayName="Child mortality (per 1,000 born, IHME)" originalName="Child mortality from IHME with projections until 2015"/>
+    <i id="rX3Jfop_ebuY-chuMpCgmRg" displayName="GDP per capita with projections" originalName="GDP per capita with projections"/>
+    <i id="rsOONWhmGBtzb4j__0MJv7Q" displayName="Population aged 0-4 years, both sexes (%)" originalName="Number of both sexes aged 0-4 years divided by total population"/>
+    <i id="rmViJSkPd4xZneV2Q6gzFwQ" displayName="Population aged 10-14 years, both sexes (%)" originalName="Number of both sexes aged 10-14 years divided by total population"/>
+    <i id="r4VUu4a4AaWqXXoAsFz-z-Q" displayName="Population aged 15-19 years, both sexes (%)" originalName="Number of both sexes aged 15-19 years divided by total population"/>
+    <i id="rTU20DXn0Bi7bTwW5T6J3gg" displayName="Population aged 20-39 years, both sexes (%)" originalName="Number of both sexes aged 20-39 years divided by total population"/>
+    <i id="rLwpdKbW2OykBbvVxhYKrhA" displayName="Population aged 40-59 years, both sexes (%)" originalName="Number of both sexes aged 40-59 years divided by total population"/>
+    <i id="rC5UskPU6PRVlmN7eXoridw" displayName="Population aged 5-9 years, both sexes (%)" originalName="Number of both sexes aged 5-9 years divided by total population"/>
+    <i id="rH6TEe8f_WNq_8x9pWZ3W0A" displayName="Population aged 60+ years, both sexes (%)" originalName="Number of both sexes aged above 60 years divided by total population"/>
+    <i id="rIpDsoI9lVTCh_PRqm66Tcw" displayName="Population aged 0-4 years, male (%)" originalName="Number of men aged 0-4 years divided by total number of men"/>
+    <i id="rmQZ_H88rIhF3315QBZpcIQ" displayName="Population aged 10-14 years, male (%)" originalName="Number of men aged 10-14 years divided by total number of men"/>
+    <i id="rYfw4UJZSizLRtgDs73d5jA" displayName="Population aged 15-19 years, male (%)" originalName="Number of men aged 15-19 years divided by total number of men"/>
+    <i id="rab1GmqpzJkWd4MF0hieVgA" displayName="Population aged 20-39 years, male (%)" originalName="Number of men aged 20-39 years divided by total number of men"/>
+    <i id="rcQkob1yAm-to1scz51flgw" displayName="Population aged 40-59 years, male (%)" originalName="Number of men aged 40-59 years divided by total number of men"/>
+    <i id="rgyZrNmSfXcPJQxJK7IxnEw" displayName="Population aged 5-9 years, male (%)" originalName="Number of men aged 5-9 years divided by total number of men"/>
+    <i id="rSkhGgUVN74knEhSAhBSSKA" displayName="Population aged 60+ years, male (%)" originalName="Number of men aged above 60 years divided by total number of men"/>
+    <i id="roLpNPQkooNCFzpTWXQ48Dw" displayName="Population aged 0-4 years, female (%)" originalName="Number of women aged 0-4 years divided by total number of women"/>
+    <i id="rJwVmwTFzheqVUzYWwSqXlA" displayName="Population aged 10-14 years, female (%)" originalName="Number of women aged 10-14 years divided by total number of women"/>
+    <i id="rYEHWlJHaLjHtcsSpRRJeig" displayName="Population aged 15-19 years, female (%)" originalName="Number of women aged 15-19 years divided by total number of women"/>
+    <i id="rWpQHQIQdntj6BEK8OIuWYw" displayName="Population aged 20-39 years, female (%)" originalName="Number of women aged 20-39 years divided by total number of women"/>
+    <i id="rElErbmOnSM6om03a1uinKQ" displayName="Population aged 40-59 years, female (%)" originalName="Number of women aged 40-59 years divided by total number of women"/>
+    <i id="re3efChATTYAT5bRqoaChXA" displayName="Population aged 5-9 years, female (%)" originalName="Number of women aged 5-9 years divided by total number of women"/>
+    <i id="rjhBvpeRgCxBq0EnQVN6b0w" displayName="Population aged 60+ years, female (%)" originalName="Number of women aged above 60 years divided by total number of women"/>
+    <i id="pyj6tScZqmEdwXv1tqzV4Xg" displayName="Population in urban agglomerations &gt; 1 million (% of total population)" originalName="Population in urban agglomerations &gt; 1 million (% of total population)"/>
+    <i id="phAwcNAVuyj2biT80zgTsYQ" displayName="Children and elderly (per 100 adults)" originalName="The total dependency ratio is the ratio of the sum of the population aged 0-14 and 65+ to the population aged 15-64, multiplied by 100."/>
+    <i id="rovrK0Uj9JPN95P9adob0tw" displayName="Population aged 0-4 years (total number)" originalName="Total number of people aged 0-4 years"/>
+    <i id="r9ztOSMb5WNHUBLwlgJqPSw" displayName="Population aged 10-14 years (total number)" originalName="Total number of people aged 10-14 years"/>
+    <i id="rFmJvuotJYE30q4nWEvpGJA" displayName="Population aged 15-19 years (total number)" originalName="Total number of people aged 15-19 years"/>
+    <i id="rHrin819tHgZudARnpsN0Mg" displayName="Population aged 20-39 years (total number)" originalName="Total number of people aged 20-39 years"/>
+    <i id="ri9SXMNc7TpebHucmAYepGQ" displayName="Population aged 40-59 years (total number)" originalName="Total number of people aged 40-59 years"/>
+    <i id="r83X3yfjC6ENYWoo41yDehg" displayName="Population aged 5-9 years (total number)" originalName="Total number of people aged 5-9 years"/>
+    <i id="rVD6A2uAmeIE0BQNW1KSg3A" displayName="Population aged 60+ years (total number)" originalName="Total number of people aged above 60 years"/>
+    <i id="phAwcNAVuyj0XOoBL_n5tAQ" displayName="Population, total" originalName="Total population"/>
+    <i id="pyj6tScZqmEfH89V6UQhpZA" displayName="Urban population" originalName="Urban population is the midyear population of areas defined as urban in each country and reported to the United Nations."/>
+    <i id="phAwcNAVuyj0-LE4StzCsEw" displayName="Urban population (% of total)" originalName="Urban population is the midyear population of areas defined as urban in each country and reported to the United Nations."/>
+    <i id="pyj6tScZqmEcRJEN8MyV3PQ" displayName="Urban population growth (annual %)" originalName="Urban population is the midyear population of areas defined as urban in each country and reported to the United Nations."/>
+  </indicators>
+  <areas>
+    <a id="i271" n="11 to 20"/>
+    <a id="i272" n="21 to 30"/>
+    <a id="i273" n="31 to 40"/>
+    <a id="i274" n="41 to 50"/>
+    <a id="i275" n="51 to 60"/>
+    <a id="i276" n="61 to 70"/>
+    <a id="i277" n="71 to 80"/>
+    <a id="i0" n="Abkhazia"/>
+    <a id="i278" n="Above 80"/>
+    <a id="i1" n="Afghanistan"/>
+    <a id="i2" n="Akrotiri and Dhekelia"/>
+    <a id="i3" n="Albania"/>
+    <a id="i4" n="Algeria"/>
+    <a id="i262" n="America"/>
+    <a id="i5" n="American Samoa"/>
+    <a id="i6" n="Andorra"/>
+    <a id="i7" n="Angola"/>
+    <a id="i8" n="Anguilla"/>
+    <a id="i9" n="Antigua and Barbuda"/>
+    <a id="i10" n="Argentina"/>
+    <a id="i11" n="Armenia"/>
+    <a id="i12" n="Aruba"/>
+    <a id="i13" n="Australia"/>
+    <a id="i14" n="Austria"/>
+    <a id="i15" n="Azerbaijan"/>
+    <a id="i16" n="Bahamas"/>
+    <a id="i17" n="Bahrain"/>
+    <a id="i18" n="Bangladesh"/>
+    <a id="i19" n="Barbados"/>
+    <a id="i20" n="Belarus"/>
+    <a id="i21" n="Belgium"/>
+    <a id="i22" n="Belize"/>
+    <a id="i23" n="Benin"/>
+    <a id="i24" n="Bermuda"/>
+    <a id="i25" n="Bhutan"/>
+    <a id="i26" n="Bolivia"/>
+    <a id="i27" n="Bosnia and Herzegovina"/>
+    <a id="i28" n="Botswana"/>
+    <a id="i29" n="Brazil"/>
+    <a id="i30" n="British Virgin Islands"/>
+    <a id="i31" n="Brunei"/>
+    <a id="i32" n="Bulgaria"/>
+    <a id="i33" n="Burkina Faso"/>
+    <a id="i34" n="Burundi"/>
+    <a id="i35" n="Cambodia"/>
+    <a id="i36" n="Cameroon"/>
+    <a id="i37" n="Canada"/>
+    <a id="i38" n="Cape Verde"/>
+    <a id="i39" n="Cayman Islands"/>
+    <a id="i40" n="Central African Republic"/>
+    <a id="i41" n="Chad"/>
+    <a id="i42" n="Channel Islands"/>
+    <a id="i43" n="Chile"/>
+    <a id="i44" n="China"/>
+    <a id="i45" n="Christmas Island"/>
+    <a id="i46" n="Cocos Island"/>
+    <a id="i47" n="Colombia"/>
+    <a id="i48" n="Comoros"/>
+    <a id="i49" n="Congo, Dem. Rep."/>
+    <a id="i50" n="Congo, Rep."/>
+    <a id="i51" n="Cook Is"/>
+    <a id="i52" n="Costa Rica"/>
+    <a id="i53" n="Cote d&apos;Ivoire"/>
+    <a id="i54" n="Croatia"/>
+    <a id="i55" n="Cuba"/>
+    <a id="i56" n="Cyprus"/>
+    <a id="i57" n="Czech Republic"/>
+    <a id="i58" n="Czechoslovakia"/>
+    <a id="i59" n="Denmark"/>
+    <a id="i60" n="Djibouti"/>
+    <a id="i61" n="Dominica"/>
+    <a id="i62" n="Dominican Republic"/>
+    <a id="i264" n="East Asia &amp; Pacific"/>
+    <a id="i63" n="East Germany"/>
+    <a id="i64" n="Ecuador"/>
+    <a id="i65" n="Egypt"/>
+    <a id="i66" n="El Salvador"/>
+    <a id="i67" n="Equatorial Guinea"/>
+    <a id="i68" n="Eritrea"/>
+    <a id="i69" n="Eritrea and Ethiopia"/>
+    <a id="i70" n="Estonia"/>
+    <a id="i71" n="Ethiopia"/>
+    <a id="i263" n="Europe &amp; Central Asia"/>
+    <a id="i72" n="Faeroe Islands"/>
+    <a id="i73" n="Falkland Is (Malvinas)"/>
+    <a id="i74" n="Fiji"/>
+    <a id="i75" n="Finland"/>
+    <a id="i76" n="France"/>
+    <a id="i77" n="French Guiana"/>
+    <a id="i78" n="French Polynesia"/>
+    <a id="i79" n="Gabon"/>
+    <a id="i80" n="Gambia"/>
+    <a id="i81" n="Georgia"/>
+    <a id="i82" n="Germany"/>
+    <a id="i83" n="Ghana"/>
+    <a id="i84" n="Gibraltar"/>
+    <a id="i85" n="Greece"/>
+    <a id="i86" n="Greenland"/>
+    <a id="i87" n="Grenada"/>
+    <a id="i88" n="Guadeloupe"/>
+    <a id="i89" n="Guam"/>
+    <a id="i90" n="Guatemala"/>
+    <a id="i91" n="Guernsey"/>
+    <a id="i92" n="Guinea"/>
+    <a id="i93" n="Guinea-Bissau"/>
+    <a id="i94" n="Guyana"/>
+    <a id="i95" n="Haiti"/>
+    <a id="i269" n="High income OECD"/>
+    <a id="i268" n="High income nonOECD"/>
+    <a id="i96" n="Holy See"/>
+    <a id="i97" n="Honduras"/>
+    <a id="i98" n="Hong Kong, China"/>
+    <a id="i99" n="Hungary"/>
+    <a id="i100" n="Iceland"/>
+    <a id="i101" n="India"/>
+    <a id="i102" n="Indonesia"/>
+    <a id="i103" n="Iran"/>
+    <a id="i104" n="Iraq"/>
+    <a id="i105" n="Ireland"/>
+    <a id="i106" n="Isle of Man"/>
+    <a id="i107" n="Israel"/>
+    <a id="i108" n="Italy"/>
+    <a id="i109" n="Jamaica"/>
+    <a id="i110" n="Japan"/>
+    <a id="i111" n="Jersey"/>
+    <a id="i112" n="Jordan"/>
+    <a id="i113" n="Kazakhstan"/>
+    <a id="i114" n="Kenya"/>
+    <a id="i115" n="Kiribati"/>
+    <a id="i118" n="Kosovo"/>
+    <a id="i119" n="Kuwait"/>
+    <a id="i120" n="Kyrgyz Republic"/>
+    <a id="i121" n="Lao"/>
+    <a id="i122" n="Latvia"/>
+    <a id="i123" n="Lebanon"/>
+    <a id="i124" n="Lesotho"/>
+    <a id="i125" n="Liberia"/>
+    <a id="i126" n="Libya"/>
+    <a id="i127" n="Liechtenstein"/>
+    <a id="i128" n="Lithuania"/>
+    <a id="i265" n="Low income"/>
+    <a id="i266" n="Lower middle income"/>
+    <a id="i129" n="Luxembourg"/>
+    <a id="i130" n="Macao, China"/>
+    <a id="i131" n="Macedonia, FYR"/>
+    <a id="i132" n="Madagascar"/>
+    <a id="i133" n="Malawi"/>
+    <a id="i134" n="Malaysia"/>
+    <a id="i135" n="Maldives"/>
+    <a id="i136" n="Mali"/>
+    <a id="i137" n="Malta"/>
+    <a id="i138" n="Marshall Islands"/>
+    <a id="i139" n="Martinique"/>
+    <a id="i140" n="Mauritania"/>
+    <a id="i141" n="Mauritius"/>
+    <a id="i142" n="Mayotte"/>
+    <a id="i143" n="Mexico"/>
+    <a id="i144" n="Micronesia, Fed. Sts."/>
+    <a id="i261" n="Middle East &amp; North Africa"/>
+    <a id="i145" n="Moldova"/>
+    <a id="i146" n="Monaco"/>
+    <a id="i147" n="Mongolia"/>
+    <a id="i148" n="Montenegro"/>
+    <a id="i149" n="Montserrat"/>
+    <a id="i150" n="Morocco"/>
+    <a id="i151" n="Mozambique"/>
+    <a id="i152" n="Myanmar"/>
+    <a id="i153" n="Namibia"/>
+    <a id="i154" n="Nauru"/>
+    <a id="i155" n="Nepal"/>
+    <a id="i156" n="Netherlands"/>
+    <a id="i157" n="Netherlands Antilles"/>
+    <a id="i158" n="New Caledonia"/>
+    <a id="i159" n="New Zealand"/>
+    <a id="i160" n="Ngorno-Karabakh"/>
+    <a id="i161" n="Nicaragua"/>
+    <a id="i162" n="Niger"/>
+    <a id="i163" n="Nigeria"/>
+    <a id="i164" n="Niue"/>
+    <a id="i165" n="Norfolk Island"/>
+    <a id="i116" n="North Korea"/>
+    <a id="i251" n="North Yemen (former)"/>
+    <a id="i166" n="Northern Cyprus"/>
+    <a id="i167" n="Northern Mariana Islands"/>
+    <a id="i168" n="Norway"/>
+    <a id="i169" n="Oman"/>
+    <a id="i170" n="Pakistan"/>
+    <a id="i171" n="Palau"/>
+    <a id="i172" n="Panama"/>
+    <a id="i173" n="Papua New Guinea"/>
+    <a id="i174" n="Paraguay"/>
+    <a id="i175" n="Peru"/>
+    <a id="i176" n="Philippines"/>
+    <a id="i177" n="Pitcairn"/>
+    <a id="i178" n="Poland"/>
+    <a id="i179" n="Portugal"/>
+    <a id="i180" n="Puerto Rico"/>
+    <a id="i181" n="Qatar"/>
+    <a id="i182" n="Reunion"/>
+    <a id="i183" n="Romania"/>
+    <a id="i184" n="Russia"/>
+    <a id="i185" n="Rwanda"/>
+    <a id="i193" n="Samoa"/>
+    <a id="i194" n="San Marino"/>
+    <a id="i195" n="Sao Tome and Principe"/>
+    <a id="i196" n="Saudi Arabia"/>
+    <a id="i197" n="Senegal"/>
+    <a id="i198" n="Serbia"/>
+    <a id="i199" n="Serbia and Montenegro"/>
+    <a id="i200" n="Serbia excluding Kosovo"/>
+    <a id="i201" n="Seychelles"/>
+    <a id="i202" n="Sierra Leone"/>
+    <a id="i203" n="Singapore"/>
+    <a id="i204" n="Slovak Republic"/>
+    <a id="i205" n="Slovenia"/>
+    <a id="i206" n="Solomon Islands"/>
+    <a id="i207" n="Somalia"/>
+    <a id="i208" n="Somaliland"/>
+    <a id="i209" n="South Africa"/>
+    <a id="i260" n="South Asia"/>
+    <a id="i117" n="South Korea"/>
+    <a id="i210" n="South Ossetia"/>
+    <a id="i252" n="South Yemen (former)"/>
+    <a id="i211" n="Spain"/>
+    <a id="i212" n="Sri Lanka"/>
+    <a id="i186" n="St. Barthélemy"/>
+    <a id="i187" n="St. Helena"/>
+    <a id="i188" n="St. Kitts and Nevis"/>
+    <a id="i189" n="St. Lucia"/>
+    <a id="i190" n="St. Martin"/>
+    <a id="i191" n="St. Vincent and the Grenadines"/>
+    <a id="i192" n="St.-Pierre-et-Miquelon"/>
+    <a id="i259" n="Sub-Saharan Africa"/>
+    <a id="i213" n="Sudan"/>
+    <a id="i214" n="Suriname"/>
+    <a id="i215" n="Svalbard"/>
+    <a id="i216" n="Swaziland"/>
+    <a id="i217" n="Sweden"/>
+    <a id="i218" n="Switzerland"/>
+    <a id="i219" n="Syria"/>
+    <a id="i220" n="Taiwan"/>
+    <a id="i221" n="Tajikistan"/>
+    <a id="i222" n="Tanzania"/>
+    <a id="i223" n="Thailand"/>
+    <a id="i224" n="Timor-Leste"/>
+    <a id="i225" n="Togo"/>
+    <a id="i226" n="Tokelau"/>
+    <a id="i227" n="Tonga"/>
+    <a id="i270" n="Top 10"/>
+    <a id="i228" n="Transnistria"/>
+    <a id="i229" n="Trinidad and Tobago"/>
+    <a id="i230" n="Tunisia"/>
+    <a id="i231" n="Turkey"/>
+    <a id="i232" n="Turkmenistan"/>
+    <a id="i233" n="Turks and Caicos Islands"/>
+    <a id="i234" n="Tuvalu"/>
+    <a id="i241" n="USSR"/>
+    <a id="i235" n="Uganda"/>
+    <a id="i236" n="Ukraine"/>
+    <a id="i237" n="United Arab Emirates"/>
+    <a id="i238" n="United Kingdom"/>
+    <a id="i258" n="United Korea (former)"/>
+    <a id="i239" n="United States"/>
+    <a id="i267" n="Upper middle income"/>
+    <a id="i240" n="Uruguay"/>
+    <a id="i242" n="Uzbekistan"/>
+    <a id="i244" n="Vanuatu"/>
+    <a id="i245" n="Venezuela"/>
+    <a id="i249" n="Vietnam"/>
+    <a id="i250" n="Virgin Islands (U.S.)"/>
+    <a id="i243" n="Wallis et Futuna"/>
+    <a id="i246" n="West Bank and Gaza"/>
+    <a id="i247" n="West Germany"/>
+    <a id="i248" n="Western Sahara"/>
+    <a id="i253" n="Yemen"/>
+    <a id="i254" n="Yugoslavia"/>
+    <a id="i255" n="Zambia"/>
+    <a id="i256" n="Zimbabwe"/>
+    <a id="i257" n="Åland"/>
+  </areas>
+  <areaCategorization id="CATID0" n="Geographic regions" a="Regions of the world" sourceName="Gapminder Geographic Regions" providerUrl="http://spreadsheets.google.com/pub?key=phT4mwjvEuGBtdf1ZeO7_PQ&amp;gid=1" dataCollectionUrl="http://spreadsheets.google.com/pub?key=pk7kRzzfckbzz4AmH_e3DNA">
+    <c id="i259" areas="i7,i23,i28,i33,i34,i36,i38,i40,i41,i48,i49,i50,i53,i67,i68,i69,i71,i79,i80,i83,i92,i93,i114,i124,i125,i132,i133,i136,i140,i141,i142,i151,i153,i162,i163,i182,i185,i187,i195,i197,i201,i202,i207,i208,i209,i213,i216,i222,i225,i235,i255,i256"/>
+    <c id="i260" areas="i1,i18,i25,i101,i135,i155,i170,i212"/>
+    <c id="i261" areas="i4,i17,i60,i65,i103,i104,i107,i112,i119,i123,i126,i137,i150,i169,i181,i196,i219,i230,i237,i246,i253,i251,i252,i248"/>
+    <c id="i262" areas="i8,i9,i10,i12,i16,i19,i22,i24,i26,i29,i30,i37,i39,i43,i47,i52,i55,i61,i62,i64,i66,i73,i77,i87,i88,i90,i94,i95,i97,i109,i139,i143,i149,i157,i161,i172,i174,i175,i180,i186,i190,i192,i188,i189,i191,i214,i229,i233,i239,i240,i245,i250"/>
+    <c id="i263" areas="i0,i2,i3,i6,i11,i14,i15,i20,i21,i27,i32,i42,i54,i56,i57,i58,i59,i63,i70,i72,i75,i76,i81,i82,i84,i85,i86,i91,i96,i99,i100,i105,i106,i108,i111,i113,i118,i120,i122,i127,i128,i129,i131,i145,i146,i148,i156,i160,i166,i168,i178,i179,i183,i184,i194,i198,i199,i200,i204,i205,i210,i211,i215,i217,i218,i221,i228,i231,i232,i236,i238,i241,i242,i254,i257,i247"/>
+    <c id="i264" areas="i5,i13,i31,i35,i44,i45,i46,i51,i74,i78,i89,i98,i102,i110,i115,i116,i117,i121,i130,i134,i138,i144,i147,i152,i154,i158,i159,i164,i165,i167,i171,i173,i176,i177,i193,i203,i206,i220,i223,i224,i226,i227,i234,i243,i249,i244,i258"/>
+  </areaCategorization>
+  <areaCategorization id="CATID1" n="Income groups" a="How rich are you?" sourceName="World Bank" providerUrl="http://www.worldbank.org/data/countryclass/classgroups.htm" dataCollectionUrl="http://spreadsheets.google.com/pub?key=pk7kRzzfckbzz4AmH_e3DNA">
+    <c id="i265" areas="i1,i7,i18,i23,i25,i33,i34,i35,i36,i40,i41,i48,i49,i50,i53,i67,i68,i69,i71,i80,i83,i92,i93,i95,i101,i114,i116,i120,i121,i124,i125,i132,i133,i136,i140,i145,i147,i151,i152,i155,i161,i162,i163,i170,i173,i185,i195,i197,i202,i206,i207,i208,i213,i221,i222,i224,i225,i235,i242,i245,i253,i255,i256"/>
+    <c id="i266" areas="i3,i4,i11,i15,i20,i26,i27,i29,i32,i38,i44,i47,i55,i60,i62,i64,i65,i66,i74,i81,i90,i94,i97,i102,i103,i104,i109,i112,i113,i115,i131,i135,i138,i144,i150,i153,i174,i175,i176,i183,i184,i193,i199,i209,i212,i214,i216,i219,i223,i227,i230,i231,i232,i236,i243,i249"/>
+    <c id="i267" areas="i5,i9,i10,i19,i22,i28,i43,i52,i54,i57,i61,i70,i79,i87,i99,i122,i123,i126,i128,i134,i141,i142,i143,i154,i167,i169,i171,i172,i178,i196,i201,i204,i188,i189,i191,i229,i234,i240,i244"/>
+    <c id="i268" areas="i6,i12,i16,i17,i24,i31,i39,i42,i56,i72,i78,i86,i89,i98,i106,i107,i119,i127,i130,i137,i146,i157,i158,i180,i181,i194,i203,i205,i237,i246"/>
+    <c id="i269" areas="i13,i14,i21,i37,i59,i75,i76,i77,i82,i84,i85,i88,i91,i100,i105,i108,i110,i111,i117,i129,i139,i156,i159,i168,i179,i182,i211,i217,i218,i238,i239,i257"/>
+  </areaCategorization>
+  <areaCategorization id="CATID2" n="International rank - life quality" a="International rank of life quality. The index is determined by the following 9 quality of life factors: Material wellbeing (GDP per person), Health (Life expectancy at birth), Political stability and security (Political stability and security ratings), Family life (Divorce rate (per 1,000 population), Community life (rate of church attendance or trade-union membership), Climate and geography (Latitude), Job security (Unemployment rate),  Political freedom (Average of indices of political and civil liberties), Gender equality (Ratio of average male and female earnings) ." sourceName="WHO" providerUrl="http://www.who.int" dataCollectionUrl="http://spreadsheets.google.com/pub?key=pp59adS3CHWevB3E-uN30Pw">
+    <c id="i270" areas="i105,i218,i168,i129,i217,i13,i100,i108,i59,i211"/>
+    <c id="i271" areas="i203,i75,i239,i37,i159,i156,i110,i98,i179,i14"/>
+    <c id="i272" areas="i130,i85,i56,i21,i76,i82,i205,i137,i238,i116"/>
+    <c id="i273" areas="i43,i143,i19,i57,i52,i134,i99,i107,i29,i10"/>
+    <c id="i274" areas="i181,i223,i212,i176,i204,i240,i172,i178,i54,i231"/>
+    <c id="i275" areas="i229,i64,i175,i47,i119,i66,i32,i183,i245,i44"/>
+    <c id="i276" areas="i249,i17,i128,i109,i150,i122,i169,i70,i237,i126"/>
+    <c id="i277" areas="i102,i196,i101,i174,i112,i161,i18,i3,i62,i65"/>
+    <c id="i278" areas="i4,i26,i230,i199,i11,i15,i81,i103,i131,i90,i97,i209,i170,i83,i113,i219,i236,i145,i20,i235,i232,i120,i28,i184,i242,i221,i163,i222,i95,i256"/>
+  </areaCategorization>
+  <indicatorCategorization>
+    <c n="Population" id="Population" indicators="phAwcNAVuyj2biT80zgTsYQ,phAwcNAVuyj0XOoBL_n5tAQ">
+      <c n="Urbanization" id="Urbanization" indicators="pyj6tScZqmEdwXv1tqzV4Xg,pyj6tScZqmEfH89V6UQhpZA,phAwcNAVuyj0-LE4StzCsEw,pyj6tScZqmEcRJEN8MyV3PQ"/>
+      <c n="Both sexes by age (%)" id="Both sexes by age (%)" indicators="rsOONWhmGBtzb4j__0MJv7Q,rC5UskPU6PRVlmN7eXoridw,rmViJSkPd4xZneV2Q6gzFwQ,r4VUu4a4AaWqXXoAsFz-z-Q,rTU20DXn0Bi7bTwW5T6J3gg,rLwpdKbW2OykBbvVxhYKrhA,rH6TEe8f_WNq_8x9pWZ3W0A"/>
+      <c n="Female by age (%)" id="Female by age (%)" indicators="roLpNPQkooNCFzpTWXQ48Dw,re3efChATTYAT5bRqoaChXA,rJwVmwTFzheqVUzYWwSqXlA,rYEHWlJHaLjHtcsSpRRJeig,rWpQHQIQdntj6BEK8OIuWYw,rElErbmOnSM6om03a1uinKQ,rjhBvpeRgCxBq0EnQVN6b0w"/>
+      <c n="Male by age (%)" id="Male by age (%)" indicators="rIpDsoI9lVTCh_PRqm66Tcw,rgyZrNmSfXcPJQxJK7IxnEw,rmQZ_H88rIhF3315QBZpcIQ,rYfw4UJZSizLRtgDs73d5jA,rab1GmqpzJkWd4MF0hieVgA,rcQkob1yAm-to1scz51flgw,rSkhGgUVN74knEhSAhBSSKA"/>
+      <c n="Both sexes by age (total)" id="Both sexes by age (total)" indicators="rovrK0Uj9JPN95P9adob0tw,r83X3yfjC6ENYWoo41yDehg,r9ztOSMb5WNHUBLwlgJqPSw,rFmJvuotJYE30q4nWEvpGJA,rHrin819tHgZudARnpsN0Mg,ri9SXMNc7TpebHucmAYepGQ,rVD6A2uAmeIE0BQNW1KSg3A"/>
+    </c>
+    <c n="Economy" id="Economy">
+      <c n="Projections" id="Projections" indicators="rX3Jfop_ebuY-chuMpCgmRg,p8SIY47PNEw4TgTkrmIVIXA"/>
+    </c>
+  </indicatorCategorization>
+</metadata>

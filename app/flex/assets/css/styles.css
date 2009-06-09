@@ -12,7 +12,7 @@
   fontWeight: bold;
 }
 
-WindowedApplication {
+mx|WindowedApplication {
   fontFamily: MyriadWebPro;
   fontSize: 12;
   backgroundColor: #FFFFFF;

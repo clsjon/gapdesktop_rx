@@ -4,6 +4,7 @@
 	<mx:Style source="/assets/css/styles.css"/>
 <mx:Script>
 	<![CDATA[
+		import mx.core.FlexGlobals;
 		import mx.controls.Image;
 		import mx.core.Application;
 		import mx.rpc.events.FaultEvent;
@@ -56,7 +57,7 @@
 			updater.updateURL = "http://www.gapminder.org/desktop/update.xml";
 			updater.addEventListener(UpdateEvent.INITIALIZED,updaterInitialized);
 			updater.addEventListener(ErrorEvent.ERROR,onError);
-			updater.initialize();
+		//	updater.initialize();
 			initialGraphsLoader.addEventListener(Event.COMPLETE,initialGraphsResultHandler);
 			initialGraphsLoader.addEventListener(IOErrorEvent.IO_ERROR,initialGraphsFaultHandler);
 			initialGraphsLoader.load(request);
@@ -75,7 +76,7 @@
 		
 		private function initialGraphsFaultHandler(event:IOErrorEvent):void {
 			Alert.show("Could not load information on initial graphs. Exiting application.");
-			Application.application.exit();
+			FlexGlobals.topLevelApplication.exit();
 		}
 		
 		private function updaterInitialized(event:UpdateEvent):void {
@@ -89,7 +90,7 @@
 		private function button_clickHandler(event:MouseEvent):void 
 		{
 			var url:String = new String();
-			vsafaar label:String = new String();
+			var label:String = new String();
 			switch(event.target.id) {
 				case "worldButton":
 				url="app:/assets/graphs/world/index.html";
