@@ -15,14 +15,11 @@
 			so.write("flashcontent");
 			
 		}
-		// called initially by movie
-		function getCurrentHash(){
-			 return unFocus.History.getCurrent();
-		}
 		// called from flash. updates browser history.
 		function updateUrl(newUrl){
 			if (newUrl.length > 1 ) {
-				unFocus.History.addHistory(newUrl);
+				window.runtime.trace("Location read from JS: " + window.htmlLoader.location);
+				window.runtime.trace('updateUrl called, newUrl: ' + newUrl);
 		    }
 		}
 		// IE history fix
@@ -38,6 +35,7 @@
 		// send url changes to flash movie
 		function historyChange(change){
 			if (change.length > 1) {
+				window.runtime.trace('historyChange invoked with change: ' + change);
 				so.call('onHashChanged', change);
 				lastHash=change;
 			}else{
@@ -45,8 +43,6 @@
 			}
 		}
 
-		// start listening to the url
-		unFocus.History.addEventListener('historyChange', historyChange);
 		
 		
 		function openURL(url){

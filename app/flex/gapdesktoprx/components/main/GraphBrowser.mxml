@@ -39,11 +39,11 @@
   		private function onExampleSelect():void {
      	 	example = RxUtils.clone(examplesList.selectedItem) as Example;
      	 	trace (example.graph.localPath + example.urlHash);
-     		graphBrowser.location = example.graph.localPath + "#" + example.urlHash;
+     		//graphBrowser.location = example.graph.localPath + "#" + example.urlHash;
      		//trace(graphBrowser.htmlLoader.window.so);
-     		//graphBrowser.htmlLoader.window.so.call('onHashChanged',example.urlHash);
+     		graphBrowser.htmlLoader.window.so.call('onHashChanged',example.urlHash);
      		graphBrowser.htmlLoader.window.historyChange(example.urlHash);
-     		//graphBrowser.htmlLoader.load(new URLRequest(example.graph.localPath + example.urlHash));
+     		//graphBrowser.htmlLoader.load(new URLRequest(example.graph.localPath));
      		//graphBrowser.reload();
      	 	//graphBrowser.location = example.graph.localPath + example.urlHash; 
     	}
@@ -92,9 +92,15 @@
 		
 		private function graphBrowser_completeHandler(event:Event):void
 		{
-			graphBrowser.htmlLoader.window.updateHash = this.updateHash;
+			//graphBrowser.htmlLoader.window.updateHash = this.updateHash;
 		}
 				
+
+		protected function graphBrowser_locationChangeHandler(event:Event):void
+		{
+			trace(event.toString());
+		}
+
 	]]>
 </mx:Script>
 <mx:HBox>
@@ -105,7 +111,7 @@
 </mx:HBox>
 <mx:Canvas height="100%" width="100%">
 	
-	<mx:HTML id="graphBrowser" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)"/>
+	<mx:HTML id="graphBrowser" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)" locationChange="graphBrowser_locationChangeHandler(event)"/>
 	
 	
 </mx:Canvas>
