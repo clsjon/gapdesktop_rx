@@ -1,3 +1,13 @@
+@namespace "http://www.adobe.com/2006/mxml";
+@namespace default "spark.skins.default.*";
+
+
+@font-face {
+	src:url("/assets/fonts/Avenir/AvenirLTStd-Medium.otf");
+	fontFamily: Avenir;
+	fontStyle: normal;
+	fontWeight: normal;
+}
 @font-face {
   src: url("/assets/fonts/MyriadWebPro.ttf");
   fontFamily: MyriadWebPro;
@@ -12,7 +22,10 @@
   fontWeight: bold;
 }
 
-
+default|WindowedApplicationSkin {
+	fontFamily: Avenir;
+	fontSize: 18;	
+}
 
  .infoBox {
   backgroundColor: #FFFFFF;

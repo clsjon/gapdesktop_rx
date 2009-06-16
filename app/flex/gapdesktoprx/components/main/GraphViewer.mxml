@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="{Capabilities.screenResolutionX}" height="{Capabilities.screenResolutionY}" backgroundColor="#CEDCE3" systemChrome="none">
+<mx:Script>
+	<![CDATA[
+		private function graphBrowser_completeHandler(event:Event):void
+		{
+			graphBrowser.htmlLoader.window.updateHash = updateHash;
+		}
+				
+
+		protected function graphBrowser_locationChangeHandler(event:Event):void
+		{
+			trace(event.toString());
+		}
+
+	]]>
+</mx:Script>
+	
+	<mx:HTML id="graphBrowser" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)" locationChange="graphBrowser_locationChangeHandler(event)"/>
+	
+	
+</mx:Canvas>
+
+
+</mx:Canvas>

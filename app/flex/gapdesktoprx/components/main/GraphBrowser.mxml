@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Window xmlns:mx="http://www.adobe.com/2006/mxml" width="{Capabilities.screenResolutionX}" height="{Capabilities.screenResolutionY}" backgroundColor="#CEDCE3" systemChrome="none">
+<mx:Window 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:containers="flexlib.containers.*"
+	width="{Capabilities.screenResolutionX}" 
+	height="{Capabilities.screenResolutionY}" 
+	backgroundColor="#CEDCE3" 
+	systemChrome="none" xmlns:main="gapdesktoprx.components.main.*">
+	
 <mx:Script>
 	<![CDATA[
 		import org.restfulx.Rx;
@@ -92,7 +99,7 @@
 		
 		private function graphBrowser_completeHandler(event:Event):void
 		{
-			//graphBrowser.htmlLoader.window.updateHash = this.updateHash;
+			graphBrowser.htmlLoader.window.updateHash = updateHash;
 		}
 				
 
@@ -106,12 +113,16 @@
 <mx:HBox>
 		<mx:Image id="closeButton" click="this.close()" source="@Embed(source='/assets/icons/closebutton.png')"/>
 		<mx:Image id="fullScreenButton" click="fullScreenButtonHandler(event)" source="@Embed(source='/assets/icons/fullscreen.png')"/>
-		<mx:Button id="addBookmarkButton" click="addBookmarkButtonHandler(event)" label="Add favorite" enabled="{RxUtils.isEmpty(hash)}"/>
+		<mx:Button id="addBookmarkButton" click="addBookmarkButtonHandler(event)" label="Add favorite" enabled="{!RxUtils.isEmpty(hash)}"/>
 		<mx:Button id="showGraphListButton" click="showGraphList_handler(event)" label = "Show graph list"/>
 </mx:HBox>
 <mx:Canvas height="100%" width="100%">
 	
-	<mx:HTML id="graphBrowser" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)" locationChange="graphBrowser_locationChangeHandler(event)"/>
+<containers:SuperTabNavigator>
+	<main:GraphViewer>
+		
+	</main:GraphViewer>
+</containers:SuperTabNavigator>
 	
 	
 </mx:Canvas>

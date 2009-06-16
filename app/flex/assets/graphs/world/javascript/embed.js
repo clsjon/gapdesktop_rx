@@ -20,6 +20,7 @@
 			if (newUrl.length > 1 ) {
 				window.runtime.trace("Location read from JS: " + window.htmlLoader.location);
 				window.runtime.trace('updateUrl called, newUrl: ' + newUrl);
+				updateHash(newUrl);
 		    }
 		}
 		// IE history fix
