@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="{Capabilities.screenResolutionX}" height="{Capabilities.screenResolutionY}" backgroundColor="#CEDCE3" systemChrome="none">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
 <mx:Script>
 	<![CDATA[
+		import gapdesktoprx.models.Example;
+	
+	
+	
+		[Bindable]
+		private var example:Example = new Example();
+		
+		private function newExample():void {
+			example = new Example();
+		}
+		
 		private function graphBrowser_completeHandler(event:Event):void
 		{
-			graphBrowser.htmlLoader.window.updateHash = updateHash;
+			//graphBrowser.htmlLoader.window.updateHash = updateHash;
 		}
 				
 
@@ -22,4 +33,3 @@
 </mx:Canvas>
 
 
-</mx:Canvas>

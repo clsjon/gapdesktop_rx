@@ -32,9 +32,9 @@
 		iconColorDark="color8"
 		selectionColor="color9"
 		
-		mainFont="Helvetica"
+		mainFont="Arial"
 		
-		coleredTextEnabled="color9"
+		coleredTextEnabled="color7#lessInk:15"
 		
 		coleredTextDisabled="color4"
 		coleredTextDisabled_lessInk="30"
@@ -78,7 +78,7 @@
 	/>
 	
   <dataSource 
-    fontSize="16"
+    fontSize="6"
     fontColor="coleredTextEnabled"
     tabelLinkColor="coleredTextEnabled"
   />
@@ -90,7 +90,7 @@
 		color="black" 
 		font="mainFont" 
 		bold="true"
-		size="20"  
+		size="11"  
 		frameFillColor ="white"
 		frameBorderColor = "color7"
 		frameCornerRadius = "2"
@@ -134,7 +134,7 @@
 	
 	<timeDisplayBehindBubbles
        percentOfChartWidth= "90"
-       color="color3"
+       color="color2"
        transparency="60"
        centerx="0"
        centery="-15"
@@ -151,7 +151,7 @@
    />
    
 	<lists
-		fontSize = "13"
+		fontSize = "10"
 		fontWeight="none"
 		font="mainFont"
 	/>
@@ -159,7 +159,7 @@
 	<controls
 		coleredTextEnabled="color7"
 		coleredTextDisabled="coleredTextDisabled"
-		fontSize = "20"
+		fontSize = "10"
 		fontWeight="bold"
 	/>
 	
@@ -171,13 +171,13 @@
 	
 	<help
 		color = "color6"
-		size="20"
+		size="10"
 		bold="false"	
 	/>
 	
 	<interpolationInfo
 		backgColor="backgroundColor"
-		size="20"
+		size="10"
 		bold="false"
 		color="coleredTextEnabled"
 	/>
@@ -201,7 +201,7 @@
 	<checkBoxesInFrames
 		color="coleredTextEnabled"
 		disabledColor = "coleredTextDisabled"
-		fontsize="20"
+		fontsize="10"
 		fontWeight="bold"
 	/>
 	<checkbox
@@ -334,7 +334,7 @@
 	
 	<dropDownButtonInsideFrames
 		
-		fontSize = "20"
+		fontSize = "10"
 		bold = "true"
 		
 		textColorUp = "coleredTextEnabled" 
@@ -389,7 +389,7 @@
 	
 	<colorRolloverText
 		color="coleredTextEnabled"
-		size="20"
+		size="10"
 		bold="false"
 	/>
 	<coloredRegionalMap  
@@ -407,7 +407,7 @@
 	
 	<colorLegendCell
 		fontColor="coleredTextEnabled" 
-		fontSize="20"
+		fontSize="10"
 		backgroundColor="white"
 		cellWidth="120" 
 		
@@ -458,7 +458,7 @@
 	
 	<countryList
 	  
-		fontSize="20"  
+		fontSize="10"  
 		borderColor="color4"
 		rowHeight="16"
 		
@@ -494,7 +494,7 @@
         labelOffset="-1" 
        
 		labelFontColor="coleredTextEnabled"
-		labelFontSize="15"
+		labelFontSize="9"
 		
 		labeledTickLength="4"
        labeledTickThickness="1"
@@ -510,7 +510,7 @@
 		axisColor = "color6"
 		
 		labelFontColor="color7"
-		labelFontSize="12"
+		labelFontSize="10"
 		labeledLineThickness="0.5"
 		labeledLineColor="0xDDDDDD"
 		labeledTickLength="2"
@@ -529,7 +529,7 @@
 		axisColor = "color6"
 		
 		labelFontColor="color7"
-		labelFontSize="12"
+		labelFontSize="10"
 		labeledLineThickness="0.5"
 		labeledLineColor="0xDDDDDD"
 		labeledTickLength="2"
@@ -578,7 +578,7 @@
 	
 	<sizeLegendText
 		color="coleredTextEnabled"
-		size="20"
+		size="10"
 		bold="false"
 	/>
 	<sizeLegendCircles
@@ -590,8 +590,8 @@
 	
 	<mxStyles
 		themeColor="color6"
-		fontSize="20"
-		fontFamily="Helvetica"
+		fontSize="10"
+		fontFamily="Arial"
 		color="coleredTextEnabled"
 		colorDisabled="coleredTextDisabled"
 		alternatingRowColors1="white"

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:display="flash.display.*" 
-	xmlns:events="flash.events.*" layout="absolute" initialize="init()" creationComplete="creationCompleteHandler()" applicationComplete="applicationCompleteHandler()" width="550" height="400">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:display="flash.display.*" 
+	xmlns:events="flash.events.*" 
+	layout="absolute" 
+	initialize="init()" 
+	creationComplete="creationCompleteHandler()" 
+	applicationComplete="applicationCompleteHandler()" 
+	width="900" 
+	height="650">
 	<mx:Style source="/assets/css/styles.css"/>
 <mx:Script>
 	<![CDATA[
@@ -53,7 +60,7 @@
 		{
 			var initialGraphsLoader:URLLoader = new URLLoader();
 			var request:URLRequest = new URLRequest("app:/config/initialgraphs.xml");
-			//updater.configurationFile= new File("app:/config/updaterConfig.xml");
+			updater.configurationFile= new File("app:/config/updaterConfig.xml");
 			updater.updateURL = "http://www.gapminder.org/desktop/update.xml";
 			updater.addEventListener(UpdateEvent.INITIALIZED,updaterInitialized);
 			updater.addEventListener(ErrorEvent.ERROR,onError);
@@ -110,7 +117,7 @@
 			graph = new GraphBrowser();
 			graph.open();
 			graph.title = label;
-			graph.graphBrowser.location = url;
+			//graph.graphBrowser.location = url;
 			graph.nativeWindow.x = 0;
 			graph.nativeWindow.y = 0;
 		}
