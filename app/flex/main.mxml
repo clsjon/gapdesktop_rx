@@ -23,8 +23,7 @@
       	import org.restfulx.Rx;
       	import gapdesktoprx.controllers.ApplicationController;
 		private function init():void {
-			trace ();
-    		ApplicationController.initialize([AIRServiceProvider], 
+			ApplicationController.initialize([AIRServiceProvider], 
         	AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
       	}
 
@@ -52,7 +51,7 @@
 		{
 			var initialGraphsLoader:URLLoader = new URLLoader();
 			var request:URLRequest = new URLRequest("app:/config/initialgraphs.xml");
-			//updater.configurationFile= new File("app:/config/updaterConfig.xml");
+			updater.configurationFile= new File("app:/config/updaterConfig.xml");
 			updater.updateURL = "http://www.gapminder.org/desktop/update.xml";
 			updater.addEventListener(UpdateEvent.INITIALIZED,updaterInitialized);
 			updater.addEventListener(ErrorEvent.ERROR,onError);
