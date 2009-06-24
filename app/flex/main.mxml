@@ -60,14 +60,14 @@
 		{
 			var initialGraphsLoader:URLLoader = new URLLoader();
 			var request:URLRequest = new URLRequest("app:/config/initialgraphs.xml");
-			updater.configurationFile= new File("app:/config/updaterConfig.xml");
-			updater.updateURL = "http://www.gapminder.org/desktop/update.xml";
-			updater.addEventListener(UpdateEvent.INITIALIZED,updaterInitialized);
-			updater.addEventListener(ErrorEvent.ERROR,onError);
-		//	updater.initialize();
-			initialGraphsLoader.addEventListener(Event.COMPLETE,initialGraphsResultHandler);
-			initialGraphsLoader.addEventListener(IOErrorEvent.IO_ERROR,initialGraphsFaultHandler);
-			initialGraphsLoader.load(request);
+			//updater.configurationFile= new File("app:/config/updaterConfig.xml");
+			//updater.updateURL = "http://www.gapminder.org/desktop/update.xml";
+			//updater.addEventListener(UpdateEvent.INITIALIZED,updaterInitialized);
+			//updater.addEventListener(ErrorEvent.ERROR,onError);
+			//updater.initialize();
+			//initialGraphsLoader.addEventListener(Event.COMPLETE,initialGraphsResultHandler);
+			//initialGraphsLoader.addEventListener(IOErrorEvent.IO_ERROR,initialGraphsFaultHandler);
+			//initialGraphsLoader.load(request);
 		}
 		
 		private function applicationCompleteHandler():void {
