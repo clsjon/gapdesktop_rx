@@ -34,10 +34,10 @@
 		
 		mainFont="Arial"
 		
-		coleredTextEnabled="color7#lessInk:15"
+		coleredTextEnabled="color8"
 		
-		coleredTextDisabled="color4"
-		coleredTextDisabled_lessInk="30"
+		coleredTextDisabled="color8"
+		coleredTextDisabled_lessInk="10"
 		
 	/>
 	<htmlMenus
@@ -458,7 +458,7 @@
 	
 	<countryList
 	  
-		fontSize="10"  
+		fontSize="11"  
 		borderColor="color4"
 		rowHeight="16"
 		
@@ -509,8 +509,8 @@
 		
 		axisColor = "color6"
 		
-		labelFontColor="color7"
-		labelFontSize="10"
+		labelFontColor="color9"
+		labelFontSize="12"
 		labeledLineThickness="0.5"
 		labeledLineColor="0xDDDDDD"
 		labeledTickLength="2"

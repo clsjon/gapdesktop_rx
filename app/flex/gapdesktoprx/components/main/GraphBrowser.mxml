@@ -5,7 +5,8 @@
 	width="{Capabilities.screenResolutionX}" 
 	height="{Capabilities.screenResolutionY}" 
 	backgroundColor="#CEDCE3" 
-	systemChrome="none" xmlns:main="gapdesktoprx.components.main.*">
+	systemChrome="none" xmlns:main="gapdesktoprx.components.main.*" 
+	xmlns:s="library://ns.adobe.com/flex/spark">
 	
 <mx:Script>
 	<![CDATA[
@@ -14,65 +15,6 @@
 		import gapdesktoprx.models.Graph;
 		import gapdesktoprx.models.Example;
 		
-		[Bindable]
-   	 	private var example:Example = new Example();
-	
-	
-		[Bindable]
-		private var hash:String = "";
-		
-		private function updateHash(newHash:String):void {
-			trace("Incoming hash from swf is: " + newHash);
-			hash = newHash;
-		}
-		public function setExample(inExample:Example):void {
-			examplesList.selectedItem = inExample;
-			onExampleSelect();		
-		}
-		
-		private function newExample():void {
-			if (!RxUtils.isEmpty(hash)) {
-      			example = new Example();
-      			example.urlHash = hash;
-      			
-      			examplesList.selectedIndex = -1;
-   			}
-    	}
-
-	    private function destroyExample():void {
-    	  example.destroy({onSuccess: onExampleDestroy});
-    	}
-  
-  		private function onExampleSelect():void {
-     	 	example = RxUtils.clone(examplesList.selectedItem) as Example;
-     	 	trace (example.graph.localPath + example.urlHash);
-     	 	var viewer:GraphViewer = new GraphViewer();
-     	 	viewer.label = example.descShort;
-     	 	navigator.addChild(viewer);
-     	 	viewer.graphBrowser.location = example.graph.localPath + "#" + example.urlHash;
-     	 	
-     		//graphBrowser.location = example.graph.localPath + "#" + example.urlHash;
-     		//trace(graphBrowser.htmlLoader.window.so);
-     		//graphBrowser.htmlLoader.window.so.call('onHashChanged',example.urlHash);
-     		//graphBrowser.htmlLoader.window.historyChange(example.urlHash);
-     		//graphBrowser.htmlLoader.load(new URLRequest(example.graph.localPath));
-     		//graphBrowser.reload();
-     	 	//graphBrowser.location = example.graph.localPath + example.urlHash; 
-    	}
-  
-    private function onExampleCreate(result:Example):void {
-      example = new Example;
-    }
-  
-    private function onExampleUpdate(result:Example):void {
-      examplesList.selectedItem = result;
-      onExampleSelect();
-    }
-  
-    private function onExampleDestroy(result:Example):void {
-      onExampleCreate(result);
-    }
-
 		
 		public var closebutton:Class;
 
@@ -93,12 +35,43 @@
 
 		}
 		
+		public function setExample(inExample:Example):void {
+			examplesList.selectedItem = inExample;
+			onExampleSelect();		
+		}
+		private function onExampleUpdate(result:Example):void {
+      		examplesList.selectedItem = result;
+      		onExampleSelect();
+    	}
+  
+		
 		private function addBookmarkButtonHandler(event:MouseEvent):void {
 			
 		}
 		
+			private function onExampleSelect():void {
+     	 	//trace (example.graph.localPath + example.urlHash);
+     	 	var viewer:GraphViewer = new GraphViewer();
+     	 	viewer.example = RxUtils.clone(examplesList.selectedItem) as Example;
+     	 	
+     	 	viewer.label = viewer.example.descShort;
+     	 	navigator.addChild(viewer);
+     	 	navigator.selectedChild = viewer;
+     	 	viewer.graphBrowser.location = viewer.example.graph.localPath + "#" + viewer.example.urlHash;
+     	 	exampleListCanvas.visible=false;
+     	 	
+     		//graphBrowser.location = example.graph.localPath + "#" + example.urlHash;
+     		//trace(graphBrowser.htmlLoader.window.so);
+     		//graphBrowser.htmlLoader.window.so.call('onHashChanged',example.urlHash);
+     		//graphBrowser.htmlLoader.window.historyChange(example.urlHash);
+     		//graphBrowser.htmlLoader.load(new URLRequest(example.graph.localPath));
+     		//graphBrowser.reload();
+     	 	//graphBrowser.location = example.graph.localPath + example.urlHash; 
+    	}
+
+		
 		private function showGraphList_handler(event:MouseEvent):void {
-			examplesList.visible=true;
+			exampleListCanvas.visible=!(exampleListCanvas.visible);
 			this.invalidateDisplayList();
 		}
 		
@@ -113,29 +86,44 @@
 			trace(event.toString());
 		}
 
+
+		protected function saveOverButton_clickHandler(event:MouseEvent):void
+		{
+			// TODO Auto-generated method stub
+		}
+
+
+		protected function saveAsNewButton_clickHandler(event:MouseEvent):void
+		{
+			// TODO Auto-generated method stub
+		}
+
 	]]>
 </mx:Script>
+
+<mx:VBox height="100%" width="100%">
+	
 <mx:HBox>
 		<mx:Image id="closeButton" click="this.close()" source="@Embed(source='/assets/icons/closebutton.png')"/>
 		<mx:Image id="fullScreenButton" click="fullScreenButtonHandler(event)" source="@Embed(source='/assets/icons/fullscreen.png')"/>
-		<mx:Button id="addBookmarkButton" click="addBookmarkButtonHandler(event)" label="Add favorite" enabled="{!RxUtils.isEmpty(hash)}"/>
-		<mx:Button id="showGraphListButton" click="showGraphList_handler(event)" label = "Show graph list"/>
+		<s:Button id="showGraphListButton" click="showGraphList_handler(event)" label = "Show graph list"/>
+		<s:Button id="saveOverButton" click="saveOverButton_clickHandler(event)" label="Save graph"/>
+		<s:Button id="saveAsNewButton" click="saveAsNewButton_clickHandler(event)" label="Save as new graph"/>
 </mx:HBox>
 <mx:Canvas height="100%" width="100%">
 	
-<containers:SuperTabNavigator id="navigator" width="100%" height="100%">
-	<main:GraphViewer>
-		
-	</main:GraphViewer>
+<containers:SuperTabNavigator id="navigator" width="100%" height="100%" editableTabLabels="true" creationPolicy="all">
+	
 </containers:SuperTabNavigator>
 	
 	
 </mx:Canvas>
-
-<mx:VBox id="exampleListCanvas" height="400" width="100%" visible="true" x="0" y="0">
-	<mx:List id="examplesList" dataProvider="{Rx.models.index(Example, {NestedBy: [Graph]})}" change="onExampleSelect()" width="100%" height="100%"/>
-	<mx:TextInput text="{hash}"/>
-	<!--<mx:TextInput id="loc" text="{graphBrowser.location}" enter="graphBrowser.location = loc.text" />-->
 </mx:VBox>
+
+<mx:Canvas id="exampleListCanvas" height="400" width="300" visible="false" x="100" y="100">
+	<mx:List id="examplesList" dataProvider="{Rx.models.index(Example, {NestedBy: [Graph]})}" change="onExampleSelect()" width="100%" height="100%"/>
+	<!--<mx:TextInput text="{hash}"/>-->
+	<!--<mx:TextInput id="loc" text="{graphBrowser.location}" enter="graphBrowser.location = loc.text" />-->
+</mx:Canvas>
 
 </mx:Window>
