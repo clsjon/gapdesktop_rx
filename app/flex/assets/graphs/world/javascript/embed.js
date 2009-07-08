@@ -47,6 +47,7 @@
 		
 		
 		function openURL(url){
+			window.runtime.trace('openURL called with URL: ' + url);
 			var win = window.open(url,"_blank");
 			if (win == undefined){
 				so.call("onPopUpBlocked", url);

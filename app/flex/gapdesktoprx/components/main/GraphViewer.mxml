@@ -6,7 +6,8 @@
 		import org.restfulx.utils.RxUtils;
 		import flash.html.HTMLLoader;
 		import gapdesktoprx.models.Example;
-	
+		import gapdesktoprx.overrides.TlzHost;
+		
 		private var _htmlLoader:HTMLLoader;
 	
 		[Bindable]
@@ -72,7 +73,7 @@
 	]]>
 </mx:Script>
 	
-	<mx:HTML id="graphBrowser" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)" locationChange="graphBrowser_locationChangeHandler(event)"  click="graphBrowser_clickHandler(event)" />
+	<mx:HTML id="graphBrowser" htmlHost="{new TlzHost()}" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)" locationChange="graphBrowser_locationChangeHandler(event)"  click="graphBrowser_clickHandler(event)" />
 	
 	
 </mx:Canvas>
