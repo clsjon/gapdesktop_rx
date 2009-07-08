@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin 
+   xmlns:fx="http://ns.adobe.com/mxml/2009" 
+    xmlns:mx="library://ns.adobe.com/flex/halo" 
+    xmlns:s="library://ns.adobe.com/flex/spark" 
+	>
+	<fx:Metadata>
+		[HostComponent("spark.components.Button")]
+	</fx:Metadata>
+	
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="down"/>
+	</s:states>
+	
+	
+	 <s:Rect left="0" right="0" top="0" bottom="0" width="69" height="20" radiusX="2" radiusY="2">
+        <s:stroke>
+            <s:SolidColorStroke color="0x000000" weight="1"/>
+        </s:stroke>
+    </s:Rect>
+
+</s:SparkSkin>
