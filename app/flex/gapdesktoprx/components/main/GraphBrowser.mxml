@@ -117,7 +117,7 @@
 <mx:HBox>
 		<mx:Image id="closeButton" click="this.close()" source="@Embed(source='/assets/icons/closebutton.png')"/>
 		<mx:Image id="fullScreenButton" click="fullScreenButtonHandler(event)" source="@Embed(source='/assets/icons/fullscreen.png')"/>
-		<s:Button id="showGraphListButton" skinClass="gapdesktoprx.skins.ButtonSkin" click="showGraphList_handler(event)" label = "Show graph list"/>
+		<s:Button id="showGraphListButton" click="showGraphList_handler(event)" label = "Show graph list"/>
 		<s:Button id="saveOverButton" click="saveOverButton_clickHandler(event)" label="Save graph"/>
 		<s:Button id="saveAsNewButton" click="saveAsNewButton_clickHandler(event)" label="Save as new graph"/>
 </mx:HBox>
