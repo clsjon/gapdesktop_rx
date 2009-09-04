@@ -11,6 +11,7 @@
 	<mx:Style source="/assets/css/styles.css"/>
 <mx:Script>
 	<![CDATA[
+		import gapdesktoprx.components.generated.UpdateWindow;
 		import mx.core.FlexGlobals;
 		import mx.controls.Image;
 		import mx.core.Application;
@@ -20,7 +21,6 @@
 		import mx.controls.Alert;
 		import air.update.events.UpdateEvent;
 		import flash.filesystem.File;
-		import air.update.ApplicationUpdaterUI;
 		import mx.events.ListEvent;
 		import mx.events.ItemClickEvent;
 		import gapdesktoprx.components.main.*;
@@ -53,21 +53,15 @@
 		private var initialX:Number;
 		private var initialY:Number;
 		
-		
-		private var updater:ApplicationUpdaterUI = new ApplicationUpdaterUI();
+		private var updateWindow:UpdateWindow;
 	
 		private function creationCompleteHandler():void
 		{
 			var initialGraphsLoader:URLLoader = new URLLoader();
 			var request:URLRequest = new URLRequest("app:/config/initialgraphs.xml");
-			//updater.configurationFile= new File("app:/config/updaterConfig.xml");
-			//updater.updateURL = "http://www.gapminder.org/desktop/update.xml";
-			//updater.addEventListener(UpdateEvent.INITIALIZED,updaterInitialized);
-			//updater.addEventListener(ErrorEvent.ERROR,onError);
-			//updater.initialize();
-			//initialGraphsLoader.addEventListener(Event.COMPLETE,initialGraphsResultHandler);
-			//initialGraphsLoader.addEventListener(IOErrorEvent.IO_ERROR,initialGraphsFaultHandler);
-			//initialGraphsLoader.load(request);
+			initialGraphsLoader.addEventListener(Event.COMPLETE,initialGraphsResultHandler);
+			initialGraphsLoader.addEventListener(IOErrorEvent.IO_ERROR,initialGraphsFaultHandler);
+			initialGraphsLoader.load(request);
 		}
 		
 		private function applicationCompleteHandler():void {
@@ -76,7 +70,7 @@
 		
 		private function initialGraphsResultHandler(event:Event):void {
 			var initXML:XML = new XML(event.target.data);
-			initialGraphs = new XMLListCollection(initXML..graph);
+			initialGraphs = new XMLListCollection(initXML.graph);
 			//graphList.invalidateList();
 			 
 		}
@@ -125,13 +119,19 @@
 		{
 			var uploadWindow:UploadGraphFromUrl;
 			uploadWindow = new UploadGraphFromUrl;
-			uploadWindow.open();
+			uploadWindow.visible = false;
+			uploadWindow.open(false);
 		}
 		
 		private function admin_clickHandler(event:MouseEvent):void {
 			var gdrx:GapdesktopRx;
 			gdrx = new GapdesktopRx;
 			gdrx.open();
+		}
+		
+		private function openUpdateWindow():void {
+			updateWindow = new UpdateWindow();
+			updateWindow.open();
 		}
 	
 	]]>
@@ -166,7 +166,7 @@
 	</mx:VBox>
 	</mx:HBox>
 	<mx:HBox>
-	<mx:Button id="checkNowButton" click="updater.checkNow();" label="Check for update" visible="true" skin="{null}"/>
+	<mx:Button id="checkNowButton" click="openUpdateWindow();" label="Check for update" visible="true" skin="{null}"/>
 	<mx:Button id="adminButton" click="admin_clickHandler(event)" label="Admin"/>	
 	
 	<mx:Label id="currentVersion" text="Current version" visible="false"/>

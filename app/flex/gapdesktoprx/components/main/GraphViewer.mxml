@@ -15,7 +15,7 @@
 
 	
 		[Bindable]
-		var example:Example = new Example();
+		public var example:Example = new Example();
 		
 		private function updateHash(newHash:String):void {
 			//trace("Incoming hash from swf is: " + newHash);
