@@ -39,7 +39,7 @@
 				updater.addEventListener(DownloadErrorEvent.DOWNLOAD_ERROR,downloadError);
 				updater.installUpdate()
 				currentState="Main";
-				
+				trace ("Window visible: "+this.visible);
 				updater.initialize();
 				
 			}
@@ -76,7 +76,7 @@
                private function downloadError(event:DownloadErrorEvent):void{
                      currentState="";
                      Alert.show("An error has occurred while downloading the update",
-                                "DownloadErrorEvent.DOWNLOAD_ERROR");
+                                "DownloadErrorEvent.DOWNLOAD_ERROR" + event.toString());
                      close();
                }
 
