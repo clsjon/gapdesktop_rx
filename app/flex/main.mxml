@@ -31,7 +31,6 @@
       	import org.restfulx.Rx;
       	import gapdesktoprx.controllers.ApplicationController;
 		private function init():void {
-			trace ();
     		ApplicationController.initialize([AIRServiceProvider], 
         	AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
       	}
