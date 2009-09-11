@@ -1,32 +1,29 @@
 package gapdesktoprx.controllers {
-  import mx.core.Application;
+  import gapdesktoprx.models.*;
+  
   import mx.core.FlexGlobals;
   
   import org.restfulx.Rx;
-  import org.restfulx.controllers.RxApplicationController;
   import org.restfulx.utils.RxUtils;
 
-  public class UpdateController extends RxApplicationController {
+  public class UpdateController {
     private static var controller:UpdateController;
     
     
-  public function UpdateController(enforcer:SingletonEnforcer, 
-      extraServices:Array, defaultServiceId:int = -1) {
-      super(commands, models, extraServices, defaultServiceId);
+    public function UpdateController(enforcer:SingletonEnforcer) {
+      super();
     }
     
-    public static function get instance():ApplicationController {
+    public static function get instance():UpdateController {
       if (controller == null) initialize();
       return controller;
     }
     
-    public static function initialize(extraServices:Array = null, 
-      defaultServiceId:int = -1, airDatabaseName:String = null):void {
-      if (!RxUtils.isEmpty(airDatabaseName)) Rx.airDatabaseName = airDatabaseName;
-      controller = new ApplicationController(new SingletonEnforcer, 
+    public static function initialize(updateURL:String):void {
+      controller = new UpdateController(new SingletonEnforcer, 
         extraServices, defaultServiceId);
-			Rx.sessionToken = FlexGlobals.topLevelApplication.parameters.session_token;
-			Rx.authenticityToken = FlexGlobals.topLevelApplication.parameters.authenticity_token;
+			
+		
     }
   }
 }

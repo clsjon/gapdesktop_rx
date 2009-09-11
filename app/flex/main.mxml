@@ -6,8 +6,8 @@
 	initialize="init()" 
 	creationComplete="creationCompleteHandler()" 
 	applicationComplete="applicationCompleteHandler()" 
-	width="900" 
-	height="650">
+	width="760" 
+	height="760">
 	<mx:Style source="/assets/css/styles.css"/>
 <mx:Script>
 	<![CDATA[
@@ -136,40 +136,27 @@
 	]]>
 </mx:Script>
 	<mx:VBox id="mainBox">
-	<mx:Image source="/assets/icons/banner.png"/>
 	<mx:HBox>
 		
+	<mx:Image source="/assets/icons/banner.png"/>
+	<mx:Image source="assets/icons/slogan.png"/>
+	</mx:HBox>
 	<mx:Button
 		id="worldButton"
-		upSkin="@Embed(source='/assets/icons/world.png')"
-		overSkin="@Embed(source='/assets/icons/world_over.png')"
-		downSkin="@Embed(source='/assets/icons/world.png')"	
+		upSkin="@Embed(source='/assets/icons/world_large.png')"
+		overSkin="@Embed(source='/assets/icons/world_large_over.png')"
+		downSkin="@Embed(source='/assets/icons/world_large.png')"	
 		click="button_clickHandler(event)"
 	/>
-	<mx:VBox>
-		<mx:Button
-		id="fourbigButton"
-		upSkin="@Embed(source='/assets/icons/fourbig.png')"
-		overSkin="@Embed(source='/assets/icons/fourbig_over.png')"
-		downSkin="@Embed(source='/assets/icons/fourbig.png')"
-		click="button_clickHandler(event)"	
-	/>
-	<mx:Button
-		id="chinaButton"
-		upSkin="@Embed(source='/assets/icons/china.png')"
-		overSkin="@Embed(source='/assets/icons/china_over.png')"
-		downSkin="@Embed(source='/assets/icons/china.png')"
-		click="button_clickHandler(event)"	
-	/>
 		
-	</mx:VBox>
-	</mx:HBox>
 	<mx:HBox>
-	<mx:Button id="checkNowButton" click="openUpdateWindow();" label="Check for update" visible="true" skin="{null}"/>
-	<mx:Button id="adminButton" click="admin_clickHandler(event)" label="Admin"/>	
+	<mx:Button id="checkNowButton" click="openUpdateWindow();" label="Check for update" visible="false" skin="{null}"/>
+	<mx:Button id="adminButton" click="admin_clickHandler(event)" visible="false" label="Admin"/>	
 	
 	<mx:Label id="currentVersion" text="Current version" visible="false"/>
-	<mx:Button id="openNew" click="openNew_clickHandler(event)" label="More graphs" visible="true" skin="{null}"/>
+	<mx:Button id="openNew" click="openNew_clickHandler(event)" label="More graphs" visible="false" skin="{null}"/>
+	<mx:Label text="Terms of use"/>
+	<mx:Label text = "About"/>
 	</mx:HBox>
 	
 </mx:VBox>
