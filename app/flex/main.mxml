@@ -11,7 +11,7 @@
 	<mx:Style source="/assets/css/styles.css"/>
 <mx:Script>
 	<![CDATA[
-		import gapdesktoprx.components.generated.UpdateWindow;
+		import gapdesktoprx.components.main.UpdateWindow;
 		import mx.core.FlexGlobals;
 		import mx.controls.Image;
 		import mx.core.Application;
@@ -150,8 +150,8 @@
 	/>
 		
 	<mx:HBox>
-	<mx:Button id="checkNowButton" click="openUpdateWindow();" label="Check for update" visible="false" skin="{null}"/>
-	<mx:Button id="adminButton" click="admin_clickHandler(event)" visible="false" label="Admin"/>	
+	<mx:Button id="checkNowButton" click="openUpdateWindow();" label="Check for update" visible="true" skin="{null}"/>
+	<mx:Button id="adminButton" click="admin_clickHandler(event)" visible="true" label="Admin"/>	
 	
 	<mx:Label id="currentVersion" text="Current version" visible="false"/>
 	<mx:Button id="openNew" click="openNew_clickHandler(event)" label="More graphs" visible="false" skin="{null}"/>
