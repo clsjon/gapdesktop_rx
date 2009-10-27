@@ -1,28 +1,27 @@
 package gapdesktoprx.controllers {
-  import gapdesktoprx.models.*;
+  import air.update.ApplicationUpdater;
   
-  import mx.core.FlexGlobals;
+  import flash.filesystem.File;
   
-  import org.restfulx.Rx;
-  import org.restfulx.utils.RxUtils;
-
   public class UpdateController {
     private static var controller:UpdateController;
     
+	public static var updater:ApplicationUpdater = new ApplicationUpdater;
     
     public function UpdateController(enforcer:SingletonEnforcer) {
       super();
     }
     
     public static function get instance():UpdateController {
-      if (controller == null) initialize();
+      if (controller == null) {
+		  initialize();  
+	  }
       return controller;
     }
     
-    public static function initialize(updateURL:String):void {
-      controller = new UpdateController(new SingletonEnforcer, 
-        extraServices, defaultServiceId);
-			
+    public static function initialize():void {
+      controller = new UpdateController(new SingletonEnforcer);
+		updater.configurationFile = File.applicationDirectory.resolvePath('flex/config/updaterConfig.xml');	
 		
     }
   }

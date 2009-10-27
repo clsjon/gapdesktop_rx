@@ -11,28 +11,22 @@
 	<mx:Style source="/assets/css/styles.css"/>
 <mx:Script>
 	<![CDATA[
-		import gapdesktoprx.components.main.UpdateWindow;
-		import mx.core.FlexGlobals;
-		import mx.controls.Image;
-		import mx.core.Application;
-		import mx.rpc.events.FaultEvent;
-		import mx.rpc.events.ResultEvent;
+		import air.update.events.UpdateEvent;
+		
+		import gapdesktoprx.components.main.*;
+		import gapdesktoprx.controllers.ApplicationController;
+		import gapdesktoprx.controllers.UpdateController;
+		
 		import mx.collections.XMLListCollection;
 		import mx.controls.Alert;
-		import air.update.events.UpdateEvent;
-		import flash.filesystem.File;
-		import mx.events.ListEvent;
-		import mx.events.ItemClickEvent;
-		import gapdesktoprx.components.main.*;
-	
-	
-	    import org.restfulx.services.air.AIRServiceProvider;
-      	import org.restfulx.services.http.XMLHTTPServiceProvider;
-      	import org.restfulx.Rx;
-      	import gapdesktoprx.controllers.ApplicationController;
+		import mx.controls.Image;
+		import mx.core.FlexGlobals;
+		
+		import org.restfulx.services.air.AIRServiceProvider;
 		private function init():void {
     		ApplicationController.initialize([AIRServiceProvider], 
         	AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
+			
       	}
 
 //		[Embed(source="config/initialgraphs.xml")]
@@ -47,6 +41,10 @@
 		[Embed(source="assets/icons/fourbig.png")]
 		public var fourbig:Class;
 		
+		public static function get upd():UpdateController {
+			return UpdateController.instance;
+		}
+
 		private var initialWidth:Number;
 		private var initialHeight:Number;
 		private var initialX:Number;
@@ -61,6 +59,7 @@
 			initialGraphsLoader.addEventListener(Event.COMPLETE,initialGraphsResultHandler);
 			initialGraphsLoader.addEventListener(IOErrorEvent.IO_ERROR,initialGraphsFaultHandler);
 			initialGraphsLoader.load(request);
+			
 		}
 		
 		private function applicationCompleteHandler():void {
