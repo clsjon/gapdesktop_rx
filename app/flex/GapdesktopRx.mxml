@@ -14,7 +14,5 @@
     <generated:ExampleBox/>
     <generated:GraphBox/>
     <generated:SubmitterBox/>
-    <main:AddExample/>
-    <main:ExampleBox/>
   </mx:ViewStack>
 </mx:Window>
