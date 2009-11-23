@@ -157,7 +157,9 @@
 		
 	<mx:HBox>
 	<mx:Button id="checkNowButton" click="openUpdateWindow();" label="Check for update" visible="true" skin="{null}"/>
-	<mx:Button id="adminButton" click="admin_clickHandler(event)" visible="true" label="Admin"/>	
+	<mx:Button id="adminButton" click="admin_clickHandler(event)" visible="true" label="Admin"/>
+
+		
 	<mx:Button id="populateButton" click="populateButton_clickHandler(event)" visible="true" label="Populate database"/>
 	<mx:Label id="currentVersion" text="Current version" visible="false"/>
 	<mx:Button id="openNew" click="openNew_clickHandler(event)" label="More graphs" visible="false" skin="{null}"/>
