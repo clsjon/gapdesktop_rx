@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:ai="http://ns.adobe.com/ai/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
+	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Group ai:objID="615c4250" x="0" y="0">
+		<s:Rect height="15" d:id="32" ai:objID="615c4370" width="15" x="0" y="0">
+			<s:fill>
+				<s:LinearGradient rotation="180" scaleX="15" x="15" y="7.5">
+					<s:GradientEntry color="0xBFBFBF" ratio="0"/>
+					<s:GradientEntry color="0xE6E6E6" ratio="0.564417"/>
+					<s:GradientEntry color="0xD4D4D4" ratio="1"/>
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		<s:Path data="M 0 0 L 4.221 0 L 8.441 0 L 4.221 9.066 L 0 0 Z" ai:objID="615c48c0" winding="nonZero" x="3.797" y="2.611">
+			<s:fill>
+				<s:SolidColor color="0xF2F2F2"/>
+			</s:fill>
+		</s:Path>
+	</s:Group>
+</s:Skin>

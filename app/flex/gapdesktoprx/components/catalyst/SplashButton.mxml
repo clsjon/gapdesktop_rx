@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009" xmlns:flm="http://ns.adobe.com/flame/2008">
+	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Rect height="374" d:id="3" ai:objID="5f2ef500" width="356" x="0.5" y="0.5">
+		<s:fill>
+			<s:LinearGradient rotation="270" scaleX="374.302" x="178.5" y="374.803">
+				<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.164834995269775" ratio="0" color.down="#666666" alpha.down="1.0"/>
+				<s:GradientEntry color="0xEFEFEF" flm:midpoint="0.708332977294922" ratio="0.564417" ratio.down="0.5254901960784314" color.down="#999999" alpha.down="1.0"/>
+				<s:GradientEntry color="0xEEEEEE" ratio="1" color.down="#666666" alpha.down="1.0"/>
+			</s:LinearGradient>
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
+		</s:stroke>
+		<s:filters>
+			<s:GlowFilter includeIn="over" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
+			<s:GlowFilter includeIn="down" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
+		</s:filters>
+	</s:Rect>
+	<s:RichText color="0x000000" fontFamily="Avenir LT Std 85 Heavy" fontSize="17" height="46" d:id="4" kerning="on" lineHeight="120%" ai:objID="5f2eff30" textAlign="justify" d:userLabel="Explore income, health and much more in Gapminder ..." whiteSpaceCollapse="preserve" width="326" x="15" y="241">
+		<s:content><s:p d:id="5" whiteSpaceCollapse="collapse"><s:span d:id="6">Explore income, health and much more in Gapminder World</s:span></s:p></s:content>
+	</s:RichText>
+	<s:Rect height="227" d:id="7" ai:objID="5f2f0020" width="355" x="1" y="6" width.over="349" id="rect1" x.over="3" width.down="348" x.down="4">
+		<s:fill>
+			<s:LinearGradient rotation="270" scaleX="226.255" x="177.5" y="226.255">
+				<s:GradientEntry alpha="0" color="0xFFFFFF" flm:midpoint="0.2" ratio="0"/>
+				<s:GradientEntry color="0xFFFFFF" flm:midpoint="0.87" ratio="0.521472"/>
+				<s:GradientEntry alpha="0" color="0xFFFFFF" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Group ai:objID="5f2f05b0" x="34" y="12" alpha.down="1" id="group1" blendMode.down="multiply">
+		<s:BitmapImage ai:embed="1" ai:objID="5f2f0980" source="@Embed('assets/images/bubbleshot.png')" x="0" y="0"/>
+	</s:Group>
+	<s:RichText color="0x000000" fontFamily="Avenir LT Std 45 Book" fontSize="14" height="77" d:id="8" kerning="on" lineHeight="120%" ai:objID="615b9720" textAlign="justify" d:userLabel="Click here to use Gapminder’s moving bubbles to ex..." whiteSpaceCollapse="preserve" width="318" x="16" y="290">
+		<s:content><s:p d:id="9" whiteSpaceCollapse="collapse"><s:span d:id="10">Click here to use Gapminder’s moving bubbles to explore how income and health have changed over the last 200 years, or explore the progress of countries through hundreds of other indicators</s:span></s:p></s:content>
+	</s:RichText>
+	<s:transitions>
+		<s:Transition fromState="down" toState="up" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{rect1}">
+					<s:Resize duration="0"/>
+					<s:Move autoCenterTransform="true" duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+</s:Skin>

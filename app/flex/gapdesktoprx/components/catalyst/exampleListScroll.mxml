@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009">
+	<fx:Metadata>[HostComponent("spark.components.VScrollBar")]</fx:Metadata>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="disabled"/>
+		<s:State name="inactive"/>
+	</s:states>
+	<s:Button skinClass="gapdesktoprx.components.catalyst.Track2" x="0" y="15" id="track">
+		<s:filters>
+			<s:DropShadowFilter includeIn="normal" blurX="4.0" hideObject="false" distance="4.0" blurY="4.0" inner="false" color="#999999" strength="1" alpha="1.0" quality="2" knockout="false" angle="45.0"/>
+		</s:filters>
+	</s:Button>
+	<s:Button skinClass="gapdesktoprx.components.catalyst.ScollUpButton" x="0" y="0" id="decrementButton" blendMode.normal="normal">
+		<s:filters>
+			<s:DropShadowFilter includeIn="normal" blurX="4.0" hideObject="false" distance="4" blurY="4.0" inner="false" color="#999999" strength="1" alpha="1.0" quality="2" knockout="false" angle="45.0"/>
+		</s:filters>
+	</s:Button>
+	<s:Button skinClass="gapdesktoprx.components.catalyst.DownButton1" x="0" y="312" id="incrementButton">
+		<s:filters>
+			<s:DropShadowFilter includeIn="normal" blurX="4.0" hideObject="false" distance="4.0" blurY="4.0" inner="false" color="#999999" strength="1" alpha="1.0" quality="2" knockout="false" angle="45.0"/>
+		</s:filters>
+	</s:Button>
+	<s:Button skinClass="gapdesktoprx.components.catalyst.Thumb1" x="0" y="15" id="thumb" alpha.disabled="0.5"/>
+	<s:transitions>
+		<s:Transition fromState="normal" toState="disabled" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{thumb}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+		<s:Transition fromState="disabled" toState="normal" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{thumb}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+</s:Skin>

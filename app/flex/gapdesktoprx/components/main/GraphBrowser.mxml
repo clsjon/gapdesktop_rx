@@ -59,7 +59,8 @@
      	 	var viewer:GraphViewer = new GraphViewer();
      	 	viewer.example = RxUtils.clone(examplesList.selectedItem) as Example;
      	 	
-     	 	viewer.label = viewer.example.descShort;
+
+			viewer.label = viewer.example.descShort;
      	 	navigator.addChild(viewer);
      	 	navigator.selectedChild = viewer;
      	 	viewer.graphBrowser.location = viewer.example.graph.localPath + "#" + viewer.example.urlHash;

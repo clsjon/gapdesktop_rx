@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009">
+	<fx:Metadata>[HostComponent("spark.components.List")]</fx:Metadata>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Rect height="328" id="rect1" width="217" x="0" y="0">
+		<s:fill>
+			<s:SolidColor color="0xFFFFFF"/>
+		</s:fill>
+	</s:Rect>
+	<s:DataGroup itemRenderer="gapdesktoprx.components.catalyst.RepeatedItem2" x="3" y="1" id="dataGroup" width="232" height="327" clipAndEnableScrolling="true">
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+	</s:DataGroup>
+	<s:VScrollBar fixedThumbSize="true" skinClass="gapdesktoprx.components.catalyst.exampleListScroll" x="223" y="2" viewport="{dataGroup}" buttonMode.normal="false" alpha.disabled="0.5" id="vscrollbar1"/>
+	<s:transitions>
+		<s:Transition fromState="normal" toState="disabled" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{vscrollbar1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+	<fx:Private></fx:Private>
+</s:Skin>

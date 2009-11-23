@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:ai="http://ns.adobe.com/ai/2009">
+	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Rect alpha="0.8" height="25" ai:objID="615c4a40" width="15" x="0" y="0">
+		<s:fill>
+			<s:SolidColor color="0xFFFFFF"/>
+		</s:fill>
+		<s:filters>
+			<s:GlowFilter includeIn="over" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="1" alpha="1.0" quality="2" knockout="false"/>
+			<s:GlowFilter includeIn="down" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="1" alpha="1.0" quality="2" knockout="false"/>
+		</s:filters>
+	</s:Rect>
+</s:Skin>

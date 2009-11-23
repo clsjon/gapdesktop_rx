@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009">
+	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Rect height="30" id="rect4" d:id="25" ai:objID="615c1b70" width="170" x="0.5" y="0.5">
+		<s:fill>
+			<s:LinearGradient rotation="270" scaleX="30" x="107.543" y="30.5">
+				<s:GradientEntry color="0xD9D9D9" ratio="0"/>
+				<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
+				<s:GradientEntry color="0xEEEEEE" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
+		</s:stroke>
+	</s:Rect>
+	<s:RichText color="#000000" fontFamily="Avenir LT Std 65 Medium" fontSize="14" height="16" id="labelDisplay" d:id="26" kerning="on" ai:objID="615c2180" tabStops="S0 S50 S100 S150 S200 S250" text="(Label)" textAlign="justify" d:userLabel="The history of the HIV epidemic" whiteSpaceCollapse="preserve" width="165" x="6" y="10"/>
+</s:Skin>
