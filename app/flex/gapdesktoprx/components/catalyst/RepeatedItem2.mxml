@@ -4,12 +4,12 @@
 		<![CDATA[
 			protected function group_rollOverHandler():void
 			{
-				mx.core.FlexGlobals.topLevelApplication.currentState='TooltipState';
+//				mx.core.FlexGlobals.topLevelApplication.currentState='TooltipState';
 			}
 
 			protected function group_rollOutHandler():void
 			{
-				mx.core.FlexGlobals.topLevelApplication.currentState='MainState';
+	//			mx.core.FlexGlobals.topLevelApplication.currentState='MainState';
 			}
 
 		]]>

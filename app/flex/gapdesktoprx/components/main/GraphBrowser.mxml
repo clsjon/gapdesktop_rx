@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Window 
+<s:Group
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
     xmlns:s="library://ns.adobe.com/flex/spark"
     xmlns:mx="library://ns.adobe.com/flex/halo" 
@@ -7,18 +7,18 @@
 	xmlns:main="gapdesktoprx.components.main.*"
 	width="{Capabilities.screenResolutionX}" 
 	height="{Capabilities.screenResolutionY}" 
-	backgroundColor="#CEDCE3" 
 	initialize="initializeHandler(event)"
 	  
 >
 <fx:Script>
 	<![CDATA[
+		import gapdesktoprx.models.Example;
+		import gapdesktoprx.models.Graph;
+		
 		import mx.events.FlexEvent;
-		import gapdesktoprx.skins.ButtonSkin;
+		
 		import org.restfulx.Rx;
 		import org.restfulx.utils.RxUtils;
-		import gapdesktoprx.models.Graph;
-		import gapdesktoprx.models.Example;
 		
 		
 		public var closebutton:Class;
@@ -57,13 +57,16 @@
 			private function onExampleSelect():void {
      	 	//trace (example.graph.localPath + example.urlHash);
      	 	var viewer:GraphViewer = new GraphViewer();
-     	 	viewer.example = RxUtils.clone(examplesList.selectedItem) as Example;
+     	
+			viewer.example = RxUtils.clone(examplesList.selectedItem) as Example;
      	 	
 
-			viewer.label = viewer.example.descShort;
+
+			//viewer.label = viewer.example.descShort;
      	 	navigator.addChild(viewer);
-     	 	navigator.selectedChild = viewer;
-     	 	viewer.graphBrowser.location = viewer.example.graph.localPath + "#" + viewer.example.urlHash;
+     	 	
+			navigator.selectedChild = viewer;
+     	 	viewer.graphHTML.location = viewer.example.graph.localPath + "#" + viewer.example.urlHash;
      	 	currentState="default";
      		//graphBrowser.location = example.graph.localPath + "#" + example.urlHash;
      		//trace(graphBrowser.htmlLoader.window.so);
@@ -119,6 +122,7 @@
 		protected function examplesList_creationCompleteHandler(event:FlexEvent):void
 		{
 			examplesList.selectedIndex = 0;
+			trace (examplesList.selectedItem.toString());
 			onExampleSelect();
 		}
 
@@ -128,12 +132,13 @@
 	<s:State name="default"/>
 	<s:State name="ViewList"/>
 </s:states>
+
 <mx:VBox height="100%" width="100%">
 	
 <mx:HBox>
-		<mx:Image id="closeButton" click="this.close()" source="@Embed(source='/assets/icons/closebutton.png')"/>
+<!--		<mx:Image id="closeButton" click="this.close()" source="@Embed(source='/assets/icons/closebutton.png')"/>
 		<mx:Image id="fullScreenButton" click="fullScreenButtonHandler(event)" source="@Embed(source='/assets/icons/fullscreen.png')"/>
-		<s:Button id="showGraphListButton" click="showGraphList_handler(event)" label = "Show favorites"/>
+-->		<s:Button id="showGraphListButton" click="showGraphList_handler(event)" label = "Show favorites"/>
 		<s:Button id="saveOverButton" click="saveOverButton_clickHandler(event)" label="Save graph"/>
 		<s:Button id="saveAsNewButton" click="saveAsNewButton_clickHandler(event)" label="Save as new graph"/>
 </mx:HBox>
@@ -148,9 +153,10 @@
 </mx:VBox>
 
 <mx:Canvas id="exampleListCanvas" height="300" width="400" visible="false" visible.ViewList="true" x="0" y="100">
-	<mx:List id="examplesList" dataProvider="{Rx.models.index(Example, {NestedBy: [Graph]})}" change="onExampleSelect()" width="100%" height="100%" creationComplete="examplesList_creationCompleteHandler(event)"/>
+	<mx:List id="examplesList" dataProvider="{Rx.models.index(Example, {NestedBy: [Graph]})}" change="onExampleSelect()" width="100%" height="100%" 
+			 creationComplete="examplesList_creationCompleteHandler(event)"/>
 	<!--<mx:TextInput text="{hash}"/>-->
 	<!--<mx:TextInput id="loc" text="{graphBrowser.location}" enter="graphBrowser.location = loc.text" />-->
 </mx:Canvas>
 
-</s:Window>
+</s:Group> 

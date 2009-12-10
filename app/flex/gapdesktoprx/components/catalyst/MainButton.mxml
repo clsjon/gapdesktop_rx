@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009">
+	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Group x="0" y="0" id="buttondef">
+		<s:filters>
+			<s:GlowFilter includeIn="over,down" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
+		</s:filters>
+		<s:Rect height="30" d:id="25" ai:objID="615c1b70" width="214" x="0.5" y="0.5">
+			<s:fill>
+				<s:LinearGradient rotation="270" scaleX="30" x="107.543" y="30.5">
+					<s:GradientEntry color="0xD9D9D9" ratio="0"/>
+					<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
+					<s:GradientEntry color="0xEEEEEE" ratio="1"/>
+				</s:LinearGradient>
+			</s:fill>
+			<s:stroke>
+				<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
+			</s:stroke>
+		</s:Rect>
+		<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="14" height="16" d:id="26" kerning="on" lineHeight="120%" ai:objID="615c2180" text="(Label)" textAlign="justify" d:userLabel="{hostComponent.label}" whiteSpaceCollapse="preserve" width="203" x="6" y="10" id="labelDisplay"></s:RichText>
+	</s:Group>
+</s:Skin>

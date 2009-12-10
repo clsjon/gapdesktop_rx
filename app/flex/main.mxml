@@ -24,6 +24,7 @@
 		import mx.core.FlexGlobals;
 		
 		import org.restfulx.services.air.AIRServiceProvider;
+		
 		private function init():void {
     		ApplicationController.initialize([AIRServiceProvider], 
         	AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
@@ -108,11 +109,7 @@
 			trace(url);
 			var graph:GraphBrowser;
 			graph = new GraphBrowser();
-			graph.open();
-			graph.title = label;
 			//graph.graphBrowser.location = url;
-			graph.nativeWindow.x = 0;
-			graph.nativeWindow.y = 0;
 		}
 		protected function openNew_clickHandler(event:MouseEvent):void
 		{

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:Canvas
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	creationComplete="graphHTML_completeHandler(event)"
+	height="100%"
+	width="100%"
+>
 <mx:Script>
 	<![CDATA[
-		import flexlib.containers.SuperTabNavigator;
 		import org.restfulx.utils.RxUtils;
 		import flash.html.HTMLLoader;
 		import gapdesktoprx.models.Example;
@@ -23,11 +28,12 @@
 			hash = newHash;
 		}
 
-		private function graphBrowser_completeHandler(event:Event):void
+		private function graphHTML_completeHandler(event:Event):void
 		{
 //			_htmlLoader = new HTMLLoader();
 //			_htmlLoader.
-			graphBrowser.htmlLoader.window.updateHash = updateHash;
+			trace("graphBrowser_completeHandler");
+			graphHTML.htmlLoader.window.updateHash = updateHash;
 		}
 				
 	
@@ -38,7 +44,7 @@
       			example = new Example();
       			example.urlHash = hash;
       			example.descShort = "[New example]";
-      			this.label = example.descShort;	
+      			//this.label = example.descShort;	
   //    			examplesList.selectedIndex = -1;
    			}
     	}
@@ -59,23 +65,22 @@
 
 
 
-		protected function graphBrowser_locationChangeHandler(event:Event):void
+		protected function graphHTML_locationChangeHandler(event:Event):void
 		{
 			trace(event.toString());
 		}
 
 
-		protected function graphBrowser_clickHandler(event:MouseEvent):void
+		protected function graphHTML_clickHandler(event:MouseEvent):void
 		{
 			trace(event.currentTarget.toString());
 		}
 
 	]]>
 </mx:Script>
-	
-	<mx:HTML id="graphBrowser" htmlHost="{new TlzHost()}" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphBrowser_completeHandler(event)" locationChange="graphBrowser_locationChangeHandler(event)"  click="graphBrowser_clickHandler(event)" />
-	
-	
+<mx:Label text="{graphHTML.location}"/>
+<mx:Label text="saldjasldkj"/>
+<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" locationChange="graphHTML_locationChangeHandler(event)"  click="graphHTML_clickHandler(event)" />	
 </mx:Canvas>
 
 

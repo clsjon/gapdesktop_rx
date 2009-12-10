@@ -7,7 +7,7 @@
 		<s:State name="down"/>
 		<s:State name="disabled"/>
 	</s:states>
-	<s:RichText color="0x808080" fontFamily="Avenir LT Std 65 Medium" height="14" id="richtext4" d:id="39" kerning="on" lineHeight="120%" ai:objID="5f2f23a0" textAlign="right" d:userLabel="Settings…" whiteSpaceCollapse="preserve" width="60" x="0" y="0">
-		<s:content><s:p d:id="40" whiteSpaceCollapse="collapse"><s:span d:id="41">Settings…</s:span></s:p></s:content>
+	<s:RichText color="0x808080" fontFamily="Avenir LT Std 65 Medium" height="14" id="richtext4" d:id="39" kerning="on" lineHeight="120%" ai:objID="5f2f23a0" textAlign="right" d:userLabel="{hostComponent.label}" whiteSpaceCollapse="preserve" width="60" x="0" y="0">
+		<s:content><s:p d:id="40" whiteSpaceCollapse="collapse"><s:span d:id="41">{hostComponent.label}</s:span></s:p></s:content>
 	</s:RichText>
 </s:Skin>
