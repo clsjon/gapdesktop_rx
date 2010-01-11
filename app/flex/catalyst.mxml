@@ -17,8 +17,6 @@
 	backgroundColor="#ffffff" 
 	height="517" 
 	width="655" 
-	height.TlzState = "{Capabilities.screenResolutionY}"
-	width.TlzState = "{Capabilities.screenResolutionX}"
 	initialize="windowedapplication1_initializeHandler(event)"		
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	preloaderBaseColor="#FFFFFF" 
@@ -146,9 +144,9 @@
 			</s:Parallel>
 		</s:Parallel>
 	</fx:Declarations>
-	<s:Group id="tlzgroup" width="100%" height="100%" includeIn="TlzState,ListLightBoxState" alpha.ListLightBoxState="20">
-		<s:layout> 
-			<s:VerticalLayout/>
+	<s:Group id="tlzgroup" x="0" y="0" width="655" height="517" includeIn="TlzState,ListLightBoxState">
+		<s:layout>
+		<s:VerticalLayout/>
 		</s:layout>
 		<s:Group id="tlzbuttonrow">
 			<s:layout>
@@ -160,7 +158,7 @@
 			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen"/>
 		</s:Group>
 		
-		<containers:SuperTabNavigator id="navigator" x="0" y="0" width="100%" height="100%" editableTabLabels="true" creationPolicy="all" fontFamily="Avenir LT Std 35 Light"/>
+		<mx:TabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" fontFamily="Avenir LT Std 35 Light"/>
 		
 	</s:Group>
 	
@@ -252,7 +250,7 @@
 				<s:text><![CDATA[Explore the spread of the HIV epidemic since 1980. HIV is now global but some countries are much harder hit than others. See the patterns and trends of HIV and how the disease relates to other indicators. In the initial graph, the bubble size is the number of people living with HIV/AIDS and the y axis is the percentage of the population. The x axis shows income per person. ]]></s:text>
 			</s:RichText>
 		</s:Group>		
-		
+
 	</s:Group>
 	<s:transitions>
 		<s:Transition autoReverse="true" fromState="MainState" toState="TooltipState">
