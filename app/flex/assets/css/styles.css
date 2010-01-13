@@ -1,5 +1,6 @@
 @namespace "http://www.adobe.com/2006/mxml";
 @namespace default "spark.skins.default.*";
+@namespace containers "flexlib.containers.*";
 
 
 @font-face {
@@ -51,4 +52,20 @@
 	paddingRight: 0;
 	paddingTop: 2;
 	themeColor: #939393;
+}
+
+containers|SuperTabNavigator {
+	tabStyleName: customTab;
+}
+
+.customTab {
+	tab-close-button-style-name: subtleCloseIcon;
+}
+
+.subtleCloseIcon
+{
+	upSkin:Embed(source="/assets/icons/supertab/close_up.png");
+	overSkin:Embed(source="/assets/icons/supertab/close_up.png");
+	downSkin:Embed(source="/assets/icons/supertab/close_up.png");
+	disabled-skin:Embed(source="/assets/icons/supertab/close_up.png");
 }

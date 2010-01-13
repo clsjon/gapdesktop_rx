@@ -17,10 +17,12 @@
 	backgroundColor="#ffffff" 
 	height="517" 
 	width="655" 
+ 
 	initialize="windowedapplication1_initializeHandler(event)"		
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	preloaderBaseColor="#FFFFFF" 
 	>
+	<fx:Style source="/assets/css/styles.css"/>
 	<fx:Script><![CDATA[
 		import flash.events.MouseEvent;
 		import flash.system.Capabilities;
@@ -144,7 +146,7 @@
 			</s:Parallel>
 		</s:Parallel>
 	</fx:Declarations>
-	<s:Group id="tlzgroup" x="0" y="0" width="655" height="517" includeIn="TlzState,ListLightBoxState">
+	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,ListLightBoxState" alpha.ListLightBoxState="20">
 		<s:layout>
 		<s:VerticalLayout/>
 		</s:layout>
@@ -153,12 +155,12 @@
 				<s:HorizontalLayout/>
 			</s:layout>
 			
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Open menu"/>
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" label="Bookmark this graph"/>
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Open menu" width="200"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" label="Bookmark this graph" width="200"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen" width="200"/>
 		</s:Group>
 		
-		<mx:TabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" fontFamily="Avenir LT Std 35 Light"/>
+		<containers:SuperTabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" fontFamily="Avenir LT Std 35 Light" editableTabLabels="true" popUpButtonPolicy="off" />
 		
 	</s:Group>
 	
@@ -219,7 +221,7 @@
 		</s:Group>
 		<s:Group id="notificationgroup" d:id="33" ai:objID="615c2a10" d:userLabel="Notification" excludeFrom="SettingsState,TosState,TlzState,ListLightBoxState">
 			<s:Button skinClass="gapdesktoprx.components.catalyst.Button1" x="0" y.MainState="489" y.TooltipState="490" y.SettingsState="490" y.TosState="490" id="button4" click="button_clickHandler_3()"/>
-			<s:Button skinClass="gapdesktoprx.components.catalyst.Button2" x.MainState="630" y.MainState="495" x.TooltipState="623" y.TooltipState="497" x.SettingsState="623" y.SettingsState="497" x.TosState="623" y.TosState="497" id="button5"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.Button2" x.MainState="630" y.MainState="495" x.TooltipState="623" y.TooltipState="497" x.SettingsState="623" y.SettingsState="497" x.TosState="623" 			y.TosState="497" id="button5"/>
 		</s:Group>
 		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState">
 			<s:Button id="adminButton" click="admin_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" visible="true" label="Admin" x="430" y="472"/>
