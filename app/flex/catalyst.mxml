@@ -185,7 +185,7 @@
 			</s:layout>
 			
 			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Open menu" width="200"/>
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" label="Bookmark this graph" width="200"/>
+
 			<s:Button id="fullScreenButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen" width="200" click="fullScreenButton_clickHandler(event)"/>
 		</s:Group>
 		
