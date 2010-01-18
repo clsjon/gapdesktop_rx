@@ -21,8 +21,7 @@ package gapdesktoprx.controllers {
     
     public static function initialize():void {
       controller = new UpdateController(new SingletonEnforcer);
-		updater.configurationFile = File.applicationDirectory.resolvePath('flex/config/updaterConfig.xml');	
-		
+		updater.configurationFile = File.applicationDirectory.resolvePath('flex/config/updaterConfig.xml');
     }
   }
 }

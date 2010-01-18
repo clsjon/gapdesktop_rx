@@ -52,8 +52,7 @@
 		private var initialX:Number;
 		private var initialY:Number;
 		
-		private var updateWindow:UpdateWindow;
-	
+		
 		private function creationCompleteHandler():void
 		{
 			var initialGraphsLoader:URLLoader = new URLLoader();
@@ -125,11 +124,7 @@
 			gdrx.open();
 		}
 		
-		private function openUpdateWindow():void {
-			updateWindow = new UpdateWindow();
-			updateWindow.open();
-		}
-	
+		
 
 		protected function populateButton_clickHandler(event:MouseEvent):void
 		{
@@ -153,7 +148,6 @@
 	/>
 		
 	<mx:HBox>
-	<mx:Button id="checkNowButton" click="openUpdateWindow();" label="Check for update" visible="true" skin="{null}"/>
 	<mx:Button id="adminButton" click="admin_clickHandler(event)" visible="true" label="Admin"/>
 
 		
