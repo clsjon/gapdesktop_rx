@@ -23,7 +23,7 @@
 		public var example:Example = new Example();
 		
 		private function updateHash(newHash:String):void {
-			//trace("Incoming hash from swf is: " + newHash);
+			trace("Incoming hash from swf is: " + newHash);
 			newExample();
 			hash = newHash;
 		}
@@ -78,8 +78,6 @@
 
 	]]>
 </mx:Script>
-<mx:Label text="{graphHTML.location}"/>
-<mx:Label text="saldjasldkj"/>
 <mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" locationChange="graphHTML_locationChangeHandler(event)"  click="graphHTML_clickHandler(event)" />	
 </mx:Canvas>
 

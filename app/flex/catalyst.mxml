@@ -15,10 +15,10 @@
 	xmlns:mx="library://ns.adobe.com/flex/halo"
 	
 	backgroundColor="#ffffff" 
-	height="517" 
-	width="655" 
+	height="600" 
+	width="800" 
  
-	initialize="windowedapplication1_initializeHandler(event)"		
+			
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)"
 	preloaderBaseColor="#FFFFFF" 
@@ -88,14 +88,14 @@
 		
 		
 		
-		protected function traceState(event:StateChangeEvent):void {
+/* 		protected function traceState(event:StateChangeEvent):void {
 			if (event.newState=='TlzState') {
 				this.nativeWindow.x=0;
 				this.nativeWindow.y=0;
 			}
 			trace("New state: " + event.newState);	
 		}
-		
+ */		
 		protected function fullScreenStateChange(event:FullScreenEvent):void {
 			if (event.fullScreen) {
 				fullScreenButton.label = "Exit full screen";
@@ -106,10 +106,10 @@
 		}
 		
 		
-		protected function windowedapplication1_initializeHandler(event:FlexEvent):void
-		{
-			this.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE,traceState);
-		}
+//		protected function windowedapplication1_initializeHandler(event:FlexEvent):void
+//		{
+//			this.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE,traceState);
+//		}
 		
 		
 		protected function windowedapplication1_preinitializeHandler(event:FlexEvent):void
@@ -209,10 +209,11 @@
 			<s:Button alpha.TooltipState="0.4" id="button1" skinClass="gapdesktoprx.components.catalyst.SplashButton" x="16" y="91"/>
 			
 		</s:Group>
+		<s:Group id="tosgroup" includeIn="TosState">
+			<s:SkinnableContainer id="skinnablecontainer1" skinClass="gapdesktoprx.components.catalyst.ScrollPanel2" x="22" y="120"/>
+		</s:Group>
 		<s:Group id="headinggroup" excludeFrom="TlzState">
-			<s:SkinnableContainer id="skinnablecontainer1" includeIn="TosState" skinClass="gapdesktoprx.components.catalyst.ScrollPanel2" x="22" y="120">
-			</s:SkinnableContainer>
-			<s:Rect height="74" d:id="12" ai:objID="615b9b10" width="655" x="0" y="0">
+			<s:Rect height="74" d:id="12" width="100%" x="0" y="0">
 				<s:fill>
 					<s:LinearGradient rotation="270" scaleX="74" x="327.5" y="74">
 						<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.208790988922119" ratio="0"/>
@@ -221,18 +222,18 @@
 					</s:LinearGradient>
 				</s:fill>
 			</s:Rect>
-			<s:Line ai:objID="615ba0d0" x="0.5" xTo="655" y="74.5">
+			<s:Line x="0" xTo="{this.width}" y="74.5">
 				<s:stroke>
 					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 				</s:stroke>
 			</s:Line>
-			<s:RichText color="#000000" fontFamily="Times" fontSize="36" d:id="13" kerning="on" ai:objID="615bad20" tabStops="S0 S50 S100 S150 S200 S250 S300 S350 S400 S450 S500" textAlign="center" d:userLabel="Gapminder Desktop" whiteSpaceCollapse="preserve" width="451" x="130" y="14">
+			<s:RichText color="#000000" fontSize="36" kerning="on" textAlign="center" d:userLabel="Gapminder Desktop" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="14">
 				<s:content><s:p><s:span fontFamily="Avenir LT Std 95 Black">Gapminder </s:span><s:span fontFamily="Avenir LT Std 35 Light">Desktop</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="0x000000" fontFamily="Avenir LT Std 35 Light" fontSize="14" height="20" d:id="17" kerning="on" lineHeight="120%" ai:objID="615bb220" textAlign="center" d:userLabel="No internet required" whiteSpaceCollapse="preserve" width="169" x="271" y="49">
+			<s:RichText color="0x000000" fontFamily="Avenir LT Std 35 Light" fontSize="14" height="20" d:id="17" kerning="on" lineHeight="120%" ai:objID="615bb220" textAlign="center" d:userLabel="No internet required" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p d:id="18" whiteSpaceCollapse="collapse"><s:span d:id="19">No internet required</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 11/11/2009 (v 1.0)" textAlign="end" whiteSpaceCollapse="preserve" width="124" x="527" y="60"/>
+			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 11/11/2009 (v 1.0)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 			<s:RichText color="#000000" fontFamily="Avenir LT Std 85 Heavy" fontSize="16" height="13" id="richtext6" includeIn="SettingsState,TosState" tabStops="S0 S50 S100 S150 S200 S250 S300 S350 S400" tabStops.TosState="S0 S50 S100 S150 S200 S250 S300 S350" text="Settings" text.TosState="Terms of use for Gapminder Desktop and the Gapminder website" width="313" width.TosState="604" x="23" y="89"/>
 		</s:Group>
 		<s:CheckBox id="checkbox2" includeIn="SettingsState" label="Check for updates automatically" skinClass="gapdesktoprx.components.catalyst.Checkbox1" x="26" y="114"/>
