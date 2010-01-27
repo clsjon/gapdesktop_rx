@@ -25,9 +25,6 @@
 	>
 	<fx:Style source="/assets/css/styles.css"/>
 	<fx:Script><![CDATA[
-		import de.websector.utils.updater.ui.ApplicationUpdaterUI;
-		import de.websector.utils.updater.ui.skins.firefox.AppUpdaterUIFirefoxSkin;
-		
 		import flash.events.FullScreenEvent;
 		import flash.events.MouseEvent;
 		
@@ -35,6 +32,7 @@
 		import gapdesktoprx.controllers.ApplicationController;
 		import gapdesktoprx.models.Example;
 		
+		import mx.binding.utils.BindingUtils;
 		import mx.events.FlexEvent;
 		
 		import org.restfulx.Rx;
@@ -66,11 +64,6 @@
 		}
 		
 		
-		protected function button_clickHandler_3():void
-		{
-			Sequence1.play();
-			currentState='SettingsState';
-		}
 		
 		protected function admin_clickHandler(event:MouseEvent):void {
 			var gdrx:GapdesktopRx;
@@ -126,7 +119,8 @@
 			
 			var viewer:GraphViewer = new GraphViewer();
 			viewer.example = RxUtils.clone(event.currentTarget.selectedItem) as Example;
-			viewer.label = viewer.example.descShort;
+			BindingUtils.bindProperty(viewer,"label",viewer.example,"descShort");
+			//viewer.label = viewer.example.descShort;
 			
 			currentState = 'TlzState';
 			navigator.addChild(viewer);
@@ -170,13 +164,6 @@
 		<s:State name="TlzState"/>
 		<s:State name="ListLightBoxState"/>
 	</s:states>
-	<fx:Declarations>
-		<s:Parallel id="Sequence1">
-			<s:Parallel target="{button4}">
-				<s:SetAction property="enabled" value="false"/>
-			</s:Parallel>
-		</s:Parallel>
-	</fx:Declarations>
 	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,ListLightBoxState" alpha.ListLightBoxState="20">
 		<s:layout>
 		<s:VerticalLayout/>
@@ -186,9 +173,12 @@
 				<s:HorizontalLayout/>
 			</s:layout>
 			
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Open menu" width="200"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Open examples" width="200"/>
 
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Bookmark this graph" width="200"/>
 			<s:Button id="fullScreenButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen" width="200" click="fullScreenButton_clickHandler(event)"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Home" width="100"/>
+
 		</s:Group>
 		
 		<containers:SuperTabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" fontFamily="Avenir LT Std 35 Light" editableTabLabels="true" popUpButtonPolicy="off"/>
@@ -252,7 +242,12 @@
 			<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.DataList1" x="406" y="134" dataProvider="{Rx.models.index(Example)}" change="exampleList_changeHandler(event)">
 			</s:List>
 		</s:Group>
-		<ws:ApplicationUpdaterUI
+		<s:Group id="updatenotificationgroup">
+			<s:layout>
+			<s:HorizontalLayout/>
+			</s:layout>
+		<s:Label text="AA"/>
+	<!--	<ws:ApplicationUpdaterUI
 			id="updater" 
 			width="100%" 
 			height="50"
@@ -262,7 +257,9 @@
 			useWindow="false"
 			
 			/>
-		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState">
+	-->	</s:Group>
+		
+			<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState">
 			<s:Button id="adminButton" click="admin_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" visible="true" label="Admin" x="430" y="472"/>
 			<s:Button id="settingsbutton" click="button_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button" x="581" y="472"/>
 			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Termsofuse_Button" x="488" y="472"/>
@@ -307,12 +304,6 @@
 				</s:Parallel>
 				<s:Parallel target="{tooltip}">
 					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{button4}">
-					<s:Move autoCenterTransform="true" duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{button5}">
-					<s:Move autoCenterTransform="true" duration="0"/>
 				</s:Parallel>
 			</s:Parallel>
 		</s:Transition>
@@ -418,11 +409,8 @@
 				<s:Parallel target="{introtextgroup}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
-				<s:Parallel target="{notificationgroup}">
+				<s:Parallel target="{updatenotificationgroup}">
 					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{button4}">
-					<s:Move autoCenterTransform="true" duration="0"/>
 				</s:Parallel>
 			</s:Parallel>
 		</s:Transition>
@@ -443,7 +431,7 @@
 				<s:Parallel target="{examplebuttongroup}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
-				<s:Parallel target="{notificationgroup}">
+				<s:Parallel target="{updatenotificationgroup}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{settingsbuttonsgroup}">

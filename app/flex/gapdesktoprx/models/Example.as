@@ -9,7 +9,7 @@ package gapdesktoprx.models {
     public var urlHash:String = "";
 
     public var descLong:String = "";
-
+	
     public var descShort:String = "";
 
     public var heading:String = "";

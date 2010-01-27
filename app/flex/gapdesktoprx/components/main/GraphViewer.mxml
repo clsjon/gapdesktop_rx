@@ -8,24 +8,22 @@
 >
 <mx:Script>
 	<![CDATA[
-		import org.restfulx.utils.RxUtils;
-		import flash.html.HTMLLoader;
 		import gapdesktoprx.models.Example;
 		import gapdesktoprx.overrides.TlzHost;
 		
+		import org.restfulx.utils.RxUtils;
+		
 		private var _htmlLoader:HTMLLoader;
 	
-		[Bindable]
+		
 		private var hash:String = "";
-
-	
-		[Bindable]
-		public var example:Example = new Example();
+		private var _example:Example = new Example();
 		
 		private function updateHash(newHash:String):void {
 			trace("Incoming hash from swf is: " + newHash);
-			newExample();
 			hash = newHash;
+			newExample();
+			trace ('Example URL Hash:' +  _example.urlHash);
 		}
 
 		private function graphHTML_completeHandler(event:Event):void
@@ -41,21 +39,22 @@
 		
 		private function newExample():void {
 			if (!RxUtils.isEmpty(hash)) {
-      			example = new Example();
-      			example.urlHash = hash;
-      			example.descShort = "[New example]";
+      			_example = new Example();
+      			_example.urlHash = hash;
+      			_example.descShort = "[New example]";
+				invalidateDisplayList();
       			//this.label = example.descShort;	
   //    			examplesList.selectedIndex = -1;
    			}
     	}
 
 	    private function destroyExample():void {
-    	  example.destroy({onSuccess: onExampleDestroy});
+    	  _example.destroy({onSuccess: onExampleDestroy});
     	}
   
     
     private function onExampleCreate(result:Example):void {
-      example = new Example;
+      _example = new Example;
     }
   
     
@@ -74,6 +73,17 @@
 		protected function graphHTML_clickHandler(event:MouseEvent):void
 		{
 			trace(event.currentTarget.toString());
+		}
+		
+		[Bindable]
+		public function set example(value:Example):void
+		{
+			_example = value;
+			invalidateProperties();
+		}
+		public function get example():Example
+		{
+			return _example;
 		}
 
 	]]>
