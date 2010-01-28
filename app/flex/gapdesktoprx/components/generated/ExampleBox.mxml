@@ -77,6 +77,9 @@
       <mx:FormItem label="DescLong" width="100%">
         <mx:TextInput id="descLongTextInput" width="100%" text="{example.descLong}"/>
       </mx:FormItem>
+		<mx:FormItem label="WillFail" width="100%">
+			<mx:TextInput id="willFailTextInput" width="100%" text="{example.willFail}"/>
+		</mx:FormItem>
       <mx:FormItem label="DescShort" width="100%">
         <mx:TextInput id="descShortTextInput" width="100%" text="{example.descShort}"/>
       </mx:FormItem>
