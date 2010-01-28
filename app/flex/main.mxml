@@ -13,6 +13,8 @@
 	<![CDATA[
 		import air.update.events.UpdateEvent;
 		
+		import de.websector.utils.updater.ui.ApplicationUpdaterUI;
+		
 		import gapdesktoprx.components.main.*;
 		import gapdesktoprx.controllers.ApplicationController;
 		import gapdesktoprx.controllers.UpdateController;
@@ -26,7 +28,7 @@
 		import org.restfulx.services.air.AIRServiceProvider;
 		
 		private function init():void {
-    		ApplicationController.initialize([AIRServiceProvider], 
+   		ApplicationController.initialize([AIRServiceProvider], 
         	AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
 			
       	}
