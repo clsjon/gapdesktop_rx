@@ -5,12 +5,15 @@
 	creationComplete="graphHTML_completeHandler(event)"
 	height="100%"
 	width="100%"
+	label="{example.descShort}"
 >
 	<mx:Metadata>
 		[Event(name="exampleChanged", type="events.ExampleChangeEvent")]
 	</mx:Metadata>
 <mx:Script>
 	<![CDATA[
+		import flash.events.Event;
+		
 		import gapdesktoprx.events.ExampleChangeEvent;
 		import gapdesktoprx.models.Example;
 		import gapdesktoprx.overrides.TlzHost;
@@ -21,6 +24,8 @@
 	
 		
 		private var hash:String = "";
+		
+		[Bindable]
 		private var _example:Example = new Example();
 		
 		private function updateHash(newHash:String):void {
@@ -43,13 +48,12 @@
 		
 		private function newExample():void {
 			if (!RxUtils.isEmpty(hash)) {
-      			_example = new Example();
-      			_example.urlHash = hash;
-      			_example.descShort = "[New example]";
+      			example = new Example();
+      			example.urlHash = hash;
+      			example.descShort = "[New example]";
 				invalidateDisplayList();
 				trace("New example");
 				trace(example.urlHash);
-				dispatchEvent(new ExampleChangeEvent(example,true));
       			//this.label = example.descShort;	
   //    			examplesList.selectedIndex = -1;
    			}
@@ -82,18 +86,22 @@
 			trace(event.currentTarget.toString());
 		}
 		
-		[Bindable]
-		public function set example(value:Example):void
-		{
-			_example = value;
-			invalidateProperties();
-		}
+		[Bindable(event="exampleChange")]
 		public function get example():Example
 		{
 			return _example;
 		}
+		
+	
+		public function set example(value:Example):void
+		{
+			_example = value;
+			invalidateProperties();
+			dispatchEvent(new Event("exampleChange"));
+			dispatchEvent(new ExampleChangeEvent(example,true));
 
-	]]>
+		}
+		]]>
 </mx:Script>
 <mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" locationChange="graphHTML_locationChangeHandler(event)"  click="graphHTML_clickHandler(event)" />	
 </mx:Canvas>

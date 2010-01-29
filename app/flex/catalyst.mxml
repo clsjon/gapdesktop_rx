@@ -121,8 +121,6 @@
 			var viewer:GraphViewer = new GraphViewer();
 			viewer.example = RxUtils.clone(event.currentTarget.selectedItem) as Example;
 			
-			BindingUtils.bindProperty(viewer,"label",viewer.example,"descShort");
-			//viewer.label = viewer.example.descShort;
 			
 			currentState = 'TlzState';
 			navigator.addChild(viewer);
