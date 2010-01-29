@@ -2,9 +2,9 @@ package gapdesktoprx.models {
   import org.restfulx.collections.ModelsCollection;
   import org.restfulx.models.RxModel;
   
-  [Resource(name="examples")]
+  [Resource(name="tags")]
   [Bindable]
-  public class Example extends RxModel {
+  public class Tag extends RxModel {
     public static const LABEL:String = "name";
 
     public var name:String = "";
@@ -15,10 +15,7 @@ package gapdesktoprx.models {
 	[HasMany(through="exampleTags")]
 	public var examples:ModelsCollection;
     
-    [BelongsTo]
-    public var graph:Graph;
-
-    public function Example() {
+    public function Tag() {
       super(LABEL);
     }
   }

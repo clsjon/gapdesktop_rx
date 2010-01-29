@@ -12,11 +12,22 @@ example:
     url_hash: string
     belongs_to: [graph]
     belongs_to: [submitter]
+    has_many: [example_tags]
+    has_many_through: [tags, example_tags]
 
 submitter:
     name: string
     email: string
     has_many: [examples]
     
+
+example_tag:
+    belongs_to: [example]
+    belongs_to: [tag]
+
+tag:
+    name:string
+    has_many: [example_tags]
+    has_many_through: [examples, example_tags]
 
     

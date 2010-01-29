@@ -11,7 +11,7 @@ package gapdesktoprx.controllers {
   public class ApplicationController extends RxApplicationController {
     private static var controller:ApplicationController;
     
-    public static var models:Array = [Example, Graph, Submitter]; /* Models */
+    public static var models:Array = [Example, Graph, Submitter, Tag, ExampleTag]; /* Models */
     
     public static var commands:Array = []; /* Commands */
     

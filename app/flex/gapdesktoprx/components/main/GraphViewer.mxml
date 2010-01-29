@@ -6,8 +6,12 @@
 	height="100%"
 	width="100%"
 >
+	<mx:Metadata>
+		[Event(name="exampleChanged", type="events.ExampleChangeEvent")]
+	</mx:Metadata>
 <mx:Script>
 	<![CDATA[
+		import gapdesktoprx.events.ExampleChangeEvent;
 		import gapdesktoprx.models.Example;
 		import gapdesktoprx.overrides.TlzHost;
 		
@@ -20,17 +24,17 @@
 		private var _example:Example = new Example();
 		
 		private function updateHash(newHash:String):void {
-			trace("Incoming hash from swf is: " + newHash);
+			//trace("Incoming hash from swf is: " + newHash);
 			hash = newHash;
 			newExample();
-			trace ('Example URL Hash:' +  _example.urlHash);
+			//trace ('Example URL Hash:' +  _example.urlHash);
 		}
 
 		private function graphHTML_completeHandler(event:Event):void
 		{
 //			_htmlLoader = new HTMLLoader();
 //			_htmlLoader.
-			trace("graphBrowser_completeHandler");
+			//trace("graphBrowser_completeHandler");
 			graphHTML.htmlLoader.window.updateHash = updateHash;
 		}
 				
@@ -43,6 +47,9 @@
       			_example.urlHash = hash;
       			_example.descShort = "[New example]";
 				invalidateDisplayList();
+				trace("New example");
+				trace(example.urlHash);
+				dispatchEvent(new ExampleChangeEvent(example,true));
       			//this.label = example.descShort;	
   //    			examplesList.selectedIndex = -1;
    			}

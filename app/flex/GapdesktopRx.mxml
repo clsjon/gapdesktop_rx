@@ -3,16 +3,25 @@
   xmlns:generated="gapdesktoprx.components.generated.*"
   paddingBottom="8" paddingLeft="8" paddingRight="8" paddingTop="8"
   width="600" height="600"
-  layout="horizontal" styleName="plain" initialize="init()" xmlns:main="gapdesktoprx.components.main.*">
+  layout="vertical" styleName="plain" initialize="init()" xmlns:main="gapdesktoprx.components.main.*">
   <mx:Script>
     <![CDATA[
+		import gapdesktoprx.utils.FirstRunUtilities;
      ]]>
   </mx:Script>
+	<mx:HBox height="90%">
+		
+	
   <mx:LinkBar dataProvider="{mainViewStack}" direction="vertical" borderStyle="solid" backgroundColor="#EEEEEE"/>
   <mx:ViewStack id="mainViewStack" width="100%" height="100%">
     <!-- For a simple demo, put all the components here. -->
     <generated:ExampleBox/>
     <generated:GraphBox/>
     <generated:SubmitterBox/>
+	<generated:TagBox/>
+	<generated:ExampleTagBox/>
   </mx:ViewStack>
+	</mx:HBox>
+<mx:Button label="Populate DB" click="FirstRunUtilities.populateDatabase()"/>
+		
 </mx:Window>
