@@ -16,9 +16,11 @@
 	xmlns:ws="http://websector.de"
 	
 	backgroundColor="#ffffff" 
+	
 	height="600" 
 	width="800" 
-	
+	minHeight="700"
+	minWidth="400"
 	
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)" 
@@ -185,29 +187,12 @@
 		</s:Group>
 		
 		<containers:SuperTabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" fontFamily="Avenir LT Std 35 Light" editableTabLabels="true" popUpButtonPolicy="off"/>
-		
 	</s:Group>
-	
-	<s:Group id="menugroup" width="517" height="655">
+	<s:Group id="maingroup" x="0" y="0" width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout gap="10"/>
+		</s:layout>
 		
-		<s:Rect width="655" height="655" includeIn="ListLightBoxState">
-			<s:fill>
-				<s:LinearGradient rotation="270" scaleX="74" x="327.5" y="74">
-					<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.208790988922119" ratio="0"/>
-					<s:GradientEntry color="0xEFEFEF" flm:midpoint="0.694443969726563" ratio="0.564417"/>
-					<s:GradientEntry color="0xEEEEEE" ratio="1"/>
-				</s:LinearGradient>
-			</s:fill>
-		</s:Rect>
-		
-		
-		<s:Group id="bigbuttongroup" includeIn="ListLightBoxState,MainState,TooltipState">
-			<s:Button alpha.TooltipState="0.4" id="button1" skinClass="gapdesktoprx.components.catalyst.SplashButton" x="16" y="91"/>
-			
-		</s:Group>
-		<s:Group id="tosgroup" includeIn="TosState">
-			<s:SkinnableContainer id="skinnablecontainer1" skinClass="gapdesktoprx.components.catalyst.ScrollPanel2" x="22" y="120"/>
-		</s:Group>
 		<s:Group id="headinggroup" excludeFrom="TlzState">
 			<s:Rect height="74" d:id="12" width="100%" x="0" y="0">
 				<s:fill>
@@ -223,61 +208,79 @@
 					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 				</s:stroke>
 			</s:Line>
-			<s:RichText color="#000000" fontSize="36" kerning="on" textAlign="center" d:userLabel="Gapminder Desktop" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="14">
+			<s:RichText color="#000000" fontSize="36" kerning="on" textAlign="center" d:userLabel="Gapminder Desktop" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
 				<s:content><s:p><s:span fontFamily="Avenir LT Std 95 Black">Gapminder </s:span><s:span fontFamily="Avenir LT Std 35 Light">Desktop</s:span></s:p></s:content>
 			</s:RichText>
 			<s:RichText color="0x000000" fontFamily="Avenir LT Std 35 Light" fontSize="14" height="20" d:id="17" kerning="on" lineHeight="120%" ai:objID="615bb220" textAlign="center" d:userLabel="No internet required" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p d:id="18" whiteSpaceCollapse="collapse"><s:span d:id="19">No internet required</s:span></s:p></s:content>
 			</s:RichText>
 			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 11/11/2009 (v 1.0)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
-			<s:RichText color="#000000" fontFamily="Avenir LT Std 85 Heavy" fontSize="16" height="13" id="richtext6" includeIn="SettingsState,TosState" tabStops="S0 S50 S100 S150 S200 S250 S300 S350 S400" tabStops.TosState="S0 S50 S100 S150 S200 S250 S300 S350" text="Settings" text.TosState="Terms of use for Gapminder Desktop and the Gapminder website" width="313" width.TosState="604" x="23" y="89"/>
+			
 		</s:Group>
-		<s:CheckBox id="checkbox2" includeIn="SettingsState" label="Check for updates automatically" skinClass="gapdesktoprx.components.catalyst.Checkbox1" x="26" y="114"/>
-		<s:Button id="button2" includeIn="SettingsState" label="Check for updates now…" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="143"/>
-		<s:Button id="button0" includeIn="SettingsState" label="Restore default graphs…" skinClass="gapdesktoprx.components.catalyst.Button3" x="25" y="186"/>
-		<s:Button id="closeSettingsButton" click="closeSettingsButton_clickHandler()" includeIn="SettingsState,TosState" label="Close settings" label.TosState="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" x.TosState="24" y.SettingsState="232" y.TosState="465"/>
-		<s:Group id="examplebuttongroup" d:userLabel="ExampleButton" excludeFrom="SettingsState,TosState,TlzState">
-			<s:Rect alpha="0" height="31" id="rect0" d:userLabel="Item Highlight" width="215" x="409" y="135">
-				<s:fill>
-					<s:SolidColor color="0xCED7EE"/>
-				</s:fill>
-			</s:Rect>
-			<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.DataList1" x="406" y="134" dataProvider="{Rx.models.index(Example)}" change="exampleList_changeHandler(event)">
-			</s:List>
+		
+		<s:Group id="menugroup" width="100%">	
+			<s:layout>
+				<s:HorizontalLayout/>
+			</s:layout>
+			<s:Group id="bigbuttoncolumn" width="50%">
+				<s:Group id="bigbuttongroup" includeIn="ListLightBoxState,MainState,TooltipState">
+						<s:Button alpha.TooltipState="0.4" id="splashButton" skinClass="gapdesktoprx.components.catalyst.SplashButton"/>		
+				</s:Group>
+			</s:Group>
+			<s:Line alpha.TooltipState="0.4" id="line1" height="100%">
+				<s:stroke>
+					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
+				</s:stroke>
+			</s:Line>
+			<s:Group id="examplescolumn" width="50%" excludeFrom="SettingsState,TosState,TlzState">
+				<s:layout><s:VerticalLayout/></s:layout>
+				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState">
+					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="17" height="40" id="richtext2" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
+						<s:content><s:p d:id="48" whiteSpaceCollapse="collapse"><s:span d:id="49">…or go directly to a graph on:</s:span></s:p></s:content>
+					</s:RichText>
+					
+				</s:Group>
+					<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{Rx.models.index(Example)}" change="exampleList_changeHandler(event)" width="100%"/>
+			
+			</s:Group>
+		</s:Group>
+		
+		<s:Group id="tosgroup" includeIn="TosState">
+			<s:RichText color="#000000" fontFamily="Avenir LT Std 85 Heavy" fontSize="16" height="13" id="richtext6" includeIn="TosState" tabStops="S0 S50 S100 S150 S200 S250 S300 S350 S400" tabStops.TosState="S0 S50 S100 S150 S200 S250 S300 S350" text="Settings" text.TosState="Terms of use for Gapminder Desktop and the Gapminder website" width="313" width.TosState="604" x="23" y="89"/>
+			<s:SkinnableContainer id="skinnablecontainer1" skinClass="gapdesktoprx.components.catalyst.ScrollPanel2" x="22" y="120"/>
+			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="24" y="465"/>
+				
+		</s:Group>
+		<s:Group id="settingsgroup" includeIn="SettingsState">
+			<s:CheckBox id="checkbox2" label="Check for updates automatically" skinClass="gapdesktoprx.components.catalyst.Checkbox1" x="26" y="114"/>
+			<s:Button id="button2" label="Check for updates now…" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="143"/>
+			<s:Button id="button0" label="Restore default graphs…" skinClass="gapdesktoprx.components.catalyst.Button3" x="25" y="186"/>
+			<s:Button id="closeSettingsButton" click="closeSettingsButton_clickHandler()" label="Close settings" label.TosState="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="232"/>
 		</s:Group>
 		<s:Group id="updatenotificationgroup">
 			<s:layout>
 				<s:HorizontalLayout/>
 			</s:layout>
 			
-<!--			<ws:ApplicationUpdaterUI
-				id="updater" 
-				width="100%" 
-				height="50"
-				configurationFile="{File.applicationDirectory.resolvePath('flex/config/updaterConfig.xml')}"
-				skinClass="de.websector.utils.updater.ui.skins.firefox.AppUpdaterUIFirefoxSkin"
-				invisibleCheck="false"
-				useWindow="false"
-				
-				/>
--->		</s:Group>
+			<!--			<ws:ApplicationUpdaterUI
+			id="updater" 
+			width="100%" 
+			height="50"
+			configurationFile="{File.applicationDirectory.resolvePath('flex/config/updaterConfig.xml')}"
+			skinClass="de.websector.utils.updater.ui.skins.firefox.AppUpdaterUIFirefoxSkin"
+			invisibleCheck="false"
+			useWindow="false"
+			
+			/>
+		-->		</s:Group>
 		
 		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState">
-			<s:Button id="adminButton" click="admin_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" visible="true" label="Admin" x="430" y="472"/>
-			<s:Button id="settingsbutton" click="button_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button" x="581" y="472"/>
-			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Termsofuse_Button" x="488" y="472"/>
+			<s:layout><s:HorizontalLayout/></s:layout>
+			<s:Button id="adminButton" click="admin_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" visible="true" label="Admin"/>
+			<s:Button id="settingsbutton" click="button_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button"/>
+			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Termsofuse_Button"/>
 		</s:Group>
-		<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState">
-			<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="17" height="40" id="richtext2" d:id="47" kerning="on" lineHeight="120%" ai:objID="5f2f3690" d:userLabel="…or go directly to a graph on:" whiteSpaceCollapse="preserve" width="246" x="409" y="91">
-				<s:content><s:p d:id="48" whiteSpaceCollapse="collapse"><s:span d:id="49">…or go directly to a graph on:</s:span></s:p></s:content>
-			</s:RichText>
-			<s:Line alpha.TooltipState="0.4" id="line1" ai:objID="5f2f3a20" x="390.5" y="91.5" yTo="374">
-				<s:stroke>
-					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
-				</s:stroke>
-			</s:Line>
-		</s:Group>
-		<s:Group id="tooltip" includeIn="TooltipState">
+		<s:Group id="tooltip" visible="false" width="300" height="200" x="{(this.width - 300)/2}" y="0">
 			
 			<s:Rect height="198" id="rect2" width="176" x="221.5" y="135.5">
 				<s:stroke>
@@ -291,8 +294,9 @@
 				<s:text><![CDATA[Explore the spread of the HIV epidemic since 1980. HIV is now global but some countries are much harder hit than others. See the patterns and trends of HIV and how the disease relates to other indicators. In the initial graph, the bubble size is the number of people living with HIV/AIDS and the y axis is the percentage of the population. The x axis shows income per person. ]]></s:text>
 			</s:RichText>
 		</s:Group>		
-		
 	</s:Group>
+	
+	
 	<s:transitions>
 		<s:Transition autoReverse="true" fromState="MainState" toState="TooltipState">
 			<s:Parallel>
@@ -302,7 +306,7 @@
 				<s:Parallel target="{line1}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{button1}">
+				<s:Parallel target="{splashButton}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{tooltip}">
@@ -312,7 +316,7 @@
 		</s:Transition>
 		<s:Transition autoReverse="true" fromState="TooltipState" toState="MainState">
 			<s:Parallel>
-				<s:Parallel target="{button1}">
+				<s:Parallel target="{splashButton}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{richtext2}">
@@ -340,7 +344,7 @@
 				<s:Parallel target="{skinnablecontainer1}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{examplebuttongroup}">
+				<s:Parallel target="{examplescolumn}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{settingsbuttonsgroup}">
@@ -349,7 +353,7 @@
 				<s:Parallel target="{introtextgroup}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{button1}">
+				<s:Parallel target="{splashButton}">
 					<s:Fade alphaTo="0" d:noAutoDelete="true">
 						<s:easer>
 							<s:Linear easeInFraction="0.25" easeOutFraction="0.25"/>
@@ -372,7 +376,7 @@
 				<s:Parallel target="{skinnablecontainer1}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{examplebuttongroup}">
+				<s:Parallel target="{examplescolumn}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{settingsbuttonsgroup}">
@@ -403,7 +407,7 @@
 				<s:Parallel target="{closeSettingsButton}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
-				<s:Parallel target="{examplebuttongroup}">
+				<s:Parallel target="{examplescolumn}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{settingsbuttonsgroup}">
@@ -431,7 +435,7 @@
 				<s:Parallel target="{closeSettingsButton}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
-				<s:Parallel target="{examplebuttongroup}">
+				<s:Parallel target="{examplescolumn}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{updatenotificationgroup}">

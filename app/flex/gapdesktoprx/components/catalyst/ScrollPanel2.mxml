@@ -6,7 +6,7 @@
 		<s:State name="disabled"/>
 	</s:states>
 	<components:ScrollingContent1 x="0" y="0" id="contentGroup" clipAndEnableScrolling="true" width="558" height="330" height.normal="483"/>
-	<s:VScrollBar fixedThumbSize="true" skinClass="gapdesktoprx.components.catalyst.exampleListScroll" x="558" y="3" viewport="{contentGroup}" buttonMode="false" id="vscrollbar1"/>
+	<s:VScrollBar fixedThumbSize="true" skinClass="gapdesktoprx.components.catalyst.ExampleListScroll" x="558" y="3" viewport="{contentGroup}" buttonMode="false" id="vscrollbar1"/>
 	<s:transitions>
 		<s:Transition fromState="normal" toState="disabled" autoReverse="true">
 			<s:Parallel>

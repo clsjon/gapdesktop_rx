@@ -5,40 +5,25 @@
 		<s:State name="normal"/>
 		<s:State name="disabled"/>
 	</s:states>
-	<s:Rect y="0.5" x="0.5" height="328" width="217" y.normal="0" x.normal="0" id="rect1">
+	<s:Rect id="rect1" width="100%" height="100%">
 		<s:fill>
 			<s:SolidColor color="0xFFFFFF"/>
 		</s:fill>
-		<s:stroke.disabled>
-			<s:SolidColorStroke color="0x5380D0" caps="none" joints="miter" miterLimit="4" weight="1"/>
-		</s:stroke.disabled>
 	</s:Rect>
-	<s:Rect d:userLabel="Item Highlight" width="215" height="31" alpha="0" id="rect0" x="3" y="1">
-		<s:fill>
-			<s:SolidColor color="0xCED7EE"/>
-		</s:fill>
-	</s:Rect>
-	<s:Rect height="30" d:id="25" ai:objID="615c1b70" width="214" x="3.5" y="1.5">
-		<s:fill>
-			<s:LinearGradient rotation="270" scaleX="30" x="107.543" y="30.5">
-				<s:GradientEntry color="0xD9D9D9" ratio="0"/>
-				<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
-				<s:GradientEntry color="0xEEEEEE" ratio="1"/>
-			</s:LinearGradient>
-		</s:fill>
-		<s:stroke>
-			<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
-		</s:stroke>
-	</s:Rect>
-	<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="14" height="16" d:id="26" kerning="on" lineHeight="120%" ai:objID="615c2180" textAlign="justify" whiteSpaceCollapse="preserve" width="203" d:userLabel="The history of the HIV epidemic" text="The history of the HIV epidemic" x="9" y="11">
-	</s:RichText>
+	<s:DataGroup itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem" id="dataGroup" clipAndEnableScrolling="true" width="300">
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+	</s:DataGroup>
+	<s:VScrollBar fixedThumbSize="true" skinClass="gapdesktoprx.components.catalyst.ExampleListScroll" viewport="{dataGroup}" buttonMode.normal="false" alpha.disabled="0.5" id="vscrollbar1"/>
 	<s:transitions>
 		<s:Transition fromState="normal" toState="disabled" autoReverse="true">
 			<s:Parallel>
-				<s:Parallel target="{rect1}">
-					<s:Move autoCenterTransform="true" duration="0"/>
+				<s:Parallel target="{vscrollbar1}">
+					<s:Fade duration="0"/>
 				</s:Parallel>
 			</s:Parallel>
 		</s:Transition>
 	</s:transitions>
+	<fx:Private></fx:Private>
 </s:Skin>

@@ -6,12 +6,12 @@
 		<s:State name="disabled"/>
 		<s:State name="inactive"/>
 	</s:states>
-	<s:Button skinClass="gapdesktoprx.components.catalyst.Track2" x="0" y="15" id="track">
+	<s:Button skinClass="gapdesktoprx.components.catalyst.Track2" id="track">
 		<s:filters>
 			<s:DropShadowFilter includeIn="normal" blurX="4.0" hideObject="false" distance="4.0" blurY="4.0" inner="false" color="#999999" strength="1" alpha="1.0" quality="2" knockout="false" angle="45.0"/>
 		</s:filters>
 	</s:Button>
-	<s:Button skinClass="gapdesktoprx.components.catalyst.ScollUpButton" x="0" y="0" id="decrementButton" blendMode.normal="normal">
+	<s:Button skinClass="gapdesktoprx.components.catalyst.ScollUpButton" id="decrementButton" blendMode.normal="normal">
 		<s:filters>
 			<s:DropShadowFilter includeIn="normal" blurX="4.0" hideObject="false" distance="4" blurY="4.0" inner="false" color="#999999" strength="1" alpha="1.0" quality="2" knockout="false" angle="45.0"/>
 		</s:filters>
