@@ -4,14 +4,14 @@ package gapdesktoprx.events
 	
 	import gapdesktoprx.models.Example;
 	
-	public class ExampleChangeEvent extends Event
+	public class ExampleHighlightedEvent extends Event
 	{
 		private var _example:Example;
 		
 		public static const EXAMPLE_HIGHLIGHTED:String = "exampleHighlighted";
 		
 		
-		public function ExampleChangeEvent(example:Example, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function ExampleHighlightedEvent(example:Example, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			
 			
@@ -20,7 +20,7 @@ package gapdesktoprx.events
 		}
 		
 		override public function clone():Event {
-			return new ExampleChangeEvent(example,bubbles,cancelable);
+			return new ExampleHighlightedEvent(example,bubbles,cancelable);
 		}
 		
 		public function get example():Example {

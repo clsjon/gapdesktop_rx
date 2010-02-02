@@ -2,8 +2,22 @@
 <s:ItemRenderer xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009">
 		<fx:Script>
 		<![CDATA[
+			import gapdesktoprx.models.Example;
+			[Bindable]
+			private var _example:Example;
+			
+			override public function set data(value:Object) : void {
+				super.data = value;
+				if (value is Example) {
+					_example = Example(value);
+					trace ('setting example in IR');
+				}
+			}
+			
+			import gapdesktoprx.events.ExampleHighlightedEvent;
 			protected function group_rollOverHandler():void
 			{
+				dispatchEvent(new ExampleHighlightedEvent(_example,true));
 			}
 
 			protected function group_rollOutHandler():void
@@ -40,7 +54,7 @@
 				<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 			</s:stroke>
 		</s:Rect>
-		<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="14" height="16" d:id="26" kerning="on" lineHeight="120%" ai:objID="615c2180" text="{data}" textAlign="justify" whiteSpaceCollapse="preserve" width="100%" x="6" y="10"></s:RichText>
+		<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="14" height="16" d:id="26" kerning="on" lineHeight="120%" ai:objID="615c2180" text="{_example.descShort}" textAlign="justify" whiteSpaceCollapse="preserve" width="100%" x="6" y="10"></s:RichText>
 	</s:Group>
 	<s:transitions>
 		<s:Transition fromState="selected" toState="normal" autoReverse="true">
