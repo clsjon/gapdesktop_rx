@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" width="400" height="300"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 >
+	<s:layout><s:VerticalLayout/></s:layout>
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			import gapdesktoprx.models.Tag;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			import org.restfulx.Rx;
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				
+			}
+			
+			private function titleWindow_close(evt:CloseEvent):void {
+				PopUpManager.removePopUp(this);
+			}
+			
+
+			protected function closeButton_clickHandler(event:MouseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
+	<s:List dataProvider="{Rx.models.index(Tag)}"/>
+</s:Group>

@@ -17,7 +17,7 @@
 	
 	backgroundColor="#ffffff" 
 	
-	height="600" 
+	height="800" 
 	width="800" 
 	minHeight="700"
 	minWidth="400"
@@ -30,13 +30,19 @@
 		import flash.events.FullScreenEvent;
 		import flash.events.MouseEvent;
 		
+		import flashx.textLayout.conversion.TextConverter;
+		import flashx.textLayout.elements.InlineGraphicElement;
+		import flashx.textLayout.elements.ParagraphElement;
+		
 		import gapdesktoprx.components.main.*;
 		import gapdesktoprx.controllers.ApplicationController;
 		import gapdesktoprx.events.ExampleChangeEvent;
-		import gapdesktoprx.events.ExampleHighlightedEvent;
+		import gapdesktoprx.events.ExampleRolloutEvent;
+		import gapdesktoprx.events.ExampleRolloverEvent;
 		import gapdesktoprx.models.Example;
 		
 		import mx.events.FlexEvent;
+		import mx.managers.PopUpManager;
 		
 		import org.restfulx.Rx;
 		import org.restfulx.services.air.AIRServiceProvider;
@@ -155,19 +161,37 @@
 		{
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN,fullScreenStateChange);
 			this.addEventListener(ExampleChangeEvent.EXAMPLE_CHANGED,exampleChangedEventHandler);
-			this.addEventListener(ExampleHighlightedEvent.EXAMPLE_HIGHLIGHTED,exampleHighlightedEventHandler);
+			this.addEventListener(ExampleRolloverEvent.EXAMPLE_ROLLOVER,exampleRolloverEventHandler);
+			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
 		}
 		
 		private function exampleChangedEventHandler(event:ExampleChangeEvent):void {
 			this.example = event.example;
 		}
 		
-		private function exampleHighlightedEventHandler(event:ExampleHighlightedEvent):void {
+		private function exampleRolloverEventHandler(event:ExampleRolloverEvent):void {
 			
 			currentState="TooltipState";
-			exampleDesc.htmlText = event.example.descLong;
+			exampleDesc.textFlow = TextConverter.importToFlow( event.example.descLong,TextConverter.TEXT_FIELD_HTML_FORMAT);
+			var p2:ParagraphElement = new ParagraphElement;
 			
-			
+			var img:InlineGraphicElement = new InlineGraphicElement();
+			img.source = "app:/assets/icons/add_bookmark.png";
+			p2.addChild(img);
+			exampleDesc.textFlow.addChild(p2);
+		}
+		
+		private function exampleRolloutEventHandler(event:ExampleRolloutEvent):void {
+			currentState="MainState";	
+			exampleDesc.textFlow = null;
+		}
+		
+		
+		
+		
+		private function launchExamplesList():void {
+			var win:ExampleSelectionBox = PopUpManager.createPopUp(this,ExampleSelectionBox,true) as ExampleSelectionBox;
+			PopUpManager.centerPopUp(win);
 		}
 	]]></fx:Script>
 	<s:states>
@@ -178,7 +202,7 @@
 		<s:State name="TlzState"/>
 		<s:State name="ListLightBoxState"/>
 	</s:states>
-	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,ListLightBoxState" alpha.ListLightBoxState="20">
+	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,ListLightBoxState" alpha.ListLightBoxState="0.2">
 		<s:layout>
 			<s:VerticalLayout/>
 		</s:layout>
@@ -191,7 +215,7 @@
 			
 			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="this.example.create()" label="Bookmark this graph" width="200"/>
 			<s:Button id="fullScreenButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen" width="200" click="fullScreenButton_clickHandler(event)"/>
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Home" width="100"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="launchExamplesList()" label="Home" width="100"/>
 			
 		</s:Group>
 		
@@ -289,8 +313,27 @@
 			<s:Button id="settingsbutton" click="button_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button"/>
 			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Termsofuse_Button"/>
 		</s:Group>
-		<s:Group id="tooltip" includeIn="TooltipState" width="210" top="0" bottom="20" horizontalCenter="{this.width / 2}" >
-			<ns:HTML id="exampleDesc" width="100%" height="100%"/>
+		<s:Group id="tooltip" includeIn="TooltipState" width="500" top="0" bottom="20" height="500">
+			<s:Rect width="100%" height="100%">
+				<s:fill>
+					<s:LinearGradient x="177.5" y="226.255" scaleX="226.255" rotation="-90">
+						<s:GradientEntry color="#ffffff" alpha="0" ratio="0"/>
+						<s:GradientEntry color="#ffffff" alpha="0.5" ratio="0.104294"/>
+						<s:GradientEntry color="#ffffff" ratio="0.521472"/>
+						<s:GradientEntry color="#ffffff" alpha="0.5" ratio="0.937791"/>
+						<s:GradientEntry color="#ffffff" alpha="0" ratio="1"/>
+					</s:LinearGradient>
+				</s:fill>
+				<s:stroke>
+					<s:SolidColorStroke color="#FFFFFF" weight="1" miterLimit="128"/>
+					
+					
+				</s:stroke>
+				<s:filters>
+					<s:DropShadowFilter alpha="0.75" blurX="10" blurY="10" distance="10" quality="3"/>
+				</s:filters>
+			</s:Rect>
+			<s:RichText id="exampleDesc" width="100%" height="100%"/>
 		</s:Group>		
 	</s:Group>
 	

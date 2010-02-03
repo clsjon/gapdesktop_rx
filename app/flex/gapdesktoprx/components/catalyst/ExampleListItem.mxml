@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:ItemRenderer xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009">
+<s:ItemRenderer xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009"
+			toolTip="{_example.descLong}"
+				>
 		<fx:Script>
 		<![CDATA[
+			import gapdesktoprx.events.ExampleRolloutEvent;
 			import gapdesktoprx.models.Example;
 			[Bindable]
 			private var _example:Example;
@@ -10,18 +13,18 @@
 				super.data = value;
 				if (value is Example) {
 					_example = Example(value);
-					trace ('setting example in IR');
 				}
 			}
 			
-			import gapdesktoprx.events.ExampleHighlightedEvent;
+			import gapdesktoprx.events.ExampleRolloverEvent;
 			protected function group_rollOverHandler():void
 			{
-				dispatchEvent(new ExampleHighlightedEvent(_example,true));
+				dispatchEvent(new ExampleRolloverEvent(_example,true));
 			}
 
 			protected function group_rollOutHandler():void
 			{
+				dispatchEvent(new ExampleRolloutEvent(true));
 			}
 
 		]]>

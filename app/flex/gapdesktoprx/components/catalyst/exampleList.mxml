@@ -15,7 +15,7 @@
 			<s:VerticalLayout/>
 		</s:layout>
 	</s:DataGroup>
-	<s:VScrollBar fixedThumbSize="true" skinClass="gapdesktoprx.components.catalyst.ExampleListScroll" viewport="{dataGroup}" buttonMode.normal="false" alpha.disabled="0.5" id="vscrollbar1"/>
+	<s:VScrollBar fixedThumbSize="true" skinClass="gapdesktoprx.components.catalyst.ExampleListScroll" viewport="{dataGroup}" buttonMode.normal="false" alpha.disabled="0.5" id="vscrollbar1" right="0"/>
 	<s:transitions>
 		<s:Transition fromState="normal" toState="disabled" autoReverse="true">
 			<s:Parallel>
