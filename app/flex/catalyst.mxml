@@ -174,9 +174,11 @@
 			currentState="TooltipState";
 			exampleDesc.textFlow = TextConverter.importToFlow( event.example.descLong,TextConverter.TEXT_FIELD_HTML_FORMAT);
 			var p2:ParagraphElement = new ParagraphElement;
-			
 			var img:InlineGraphicElement = new InlineGraphicElement();
 			img.source = "app:/assets/icons/add_bookmark.png";
+			img.height = "100";
+			img.width = "100";
+			
 			p2.addChild(img);
 			exampleDesc.textFlow.addChild(p2);
 		}
@@ -202,6 +204,8 @@
 		<s:State name="TlzState"/>
 		<s:State name="ListLightBoxState"/>
 	</s:states>
+	
+	
 	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,ListLightBoxState" alpha.ListLightBoxState="0.2">
 		<s:layout>
 			<s:VerticalLayout/>
@@ -257,7 +261,7 @@
 			</s:layout>
 			<s:Group id="bigbuttoncolumn" width="50%">
 				<s:Group id="bigbuttongroup" includeIn="ListLightBoxState,MainState,TooltipState">
-						<s:Button alpha.TooltipState="0.4" id="splashButton" skinClass="gapdesktoprx.components.catalyst.SplashButton"/>		
+					<s:Button alpha.TooltipState="0.4" id="splashButton" skinClass="gapdesktoprx.components.catalyst.SplashButton"/>		
 				</s:Group>
 			</s:Group>
 			<s:Line alpha.TooltipState="0.4" id="line1" height="100%">
@@ -273,8 +277,8 @@
 					</s:RichText>
 					
 				</s:Group>
-					<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{Rx.models.index(Example)}" change="exampleList_changeHandler(event)" width="100%"/>
-			
+				<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{Rx.models.index(Example)}" change="exampleList_changeHandler(event)" width="100%"/>
+				
 			</s:Group>
 		</s:Group>
 		
@@ -282,7 +286,7 @@
 			<s:RichText color="#000000" fontFamily="Avenir LT Std 85 Heavy" fontSize="16" height="13" id="richtext6" includeIn="TosState" tabStops="S0 S50 S100 S150 S200 S250 S300 S350 S400" tabStops.TosState="S0 S50 S100 S150 S200 S250 S300 S350" text="Settings" text.TosState="Terms of use for Gapminder Desktop and the Gapminder website" width="313" width.TosState="604" x="23" y="89"/>
 			<s:SkinnableContainer id="skinnablecontainer1" skinClass="gapdesktoprx.components.catalyst.ScrollPanel2" x="22" y="120"/>
 			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="24" y="465"/>
-				
+			
 		</s:Group>
 		<s:Group id="settingsgroup" includeIn="SettingsState">
 			<s:CheckBox id="checkbox2" label="Check for updates automatically" skinClass="gapdesktoprx.components.catalyst.Checkbox1" x="26" y="114"/>
@@ -313,29 +317,30 @@
 			<s:Button id="settingsbutton" click="button_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button"/>
 			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Termsofuse_Button"/>
 		</s:Group>
-		<s:Group id="tooltip" includeIn="TooltipState" width="500" top="0" bottom="20" height="500">
-			<s:Rect width="100%" height="100%">
-				<s:fill>
-					<s:LinearGradient x="177.5" y="226.255" scaleX="226.255" rotation="-90">
-						<s:GradientEntry color="#ffffff" alpha="0" ratio="0"/>
-						<s:GradientEntry color="#ffffff" alpha="0.5" ratio="0.104294"/>
-						<s:GradientEntry color="#ffffff" ratio="0.521472"/>
-						<s:GradientEntry color="#ffffff" alpha="0.5" ratio="0.937791"/>
-						<s:GradientEntry color="#ffffff" alpha="0" ratio="1"/>
-					</s:LinearGradient>
-				</s:fill>
-				<s:stroke>
-					<s:SolidColorStroke color="#FFFFFF" weight="1" miterLimit="128"/>
-					
-					
-				</s:stroke>
-				<s:filters>
-					<s:DropShadowFilter alpha="0.75" blurX="10" blurY="10" distance="10" quality="3"/>
-				</s:filters>
-			</s:Rect>
-			<s:RichText id="exampleDesc" width="100%" height="100%"/>
-		</s:Group>		
+		
 	</s:Group>
+	
+	<s:Group id="tooltip" includeIn="TooltipState" x="10" top="10" width="255" bottom="10">
+		<s:layout><s:BasicLayout/></s:layout>
+		<s:Rect width="100%" height="100%">
+			<s:fill>
+				<s:LinearGradient x="178.5" y="374.803" scaleX="374.302" rotation="-90">
+					<s:GradientEntry color="#f0f0f0" ratio="0"/>
+					<s:GradientEntry color="#efefef" ratio="0.564417"/>
+					<s:GradientEntry color="#f0f0f0" ratio="1"/>
+				</s:LinearGradient>
+			</s:fill>
+			<s:stroke>
+				<s:SolidColorStroke color="#FFFFFF" weight="2" miterLimit="128" alpha="0.5"/>
+				
+				
+			</s:stroke>
+			<s:filters>
+				<s:DropShadowFilter alpha="0.75" blurX="10" blurY="10" distance="10" quality="3"/>
+			</s:filters>
+		</s:Rect>
+		<s:RichText id="exampleDesc" top="15" left="15" bottom="15" right="15"/>
+	</s:Group>		
 	
 	
 	<s:transitions>
