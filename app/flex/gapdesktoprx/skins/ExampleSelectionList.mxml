@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009">
+	<fx:Metadata>[HostComponent("spark.components.List")]</fx:Metadata>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Rect id="rect1" width="100%" height="100%">
+		<s:fill>
+			<s:SolidColor color="0xFFFFFF"/>
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke color="#888888" weight="10"/>
+		</s:stroke>
+	</s:Rect>
+	<s:DataGroup itemRenderer="gapdesktoprx.skins.ExampleSelectionItem" id="dataGroup" clipAndEnableScrolling="true" width="300">
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+	</s:DataGroup>
+</s:Skin>
