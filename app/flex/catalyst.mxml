@@ -251,7 +251,7 @@
 			<s:RichText color="0x000000" fontFamily="Avenir LT Std 35 Light" fontSize="14" height="20" d:id="17" kerning="on" lineHeight="120%" ai:objID="615bb220" textAlign="center" d:userLabel="No internet required" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p d:id="18" whiteSpaceCollapse="collapse"><s:span d:id="19">No internet required</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 11/11/2009 (v 1.0)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 02/04/2010 (v 1.0b2)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 			
 		</s:Group>
 		
@@ -325,9 +325,9 @@
 		<s:Rect width="100%" height="100%">
 			<s:fill>
 				<s:LinearGradient x="178.5" y="374.803" scaleX="374.302" rotation="-90">
-					<s:GradientEntry color="#f0f0f0" ratio="0"/>
-					<s:GradientEntry color="#efefef" ratio="0.564417"/>
-					<s:GradientEntry color="#f0f0f0" ratio="1"/>
+					<s:GradientEntry color="#f3f3f3" ratio="0"/>
+					<s:GradientEntry color="#ffffff" ratio="0.564417"/>
+					<s:GradientEntry color="#f3f3f3" ratio="1"/>
 				</s:LinearGradient>
 			</s:fill>
 			<s:stroke>
@@ -339,7 +339,7 @@
 				<s:DropShadowFilter alpha="0.75" blurX="10" blurY="10" distance="10" quality="3"/>
 			</s:filters>
 		</s:Rect>
-		<s:RichText id="exampleDesc" top="15" left="15" bottom="15" right="15"/>
+		<s:RichText id="exampleDesc" top="15" left="15" bottom="15" right="15" fontFamily="Avenir LT Std 45 Book" kerning="on" fontSize="14" textAlign="justify" textAlignLast="justify"/>
 	</s:Group>		
 	
 	
