@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="distribution" content="global" />
+<meta name="robots" content="follow, all" />
+<meta name="language" content="en, sv" />
+<meta name="description" content="  Page not found - Gapminder.org, Related to: " />
+<title>  Page not found -  Gapminder.org</title>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.gapminder.org/feed/" />
+<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.gapminder.org/feed/rss/" />
+<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.gapminder.org/feed/atom/" />
+<link rel="pingback" href="http://www.gapminder.org/xmlrpc.php" />
+<style type="text/css" media="screen">
+		<!-- @import url( http://www.gapminder.org/wp-content/themes/white/style.css ); -->
+		</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.gapminder.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.gapminder.org/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Gapminder.org' href='http://www.gapminder.org' />
+<meta name="generator" content="WordPress 2.8.4" />
+<script type="text/javascript" src="http://www.gapminder.org/wp-content/plugins/flv-embed/swfobject.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="http://www.gapminder.org/wp-content/plugins/sociable/sociable.css" />
+<meta name="wassup-version" content="1.6.3" />
+<script type="text/javascript" src="/wp-content/swfobject_2/swfobject.js"></script>
+</head>
+<body id="home" class="log">
+<div id="header">
+	<a href="/"><img class="logo" src="http://www.gapminder.org/wp-content/uploads/logo/logo_gapminder.jpg" alt="Gapminder Logo" width="229" height="32"></a>
+	<span id="statement">Unveiling the beauty of statistics for a fact based world view.</span>
+	
+	</div>
+	
+<div id="mainwrapper">	
+<div id="leftwrap">
+<div class="navwidth">
+	
+	<!---->	
+    <ul class="navigation">
+
+
+	 <ul class="navigation">
+		
+		
+	
+			<li>
+				<a href="http://www.gapminder.org/" title="Home"><span>Home</span></a></li>
+	
+				<li><a href="http://graphs.gapminder.org/world/" title="Gapminder World">Gapminder World</a></li>
+	
+													<li><a href="http://www.gapminder.org/blog/" title="Gapminder World Blog">Blog</a></li>
+														
+									<li><a href="http://www.gapminder.org/videos/" title="Videos">Videos</a></li>
+						
+		
+		
+													<li><a href="http://www.gapminder.org/downloads/" title="Downloads">Downloads</a></li>
+								
+		
+		
+					<li>
+						<a href="http://www.gapminder.org/faq_frequently_asked_questions/" title="FAQ">FAQ</a></li>
+		
+
+		
+									<li><a href="http://www.gapminder.org/about-gapminder/" title="About">About</a></li>
+				
+
+
+	
+
+
+</div>
+
+
+        
+<div id="sidebar">
+
+<div id="searchdiv">
+ <form id="searchform" method="get" action="/index.php">
+  <input style="text-align:right;padding:5px;font-size:12px;color:#ababb1;font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma, Helvetica, Verdana, sans-serif;" type="text" name="s" id="s" size="22"
+value="Search" onblur="setTimeout('closeResults()',2000); if (this.value == '') {this.value = '';}"  onfocus="if (this.value == 'Search') {this.value = '';}" />
+<div style="visibility:hidden"> <input name="sbutt" type="submit" value="Find" alt="Submit"  /></div>
+</form></div>
+
+
+</div>
+
+</div>
+<div id="content">
+<h3>Page not found</h3>
+  <p>The page you requested can not be found.</p>
+  <p>Please go to the <a href="http://www.gapminder.org">Home Page</a> of Gapminder.org to locate the page you're looking for.</p>
+</div>
+
+</div>
+<div id="footer">
+ <p>© Gapminder Foundation</p>
+</div>
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-739025-2");
+pageTracker._setDomainName(".gapminder.org");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+
+
+
+
+</body>
+</html>
