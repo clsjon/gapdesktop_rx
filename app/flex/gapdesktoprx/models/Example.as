@@ -5,17 +5,23 @@ package gapdesktoprx.models {
   [Resource(name="examples")]
   [Bindable]
   public class Example extends RxModel {
-    public static const LABEL:String = "descShort";
+    public static const LABEL:String = "name";
 
-    public var urlHash:String = "";
+    public var name:String = "";
 
-    public var descLong:String = "";
+    public var content:String = "";
 	
-    public var descShort:String = "";
+    public var introText:String = "";
 
-	public var willFail:String = "";
+	public var introImage:String = "";
 	
-    public var heading:String = "";
+    public var hash:String = "";
+	
+	public var created:Date = new Date;
+	
+	public var updated:Date = new Date;
+	
+	public var userGenerated:Boolean = false;
 	
 	[HasMany]
 	public var exampleTags:ModelsCollection;

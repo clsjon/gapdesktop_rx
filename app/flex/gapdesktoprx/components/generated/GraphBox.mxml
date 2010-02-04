@@ -25,9 +25,11 @@
   
     private function updateModelProperties():void {
       graph.name = nameTextInput.text;
-      graph.downloadKey = downloadKeyTextInput.text;
+      graph.collectionKey = collectionKeyTextInput.text;
       graph.downloadedDate = downloadedDateDateField.selectedDate;
-      graph.localPath = localPathTextInput.text;
+      graph.shortName = shortNameTextInput.text;
+	  graph.defaultGraph = defaultGraphTextInput.text;
+	  graph.skinColor = skinColorTextInput.text;
 
     }
 
@@ -70,15 +72,23 @@
       <mx:FormItem label="Name" width="100%">
         <mx:TextInput id="nameTextInput" width="100%" text="{graph.name}"/>
       </mx:FormItem>
-      <mx:FormItem label="DownloadKey" width="100%">
-        <mx:TextInput id="downloadKeyTextInput" width="100%" text="{graph.downloadKey}"/>
+      <mx:FormItem label="Collection key" width="100%">
+        <mx:TextInput id="collectionKeyTextInput" width="100%" text="{graph.collectionKey}"/>
       </mx:FormItem>
-      <mx:FormItem label="DownloadedDate" width="100%">
+      <mx:FormItem label="Downloaded date" width="100%">
         <mx:DateField id="downloadedDateDateField" selectedDate="{graph.downloadedDate}"/>
       </mx:FormItem>
-      <mx:FormItem label="LocalPath" width="100%">
-        <mx:TextInput id="localPathTextInput" width="100%" text="{graph.localPath}"/>
-      </mx:FormItem>
+		<mx:FormItem label="Short name" width="100%">
+			<mx:TextInput id="shortNameTextInput" width="100%" text="{graph.shortName}"/>
+		</mx:FormItem>
+		<mx:FormItem label="Default graph" width="100%">
+			<mx:TextInput id="defaultGraphTextInput" width="100%" text="{graph.defaultGraph}"/>
+		</mx:FormItem>
+		<mx:FormItem label="Skin color" width="100%">
+			<mx:TextInput id="skinColorTextInput" width="100%" text="{graph.skinColor}"/>
+		</mx:FormItem>
+		
+      
     </mx:Form>
     <mx:ControlBar width="100%">
       <mx:Button label="Save Graph" width="50%" height="30"

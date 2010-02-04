@@ -9,11 +9,16 @@ package gapdesktoprx.models {
 
     public var name:String = "";
 
-    public var downloadKey:String = "";
+    public var collectionKey:String = "";
 
     public var downloadedDate:Date = new Date;
 
-    public var localPath:String = "";
+    public var shortName:String = "";
+	
+	public var defaultGraph:String = "";
+	
+	public var skinColor:String = "";
+	
 
     [HasMany]
     public var examples:ModelsCollection;

@@ -8,7 +8,9 @@
 	<fx:Script>
 		<![CDATA[
 			import flash.events.MouseEvent;
-			import gapdesktoprx.models.Tag;
+			
+			import gapdesktoprx.models.Example;
+			import gapdesktoprx.skins.ExampleSelectionList;
 			
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
@@ -39,5 +41,5 @@
 	</fx:Declarations>
 	
 	<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
-	<s:List dataProvider="{Rx.models.index(Tag)}"/>
+	<s:List dataProvider="{Rx.models.index(Example)}" skinClass="gapdesktoprx.skins.ExampleSelectionList"/>
 </s:Group>

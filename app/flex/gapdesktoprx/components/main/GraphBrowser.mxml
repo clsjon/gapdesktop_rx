@@ -65,7 +65,8 @@ xmlns:ns="library://ns.adobe.com/flex/mx">
      	 	navigator.addChild(viewer);
      	 	
 			navigator.selectedChild = viewer;
-     	 	viewer.graphHTML.location = viewer.example.graph.localPath + "#" + viewer.example.urlHash;
+			trace('app:/assets/graphs/' + viewer.example.graph.shortName + "/index.html#" + viewer.example.hash);
+     	 	viewer.graphHTML.location = 'app:/assets/graphs/' + viewer.example.graph.shortName + "/index.html#" + viewer.example.hash;
      	 	currentState="default";
      		//graphBrowser.location = example.graph.localPath + "#" + example.urlHash;
      		//trace(graphBrowser.htmlLoader.window.so);

@@ -26,11 +26,10 @@
     }
   
     private function updateModelProperties():void {
-      example.urlHash = urlHashTextInput.text;
-      example.descLong = descLongTextInput.text;
-      example.descShort = descShortTextInput.text;
-      example.heading = headingTextInput.text;
-
+      example.hash = hashTextInput.text;
+      example.content = contentTextInput.text;
+      example.name = nameTextInput.text;
+      example.userGenerated = userGeneratedCheckBox.selected;
 	  example.graph = Graph(graphComboBox.selectedItem);
       example.submitter = Submitter(submitterComboBox.selectedItem);
     }
@@ -71,28 +70,24 @@
   <mx:Panel title="Edit Example" cornerRadius="0" borderStyle="solid" 
     backgroundColor="#EEEEEE" width="75%" height="100%">
     <mx:Form width="100%" height="100%">
-      <mx:FormItem label="UrlHash" width="100%">
-        <mx:TextInput id="urlHashTextInput" width="100%" text="{example.urlHash}"/>
-      </mx:FormItem>
-      <mx:FormItem label="DescLong" width="100%">
-        <mx:TextInput id="descLongTextInput" width="100%" text="{example.descLong}"/>
-      </mx:FormItem>
-		<mx:FormItem label="WillFail" width="100%">
-			<mx:TextInput id="willFailTextInput" width="100%" text="{example.willFail}"/>
+		<mx:FormItem label="Name" width="100%">
+			<mx:TextInput id="nameTextInput" width="100%" text="{example.name}"/>
 		</mx:FormItem>
-      <mx:FormItem label="DescShort" width="100%">
-        <mx:TextInput id="descShortTextInput" width="100%" text="{example.descShort}"/>
+        <mx:FormItem label="Content" width="100%">
+        <mx:TextInput id="contentTextInput" width="100%" text="{example.content}"/>
       </mx:FormItem>
-      <mx:FormItem label="Heading" width="100%">
-        <mx:TextInput id="headingTextInput" width="100%" text="{example.heading}"/>
-      </mx:FormItem>
-      <mx:FormItem label="Graph" width="100%">
+		<mx:FormItem label="Hash" width="100%">
+			<mx:TextInput id="hashTextInput" width="100%" text="{example.hash}"/>
+		</mx:FormItem>
+		<mx:FormItem width="100%">
+			<mx:CheckBox id="userGeneratedCheckBox" label="User generated" selected="{example.userGenerated}"/>
+		</mx:FormItem>
+		   <mx:FormItem label="Graph" width="100%">
         <mx:ComboBox id="graphComboBox" width="200"
           labelField="{Graph.LABEL}"
           dataProvider="{Rx.models.index(Graph)}" prompt="Graph ..."
           selectedItem="{example.graph}" />
       </mx:FormItem>
- 
       <mx:FormItem label="Submitter" width="100%">
         <mx:ComboBox id="submitterComboBox" width="200"
           labelField="{Submitter.LABEL}"
