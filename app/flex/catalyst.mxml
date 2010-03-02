@@ -17,16 +17,18 @@
 	
 	backgroundColor="#ffffff" 
 	
-	height="800" 
+	height="500" 
 	width="800" 
-	minHeight="700"
-	minWidth="400"
+	minHeight="400"
+	minWidth="700"
 	
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)" 
 	xmlns:ns="library://ns.adobe.com/flex/mx">
 	<fx:Style source="/assets/css/styles.css"/>
 	<fx:Script><![CDATA[
+		import air.update.events.UpdateEvent;
+		 
 		import flash.events.FullScreenEvent;
 		import flash.events.MouseEvent;
 		
@@ -38,6 +40,7 @@
 		import gapdesktoprx.events.ExampleRolloutEvent;
 		import gapdesktoprx.events.ExampleRolloverEvent;
 		import gapdesktoprx.models.Example;
+		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
 		import mx.events.FlexEvent;
 		import mx.managers.PopUpManager;
@@ -135,7 +138,6 @@
 			trace('app:/assets/graphs/' + viewer.example.graph.shortName + "/index.html#" + viewer.example.hash);
 			viewer.graphHTML.location = 'app:/assets/graphs/' + viewer.example.graph.shortName + "/index.html#" + viewer.example.hash;
 			
-			
 			//trace ("Selected item: " + event.currentTarget.selectedItems);
 		}
 		
@@ -162,6 +164,12 @@
 			this.addEventListener(ExampleChangeEvent.EXAMPLE_CHANGED,exampleChangedEventHandler);
 			this.addEventListener(ExampleRolloverEvent.EXAMPLE_ROLLOVER,exampleRolloverEventHandler);
 			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
+		 	updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
+		}
+		
+		private function checkForUpdateEventHandler(event:UpdateEvent):void {
+			
+			trace ('update check authorized');
 		}
 		
 		private function exampleChangedEventHandler(event:ExampleChangeEvent):void {
@@ -174,7 +182,7 @@
 			exampleDesc.textFlow = TextConverter.importToFlow( event.example.content,TextConverter.TEXT_FIELD_HTML_FORMAT);
 			exampleName.textFlow = TextConverter.importToFlow(event.example.name,TextConverter.PLAIN_TEXT_FORMAT);
 		}
-			
+		
 		
 		private function exampleRolloutEventHandler(event:ExampleRolloutEvent):void {
 			currentState="MainState";	
@@ -209,11 +217,11 @@
 				<s:HorizontalLayout/>
 			</s:layout>
 			
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Open examples" width="200"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="launchExamplesList()" label="Browse all graphs" width="200"/>
 			
 			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="this.example.create()" label="Bookmark this graph" width="200"/>
 			<s:Button id="fullScreenButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen" width="200" click="fullScreenButton_clickHandler(event)"/>
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="launchExamplesList()" label="Home" width="100"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Home" width="100"/>
 			
 		</s:Group>
 		
@@ -288,23 +296,7 @@
 			<s:Button id="button0" label="Restore default graphs…" skinClass="gapdesktoprx.components.catalyst.Button3" x="25" y="186"/>
 			<s:Button id="closeSettingsButton" click="closeSettingsButton_clickHandler()" label="Close settings" label.TosState="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="232"/>
 		</s:Group>
-		<s:Group id="updatenotificationgroup">
-			<s:layout>
-				<s:HorizontalLayout/>
-			</s:layout>
 			
-			<!--			<ws:ApplicationUpdaterUI
-			id="updater" 
-			width="100%" 
-			height="50"
-			configurationFile="{File.applicationDirectory.resolvePath('flex/config/updaterConfig.xml')}"
-			skinClass="de.websector.utils.updater.ui.skins.firefox.AppUpdaterUIFirefoxSkin"
-			invisibleCheck="false"
-			useWindow="false"
-			
-			/>
-		-->		</s:Group>
-		
 		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState">
 			<s:layout><s:HorizontalLayout/></s:layout>
 			<s:Button id="adminButton" click="admin_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" visible="true" label="Admin"/>
@@ -313,8 +305,24 @@
 		</s:Group>
 		
 	</s:Group>
-	
-	<s:Group id="tooltip" includeIn="TooltipState" x="100" top="10" width="255" bottom="10">
+	<s:Group id="updatenotificationgroup" x="0" y="0">
+		<s:layout>
+			<s:BasicLayout/>
+		</s:layout>
+		
+		<ws:ApplicationUpdaterUI
+			id="updater" 
+			width="100%" 
+			height="50"
+			configurationFile="{File.applicationDirectory.resolvePath('config/updaterConfig.xml')}"
+			skinClass="gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin"
+			invisibleCheck="false"
+			useWindow="false"
+			
+			/>
+	</s:Group>
+
+	<s:Group id="tooltip" includeIn="TooltipState" x="100" y="10" width="255" height="{parentApplication.height - 20}">
 		<s:layout><s:BasicLayout/></s:layout>
 		<s:Rect width="100%" height="100%">
 			<s:fill>
@@ -341,7 +349,7 @@
 		</s:Line>
 		<s:RichText id="exampleDesc" top="30" left="15" bottom="15" right="15" fontFamily="Avenir LT Std 45 Book" kerning="on" fontSize="14" textAlign="justify" textAlignLast="justify"/>
 	</s:Group>		
-
+	
 	
 	<s:transitions>
 		<s:Transition autoReverse="true" fromState="MainState" toState="TooltipState">

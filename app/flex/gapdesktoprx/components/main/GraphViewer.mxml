@@ -104,7 +104,6 @@
 		]]>
 	</mx:Script>
 	<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" locationChange="graphHTML_locationChangeHandler(event)"  click="graphHTML_clickHandler(event)" />
-	<mx:Text id="loc" text="{graphHTML.location}"/>
 </mx:Canvas>
 
 

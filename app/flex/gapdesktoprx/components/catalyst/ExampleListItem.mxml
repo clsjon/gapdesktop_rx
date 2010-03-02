@@ -61,7 +61,7 @@
 			<s:GlowFilter includeIn="hovered" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
 			<s:GlowFilter includeIn="selected" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
 		</s:filters>
-		<s:Rect height="30" d:id="25" width="250" x="0.5" y="0.5">
+		<s:Rect height="30" width="250" x="0.5" y="0.5">
 			<s:fill>
 				<s:LinearGradient rotation="270" scaleX="30" x="107.543" y="30.5">
 					<s:GradientEntry color="0xD9D9D9" ratio="0"/>

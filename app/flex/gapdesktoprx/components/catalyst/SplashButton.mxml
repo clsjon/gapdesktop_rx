@@ -39,7 +39,7 @@
 		<s:BitmapImage ai:embed="1" ai:objID="5f2f0980" source="@Embed('assets/images/bubbleshot.png')" x="0" y="0"/>
 	</s:Group>
 	<s:RichText color="0x000000" fontFamily="Avenir LT Std 45 Book" fontSize="14" height="77" d:id="8" kerning="on" lineHeight="120%" ai:objID="615b9720" textAlign="justify" d:userLabel="Click here to use Gapminder’s moving bubbles to ex..." whiteSpaceCollapse="preserve" width="318" x="16" y="290">
-		<s:content><s:p d:id="9" whiteSpaceCollapse="collapse"><s:span d:id="10">Click here to use Gapminder’s moving bubbles to explore how income and health have changed over the last 200 years, or explore the progress of countries through hundreds of other indicators</s:span></s:p></s:content>
+		<s:content><s:p whiteSpaceCollapse="collapse">Click <s:a href="aa">here</s:a> to use Gapminder’s moving bubbles to explore how income and health have changed over the last 200 years, or explore the progress of countries through hundreds of other indicators</s:p></s:content>
 	</s:RichText>
 	<s:transitions>
 		<s:Transition fromState="down" toState="up" autoReverse="true">
