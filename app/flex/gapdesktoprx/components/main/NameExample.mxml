@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/halo" width="400" height="300">
+		 xmlns:mx="library://ns.adobe.com/flex/halo" 
+		 width="400" 
+		 height="300"
+		 title="Enter a name for this graph:"
+		 >
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<fx:Metadata>
+		[Event(name="nameExample", type="events.NameExampleEvent")]
+	</fx:Metadata>
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import flash.events.MouseEvent;
 			
+			import gapdesktoprx.events.NameExampleEvent;
+			
+			import mx.managers.PopUpManager;
+			
+
+
+			protected function okButton_clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new NameExampleEvent(graphName.text,true));
+				trace('event should be dispatched');
+				PopUpManager.removePopUp(this);
+				// TODO Auto-generated method stub
+			}
+
 		]]>
 	</fx:Script>
+	
 	<s:TextInput id="graphName"/>
-	<s:Button id="cancelButton" label="Cancel"/>
-	<s:Button id="okButton" label=Save bookmark"/>
-</s:Group>
+	<s:Group id="buttons">
+		<s:layout>
+		<s:HorizontalLayout/></s:layout>
+		<s:Button id="cancelButton" label="Cancel" />
+		<s:Button id="okButton" label="Save bookmark" click="okButton_clickHandler(event)"/>
+	</s:Group>
+	
+</s:Panel>

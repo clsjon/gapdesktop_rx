@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/2.0beta2">
+<application xmlns="http://ns.adobe.com/air/application/1.5.3">
 
 <!-- Adobe AIR Application Descriptor File Template.
 
@@ -24,7 +24,7 @@
 	<name>Gapminder Desktop</name>
 
 	<!-- An application version designator (such as "v1", "2.5", or "Alpha 1"). Required. -->
-	<version>1.1</version>
+	<version>1.0b3</version>
 
 	<!-- Description, displayed in the AIR application installer.
 	     May have multiple values for each language. See samples or xsd schema file. Optional. -->
@@ -91,7 +91,7 @@
 		<image16x16></image16x16>
 		<image32x32></image32x32>
 		<image48x48></image48x48>
-		<image128x128></image128x128>
+		<image128x128>assets/icons/desktop_logo.png</image128x128>
 	</icon> -->
 
 	<!-- Whether the application handles the update when a user double-clicks an update version
@@ -101,7 +101,7 @@
 	
 	<!-- Whether the application can be launched when the user clicks a link in a web browser.
 	Optional. Default false. -->
-	<!-- <allowBrowserInvocation></allowBrowserInvocation> -->
+	<!-- <allowBrowserInvocation>true</allowBrowserInvocation> -->
 
 	<!-- Listing of file types for which the application can register. Optional. -->
 	<!-- <fileTypes> -->
@@ -126,7 +126,7 @@
 				<image16x16></image16x16>
 				<image32x32></image32x32>
 				<image48x48></image48x48>
-				<image128x128>assets/icons/desktop_logo.png</image128x128>
+				<image128x128></image128x128>
 			</icon> -->
 			
 		<!-- </fileType> -->

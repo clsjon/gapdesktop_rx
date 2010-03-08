@@ -17,18 +17,18 @@
 	
 	backgroundColor="#ffffff" 
 	
-	height="500" 
+	height="600" 
 	width="800" 
 	minHeight="400"
 	minWidth="700"
 	
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)" 
-	xmlns:ns="library://ns.adobe.com/flex/mx">
+	xmlns:ns="library://ns.adobe.com/flex/mx" xmlns:extensions="gapdesktoprx.components.extensions.*">
 	<fx:Style source="/assets/css/styles.css"/>
 	<fx:Script><![CDATA[
 		import air.update.events.UpdateEvent;
-		 
+		
 		import flash.events.FullScreenEvent;
 		import flash.events.MouseEvent;
 		
@@ -36,16 +36,18 @@
 		
 		import gapdesktoprx.components.main.*;
 		import gapdesktoprx.controllers.ApplicationController;
+		import gapdesktoprx.controllers.ModelsController;
 		import gapdesktoprx.events.ExampleChangeEvent;
 		import gapdesktoprx.events.ExampleRolloutEvent;
 		import gapdesktoprx.events.ExampleRolloverEvent;
+		import gapdesktoprx.events.NameExampleEvent;
 		import gapdesktoprx.models.Example;
+		import gapdesktoprx.skins.ExampleSelectionList;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
 		import mx.events.FlexEvent;
 		import mx.managers.PopUpManager;
 		
-		import org.restfulx.Rx;
 		import org.restfulx.services.air.AIRServiceProvider;
 		import org.restfulx.utils.RxUtils;
 		
@@ -79,6 +81,7 @@
 			var gdrx:GapdesktopRx;
 			gdrx = new GapdesktopRx;
 			gdrx.open();
+			
 		}
 		
 		
@@ -123,6 +126,10 @@
 			
 		}
 		
+		public static function get models():ModelsController {
+			return ModelsController.instance;
+		}
+		
 		
 		protected function exampleList_changeHandler(event:IndexChangeEvent):void
 		{
@@ -164,7 +171,8 @@
 			this.addEventListener(ExampleChangeEvent.EXAMPLE_CHANGED,exampleChangedEventHandler);
 			this.addEventListener(ExampleRolloverEvent.EXAMPLE_ROLLOVER,exampleRolloverEventHandler);
 			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
-		 	updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
+			this.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
+			updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
 		}
 		
 		private function checkForUpdateEventHandler(event:UpdateEvent):void {
@@ -174,6 +182,17 @@
 		
 		private function exampleChangedEventHandler(event:ExampleChangeEvent):void {
 			this.example = event.example;
+		}
+		
+		private function nameExampleHandler(event:NameExampleEvent):void {
+			trace('Name example event caught');
+			this.example.name = event.name;
+			if (this.example.id) {
+				example.update();
+			}
+			else {
+				example.create();
+			}
 		}
 		
 		private function exampleRolloverEventHandler(event:ExampleRolloverEvent):void {
@@ -197,6 +216,19 @@
 			var win:ExampleSelectionBox = PopUpManager.createPopUp(this,ExampleSelectionBox,true) as ExampleSelectionBox;
 			PopUpManager.centerPopUp(win);
 		}
+		
+		private function launchDefaultGraph():void {
+			//			trace('mc:' + ObjectUtil.toString(models.examples));
+			//			trace('-------------------------------------------------------------------------------------');
+			//			trace('idx:' + ObjectUtil.toString( Rx.models.index(Example)));
+		}
+		
+		protected function bookmarkButton_clickHandler(event:MouseEvent):void
+		{
+			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
+			PopUpManager.centerPopUp(nameExampleWindow);
+		}
+		
 	]]></fx:Script>
 	<s:states>
 		<s:State name="MainState"/>
@@ -204,11 +236,19 @@
 		<s:State name="TooltipState"/>
 		<s:State name="TosState"/>
 		<s:State name="TlzState"/>
-		<s:State name="ListLightBoxState"/>
+		<s:State name="GraphSelectOverMenuState"/>
+		<s:State name="GraphSelectOverBrowserState"/>
 	</s:states>
 	
 	
-	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,ListLightBoxState" alpha.ListLightBoxState="0.2">
+	<s:Group id="graphSelection"  includeIn="GraphSelectOverBrowserState,GraphSelectOverMenuState">
+		<s:layout>
+		<s:HorizontalLayout/>
+		</s:layout>
+		<s:List skinClass="gapdesktoprx.skins.ExampleSelectionList"/>
+	</s:Group>	
+	
+	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="GraphSelectOverBrowserState,TlzState" alpha.GraphSelectOverBrowserState="0.2">
 		<s:layout>
 			<s:VerticalLayout/>
 		</s:layout>
@@ -217,9 +257,9 @@
 				<s:HorizontalLayout/>
 			</s:layout>
 			
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="launchExamplesList()" label="Browse all graphs" width="200"/>
+			<extensions:IconButton skinClass="gapdesktoprx.skins.IconButtonSkin" click="launchExamplesList()" iconUp="assets/icons/fullscreen.png" label="Browse all graphs" width="200"/>
 			
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="this.example.create()" label="Bookmark this graph" width="200"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" id="bookmarkButton" click="bookmarkButton_clickHandler(event)" label="Bookmark this graph" width="200"/>
 			<s:Button id="fullScreenButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen" width="200" click="fullScreenButton_clickHandler(event)"/>
 			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Home" width="100"/>
 			
@@ -248,40 +288,55 @@
 				</s:stroke>
 			</s:Line>
 			<s:RichText color="#000000" fontSize="36" kerning="on" textAlign="center" d:userLabel="Gapminder Desktop" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
-				<s:content><s:p><s:span fontFamily="Avenir LT Std 95 Black">Gapminder </s:span><s:span fontFamily="Avenir LT Std 35 Light">Desktop</s:span></s:p></s:content>
+				<s:content><s:p><s:span fontFamily="Avenir LT Std 95 Black">Gapminder </s:span><s:span fontFamily="Avenir LT Std 35 Light">Desktop </s:span><s:span fontFamily="Avenir LT Std 35 Light" fontSize="12">beta</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="0x000000" fontFamily="Avenir LT Std 35 Light" fontSize="14" height="20" d:id="17" kerning="on" lineHeight="120%" ai:objID="615bb220" textAlign="center" d:userLabel="No internet required" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
+			<s:RichText color="0x000000" fontFamily="Avenir LT Std 35 Light" fontSize="14" height="20" d:id="17" kerning="on" lineHeight="120%" textAlign="center" d:userLabel="No internet required" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p d:id="18" whiteSpaceCollapse="collapse"><s:span d:id="19">No internet required</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 02/04/2010 (v 1.0b2)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
-			
+			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 03/04/2010 (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 		</s:Group>
 		
-		<s:Group id="menugroup" width="100%">	
+		<s:Group id="gwgroup" width="100%" height="500">	
 			<s:layout>
 				<s:HorizontalLayout/>
 			</s:layout>
-			<s:Group id="bigbuttoncolumn" width="50%">
-				<s:Group id="bigbuttongroup" includeIn="ListLightBoxState,MainState,TooltipState">
+			<s:Group id="bigbuttoncolumn" width="50%"  height="500">
+				<s:Group id="bigbuttongroup" includeIn="GraphSelectOverMenuState,MainState,TooltipState">
 					<s:Button alpha.TooltipState="0.4" id="splashButton" skinClass="gapdesktoprx.components.catalyst.SplashButton"/>		
 				</s:Group>
 			</s:Group>
-			<s:Line alpha.TooltipState="0.4" id="line1" height="100%">
+			<s:Group id="explanationcolumn" width="50%" height="500" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">
+				<s:layout><s:VerticalLayout/></s:layout>
+				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState">
+					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
+						<s:content><s:p>Gapminder World</s:p></s:content>
+					</s:RichText>
+					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="12" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200">
+						<s:content>
+							<s:p >Lets you have the world's most important data with you at all times. Features include:</s:p>
+							<s:p>–Bookmark your own graphs<s:br/>–Choose from a library of existing graphs<s:br/>–No internet required<s:br/>–Updates automatically when new data are available</s:p>
+							
+						</s:content>
+						
+					</s:RichText>
+				</s:Group>
+				<s:Button id="mainGwButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Open Gapminder World" width="200" click="launchDefaultGraph()"/>
+				<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="12" id="or" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
+					<s:content><s:p>or</s:p></s:content>
+				</s:RichText>
+				<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" label="Open list of graphs" width="200" click="launchExamplesList()"/>
+				
+				<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{models.examples}" change="exampleList_changeHandler(event)" width="100%" height="400"/>
+				
+				
+				
+			</s:Group>
+			<s:Line id="line1" top="0" left="0" right="120" bottom="0">
 				<s:stroke>
 					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 				</s:stroke>
 			</s:Line>
-			<s:Group id="examplescolumn" width="50%" excludeFrom="SettingsState,TosState,TlzState">
-				<s:layout><s:VerticalLayout/></s:layout>
-				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState">
-					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="17" height="40" id="richtext2" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
-						<s:content><s:p d:id="48" whiteSpaceCollapse="collapse"><s:span d:id="49">…or go directly to a graph on:</s:span></s:p></s:content>
-					</s:RichText>
-					
-				</s:Group>
-				<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{Rx.models.index(Example)}" change="exampleList_changeHandler(event)" width="100%"/>
-				
-			</s:Group>
+			
 		</s:Group>
 		
 		<s:Group id="tosgroup" includeIn="TosState">
@@ -290,13 +345,13 @@
 			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="24" y="465"/>
 			
 		</s:Group>
-		<s:Group id="settingsgroup" includeIn="SettingsState">
+		<s:Group id="settingsgroup" includeIn="SettingsState" x="100">
 			<s:CheckBox id="checkbox2" label="Check for updates automatically" skinClass="gapdesktoprx.components.catalyst.Checkbox1" x="26" y="114"/>
 			<s:Button id="button2" label="Check for updates now…" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="143"/>
 			<s:Button id="button0" label="Restore default graphs…" skinClass="gapdesktoprx.components.catalyst.Button3" x="25" y="186"/>
 			<s:Button id="closeSettingsButton" click="closeSettingsButton_clickHandler()" label="Close settings" label.TosState="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="232"/>
 		</s:Group>
-			
+		
 		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState">
 			<s:layout><s:HorizontalLayout/></s:layout>
 			<s:Button id="adminButton" click="admin_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" visible="true" label="Admin"/>
@@ -305,7 +360,7 @@
 		</s:Group>
 		
 	</s:Group>
-	<s:Group id="updatenotificationgroup" x="0" y="0">
+	<s:Group id="updatenotificationgroup" x="0" bottom="0" height="50">
 		<s:layout>
 			<s:BasicLayout/>
 		</s:layout>
@@ -321,7 +376,7 @@
 			
 			/>
 	</s:Group>
-
+	
 	<s:Group id="tooltip" includeIn="TooltipState" x="100" y="10" width="255" height="{parentApplication.height - 20}">
 		<s:layout><s:BasicLayout/></s:layout>
 		<s:Rect width="100%" height="100%">
@@ -351,10 +406,11 @@
 	</s:Group>		
 	
 	
+	
 	<s:transitions>
 		<s:Transition autoReverse="true" fromState="MainState" toState="TooltipState">
 			<s:Parallel>
-				<s:Parallel target="{richtext2}">
+				<s:Parallel target="{explanationtext}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{line1}">
@@ -373,7 +429,7 @@
 				<s:Parallel target="{splashButton}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{richtext2}">
+				<s:Parallel target="{explanationtext}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{line1}">
@@ -398,7 +454,7 @@
 				<s:Parallel target="{skinnablecontainer1}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{examplescolumn}">
+				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{settingsbuttonsgroup}">
@@ -430,7 +486,7 @@
 				<s:Parallel target="{skinnablecontainer1}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{examplescolumn}">
+				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{settingsbuttonsgroup}">
@@ -461,7 +517,7 @@
 				<s:Parallel target="{closeSettingsButton}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
-				<s:Parallel target="{examplescolumn}">
+				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{settingsbuttonsgroup}">
@@ -489,7 +545,7 @@
 				<s:Parallel target="{closeSettingsButton}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
-				<s:Parallel target="{examplescolumn}">
+				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{updatenotificationgroup}">

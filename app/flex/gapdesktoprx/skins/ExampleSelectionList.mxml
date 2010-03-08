@@ -13,7 +13,7 @@
 			<s:SolidColorStroke color="#888888" weight="10"/>
 		</s:stroke>
 	</s:Rect>
-	<s:DataGroup itemRenderer="gapdesktoprx.skins.ExampleSelectionItem" id="dataGroup" clipAndEnableScrolling="true" width="300">
+	<s:DataGroup itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem" id="dataGroup" clipAndEnableScrolling="true" width="300">
 		<s:layout>
 			<s:VerticalLayout/>
 		</s:layout>

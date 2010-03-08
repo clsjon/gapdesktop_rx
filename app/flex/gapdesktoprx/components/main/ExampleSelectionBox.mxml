@@ -4,20 +4,17 @@
 		 xmlns:mx="library://ns.adobe.com/flex/halo" width="400" height="500"
 		 creationComplete="group1_creationCompleteHandler(event)"
 		 >
-	<s:layout><s:VerticalLayout/></s:layout>
 	<fx:Script>
 		<![CDATA[
-			import spark.events.IndexChangeEvent;
 			import flash.events.MouseEvent;
 			
 			import gapdesktoprx.components.catalyst.ExampleList;
-			import gapdesktoprx.models.Example;
 			
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			
-			import org.restfulx.Rx;
+			import spark.events.IndexChangeEvent;
 			
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
@@ -46,7 +43,19 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:SolidColor color="#FFFFFF"/>
+		</s:fill>
+	</s:Rect>
+ <s:Group id="lists" x="0" y="0" width="100%" height="100%">
+	 <s:layout><s:VerticalLayout/></s:layout>
+	 
 	<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
-	<s:List id="userGraphList" dataProvider="{Rx.models.index(Example)}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="userGraphList_changeHandler(event)"/>
+	 <s:Label text="UGs"/>
+	<s:List id="userGraphList" dataProvider="{catalyst.models.userExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="userGraphList_changeHandler(event)"/>
+	 <s:Label text="GGs"/>
+	 <s:List id="gapGraphList" dataProvider="{catalyst.models.gapExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="userGraphList_changeHandler(event)"/>
+	  
+ </s:Group>
 </s:Group>
