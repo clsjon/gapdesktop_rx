@@ -9,10 +9,13 @@
 		<s:fill>
 			<s:SolidColor color="0xFFFFFF"/>
 		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke color="0x111111" weight="1"/>
+		</s:stroke>
 	</s:Rect>
-	<s:DataGroup itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem" id="dataGroup" clipAndEnableScrolling="true" width="300">
+	<s:DataGroup itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem" id="dataGroup" clipAndEnableScrolling="true" top="10" height="90%" width="90%" horizontalCenter="0">
 		<s:layout>
-			<s:VerticalLayout/>
+			<s:VerticalLayout paddingBottom="10" gap="10"/>
 		</s:layout>
 	</s:DataGroup>
 	<s:VScrollBar fixedThumbSize="true" skinClass="gapdesktoprx.components.catalyst.ExampleListScroll" viewport="{dataGroup}" buttonMode.normal="false" alpha.disabled="0.5" id="vscrollbar1" right="0"/>

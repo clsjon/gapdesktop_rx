@@ -28,9 +28,13 @@
 			protected function okButton_clickHandler(event:MouseEvent):void
 			{
 				dispatchEvent(new NameExampleEvent(graphName.text,true));
-				trace('event should be dispatched');
 				PopUpManager.removePopUp(this);
-				// TODO Auto-generated method stub
+			}
+
+
+			protected function cancelButton_clickHandler(event:MouseEvent):void
+			{
+				PopUpManager.removePopUp(this);
 			}
 
 		]]>
@@ -40,7 +44,7 @@
 	<s:Group id="buttons">
 		<s:layout>
 		<s:HorizontalLayout/></s:layout>
-		<s:Button id="cancelButton" label="Cancel" />
+		<s:Button id="cancelButton" label="Cancel" click="cancelButton_clickHandler(event)"/>
 		<s:Button id="okButton" label="Save bookmark" click="okButton_clickHandler(event)"/>
 	</s:Group>
 	

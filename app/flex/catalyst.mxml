@@ -43,22 +43,19 @@
 		import gapdesktoprx.events.ExampleChangeEvent;
 		import gapdesktoprx.events.ExampleRolloutEvent;
 		import gapdesktoprx.events.ExampleRolloverEvent;
+		import gapdesktoprx.events.ExampleSelectEvent;
 		import gapdesktoprx.events.NameExampleEvent;
 		import gapdesktoprx.models.Example;
-		import gapdesktoprx.skins.ExampleSelectionList;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
 		import mx.events.FlexEvent;
 		import mx.managers.PopUpManager;
 		
 		import org.restfulx.services.air.AIRServiceProvider;
-		import org.restfulx.utils.RxUtils;
-		
-		import spark.events.IndexChangeEvent;
 		
 		
 		[Bindable]
-		private var example:Example = new Example();
+		private var _example:Example = new Example();
 		
 		
 		protected function button_clickHandler():void
@@ -134,18 +131,18 @@
 		}
 		
 		
-		protected function exampleList_changeHandler(event:IndexChangeEvent):void
+		protected function exampleSelectEventHandler(event:ExampleSelectEvent):void
 		{
 			
 			var viewer:GraphViewer = new GraphViewer();
-			viewer.example = RxUtils.clone(event.currentTarget.selectedItem) as Example;
+			viewer.example = event.example;
 			
 			
 			currentState = 'TlzState';
 			navigator.addChild(viewer);
 			
 			navigator.selectedChild = viewer;
-			trace('app:/assets/graphs/' + viewer.example.graph.shortName + "/index.html#" + viewer.example.hash);
+		/* 	trace('app:/assets/graphs/' + viewer.example.graph.shortName + "/index.html#" + viewer.example.hash); */
 			viewer.graphHTML.location = 'app:/assets/graphs/' + viewer.example.graph.shortName + "/index.html#" + viewer.example.hash;
 			
 			//trace ("Selected item: " + event.currentTarget.selectedItems);
@@ -171,10 +168,8 @@
 		protected function windowedapplication1_applicationCompleteHandler(event:FlexEvent):void
 		{
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN,fullScreenStateChange);
-			this.addEventListener(ExampleChangeEvent.EXAMPLE_CHANGED,exampleChangedEventHandler);
 			this.addEventListener(ExampleRolloverEvent.EXAMPLE_ROLLOVER,exampleRolloverEventHandler);
 			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
-			this.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
 		}
 		
@@ -184,17 +179,17 @@
 		}
 		
 		private function exampleChangedEventHandler(event:ExampleChangeEvent):void {
-			this.example = event.example;
+			_example = event.example;
 		}
 		
 		private function nameExampleHandler(event:NameExampleEvent):void {
-			trace('Name example event caught');
-			this.example.name = event.name;
-			if (this.example.id) {
-				example.update();
+			trace ('rename');
+			_example.name = event.name;
+			if (_example.id) {
+				_example.update();
 			}
 			else {
-				example.create();
+				_example.create();
 			}
 		}
 		
@@ -217,6 +212,7 @@
 		
 		private function launchExamplesList():void {
 			var win:ExampleSelectionBox = PopUpManager.createPopUp(this,ExampleSelectionBox,true) as ExampleSelectionBox;
+			win.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler);
 			PopUpManager.centerPopUp(win);
 		}
 		
@@ -229,6 +225,7 @@
 		protected function bookmarkButton_clickHandler(event:MouseEvent):void
 		{
 			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
+			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			PopUpManager.centerPopUp(nameExampleWindow);
 		}
 		
@@ -254,7 +251,7 @@
 			
 			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" id="bookmarkButton" click="bookmarkButton_clickHandler(event)" label="Bookmark this graph" width="200"/>
 			<s:Button id="fullScreenButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen" width="200" click="fullScreenButton_clickHandler(event)"/>
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='ListLightBoxState'" label="Home" width="100"/>
+			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='MainState'" label="Home" width="100"/>
 			
 		</s:Group>
 		

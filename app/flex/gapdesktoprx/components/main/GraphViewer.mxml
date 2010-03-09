@@ -48,8 +48,12 @@
 			
 			private function newExample():void {
 				if (!RxUtils.isEmpty(hash)) {
-					example = new Example();
+					var newExample:Example = new Example();
+					newExample.graph = _example.graph;
+					newExample.submitter = _example.submitter; //Defaults to submitter of original graph - this should be changed to current user if authentication is implemented
+					
 					example.hash = hash;
+					example.userGenerated = true;
 					example.name = "[New example]";
 					invalidateDisplayList();
 					trace("New example");
@@ -97,8 +101,8 @@
 			{
 				_example = value;
 				invalidateProperties();
-				dispatchEvent(new Event("exampleChange"));
-				dispatchEvent(new ExampleChangeEvent(example,true));
+				this.dispatchEvent(new Event("exampleChange"));
+				this.dispatchEvent(new ExampleChangeEvent(example,true));
 				
 			}
 		]]>

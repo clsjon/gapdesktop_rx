@@ -4,8 +4,12 @@
 				xmlns:ns="library://ns.adobe.com/flex/mx">
 	<fx:Script>
 		<![CDATA[
+			import flash.events.MouseEvent;
+			
 			import gapdesktoprx.events.ExampleRolloutEvent;
 			import gapdesktoprx.models.Example;
+			
+			import mx.controls.Alert;
 			[Bindable]
 			private var _example:Example;
 			
@@ -43,6 +47,14 @@
 				dispatchEvent(new ExampleRolloutEvent(true));
 			}
 			
+
+			protected function deleteButton_clickHandler(event:MouseEvent):void
+			{
+				/* Alert.show('Delete ' + _example.name,"Delete example placeholder"); */
+				event.preventDefault();
+				_example.destroy();
+			}
+
 		]]>
 		
 	</fx:Script>
@@ -76,7 +88,7 @@
 		<ns:Image source="{logo}" x="6" y="6" width="16" height="16"/>
 		<ns:Image includeIn="hovered" right="6" y="10" source="@Embed(source='assets/icons/play.png')"/>
 		<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="14" height="16" d:id="26" kerning="on" lineHeight="120%" ai:objID="615c2180" text="{_example.name}" textAlign="justify" whiteSpaceCollapse="preserve" width="100%" x="30" y="10"></s:RichText>
-		<s:RichText visible="{_example.userGenerated}" text="usergen"/>
+		<s:Button id="deleteButton" visible="{_example.userGenerated}" includeIn="hovered,selected" label="Delete" click="deleteButton_clickHandler(event)" right="0"/>
 	</s:Group>
 	<s:transitions>
 		<s:Transition fromState="selected" toState="normal" autoReverse="true">

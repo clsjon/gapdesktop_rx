@@ -31,6 +31,8 @@
       example.content = contentTextInput.text;
       example.name = nameTextInput.text;
       example.userGenerated = userGeneratedCheckBox.selected;
+	  example.introText = introTextTextInput.text;
+	  example.introImage = introImageTextInput.text;
 	  example.graph = Graph(graphComboBox.selectedItem);
       example.submitter = Submitter(submitterComboBox.selectedItem);
     }
@@ -79,6 +81,12 @@
         <mx:FormItem label="Content" width="100%">
         <mx:TextInput id="contentTextInput" width="100%" text="{example.content}"/>
       </mx:FormItem>
+		<mx:FormItem label="Intro text" width="100%">
+			<mx:TextInput id="introTextTextInput" width="100%" text="{example.introText}"/>
+		</mx:FormItem>
+		<mx:FormItem label="Intro image" width="100%">
+			<mx:TextInput id="introImageTextInput" width="100%" text="{example.introImage}"/>
+		</mx:FormItem>
 		<mx:FormItem label="Hash" width="100%">
 			<mx:TextInput id="hashTextInput" width="100%" text="{example.hash}"/>
 		</mx:FormItem>

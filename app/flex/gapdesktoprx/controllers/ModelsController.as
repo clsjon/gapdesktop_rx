@@ -29,7 +29,7 @@ package gapdesktoprx.controllers {
 			Rx.models.index(Example);
 			examples = Rx.models.cached(Example);
 			userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
-			gapExamples = Rx.filter$(Rx.models.cached(Example), filterGapExamples);
+			gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
 		}
 		
 		private function onCacheUpdate(event:CacheUpdateEvent):void {
@@ -37,7 +37,7 @@ package gapdesktoprx.controllers {
 			if (event.isFor(Example)) {
 				examples = Rx.models.cached(Example);
 				userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
-				gapExamples = Rx.filter$(Rx.models.cached(Example), filterGapExamples);
+				gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
 			}
 //			var prop:String = RxUtils.toCamelCase(Rx.models.state.controllers[event.fqn]);
 //			if (hasOwnProperty(prop)) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/halo" width="400" height="500"
+		 xmlns:mx="library://ns.adobe.com/flex/halo" width="600" height="500"
 		 creationComplete="group1_creationCompleteHandler(event)"
 		 >
 	<fx:Script>
@@ -9,6 +9,8 @@
 			import flash.events.MouseEvent;
 			
 			import gapdesktoprx.components.catalyst.ExampleList;
+			import gapdesktoprx.events.ExampleSelectEvent;
+			import gapdesktoprx.models.Example;
 			
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
@@ -25,20 +27,26 @@
 				PopUpManager.removePopUp(this);
 			}
 			
-
+			
 			protected function closeButton_clickHandler(event:MouseEvent):void
 			{
 				PopUpManager.removePopUp(this);
 			}
-
-
-			protected function userGraphList_changeHandler(event:IndexChangeEvent):void
+			
+			
+			protected function graphList_changeHandler(event:IndexChangeEvent):void
 			{
-				// TODO Auto-generated method stub
+				this.dispatchEvent(new ExampleSelectEvent(event.currentTarget.selectedItem as Example,true));
+				PopUpManager.removePopUp(this);
+				
 			}
-
+			
 		]]>
 	</fx:Script>
+	
+	<fx:Metadata>
+		[Event(name="exampleSelected", type="gapdesktoprx.events.ExampleSelectEvent")]
+	</fx:Metadata>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -48,14 +56,15 @@
 			<s:SolidColor color="#FFFFFF"/>
 		</s:fill>
 	</s:Rect>
- <s:Group id="lists" x="0" y="0" width="100%" height="100%">
-	 <s:layout><s:VerticalLayout/></s:layout>
-	 
-	<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
-	 <s:Label text="UGs"/>
-	<s:List id="userGraphList" dataProvider="{catalyst.models.userExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="userGraphList_changeHandler(event)"/>
-	 <s:Label text="GGs"/>
-	 <s:List id="gapGraphList" dataProvider="{catalyst.models.gapExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="userGraphList_changeHandler(event)"/>
-	  
- </s:Group>
+	<s:Group id="main" x="0" y="0" width="100%" height="100%">
+		<s:layout><s:VerticalLayout/></s:layout>
+		
+		<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
+		<s:Group id="lists">
+			<s:layout><s:HorizontalLayout gap="30"/></s:layout>
+			<s:List id="gapGraphList" height="400" dataProvider="{catalyst.models.gapExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
+			<s:List id="userGraphList" height="400" dataProvider="{catalyst.models.userExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
+			
+		</s:Group>
+	</s:Group>
 </s:Group>
