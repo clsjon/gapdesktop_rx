@@ -24,8 +24,11 @@
 	
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)" 
-	xmlns:ns="library://ns.adobe.com/flex/mx" xmlns:extensions="gapdesktoprx.components.extensions.*">
+	xmlns:ns="library://ns.adobe.com/flex/mx" 
+	xmlns:extensions="gapdesktoprx.components.extensions.*">
+	
 	<fx:Style source="/assets/css/styles.css"/>
+	
 	<fx:Script><![CDATA[
 		import air.update.events.UpdateEvent;
 		
@@ -236,19 +239,9 @@
 		<s:State name="TooltipState"/>
 		<s:State name="TosState"/>
 		<s:State name="TlzState"/>
-		<s:State name="GraphSelectOverMenuState"/>
-		<s:State name="GraphSelectOverBrowserState"/>
 	</s:states>
-	
-	
-	<s:Group id="graphSelection"  includeIn="GraphSelectOverBrowserState,GraphSelectOverMenuState">
-		<s:layout>
-		<s:HorizontalLayout/>
-		</s:layout>
-		<s:List skinClass="gapdesktoprx.skins.ExampleSelectionList"/>
-	</s:Group>	
-	
-	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="GraphSelectOverBrowserState,TlzState" alpha.GraphSelectOverBrowserState="0.2">
+
+	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState">
 		<s:layout>
 			<s:VerticalLayout/>
 		</s:layout>
@@ -267,13 +260,13 @@
 		
 		<containers:SuperTabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" fontFamily="Avenir LT Std 35 Light" editableTabLabels="true" popUpButtonPolicy="off"/>
 	</s:Group>
-	<s:Group id="maingroup" x="0" y="0" width="100%" height="100%">
+	<s:Group id="maingroup" width="100%">
 		<s:layout>
 			<s:VerticalLayout gap="10"/>
 		</s:layout>
 		
 		<s:Group id="headinggroup" excludeFrom="TlzState">
-			<s:Rect height="74" d:id="12" width="100%" x="0" y="0">
+			<s:Rect height="74" width="100%" x="0" y="0">
 				<s:fill>
 					<s:LinearGradient rotation="270" scaleX="74" x="327.5" y="74">
 						<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.208790988922119" ratio="0"/>
@@ -287,25 +280,25 @@
 					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 				</s:stroke>
 			</s:Line>
-			<s:RichText color="#000000" fontSize="36" kerning="on" textAlign="center" d:userLabel="Gapminder Desktop" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
+			<s:RichText color="#000000" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
 				<s:content><s:p><s:span fontFamily="Avenir LT Std 95 Black">Gapminder </s:span><s:span fontFamily="Avenir LT Std 35 Light">Desktop </s:span><s:span fontFamily="Avenir LT Std 35 Light" fontSize="12">beta</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="0x000000" fontFamily="Avenir LT Std 35 Light" fontSize="14" height="20" d:id="17" kerning="on" lineHeight="120%" textAlign="center" d:userLabel="No internet required" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
-				<s:content><s:p d:id="18" whiteSpaceCollapse="collapse"><s:span d:id="19">No internet required</s:span></s:p></s:content>
+			<s:RichText color="0x000000" fontFamily="Avenir LT Std 35 Light" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
+				<s:content><s:p whiteSpaceCollapse="collapse"><s:span>no internet required</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 03/04/2010 (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 03/08/2010 (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 		</s:Group>
 		
-		<s:Group id="gwgroup" width="100%" height="500">	
+		<s:Group id="gwgroup" width="100%">	
 			<s:layout>
 				<s:HorizontalLayout/>
 			</s:layout>
-			<s:Group id="bigbuttoncolumn" width="50%"  height="500">
-				<s:Group id="bigbuttongroup" includeIn="GraphSelectOverMenuState,MainState,TooltipState">
+			<s:Group id="bigbuttoncolumn" width="50%">
+				<s:Group id="bigbuttongroup" includeIn="MainState,TooltipState">
 					<s:Button alpha.TooltipState="0.4" id="splashButton" skinClass="gapdesktoprx.components.catalyst.SplashButton"/>		
 				</s:Group>
 			</s:Group>
-			<s:Group id="explanationcolumn" width="50%" height="500" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">
+			<s:Group id="explanationcolumn" width="50%" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">
 				<s:layout><s:VerticalLayout/></s:layout>
 				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState">
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
@@ -326,7 +319,7 @@
 				</s:RichText>
 				<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" label="Open list of graphs" width="200" click="launchExamplesList()"/>
 				
-				<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{models.examples}" change="exampleList_changeHandler(event)" width="100%" height="400"/>
+				<!--<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{models.examples}" change="exampleList_changeHandler(event)" width="100%" height="400"/>-->
 				
 				
 				
@@ -352,12 +345,14 @@
 			<s:Button id="closeSettingsButton" click="closeSettingsButton_clickHandler()" label="Close settings" label.TosState="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="232"/>
 		</s:Group>
 		
-		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState">
+		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%" height="40">
 			<s:layout><s:HorizontalLayout/></s:layout>
-			<s:Button id="adminButton" click="admin_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" visible="true" label="Admin"/>
-			<s:Button id="settingsbutton" click="button_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button"/>
+			<s:Button id="adminButton" click="admin_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Admin"/>
+			<s:Button id="settingsbutton" click="button_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Settings"/>
 			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Termsofuse_Button"/>
 		</s:Group>
+		
+
 		
 	</s:Group>
 	<s:Group id="updatenotificationgroup" x="0" bottom="0" height="50">
