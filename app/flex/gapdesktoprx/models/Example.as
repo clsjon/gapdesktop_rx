@@ -1,4 +1,6 @@
 package gapdesktoprx.models {
+  import mx.events.FlexEvent;
+  
   import org.restfulx.collections.ModelsCollection;
   import org.restfulx.models.RxModel;
   
@@ -15,7 +17,18 @@ package gapdesktoprx.models {
 
 	public var introImage:String = "";
 	
-    public var hash:String = "";
+	[Ignored]
+    private var _hash:String = "";
+	
+	[Bindable(event="hashUpdated")]
+	public function set hash (value:String):void {
+		_hash = hash;
+		this.dispatchEvent(new FlexEvent("hashUpdated");
+	}
+	
+	public function get hash():String {
+		return _hash;
+	}
 	
 	public var created:Date = new Date;
 	
@@ -35,6 +48,11 @@ package gapdesktoprx.models {
     
     [BelongsTo]
     public var graph:Graph;
+	
+	[Ignored]
+	public function url():String {
+		return 'app:/assets/graphs/' + graph.shortName + "/index.html#" + hash;	
+	}
 
     public function Example() {
       super(LABEL);

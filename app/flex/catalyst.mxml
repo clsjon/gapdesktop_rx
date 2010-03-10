@@ -134,16 +134,11 @@
 			
 			var viewer:GraphViewer = new GraphViewer();
 			viewer.example = event.example;
-			
-			
 			currentState = 'TlzState';
 			navigator.addChild(viewer);
 			
 			navigator.selectedChild = viewer;
-		/* 	trace('app:/assets/graphs/' + viewer.example.graph.shortName + "/index.html#" + viewer.example.hash); */
-			viewer.graphHTML.location = 'app:/assets/graphs/' + viewer.example.graph.shortName + "/index.html#" + viewer.example.hash;
 			
-			//trace ("Selected item: " + event.currentTarget.selectedItems);
 		}
 		
 		

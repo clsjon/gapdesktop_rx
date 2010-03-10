@@ -37,7 +37,7 @@ package gapdesktoprx.controllers {
 			examples = Rx.models.cached(Example);
 			userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
 			gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
-			defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
+			//defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
 		}
 		
 		private function onCacheUpdate(event:CacheUpdateEvent):void {
@@ -46,7 +46,7 @@ package gapdesktoprx.controllers {
 				examples = Rx.models.cached(Example);
 				userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
 				gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
-				defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
+				//defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
 			} else {
 				var prop:String = RxUtils.toCamelCase(Rx.models.state.controllers[event.fqn]);
 				if (hasOwnProperty(prop)) {
