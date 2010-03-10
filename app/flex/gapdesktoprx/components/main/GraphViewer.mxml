@@ -18,20 +18,18 @@
 			import gapdesktoprx.models.Example;
 			import gapdesktoprx.overrides.TlzHost;
 			
+			import mx.controls.Alert;
+			
 			import org.restfulx.utils.RxUtils;
 			
 			private var _htmlLoader:HTMLLoader;
-			
-			
-			private var hash:String = "";
 			
 			[Bindable]
 			private var _example:Example = new Example();
 			
 			private function updateHash(newHash:String):void {
 				//trace("Incoming hash from swf is: " + newHash);
-				hash = newHash;
-				newExample();
+				newExample(newHash);
 				//trace ('Example URL Hash:' +  _example.urlHash);
 			}
 			
@@ -46,16 +44,15 @@
 			
 			
 			
-			private function newExample():void {
+			private function newExample(hash:String):void {
 				if (!RxUtils.isEmpty(hash)) {
-					var newExample:Example = new Example();
-					newExample.graph = _example.graph;
-					newExample.submitter = _example.submitter; //Defaults to submitter of original graph - this should be changed to current user if authentication is implemented
+					var newExample:Example = RxUtils.clone(_example) as Example;
+					newExample.hash = hash;
 					
-					example.hash = hash;
-					example.userGenerated = true;
-					example.name = "[New example]";
+					newExample.userGenerated = true;
+					newExample.name = "[New example]";
 					invalidateDisplayList();
+					example = newExample;
 					trace("New example");
 					trace(example.hash);
 					//this.label = example.descShort;	
@@ -104,6 +101,10 @@
 				this.dispatchEvent(new Event("exampleChange"));
 				this.dispatchEvent(new ExampleChangeEvent(example,true));
 				
+			}
+			
+			public function bookmarkExample():void {
+				Alert.show("bookmark received for tab: " + _example.name);
 			}
 		]]>
 	</mx:Script>

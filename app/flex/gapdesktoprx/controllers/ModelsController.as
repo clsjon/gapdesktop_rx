@@ -1,6 +1,8 @@
 package gapdesktoprx.controllers {
 	import gapdesktoprx.models.Example;
 	
+	import mx.utils.ObjectUtil;
+	
 	import org.restfulx.Rx;
 	import org.restfulx.collections.RxCollection;
 	import org.restfulx.events.CacheUpdateEvent;
@@ -18,6 +20,8 @@ package gapdesktoprx.controllers {
 		
 		public var gapExamples:RxCollection;
 		
+		public var defaultExample:Example;
+		
 		public var tags:RxCollection;
 		
 		public var graphs:RxCollection;
@@ -26,10 +30,14 @@ package gapdesktoprx.controllers {
 		
 		public function ModelsController(enforcer:SingletonEnforcer) {
 			Rx.models.addEventListener(CacheUpdateEvent.ID, onCacheUpdate);
-			Rx.models.index(Example);
+			Rx.models.index(Example,refreshCollections);
+		}
+		
+		private function refreshCollections(obj:Object):void {
 			examples = Rx.models.cached(Example);
 			userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
 			gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
+			defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
 		}
 		
 		private function onCacheUpdate(event:CacheUpdateEvent):void {
@@ -38,12 +46,15 @@ package gapdesktoprx.controllers {
 				examples = Rx.models.cached(Example);
 				userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
 				gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
+				defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
+			} else {
+				var prop:String = RxUtils.toCamelCase(Rx.models.state.controllers[event.fqn]);
+				if (hasOwnProperty(prop)) {
+					this[prop] = Rx.models.cache.data[event.fqn];
+				}
 			}
-//			var prop:String = RxUtils.toCamelCase(Rx.models.state.controllers[event.fqn]);
-//			if (hasOwnProperty(prop)) {
-//				this[prop] = Rx.models.cache.data[event.fqn];
-//			}
 		}
+		
 		
 		private function filterUserExamples(example:Example):Boolean {
 			return example.userGenerated;

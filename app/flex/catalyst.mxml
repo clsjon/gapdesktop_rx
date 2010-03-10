@@ -51,6 +51,7 @@
 		import mx.events.FlexEvent;
 		import mx.managers.PopUpManager;
 		
+		import org.restfulx.Rx;
 		import org.restfulx.services.air.AIRServiceProvider;
 		
 		
@@ -123,6 +124,7 @@
 		{
 			ApplicationController.initialize([AIRServiceProvider], 
 				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
+			Rx.enableLogging();
 			
 		}
 		
@@ -170,6 +172,7 @@
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN,fullScreenStateChange);
 			this.addEventListener(ExampleRolloverEvent.EXAMPLE_ROLLOVER,exampleRolloverEventHandler);
 			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
+			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
 			updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
 		}
 		
@@ -217,6 +220,7 @@
 		}
 		
 		private function launchDefaultGraph():void {
+			this.dispatchEvent(new ExampleSelectEvent( models.defaultExample));
 			//			trace('mc:' + ObjectUtil.toString(models.examples));
 			//			trace('-------------------------------------------------------------------------------------');
 			//			trace('idx:' + ObjectUtil.toString( Rx.models.index(Example)));
@@ -227,6 +231,7 @@
 			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			PopUpManager.centerPopUp(nameExampleWindow);
+			nameExampleWindow.y = this.y;
 		}
 		
 	]]></fx:Script>
@@ -298,6 +303,7 @@
 			<s:Group id="explanationcolumn" width="50%" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">
 				<s:layout><s:VerticalLayout/></s:layout>
 				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState">
+					<s:layout><s:VerticalLayout gap="0"/></s:layout>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
 						<s:content><s:p>Gapminder World</s:p></s:content>
 					</s:RichText>
@@ -352,7 +358,7 @@
 
 		
 	</s:Group>
-	<s:Group id="updatenotificationgroup" x="0" bottom="0" height="50">
+	<s:Group id="updatenotificationgroup" x="0" bottom="0" height="50" width="100%" includeIn="MainState">
 		<s:layout>
 			<s:BasicLayout/>
 		</s:layout>

@@ -3,7 +3,7 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/halo" 
 		 width="400" 
-		 height="300"
+		 height="70"
 		 title="Enter a name for this graph:"
 		 >
 	<s:layout>

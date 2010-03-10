@@ -73,7 +73,7 @@
 			<s:GlowFilter includeIn="hovered" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
 			<s:GlowFilter includeIn="selected" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
 		</s:filters>
-		<s:Rect height="30" width="250" x="0.5" y="0.5">
+	<!--	<s:Rect height="30" width="250" x="0.5" y="0.5">
 			<s:fill>
 				<s:LinearGradient rotation="270" scaleX="30" x="107.543" y="30.5">
 					<s:GradientEntry color="0xD9D9D9" ratio="0"/>
@@ -85,7 +85,7 @@
 				<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 			</s:stroke>
 		</s:Rect>
-		<ns:Image source="{logo}" x="6" y="6" width="16" height="16"/>
+-->		<ns:Image source="{logo}" x="6" y="6" width="16" height="16"/>
 		<ns:Image includeIn="hovered" right="6" y="10" source="@Embed(source='assets/icons/play.png')"/>
 		<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="14" height="16" d:id="26" kerning="on" lineHeight="120%" ai:objID="615c2180" text="{_example.name}" textAlign="justify" whiteSpaceCollapse="preserve" width="100%" x="30" y="10"></s:RichText>
 		<s:Button id="deleteButton" visible="{_example.userGenerated}" includeIn="hovered,selected" label="Delete" click="deleteButton_clickHandler(event)" right="0"/>

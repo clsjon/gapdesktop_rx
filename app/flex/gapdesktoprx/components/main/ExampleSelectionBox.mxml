@@ -62,8 +62,8 @@
 		<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
 		<s:Group id="lists">
 			<s:layout><s:HorizontalLayout gap="30"/></s:layout>
-			<s:List id="gapGraphList" height="400" dataProvider="{catalyst.models.gapExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
-			<s:List id="userGraphList" height="400" dataProvider="{catalyst.models.userExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
+			<s:List id="gapGraphList" width="250" height="400" dataProvider="{catalyst.models.gapExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
+			<s:List id="userGraphList" width="250" height="400" dataProvider="{catalyst.models.userExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
 			
 		</s:Group>
 	</s:Group>
