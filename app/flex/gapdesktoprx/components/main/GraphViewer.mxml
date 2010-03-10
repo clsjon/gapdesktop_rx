@@ -100,11 +100,18 @@
 				invalidateProperties();
 				this.dispatchEvent(new Event("exampleChange"));
 				this.dispatchEvent(new ExampleChangeEvent(example,true));
-				
+				this.graphHTML.location = 'app:/assets/graphs/' + example.graph.shortName + "/index.html#" + example.hash;
+
 			}
 			
-			public function bookmarkExample():void {
-				Alert.show("bookmark received for tab: " + _example.name);
+			public function bookmarkExample(name:String):void {
+				_example.name = name;
+				if (_example.id) {
+					_example.update();
+				} else {
+					_example.create();
+				}
+				
 			}
 		]]>
 	</mx:Script>

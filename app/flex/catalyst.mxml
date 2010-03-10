@@ -55,10 +55,6 @@
 		import org.restfulx.services.air.AIRServiceProvider;
 		
 		
-		[Bindable]
-		private var _example:Example = new Example();
-		
-		
 		protected function button_clickHandler():void
 		{
 			currentState='SettingsState';
@@ -181,19 +177,8 @@
 			trace ('update check authorized');
 		}
 		
-		private function exampleChangedEventHandler(event:ExampleChangeEvent):void {
-			_example = event.example;
-		}
-		
 		private function nameExampleHandler(event:NameExampleEvent):void {
-			trace ('rename');
-			_example.name = event.name;
-			if (_example.id) {
-				_example.update();
-			}
-			else {
-				_example.create();
-			}
+			GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
 		}
 		
 		private function exampleRolloverEventHandler(event:ExampleRolloverEvent):void {
@@ -232,7 +217,7 @@
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			PopUpManager.centerPopUp(nameExampleWindow);
 			nameExampleWindow.y = this.y;
-		}
+ 		}
 		
 	]]></fx:Script>
 	<s:states>
@@ -252,7 +237,7 @@
 				<s:HorizontalLayout/>
 			</s:layout>
 			
-			<extensions:IconButton skinClass="gapdesktoprx.skins.IconButtonSkin" click="launchExamplesList()" iconUp="assets/icons/fullscreen.png" label="Browse all graphs" width="200"/>
+			<extensions:IconButton skinClass="gapdesktoprx.skins.IconButtonSkin" click="launchExamplesList()" iconUp="assets/icons/fullscreen.png" label="Open list of graphs" width="200"/>
 			
 			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" id="bookmarkButton" click="bookmarkButton_clickHandler(event)" label="Bookmark this graph" width="200"/>
 			<s:Button id="fullScreenButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen" width="200" click="fullScreenButton_clickHandler(event)"/>
