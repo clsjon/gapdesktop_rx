@@ -24,7 +24,7 @@ package gapdesktoprx.controllers {
 		
 		public var tags:RxCollection;
 		
-		public var examplesByTag:RxCollection;
+		public var usedMainTags:RxCollection;
 		
 		public var graphs:RxCollection;
 		
@@ -45,9 +45,7 @@ package gapdesktoprx.controllers {
 		
 		private function refreshTagCollections(obj:Object):void {
 			tags = Rx.models.cached(Tag);
-			for each (var tag:Tag in tags) {
-				trace ('tag ' + tag.name + ' with exampleTags numbering ' + tag.exampleTags.length);
-			}
+			usedMainTags = Rx.filter(Rx.models.cached(Tag), filterUsedMainTags);
 		}
 		
 		private function onCacheUpdate(event:CacheUpdateEvent):void {
@@ -71,6 +69,9 @@ package gapdesktoprx.controllers {
 			}
 		}
 		
+		private function filterUsedMainTags(tag:Tag):Boolean {
+			return (tag.children != null);
+		}
 		
 		private function filterUserExamples(example:Example):Boolean {
 			return example.userGenerated;

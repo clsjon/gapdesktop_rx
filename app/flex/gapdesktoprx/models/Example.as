@@ -1,6 +1,4 @@
 package gapdesktoprx.models {
-  import mx.events.FlexEvent;
-  
   import org.restfulx.collections.ModelsCollection;
   import org.restfulx.models.RxModel;
   
@@ -31,12 +29,14 @@ package gapdesktoprx.models {
 	[HasMany(through="exampleTags")]
 	public var tags:ModelsCollection;
 
-
     [BelongsTo]
     public var submitter:Submitter;
     
     [BelongsTo]
     public var graph:Graph;
+	
+	[BelongsTo(referAs="children")]
+	public var mainTag:Tag;
 	
 	[Ignored]
 	public function url():String {

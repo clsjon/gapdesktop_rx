@@ -14,6 +14,7 @@
 			
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
 			
 			import spark.events.IndexChangeEvent;
@@ -41,6 +42,18 @@
 				
 			}
 			
+
+			protected function gapGraphs_changeHandler(event:ListEvent):void
+			{
+				var item:Object = event.currentTarget.selectedItem;
+				if (gapGraphs.dataDescriptor.isBranch(item)) {
+					trace('branch');
+				} else {
+					this.dispatchEvent(new ExampleSelectEvent(item as Example,true));
+					PopUpManager.removePopUp(this);
+				}
+			}
+
 		]]>
 	</fx:Script>
 	
@@ -62,7 +75,7 @@
 		<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
 		<s:Group id="lists">
 			<s:layout><s:HorizontalLayout gap="30"/></s:layout>
-			<ns:Tree id="gapGraphs" width="250" height="400" dataProvider="{catalyst.models.tags}"/>
+			<ns:Tree id="gapGraphs" width="250" height="400" dataProvider="{catalyst.models.usedMainTags}" change="gapGraphs_changeHandler(event)"/>
 			<!--<s:List id="gapGraphList" width="250" height="400" dataProvider="{catalyst.models.gapExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
 			--><s:List id="userGraphList" width="250" height="400" dataProvider="{catalyst.models.userExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
 			
