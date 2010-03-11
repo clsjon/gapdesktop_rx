@@ -17,7 +17,7 @@ package gapdesktoprx.models {
 
 	public var introImage:String = "";
 	
-	private var hash:String = "";
+	public var hash:String = "";
 	
 	public var created:Date = new Date;
 	

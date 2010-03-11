@@ -1,4 +1,6 @@
 package gapdesktoprx.models {
+  import mx.collections.ArrayCollection;
+  
   import org.restfulx.collections.ModelsCollection;
   import org.restfulx.models.RxModel;
   
@@ -12,8 +14,8 @@ package gapdesktoprx.models {
     [HasMany]
     public var exampleTags:ModelsCollection;
 	
-	[HasMany(through="exampleTags")]
-	public var examples:ModelsCollection;
+	[HasMany(through="exampleTags",type="Example")]
+	public var children:ModelsCollection;
     
     public function Tag() {
       super(LABEL);

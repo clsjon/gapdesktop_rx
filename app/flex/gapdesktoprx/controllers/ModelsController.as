@@ -1,7 +1,7 @@
 package gapdesktoprx.controllers {
 	import gapdesktoprx.models.Example;
-	
-	import mx.utils.ObjectUtil;
+	import gapdesktoprx.models.ExampleTag;
+	import gapdesktoprx.models.Tag;
 	
 	import org.restfulx.Rx;
 	import org.restfulx.collections.RxCollection;
@@ -24,29 +24,45 @@ package gapdesktoprx.controllers {
 		
 		public var tags:RxCollection;
 		
+		public var examplesByTag:RxCollection;
+		
 		public var graphs:RxCollection;
 		
 		public var submitters:RxCollection;
 		
 		public function ModelsController(enforcer:SingletonEnforcer) {
 			Rx.models.addEventListener(CacheUpdateEvent.ID, onCacheUpdate);
-			Rx.models.index(Example,refreshCollections);
+			Rx.models.index(Example,refreshExampleCollections);
+			Rx.models.index(ExampleTag,refreshTagCollections);
 		}
 		
-		private function refreshCollections(obj:Object):void {
+		private function refreshExampleCollections(obj:Object):void {
 			examples = Rx.models.cached(Example);
 			userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
 			gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
 			//defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
 		}
 		
+		private function refreshTagCollections(obj:Object):void {
+			tags = Rx.models.cached(Tag);
+			for each (var tag:Tag in tags) {
+				trace ('tag ' + tag.name + ' with exampleTags numbering ' + tag.exampleTags.length);
+			}
+		}
+		
 		private function onCacheUpdate(event:CacheUpdateEvent):void {
-			trace('cache update');
+			trace('cache update for ' + event.fqn);
 			if (event.isFor(Example)) {
 				examples = Rx.models.cached(Example);
 				userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
 				gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
 				//defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
+			} else if (event.isFor(Tag)) {
+				for each (var tag:Tag in event.data) {
+					//trace (tag.name + ' with examples ' + tag.exampleTags.length);
+				}
+			
+			
 			} else {
 				var prop:String = RxUtils.toCamelCase(Rx.models.state.controllers[event.fqn]);
 				if (hasOwnProperty(prop)) {
