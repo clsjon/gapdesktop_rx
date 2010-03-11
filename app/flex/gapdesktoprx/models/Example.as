@@ -17,18 +17,7 @@ package gapdesktoprx.models {
 
 	public var introImage:String = "";
 	
-	[Ignored]
-    private var _hash:String = "";
-	
-	[Bindable(event="hashUpdated")]
-	public function set hash (value:String):void {
-		_hash = hash;
-		this.dispatchEvent(new FlexEvent("hashUpdated");
-	}
-	
-	public function get hash():String {
-		return _hash;
-	}
+	private var hash:String = "";
 	
 	public var created:Date = new Date;
 	
