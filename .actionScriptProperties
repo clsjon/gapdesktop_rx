@@ -14,7 +14,10 @@
   </compiler>
   <applications>
     <application path="catalyst.mxml">
-      <airExcludes/>
+      <airExcludes>
+        <airExclude path="gapdesktoprx/.DS_Store"/>
+        <airExclude path=".DS_Store"/>
+      </airExcludes>
     </application>
     <application path="main.mxml">
       <airExcludes/>

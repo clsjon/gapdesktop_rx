@@ -10,6 +10,18 @@
 	fontWeight: normal;
 }
 @font-face {
+	src:url("/assets/fonts/Avenir/AvenirLTStd-Light.otf");
+	fontFamily: Avenir;
+	fontStyle: normal;
+	fontWeight: light;
+}
+@font-face {
+	src:url("/assets/fonts/Avenir/AvenirLTStd-Medium.otf");
+	fontFamily: Avenir;
+	fontStyle: normal;
+	fontWeight: normal;
+}
+@font-face {
   src: url("/assets/fonts/MyriadWebPro.ttf");
   fontFamily: MyriadWebPro;
   fontStyle: normal;

@@ -18,8 +18,6 @@
 			import gapdesktoprx.models.Example;
 			import gapdesktoprx.overrides.TlzHost;
 			
-			import mx.controls.Alert;
-			
 			import org.restfulx.utils.RxUtils;
 			
 			private var _htmlLoader:HTMLLoader;
@@ -40,6 +38,7 @@
 				//			_htmlLoader.
 				//trace("graphBrowser_completeHandler");
 				graphHTML.htmlLoader.window.updateHash = updateHash;
+				graphHTML.setFocus();
 			}
 			
 			
@@ -106,7 +105,13 @@
 			}
 			
 			public function bookmarkExample(name:String):void {
-				_example.name = name;
+				var newExample:Example = RxUtils.clone(_example) as Example;
+				newExample.name = name;
+				newExample.id = null;
+				
+				//MiscUtils.copyData(_example,newExample,new ArrayCollection(["id"]));
+				
+				_example = newExample;
 				if (_example.id) {
 					_example.update();
 				} else {

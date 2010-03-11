@@ -32,6 +32,7 @@
 	<fx:Script><![CDATA[
 		import air.update.events.UpdateEvent;
 		
+		import flash.display.StageDisplayState;
 		import flash.events.FullScreenEvent;
 		import flash.events.MouseEvent;
 		
@@ -40,18 +41,16 @@
 		import gapdesktoprx.components.main.*;
 		import gapdesktoprx.controllers.ApplicationController;
 		import gapdesktoprx.controllers.ModelsController;
-		import gapdesktoprx.events.ExampleChangeEvent;
 		import gapdesktoprx.events.ExampleRolloutEvent;
 		import gapdesktoprx.events.ExampleRolloverEvent;
 		import gapdesktoprx.events.ExampleSelectEvent;
 		import gapdesktoprx.events.NameExampleEvent;
-		import gapdesktoprx.models.Example;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
 		import mx.events.FlexEvent;
+		import mx.events.StateChangeEvent;
 		import mx.managers.PopUpManager;
 		
-		import org.restfulx.Rx;
 		import org.restfulx.services.air.AIRServiceProvider;
 		
 		
@@ -110,18 +109,27 @@
 		}
 		
 		
-		//		protected function windowedapplication1_initializeHandler(event:FlexEvent):void
-		//		{
-		//			this.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE,traceState);
-		//		}
+		protected function windowedapplication1_initializeHandler(event:FlexEvent):void
+		{
+			this.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE,stateChangeHandler);
+		}
+		
+		private function stateChangeHandler(event:StateChangeEvent):void {
+			switch (event.newState) {
+				case 'MainState':
+				case 'SettingsState':
+				case 'TosState':
+					stage.displayState = StageDisplayState.NORMAL;
+					break;
+				
+			}
+		}
 		
 		
 		protected function windowedapplication1_preinitializeHandler(event:FlexEvent):void
 		{
 			ApplicationController.initialize([AIRServiceProvider], 
 				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
-			Rx.enableLogging();
-			
 		}
 		
 		public static function get models():ModelsController {
@@ -212,7 +220,7 @@
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			PopUpManager.centerPopUp(nameExampleWindow);
 			nameExampleWindow.y = this.y;
- 		}
+		}
 		
 	]]></fx:Script>
 	<s:states>
@@ -222,7 +230,7 @@
 		<s:State name="TosState"/>
 		<s:State name="TlzState"/>
 	</s:states>
-
+	
 	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState">
 		<s:layout>
 			<s:VerticalLayout/>
@@ -335,7 +343,7 @@
 			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Termsofuse_Button"/>
 		</s:Group>
 		
-
+		
 		
 	</s:Group>
 	<s:Group id="updatenotificationgroup" x="0" bottom="0" height="50" width="100%" includeIn="MainState">
