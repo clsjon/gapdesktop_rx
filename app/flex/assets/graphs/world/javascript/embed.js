@@ -18,8 +18,8 @@
 		// called from flash. updates browser history.
 		function updateUrl(newUrl){
 			if (newUrl.length > 1 ) {
-				window.runtime.trace("Location read from JS: " + window.htmlLoader.location);
-				window.runtime.trace('updateUrl called, newUrl: ' + newUrl);
+				//window.runtime.trace("Location read from JS: " + window.htmlLoader.location);
+				//window.runtime.trace('updateUrl called, newUrl: ' + newUrl);
 				updateHash(newUrl);
 		    }
 		}
@@ -36,7 +36,7 @@
 		// send url changes to flash movie
 		function historyChange(change){
 			if (change.length > 1) {
-				window.runtime.trace('historyChange invoked with change: ' + change);
+				//window.runtime.trace('historyChange invoked with change: ' + change);
 				so.call('onHashChanged', change);
 				lastHash=change;
 			}else{
@@ -47,7 +47,7 @@
 		
 		
 		function openURL(url){
-			window.runtime.trace('openURL called with URL: ' + url);
+			//window.runtime.trace('openURL called with URL: ' + url);
 			var win = window.open(url,"_blank");
 			if (win == undefined){
 				so.call("onPopUpBlocked", url);

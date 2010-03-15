@@ -78,13 +78,13 @@
 			
 			protected function graphHTML_locationChangeHandler(event:Event):void
 			{
-				trace('Location: ' + event.currentTarget.location);
+				//trace('Location: ' + event.currentTarget.location);
 			}
 			
 			
 			protected function graphHTML_clickHandler(event:MouseEvent):void
 			{
-				trace(event.currentTarget.toString());
+				//trace(event.currentTarget.toString());
 			}
 			
 			[Bindable(event="exampleChange")]
@@ -106,16 +106,20 @@
 			
 			public function bookmarkExample(name:String):void {
 				var newExample:Example = RxUtils.clone(_example) as Example;
+				trace ("New example hash: " + newExample.hash);
 				newExample.name = name;
 				newExample.id = null;
-				
-				//MiscUtils.copyData(_example,newExample,new ArrayCollection(["id"]));
-				
-				_example = newExample;
-				if (_example.id) {
-					_example.update();
+				newExample.userGenerated = true;
+				newExample.mainTag = null;
+				newExample.tags = null;
+				newExample.introText = null;
+				newExample.content = null;
+				newExample.introImage = null;
+				example = newExample;
+				if (example.id) {
+					example.update();
 				} else {
-					_example.create();
+					example.create();
 				}
 				
 			}

@@ -28,7 +28,6 @@ package gapdesktoprx.events
 		}
 		
 		public function set example(example:Example):void {
-			trace("Example in event has url hash: " + example.hash);
 			_example = example;
 		}
 		

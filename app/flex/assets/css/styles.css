@@ -1,6 +1,15 @@
 @namespace "http://www.adobe.com/2006/mxml";
 @namespace default "spark.skins.default.*";
 @namespace containers "flexlib.containers.*";
+@namespace s "library://ns.adobe.com/flex/spark";
+
+
+@font-face {
+	src:url("/assets/fonts/Garamond/AGaramondPro-Regular.otf");
+	fontFamily: Garamond;
+	fontStyle: normal;
+	fontWeight: normal;
+}
 
 
 @font-face {
@@ -16,11 +25,19 @@
 	fontWeight: light;
 }
 @font-face {
-	src:url("/assets/fonts/Avenir/AvenirLTStd-Medium.otf");
+	src:url("/assets/fonts/Avenir/AvenirLTStd-Heavy.otf");
 	fontFamily: Avenir;
 	fontStyle: normal;
-	fontWeight: normal;
+	fontWeight: heavy;
 }
+
+@font-face {
+	src:url("/assets/fonts/Avenir/AvenirLTStd-Book.otf");
+	fontFamily: Avenir;
+	fontStyle: normal;
+	fontWeight: book;
+}
+
 @font-face {
   src: url("/assets/fonts/MyriadWebPro.ttf");
   fontFamily: MyriadWebPro;
@@ -38,8 +55,14 @@
 global{
 	modal-transparency-blur: 0;
 	modal-transparency: 0.5;
+
 }
 
+.mainButtonStyle{
+	skinClass: ClassReference('gapdesktoprx.components.catalyst.MainButton');
+	font-family: Avenir;
+	font-weight: bold;
+}
 
  .infoBox {
   backgroundColor: #FFFFFF;

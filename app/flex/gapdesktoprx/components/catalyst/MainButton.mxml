@@ -23,6 +23,7 @@
 				<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 			</s:stroke>
 		</s:Rect>
-		<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="14" height="16" d:id="26" kerning="on" lineHeight="120%" ai:objID="615c2180" text="(Label)" textAlign="justify" d:userLabel="{hostComponent.label}" whiteSpaceCollapse="preserve" width="203" x="6" y="10" id="labelDisplay"></s:RichText>
+		<s:RichText id="labelDisplay" color="0x000000" fontSize="14" height="16" fontFamily="{hostComponent.getStyle('fontFamily')}" text="AA" kerning="on" lineHeight="120%" ai:objID="615c2180" textAlign="justify" whiteSpaceCollapse="preserve" width="203" x="6" y="10"/>
+		<s:RichText id="fontName" color="0x111111" fontSize="9" height="16" text="{hostComponent.getStyle('fontFamily')}" x="0" y="20"/>
 	</s:Group>
 </s:Skin>

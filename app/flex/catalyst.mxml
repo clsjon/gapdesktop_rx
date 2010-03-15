@@ -51,6 +51,7 @@
 		import mx.events.StateChangeEvent;
 		import mx.managers.PopUpManager;
 		
+		import org.restfulx.Rx;
 		import org.restfulx.services.air.AIRServiceProvider;
 		
 		
@@ -85,7 +86,6 @@
 		
 		protected function list1_clickHandler(event:MouseEvent):void
 		{
-			trace(event.toString());
 			currentState='TlzState';
 		}
 		
@@ -130,6 +130,7 @@
 		{
 			ApplicationController.initialize([AIRServiceProvider], 
 				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
+			Rx.enableLogging();
 		}
 		
 		public static function get models():ModelsController {
@@ -248,7 +249,7 @@
 			
 		</s:Group>
 		
-		<containers:SuperTabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" fontFamily="Avenir LT Std 35 Light" editableTabLabels="true" popUpButtonPolicy="off"/>
+		<containers:SuperTabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off"/>
 	</s:Group>
 	<s:Group id="maingroup" width="100%">
 		<s:layout>
@@ -271,12 +272,12 @@
 				</s:stroke>
 			</s:Line>
 			<s:RichText color="#000000" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
-				<s:content><s:p><s:span fontFamily="Avenir LT Std 95 Black">Gapminder </s:span><s:span fontFamily="Avenir LT Std 35 Light">Desktop </s:span><s:span fontFamily="Avenir LT Std 35 Light" fontSize="12">beta</s:span></s:p></s:content>
+				<s:content><s:p><s:span fontSize="12">beta</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="0x000000" fontFamily="Avenir LT Std 35 Light" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
+			<s:RichText color="0x000000" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p whiteSpaceCollapse="collapse"><s:span>no internet required</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="#000000" fontFamily="Avenir LT Std 45 Book" fontSize="10" height="10" text="Updated 03/08/2010 (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+			<s:RichText color="#000000" fontSize="10" height="10" text="Updated 03/08/2010 (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 		</s:Group>
 		
 		<s:Group id="gwgroup" width="100%">	
@@ -292,10 +293,10 @@
 				<s:layout><s:VerticalLayout/></s:layout>
 				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState">
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
-					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
+					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
 						<s:content><s:p>Gapminder World</s:p></s:content>
 					</s:RichText>
-					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="12" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200">
+					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="12" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200">
 						<s:content>
 							<s:p >Lets you have the world's most important data with you at all times. Features include:</s:p>
 							<s:p>–Bookmark your own graphs<s:br/>–Choose from a library of existing graphs<s:br/>–No internet required<s:br/>–Updates automatically when new data are available</s:p>
@@ -304,11 +305,11 @@
 						
 					</s:RichText>
 				</s:Group>
-				<s:Button id="mainGwButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Open Gapminder World" width="200" click="launchDefaultGraph()"/>
-				<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="12" id="or" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
+				<s:Button id="mainGwButton" styleName="mainButtonStyle" label="Open Gapminder World" width="200" click="launchDefaultGraph()"/>
+				<s:RichText color="0x000000" fontSize="12" id="or" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
 					<s:content><s:p>or</s:p></s:content>
 				</s:RichText>
-				<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" label="Open list of graphs" width="200" click="launchExamplesList()"/>
+				<s:Button styleName="mainButtonStyle" label="Open list of graphs" width="200" click="launchExamplesList()"/>
 				
 				<!--<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{models.examples}" change="exampleList_changeHandler(event)" width="100%" height="400"/>-->
 				
@@ -324,7 +325,7 @@
 		</s:Group>
 		
 		<s:Group id="tosgroup" includeIn="TosState">
-			<s:RichText color="#000000" fontFamily="Avenir LT Std 85 Heavy" fontSize="16" height="13" id="richtext6" includeIn="TosState" tabStops="S0 S50 S100 S150 S200 S250 S300 S350 S400" tabStops.TosState="S0 S50 S100 S150 S200 S250 S300 S350" text="Settings" text.TosState="Terms of use for Gapminder Desktop and the Gapminder website" width="313" width.TosState="604" x="23" y="89"/>
+			<s:RichText color="#000000" fontSize="16" height="13" id="richtext6" includeIn="TosState" tabStops="S0 S50 S100 S150 S200 S250 S300 S350 S400" tabStops.TosState="S0 S50 S100 S150 S200 S250 S300 S350" text="Settings" text.TosState="Terms of use for Gapminder Desktop and the Gapminder website" width="313" width.TosState="604" x="23" y="89"/>
 			<s:SkinnableContainer id="skinnablecontainer1" skinClass="gapdesktoprx.components.catalyst.ScrollPanel2" x="22" y="120"/>
 			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="24" y="465"/>
 			
@@ -382,13 +383,13 @@
 				<s:DropShadowFilter alpha="0.75" blurX="10" blurY="10" distance="10" quality="3"/>
 			</s:filters>
 		</s:Rect>
-		<s:RichText id="exampleName" top="10" left="15" height="20" right="15" fontFamily="Avenir LT Std 95 Black" kerning="on" fontSize="14" textAlign="left"/>
+		<s:RichText id="exampleName" top="10" left="15" height="20" right="15" kerning="on" fontSize="14" textAlign="left"/>
 		<s:Line left="15" right="15" y="25">
 			<s:stroke>
 				<s:SolidColorStroke color="#888888" weight="1"/>
 			</s:stroke>
 		</s:Line>
-		<s:RichText id="exampleDesc" top="30" left="15" bottom="15" right="15" fontFamily="Avenir LT Std 45 Book" kerning="on" fontSize="14" textAlign="justify" textAlignLast="justify"/>
+		<s:RichText id="exampleDesc" top="30" left="15" bottom="15" right="15" kerning="on" fontSize="14" textAlign="justify" textAlignLast="justify"/>
 	</s:Group>		
 	
 	

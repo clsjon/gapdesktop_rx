@@ -2,6 +2,7 @@ package gapdesktoprx.controllers {
 	import gapdesktoprx.models.Example;
 	import gapdesktoprx.models.ExampleTag;
 	import gapdesktoprx.models.Tag;
+	import gapdesktoprx.utils.FirstRunUtilities;
 	
 	import org.restfulx.Rx;
 	import org.restfulx.collections.RxCollection;
@@ -36,14 +37,17 @@ package gapdesktoprx.controllers {
 			Rx.models.index(ExampleTag,refreshTagCollections);
 		}
 		
-		private function refreshExampleCollections(obj:Object):void {
+		private function refreshExampleCollections(obj:Object = null):void {
 			examples = Rx.models.cached(Example);
+			if (examples.length == 0) {
+				FirstRunUtilities.populateDatabase();
+			}
 			userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
 			gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
-			//defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
+			defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
 		}
 		
-		private function refreshTagCollections(obj:Object):void {
+		private function refreshTagCollections(obj:Object = null):void {
 			tags = Rx.models.cached(Tag);
 			usedMainTags = Rx.filter(Rx.models.cached(Tag), filterUsedMainTags);
 		}
@@ -51,15 +55,10 @@ package gapdesktoprx.controllers {
 		private function onCacheUpdate(event:CacheUpdateEvent):void {
 			trace('cache update for ' + event.fqn);
 			if (event.isFor(Example)) {
-				examples = Rx.models.cached(Example);
-				userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
-				gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
+				refreshExampleCollections();
 				//defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
-			} else if (event.isFor(Tag)) {
-				for each (var tag:Tag in event.data) {
-					//trace (tag.name + ' with examples ' + tag.exampleTags.length);
-				}
-			
+			} else if (event.isFor(ExampleTag)) {
+				refreshTagCollections();
 			
 			} else {
 				var prop:String = RxUtils.toCamelCase(Rx.models.state.controllers[event.fqn]);
