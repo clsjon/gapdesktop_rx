@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas
+<mx:VBox
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	creationComplete="graphHTML_completeHandler(event)"
@@ -18,6 +18,8 @@
 			import gapdesktoprx.models.Example;
 			import gapdesktoprx.overrides.TlzHost;
 			
+			import mx.utils.ObjectUtil;
+			
 			import org.restfulx.utils.RxUtils;
 			
 			private var _htmlLoader:HTMLLoader;
@@ -26,8 +28,10 @@
 			private var _example:Example = new Example();
 			
 			private function updateHash(newHash:String):void {
-				//trace("Incoming hash from swf is: " + newHash);
-				_example.hash = newHash;
+				trace("Incoming hash from swf is: " + newHash);
+				example.hash = newHash;
+				example.name = '[New example]';
+				//_example.hash = newHash;
 				//newExample(newHash);
 				//trace ('Example URL Hash:' +  _example.urlHash);
 			}
@@ -36,7 +40,7 @@
 			{
 				//			_htmlLoader = new HTMLLoader();
 				//			_htmlLoader.
-				//trace("graphBrowser_completeHandler");
+				trace("graphBrowser_completeHandler");
 				graphHTML.htmlLoader.window.updateHash = updateHash;
 				graphHTML.setFocus();
 			}
@@ -78,7 +82,7 @@
 			
 			protected function graphHTML_locationChangeHandler(event:Event):void
 			{
-				//trace('Location: ' + event.currentTarget.location);
+				trace('Location: ' + event.currentTarget.location);
 			}
 			
 			
@@ -100,12 +104,14 @@
 				invalidateProperties();
 				this.dispatchEvent(new Event("exampleChange"));
 				this.dispatchEvent(new ExampleChangeEvent(example,true));
+				//trace(value.urlhash);
 				//this.graphHTML.location = 'app:/assets/graphs/' + example.graph.shortName + "/index.html#" + example.hash;
 
 			}
 			
 			public function bookmarkExample(name:String):void {
 				var newExample:Example = RxUtils.clone(_example) as Example;
+				
 				trace ("New example hash: " + newExample.hash);
 				newExample.name = name;
 				newExample.id = null;
@@ -117,15 +123,19 @@
 				newExample.introImage = null;
 				example = newExample;
 				if (example.id) {
+					trace('example update for example id: ' + example.id);
 					example.update();
 				} else {
 					example.create();
+					trace('example create for example id: ' + example.id);
 				}
 				
 			}
 		]]>
 	</mx:Script>
+	<s:RichText fontSize="8" text="{graphHTML.location}" width="100%" height="10" />
+	<s:RichText fontSize="8" text="{example.id}" height="10"/>
 	<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" location="{_example.url()}" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" locationChange="graphHTML_locationChangeHandler(event)"  click="graphHTML_clickHandler(event)" />
-</mx:Canvas>
+</mx:VBox>
 
 
