@@ -29,11 +29,11 @@
 			
 			private function updateHash(newHash:String):void {
 				trace("Incoming hash from swf is: " + newHash);
-				example.hash = newHash;
-				example.name = '[New example]';
-				//_example.hash = newHash;
-				//newExample(newHash);
-				//trace ('Example URL Hash:' +  _example.urlHash);
+				if (example.id) {
+					newExample(newHash);
+				} else {
+					example.hash = newHash;
+				}
 			}
 			
 			private function graphHTML_completeHandler(event:Event):void
@@ -50,9 +50,9 @@
 			
 			private function newExample(hash:String):void {
 				if (!RxUtils.isEmpty(hash)) {
-					var newExample:Example = RxUtils.clone(_example) as Example;
+					var newExample:Example = new Example;
 					newExample.hash = hash;
-					
+					newExample.graph = _example.graph;
 					newExample.userGenerated = true;
 					newExample.name = "[New example]";
 					invalidateDisplayList();
@@ -106,28 +106,13 @@
 				this.dispatchEvent(new ExampleChangeEvent(example,true));
 				//trace(value.urlhash);
 				//this.graphHTML.location = 'app:/assets/graphs/' + example.graph.shortName + "/index.html#" + example.hash;
-
+				
 			}
 			
 			public function bookmarkExample(name:String):void {
-				var newExample:Example = RxUtils.clone(_example) as Example;
-				
-				trace ("New example hash: " + newExample.hash);
-				newExample.name = name;
-				newExample.id = null;
-				newExample.userGenerated = true;
-				newExample.mainTag = null;
-				newExample.tags = null;
-				newExample.introText = null;
-				newExample.content = null;
-				newExample.introImage = null;
-				example = newExample;
-				if (example.id) {
-					trace('example update for example id: ' + example.id);
-					example.update();
-				} else {
+				if (!example.id) {
+					example.name = name;
 					example.create();
-					trace('example create for example id: ' + example.id);
 				}
 				
 			}
