@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<s:WindowedApplication 
+<s:WindowedApplication
 	xmlns:lib="assets.graphics.Desktop_mockup_091104_copy.*" 
 	xmlns:ATE="http://ns.adobe.com/ate/2009" 
 	xmlns:ai="http://ns.adobe.com/ai/2009" 
@@ -21,7 +21,7 @@
 	width="800" 
 	minHeight="400"
 	minWidth="700"
-	
+	resizing="windowedapplication1_resizingHandler(event)"
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)" 
 	xmlns:ns="library://ns.adobe.com/flex/mx" 
@@ -35,6 +35,7 @@
 		import flash.display.StageDisplayState;
 		import flash.events.FullScreenEvent;
 		import flash.events.MouseEvent;
+		import flash.events.NativeWindowBoundsEvent;
 		
 		import flashx.textLayout.conversion.TextConverter;
 		
@@ -223,6 +224,22 @@
 			nameExampleWindow.y = this.y;
 		}
 		
+		private function fixedSizeState():Boolean {
+			if (this.currentState == "MainState") {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		protected function windowedapplication1_resizingHandler(event:NativeWindowBoundsEvent):void
+		{
+			if (this.fixedSizeState()) {
+				trace ('now resizing should have been prevented');
+			}
+		}
+
 	]]></fx:Script>
 	<s:states>
 		<s:State name="MainState"/>
@@ -271,8 +288,8 @@
 					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 				</s:stroke>
 			</s:Line>
-			<s:RichText color="#000000" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
-				<s:content><s:p><s:span fontSize="12">beta</s:span></s:p></s:content>
+			<s:RichText color="#000000" fontFamily="Avenir-black" fontWeight="normal" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
+				<s:content><s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span><s:span fontFamily="Avenir-light" fontSize="12"> beta</s:span></s:p></s:content>
 			</s:RichText>
 			<s:RichText color="0x000000" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p whiteSpaceCollapse="collapse"><s:span>no internet required</s:span></s:p></s:content>
@@ -285,8 +302,8 @@
 				<s:HorizontalLayout/>
 			</s:layout>
 			<s:Group id="bigbuttoncolumn" width="50%">
-				<s:Group id="bigbuttongroup" includeIn="MainState,TooltipState">
-					<s:Button alpha.TooltipState="0.4" id="splashButton" skinClass="gapdesktoprx.components.catalyst.SplashButton"/>		
+				<s:Group id="bigbuttongroup" excludeFrom="SettingsState,TlzState,TosState">
+					<s:Button id="splashButton" skinClass="gapdesktoprx.components.catalyst.SplashButton"/>		
 				</s:Group>
 			</s:Group>
 			<s:Group id="explanationcolumn" width="50%" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">
@@ -305,7 +322,7 @@
 						
 					</s:RichText>
 				</s:Group>
-				<s:Button id="mainGwButton" styleName="mainButtonStyle" label="Open Gapminder World" width="200" click="launchDefaultGraph()"/>
+				<s:Button id="mainGwButton" styleName="mainButtonStyle" useHandCursor="true" buttonMode="true" label="Open Gapminder World" width="200" click="launchDefaultGraph()"/>
 				<s:RichText color="0x000000" fontSize="12" id="or" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
 					<s:content><s:p>or</s:p></s:content>
 				</s:RichText>
@@ -451,11 +468,7 @@
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{splashButton}">
-					<s:Fade alphaTo="0" d:noAutoDelete="true">
-						<s:easer>
-							<s:Linear easeInFraction="0.25" easeOutFraction="0.25"/>
-						</s:easer>
-					</s:Fade>
+					<s:Fade duration="500"/>
 				</s:Parallel>
 			</s:Parallel>
 		</s:Transition>
