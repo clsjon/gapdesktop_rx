@@ -1,29 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009">
-	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
+
+
+
+<s:Skin 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo" 	
+	minWidth="21" minHeight="16" 
+	alpha.disabled="0.5"
+	>
+	<fx:Script>
+		<![CDATA[
+			import mx.graphics.SolidColorStroke;
+		]]>
+	</fx:Script>
+	
+	<fx:Metadata>
+		[HostComponent("spark.components.Button")]
+	</fx:Metadata>
+	
+	<!-- states -->	
 	<s:states>
-		<s:State name="up"/>
-		<s:State name="over"/>
-		<s:State name="down"/>
-		<s:State name="disabled"/>
+		<s:State name="up" />
+		<s:State name="over" />
+		<s:State name="down" />
+		<s:State name="disabled" />
 	</s:states>
-	<s:Group x="0" y="0" id="buttondef">
-		<s:filters>
-			<s:GlowFilter includeIn="over,down" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
-		</s:filters>
-		<s:Rect height="30" d:id="25" ai:objID="615c1b70" width="{hostComponent.width}" x="0.5" y="0.5">
-			<s:fill>
-				<s:LinearGradient rotation="270" scaleX="30" x="107.543" y="30.5">
-					<s:GradientEntry color="0xD9D9D9" ratio="0"/>
-					<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
-					<s:GradientEntry color="0xEEEEEE" ratio="1"/>
-				</s:LinearGradient>
-			</s:fill>
-			<s:stroke>
-				<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
-			</s:stroke>
-		</s:Rect>
-		<s:RichText id="labelDisplay" color="0x000000" fontSize="14" height="16" fontFamily="{hostComponent.getStyle('fontFamily')}" text="AA" kerning="on" lineHeight="120%" ai:objID="615c2180" textAlign="justify" whiteSpaceCollapse="preserve" width="203" x="6" y="10"/>
-		<s:RichText id="fontName" color="0x111111" fontSize="9" height="16" text="{hostComponent.getStyle('fontFamily')}" x="0" y="20"/>
-	</s:Group>
+	
+	
+	<s:Rect 
+		radiusX="8" radiusY="8" 
+		height="100%" width="100%"
+		y=".5" x=".5"
+		>
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry 
+					color="#f4f4f3" 
+					color.down="#bbbaba" 
+					ratio="0"/>
+				<s:GradientEntry 
+					color="#bbbaba" 
+					color.down="#f4f4f3" 
+					ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke 
+				color="#999999"
+				color.over="#666666"
+				color.down="#666666"
+				weight="1"
+				/>
+		</s:stroke>
+	</s:Rect>
+	
+	
+	
+	<!-- label -->
+	<s:Label 
+		id="labelDisplay"
+		horizontalCenter="0" verticalCenter="1"
+		left="15" right="15" 
+		top="2" bottom="2"
+		textAlign="center"
+		verticalAlign="middle"
+		color="#333333"
+		fontSize="{hostComponent.getStyle('fontSize')}"
+		fontFamily="{hostComponent.getStyle('fontFamily')}"
+		/>
+	
+	
 </s:Skin>
