@@ -6,6 +6,7 @@
 		 xmlns:ns="library://ns.adobe.com/flex/mx">
 	<fx:Script>
 		<![CDATA[
+			import flash.events.Event;
 			import flash.events.MouseEvent;
 			
 			import gapdesktoprx.components.catalyst.ExampleList;
@@ -16,6 +17,8 @@
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
+			
+			import org.restfulx.collections.RxCollection;
 			
 			import spark.events.IndexChangeEvent;
 			
@@ -42,7 +45,7 @@
 				
 			}
 			
-
+			
 			protected function gapGraphs_changeHandler(event:ListEvent):void
 			{
 				var item:Object = event.currentTarget.selectedItem;
@@ -53,6 +56,16 @@
 					PopUpManager.removePopUp(this);
 				}
 			}
+			
+
+			protected function gapGraphs_renderHandler(event:Event):void
+			{
+				var tree:Tree = event.currentTarget as Tree;
+				var dp:RxCollection = tree.dataProvider as RxCollection;
+					
+				tree.expandChildrenOf(dp,true);
+			}
+
 
 		]]>
 	</fx:Script>
@@ -69,16 +82,22 @@
 			<s:SolidColor color="#FFFFFF"/>
 		</s:fill>
 	</s:Rect>
-	<s:Group id="main" x="0" y="0" width="100%" height="100%">
+	<s:Group id="main" x="0" y="0" width="600" height="500">
 		<s:layout><s:VerticalLayout/></s:layout>
 		
 		<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
 		<s:Group id="lists">
-			<s:layout><s:HorizontalLayout gap="30"/></s:layout>
-			<ns:Tree id="gapGraphs" width="250" height="400" dataProvider="{catalyst.models.usedMainTags}" change="gapGraphs_changeHandler(event)"/>
-			<!--<s:List id="gapGraphList" width="250" height="400" dataProvider="{catalyst.models.gapExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
-			--><s:List id="userGraphList" width="250" height="400" dataProvider="{catalyst.models.userExamples}" skinClass="gapdesktoprx.components.catalyst.ExampleList" change="graphList_changeHandler(event)"/>
-			
+			<s:layout><s:HorizontalLayout gap="30" horizontalAlign="center" verticalAlign="contentJustify"/></s:layout>
+			<s:Group id="gapexamples" width="100%">
+				<s:layout><s:VerticalLayout horizontalAlign="contentJustify"/></s:layout>
+				<s:Label id="gapGraphsLabel" text="Gapminder graphs" width="100%"/>				
+				<ns:Tree id="gapGraphs" dataProvider="{catalyst.models.usedMainTags}" change="gapGraphs_changeHandler(event)" width="100%"/>
+			</s:Group>
+			<s:Group id="userexamples" width="100%">
+				<s:layout><s:VerticalLayout/></s:layout>
+				<s:Label id="userGraphsLabel" text="Your own graphs"/>				
+				<s:List id="userGraphList" width="300" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)"/>
+			</s:Group>
 		</s:Group>
 	</s:Group>
 </s:Group>

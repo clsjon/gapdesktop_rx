@@ -56,11 +56,8 @@
 					newExample.userGenerated = true;
 					newExample.name = "[New example]";
 					invalidateDisplayList();
-					example = newExample;
-					trace("New example");
-					trace(example.hash);
-					//this.label = example.descShort;	
-					//    			examplesList.selectedIndex = -1;
+					_example = newExample;
+					trace("New example: " + example.hash);
 				}
 			}
 			
@@ -100,9 +97,12 @@
 			
 			public function set example(value:Example):void
 			{
+	
+				trace ('is the same: ' + (value.url()==_example.url()));					
 				_example = value;
-				invalidateProperties();
+				invalidateProperties();				
 				this.dispatchEvent(new Event("exampleChange"));
+				
 				this.dispatchEvent(new ExampleChangeEvent(example,true));
 				//trace(value.urlhash);
 				//this.graphHTML.location = 'app:/assets/graphs/' + example.graph.shortName + "/index.html#" + example.hash;

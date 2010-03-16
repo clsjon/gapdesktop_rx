@@ -19,8 +19,12 @@
 	
 	height="600" 
 	width="800" 
-	minHeight="400"
-	minWidth="700"
+	minHeight="600"
+	minWidth="800"
+	maxHeight="600"
+	maxWidth="800"
+	maxHeight.TlzState="1200"
+	maxWidth.TlzState="1900"
 	resizing="windowedapplication1_resizingHandler(event)"
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)" 
@@ -55,6 +59,8 @@
 		import org.restfulx.Rx;
 		import org.restfulx.services.air.AIRServiceProvider;
 		
+		private var oldTlzHeight:Number;
+		private var oldTlzWidth:Number;
 		
 		protected function button_clickHandler():void
 		{
@@ -113,15 +119,26 @@
 		protected function windowedapplication1_initializeHandler(event:FlexEvent):void
 		{
 			this.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE,stateChangeHandler);
+			oldTlzHeight = this.height;
+			oldTlzWidth = this.width;
+			
 		}
 		
 		private function stateChangeHandler(event:StateChangeEvent):void {
+			switch (event.oldState) {
+				case 'TlzState':
+					oldTlzHeight = this.height;
+					oldTlzWidth = this.width;
+			}
 			switch (event.newState) {
 				case 'MainState':
 				case 'SettingsState':
 				case 'TosState':
 					stage.displayState = StageDisplayState.NORMAL;
 					break;
+				case 'TlzState':
+					this.height = oldTlzHeight;
+					this.width = oldTlzWidth;
 				
 			}
 		}

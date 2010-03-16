@@ -40,7 +40,11 @@ package gapdesktoprx.models {
 	
 	[Ignored]
 	public function url():String {
-		return 'app:/assets/graphs/' + graph.shortName + "/index.html#" + hash;	
+		if (graph && hash) {
+		return 'app:/assets/graphs/' + graph.shortName + "/index.html#" + hash;
+		} else {
+			return null;
+		}
 	}
 
     public function Example() {
