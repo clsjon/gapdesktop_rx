@@ -17,12 +17,14 @@
 	
 	backgroundColor="#ffffff" 
 	
-	height="600" 
-	width="800" 
-	minHeight="600"
-	minWidth="800"
-	maxHeight="600"
-	maxWidth="800"
+	height="450" 
+	width="700" 
+	minHeight="450"
+	minWidth="700"
+	maxHeight="450"
+	maxWidth="700"
+	height.TlzState="600"
+	width.TlzState="800"
 	maxHeight.TlzState="1200"
 	maxWidth.TlzState="1900"
 	resizing="windowedapplication1_resizingHandler(event)"
@@ -275,17 +277,17 @@
 				<s:HorizontalLayout/>
 			</s:layout>
 			
-			<extensions:IconButton skinClass="gapdesktoprx.skins.IconButtonSkin" click="launchExamplesList()" iconUp="assets/icons/fullscreen.png" label="Open list of graphs" width="200"/>
+			<s:Button styleName="mainButtonStyle" click="launchExamplesList()" label="Open list of graphs" width="200"/>
 			
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" id="bookmarkButton" click="bookmarkButton_clickHandler(event)" label="Bookmark this graph" width="200"/>
-			<s:Button id="fullScreenButton" skinClass="gapdesktoprx.components.catalyst.MainButton" label="Full screen" width="200" click="fullScreenButton_clickHandler(event)"/>
-			<s:Button skinClass="gapdesktoprx.components.catalyst.MainButton" click="currentState='MainState'" label="Home" width="100"/>
+			<s:Button styleName="mainButtonStyle" id="bookmarkButton" click="bookmarkButton_clickHandler(event)" label="Bookmark this graph" width="200"/>
+			<s:Button id="fullScreenButton" styleName="mainButtonStyle" label="Full screen" width="200" click="fullScreenButton_clickHandler(event)"/>
+			<s:Button styleName="mainButtonStyle" click="currentState='MainState'" label="Home" width="100"/>
 			
 		</s:Group>
 		
 		<containers:SuperTabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off"/>
 	</s:Group>
-	<s:Group id="maingroup" width="100%">
+	<s:Group id="maingroup" width="100%" x="0">
 		<s:layout>
 			<s:VerticalLayout gap="10"/>
 		</s:layout>
@@ -308,29 +310,29 @@
 			<s:RichText color="#000000" fontFamily="Avenir-black" fontWeight="normal" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
 				<s:content><s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span><s:span fontFamily="Avenir-light" fontSize="12"> beta</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="0x000000" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
+			<s:RichText color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p whiteSpaceCollapse="collapse"><s:span>no internet required</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="#000000" fontSize="10" height="10" text="Updated 03/08/2010 (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+			<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated 03/08/2010 (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 		</s:Group>
 		
-		<s:Group id="gwgroup" width="100%">	
+		<s:Group id="gwgroup" width="100%" x="0">	
 			<s:layout>
-				<s:HorizontalLayout/>
+				<s:HorizontalLayout gap="20" paddingLeft="10"/>
 			</s:layout>
 			<s:Group id="bigbuttoncolumn" width="50%">
 				<s:Group id="bigbuttongroup" excludeFrom="SettingsState,TlzState,TosState">
-					<s:Button id="splashButton" skinClass="gapdesktoprx.components.catalyst.SplashButton"/>		
+					<s:Button id="splashButton" styleName="splashButtonStyle"/>		
 				</s:Group>
 			</s:Group>
-			<s:Group id="explanationcolumn" width="50%" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">
+			<s:Group id="explanationcolumn" width="350" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">
 				<s:layout><s:VerticalLayout/></s:layout>
-				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState">
+				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%">
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
-					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
+					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
 						<s:content><s:p>Gapminder World</s:p></s:content>
 					</s:RichText>
-					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="12" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200">
+					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200">
 						<s:content>
 							<s:p >Lets you have the world's most important data with you at all times. Features include:</s:p>
 							<s:p>–Bookmark your own graphs<s:br/>–Choose from a library of existing graphs<s:br/>–No internet required<s:br/>–Updates automatically when new data are available</s:p>
@@ -340,7 +342,7 @@
 					</s:RichText>
 				</s:Group>
 				<s:Button id="mainGwButton" styleName="mainButtonStyle" useHandCursor="true" buttonMode="true" label="Open Gapminder World" width="200" click="launchDefaultGraph()"/>
-				<s:RichText color="0x000000" fontSize="12" id="or" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
+				<s:RichText color="0x000000" fontFamily="Avenir-book" fontSize="14" id="or" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
 					<s:content><s:p>or</s:p></s:content>
 				</s:RichText>
 				<s:Button styleName="mainButtonStyle" label="Open list of graphs" width="200" click="launchExamplesList()"/>

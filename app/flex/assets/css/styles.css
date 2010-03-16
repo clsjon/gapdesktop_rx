@@ -71,6 +71,12 @@ global{
 	font-size: 16;
 }
 
+.splashButtonStyle{
+	skinClass: ClassReference('gapdesktoprx.components.catalyst.SplashButton');
+	font-family: Avenir-light;
+	font-size: 18;
+}
+
  .infoBox {
   backgroundColor: #FFFFFF;
   borderColor: #999999;

@@ -1,74 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-
-<s:Skin 
-	xmlns:fx="http://ns.adobe.com/mxml/2009" 
-	xmlns:s="library://ns.adobe.com/flex/spark" 
-	xmlns:mx="library://ns.adobe.com/flex/halo" 	
-	minWidth="21" minHeight="16" 
-	alpha.disabled="0.5"
-	>
-	<fx:Script>
-		<![CDATA[
-			import mx.graphics.SolidColorStroke;
-		]]>
-	</fx:Script>
-	
-	<fx:Metadata>
-		[HostComponent("spark.components.Button")]
-	</fx:Metadata>
-	
-	<!-- states -->	
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009">
+	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
 	<s:states>
-		<s:State name="up" />
-		<s:State name="over" />
-		<s:State name="down" />
-		<s:State name="disabled" />
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
 	</s:states>
-	
-	
-	<s:Rect 
-		radiusX="8" radiusY="8" 
-		height="100%" width="100%"
-		y=".5" x=".5"
-		>
+	<s:Rect height="28" radiusX="6" width="100%" x="0.5" y="0.5">
+		<s:stroke>
+			<s:LinearGradientStroke caps="none" joints="miter" miterLimit="4" rotation="90" weight="1">
+				<s:GradientEntry alpha="1.0" color="#EAEAEA" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color="#969797" ratio="1" color.down="#FFFFFF"/>
+			</s:LinearGradientStroke>
+		</s:stroke>
 		<s:fill>
-			<s:LinearGradient rotation="90">
-				<s:GradientEntry 
-					color="#f4f4f3" 
-					color.down="#bbbaba" 
-					ratio="0"/>
-				<s:GradientEntry 
-					color="#bbbaba" 
-					color.down="#f4f4f3" 
-					ratio="1"/>
+			<s:LinearGradient rotation="90" rotation.down="270">
+				<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0.07058823529411765"/>
+				<s:GradientEntry alpha="1.0" color="#E1E1E1" ratio="0.6"/>
+				<s:GradientEntry alpha="1.0" color="#CECECE" ratio="0.9333333333333333"/>
+				<s:GradientEntry alpha="1.0" color="#CECECE" ratio="1"/>
 			</s:LinearGradient>
 		</s:fill>
-		<s:stroke>
-			<s:SolidColorStroke 
-				color="#999999"
-				color.over="#666666"
-				color.down="#666666"
-				weight="1"
-				/>
-		</s:stroke>
+		<s:filters>
+			<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#969797" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
+			<s:DropShadowFilter includeIn="down" hideObject="false" knockout="false" distance="2" color="#333333" strength="1" inner="true" blurX="2" angle="45.0" blurY="2" alpha="0.5" quality="2"/>
+		</s:filters>
+		<s:fill.over>
+			<s:SolidColor color="#FFFFFF"/>
+		</s:fill.over>
 	</s:Rect>
-	
-	
-	
-	<!-- label -->
-	<s:Label 
-		id="labelDisplay"
-		horizontalCenter="0" verticalCenter="1"
-		left="15" right="15" 
-		top="2" bottom="2"
-		textAlign="center"
-		verticalAlign="middle"
-		color="#333333"
-		fontSize="{hostComponent.getStyle('fontSize')}"
-		fontFamily="{hostComponent.getStyle('fontFamily')}"
-		/>
-	
-	
+	<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="14" tabStops="S0" x="6" y="7" id="labelDisplay"/>
 </s:Skin>
