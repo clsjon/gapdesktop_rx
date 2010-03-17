@@ -45,7 +45,8 @@
 		
 		import flashx.textLayout.conversion.TextConverter;
 		
-		import flexlib.events.SuperTabEvent;
+		import flexlib.controls.SuperTabBar;
+		import flexlib.controls.tabBarClasses.SuperTab;
 		
 		import gapdesktoprx.components.main.*;
 		import gapdesktoprx.controllers.ApplicationController;
@@ -56,11 +57,9 @@
 		import gapdesktoprx.events.NameExampleEvent;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
-		import mx.containers.Canvas;
 		import mx.events.FlexEvent;
 		import mx.events.StateChangeEvent;
 		import mx.managers.PopUpManager;
-		import mx.utils.ObjectUtil;
 		
 		import org.restfulx.Rx;
 		import org.restfulx.services.air.AIRServiceProvider;
@@ -151,7 +150,7 @@
 			var viewer:GraphViewer = new GraphViewer();
 			viewer.example = event.example;
 			currentState = 'TlzState';
-			navigator.addChild(viewer);
+			navigator.addChildAt(viewer,navigator.numChildren - 1);
 			
 			navigator.selectedChild = viewer;
 			
@@ -183,6 +182,39 @@
 			updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
 		}
 		
+		
+		protected function navigator_clickHandler(event:MouseEvent):void {
+/* 			trace('--------------');
+			trace (getQualifiedClassName(event.target));
+ */			var bar:SuperTabBar = null;
+			
+			var obj:Object = event.target;
+			var parent:Object = obj.parent;
+			var child:DisplayObject = null;
+			for (var i:uint=0; i<4; i++) {
+				if (parent is SuperTabBar) {
+					bar = parent as SuperTabBar;
+					child = obj as DisplayObject;
+					break;
+				}
+				obj = parent;
+				parent = obj.parent;
+				
+			}
+			if (bar) {
+				var selectedIndex:uint = bar.getChildIndex(child);
+				if (selectedIndex == (bar.numChildren - 1 )) {
+					event.stopImmediatePropagation();
+					event.preventDefault();
+					if (event.target is SuperTab) {
+						var viewer:GraphViewer = new GraphViewer();
+						viewer.example = models.defaultExample;
+						navigator.addChildAt(viewer,navigator.numChildren - 2);
+	/* 					invalidateDisplayList();
+	 */				}
+				}
+			}
+		}
 		private function checkForUpdateEventHandler(event:UpdateEvent):void {
 			
 			trace ('update check authorized');
@@ -250,20 +282,12 @@
 	
 		protected function navigator_creationCompleteHandler(event:FlexEvent):void
 		{
-			var nav:SuperTabNavigator = event.currentTarget as SuperTabNavigator;
-			var blankCanvas:Canvas = new Canvas();
-			blankCanvas.label = "+"
-			nav.addChild(blankCanvas);
+			SuperTabNavigator(event.currentTarget).addEventListener(MouseEvent.CLICK,navigator_clickHandler,true);
+
 		}
 
 
-		protected function navigator_tabCloseHandler(event:SuperTabEvent):void
-		{
-			trace(event.currentTarget.class);
-			event.preventDefault();
-		}
-
-
+	
 		protected function settingsbutton_clickHandler(event:MouseEvent):void
 		{
 			if (event.altKey) { //open db admin interface
@@ -287,9 +311,9 @@
 	
 	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState">
 		<s:layout>
-			<s:VerticalLayout/>
+			<s:BasicLayout/>
 		</s:layout>
-		<s:Group id="tlzbuttonrow">
+		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
 			<s:layout><s:HorizontalLayout/></s:layout>
 			
 			<s:Button id="homeButton" click="currentState='MainState'" styleName="mainButtonStyle" label="Home" width="100"/>
@@ -299,7 +323,9 @@
 			
 		</s:Group>
 		
-		<containers:SuperTabNavigator id="navigator" x="0" y="0" width="100%" height="100%" creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabClose="navigator_tabCloseHandler(event)"/>
+		<containers:SuperTabNavigator id="navigator" bottom="0" top="30" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)">
+			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+"/>
+		</containers:SuperTabNavigator>
 		
 	</s:Group>
 	<s:Group id="maingroup" width="100%" x="0">
@@ -326,14 +352,12 @@
 				<s:content><s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span></s:p></s:content>
 			</s:RichText>
 			
-			<s:RichText color="#000000" rotation="45" fontFamily="Avenir-light" fontWeight="normal" fontSize="24" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
-				<s:content><s:p>beta</s:p></s:content>
-			</s:RichText>
+			<s:RichText color="#444444" rotation="45" fontFamily="Avenir-light" fontWeight="normal" fontSize="14" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" x="520" y="5" text="beta"/>
 			
 			<s:RichText color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p whiteSpaceCollapse="collapse"><s:span>no internet required</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated 03/08/2010 (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+			<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date().toLocaleDateString()} (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 		</s:Group>
 		
 		<s:Group id="gwgroup" width="100%" x="0">	
