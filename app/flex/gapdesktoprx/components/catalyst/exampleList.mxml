@@ -14,7 +14,7 @@
 		</s:fill>
 	</s:Rect>
 
-	<s:DataGroup itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem" id="dataGroup" clipAndEnableScrolling="true" top="10" height="305" width="215" horizontalCenter="0">
+	<s:DataGroup itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem" id="dataGroup" clipAndEnableScrolling="true" top="10" height="300" width="215" horizontalCenter="0">
 		<s:layout>
 			<s:VerticalLayout paddingBottom="10" gap="0"/>
 		</s:layout>

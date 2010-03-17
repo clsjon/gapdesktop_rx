@@ -81,6 +81,14 @@ global{
 	skinClass: ClassReference('gapdesktoprx.components.catalyst.ExampleList');
 }
 
+.gapGraphsStyle{
+	defaultLeafIcon: ClassReference(null);
+	folderClosedIcon: ClassReference(null);
+	folderOpenIcon: ClassReference(null);
+	font-family: Avenir-light;
+	font-size: 14;
+}
+
 
  .infoBox {
   backgroundColor: #FFFFFF;

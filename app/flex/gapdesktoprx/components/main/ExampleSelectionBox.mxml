@@ -9,7 +9,6 @@
 			import flash.events.Event;
 			import flash.events.MouseEvent;
 			
-			import gapdesktoprx.components.catalyst.ExampleList;
 			import gapdesktoprx.events.ExampleSelectEvent;
 			import gapdesktoprx.models.Example;
 			
@@ -46,27 +45,29 @@
 			}
 			
 			
-			protected function gapGraphs_changeHandler(event:ListEvent):void
-			{
-				var item:Object = event.currentTarget.selectedItem;
-				if (gapGraphs.dataDescriptor.isBranch(item)) {
-					trace('branch');
-				} else {
-					this.dispatchEvent(new ExampleSelectEvent(item as Example,true));
-					PopUpManager.removePopUp(this);
-				}
-			}
-			
-
 			protected function gapGraphs_renderHandler(event:Event):void
 			{
 				var tree:Tree = event.currentTarget as Tree;
 				var dp:RxCollection = tree.dataProvider as RxCollection;
-					
+				
 				tree.expandChildrenOf(dp,true);
 			}
-
-
+			
+			
+			
+			protected function gapGraphs_itemClickHandler(event:ListEvent):void
+			{
+				var tree:Tree = event.currentTarget as Tree;
+				var item:Object = Tree(event.currentTarget).selectedItem;
+				if (tree.dataDescriptor.isBranch(item)) {
+					tree.expandItem(item, !tree.isItemOpen(item), true);
+				} else {
+					this.dispatchEvent(new ExampleSelectEvent(item as Example,true));
+					PopUpManager.removePopUp(this);
+				}
+				
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -91,12 +92,12 @@
 			<s:Group id="gapexamples">
 				<s:layout><s:VerticalLayout horizontalAlign="contentJustify"/></s:layout>
 				<s:Label fontFamily="Avenir-heavy"  fontSize="16" id="gapGraphsLabel" text="Gapminder graphs" width="100%"/>				
-				<ns:Tree width="200" height="350" id="gapGraphs" dataProvider="{catalyst.models.usedMainTags}" change="gapGraphs_changeHandler(event)"/>
+				<ns:Tree width="200" height="300" id="gapGraphs" dataProvider="{catalyst.models.usedMainTags}" itemClick="gapGraphs_itemClickHandler(event)" styleName="gapGraphsStyle"/>
 			</s:Group>
 			<s:Group id="userexamples">
 				<s:layout><s:VerticalLayout/></s:layout>
-				<s:Label id="userGraphsLabel" fontFamily="Avenir-heavy"  fontSize="16" text="Your own graphs"/>				
-				<s:List id="userGraphList" height="350" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)"/>
+				<s:Label id="userGraphsLabel" fontFamily="Avenir-heavy"  fontSize="16" text="Your own graphs" width="100%"/>				
+				<s:List id="userGraphList" width="200" height="300" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)"/>
 			</s:Group>
 		</s:Group>
 	</s:Group>
