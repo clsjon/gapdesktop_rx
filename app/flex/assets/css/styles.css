@@ -77,6 +77,11 @@ global{
 	font-size: 18;
 }
 
+.exampleListStyle{
+	skinClass: ClassReference('gapdesktoprx.components.catalyst.ExampleList');
+}
+
+
  .infoBox {
   backgroundColor: #FFFFFF;
   borderColor: #999999;

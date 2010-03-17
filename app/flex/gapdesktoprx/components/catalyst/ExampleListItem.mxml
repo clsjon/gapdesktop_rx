@@ -8,8 +8,6 @@
 			
 			import gapdesktoprx.events.ExampleRolloutEvent;
 			import gapdesktoprx.models.Example;
-			
-			import mx.controls.Alert;
 			[Bindable]
 			private var _example:Example;
 			
@@ -68,27 +66,56 @@
 			<s:SolidColor color="0xCED7EE"/>
 		</s:fill>
 	</s:Rect>
+	<ns:Image id="deleteButton" visible="{_example.userGenerated}" source="@Embed(source='assets/icons/trash.png')" includeIn="hovered,selected" click="deleteButton_clickHandler(event)" width="10" right="0"/>
 	<s:Group x="0" y="0" rollOver="group_rollOverHandler()" rollOut="group_rollOutHandler()">
 		<s:filters>
 			<s:GlowFilter includeIn="hovered" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
 			<s:GlowFilter includeIn="selected" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
 		</s:filters>
-	<!--	<s:Rect height="30" width="250" x="0.5" y="0.5">
+	<ns:Image source="{logo}" x="6" y="6" width="16" height="16"/>
+		<ns:Image includeIn="hovered" right="6" y="10" source="@Embed(source='assets/icons/play.png')"/>
+		<s:Rect height="28" radiusX="0" width="200" x="0.5" y="0.5">
+			<s:stroke>
+				<s:LinearGradientStroke caps="none" joints="miter" miterLimit="4" rotation="90" weight="1">
+					<s:GradientEntry alpha="1.0" color="#EAEAEA" ratio="0"/>
+					<s:GradientEntry alpha="1.0" color="#969797" ratio="1"/>
+				</s:LinearGradientStroke>
+			</s:stroke>
 			<s:fill>
-				<s:LinearGradient rotation="270" scaleX="30" x="107.543" y="30.5">
-					<s:GradientEntry color="0xD9D9D9" ratio="0"/>
-					<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
-					<s:GradientEntry color="0xEEEEEE" ratio="1"/>
+				<s:LinearGradient rotation="90">
+					<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0"/>
+					<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0.07058823529411765"/>
+					<s:GradientEntry alpha="1.0" color="#EAE4E4" ratio="0.7764705882352941" ratio.hovered="0.6666666666666666"/>
+					<s:GradientEntry alpha="1.0" color="#CECECE" ratio="0.9333333333333333"/>
+					<s:GradientEntry alpha="1.0" color="#CECECE" ratio="1"/>
 				</s:LinearGradient>
 			</s:fill>
-			<s:stroke>
-				<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
-			</s:stroke>
+			<s:filters>
+				<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#969797" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
+			</s:filters>
 		</s:Rect>
--->		<ns:Image source="{logo}" x="6" y="6" width="16" height="16"/>
-		<ns:Image includeIn="hovered" right="6" y="10" source="@Embed(source='assets/icons/play.png')"/>
-		<s:RichText color="0x000000" fontFamily="Avenir LT Std 65 Medium" fontSize="14" height="16" d:id="26" kerning="on" lineHeight="120%" ai:objID="615c2180" text="{_example.name}" textAlign="justify" whiteSpaceCollapse="preserve" width="100%" x="30" y="10"></s:RichText>
-		<s:Button id="deleteButton" visible="{_example.userGenerated}" includeIn="hovered,selected" label="Delete" click="deleteButton_clickHandler(event)" right="0"/>
+		<s:RichText fontFamily="Avenir" fontSize="12" id="labelDisplay1" text="{data}" x="30" y="8" color="#333333" tabStops="S0 S50" color.hovered="#000000">
+			<s:filters>
+				<s:DropShadowFilter alpha="0.5" angle="45.0" blurX="4.0" blurY="4.0" color="#636D78" distance="4.0" hideObject="false" inner="true" knockout="false" quality="2" strength="1"/>
+			</s:filters>
+		</s:RichText>
+
+		<s:Rect alpha="0" height="29" includeIn="normal" d:userLabel="Item Highlight Rectangle" width="90">
+			<s:fill>
+				<s:SolidColor color="0xCED7EE"/>
+			</s:fill>
+		</s:Rect>
+		<s:Path data="M 8.70 15.00 L 0.04 0.00 17.36 -0.01 Z " height="11.379" includeIn="selected" width="26.707" x="31.179" y="28.494">
+			<s:stroke>
+				<s:SolidColorStroke caps="none" color="#979696" joints="miter" miterLimit="4" weight="1"/>
+			</s:stroke>
+			<s:fill>
+				<s:SolidColor color="0xD0D0D0"/>
+			</s:fill>
+			<s:filters>
+				<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#9796969" distance="2" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
+			</s:filters>
+		</s:Path>
 	</s:Group>
 	<s:transitions>
 		<s:Transition fromState="selected" toState="normal" autoReverse="true">

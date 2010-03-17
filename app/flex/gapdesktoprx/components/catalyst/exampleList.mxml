@@ -5,17 +5,18 @@
 		<s:State name="normal"/>
 		<s:State name="disabled"/>
 	</s:states>
-	<s:Rect id="rect1" width="100%" height="100%">
-		<s:fill>
-			<s:SolidColor color="0xFFFFFF"/>
-		</s:fill>
+	<s:Rect height="305" height.normal="306" width="215" x="0.5" y.disabled="1.5" y.normal="0.5">
 		<s:stroke>
-			<s:SolidColorStroke color="0x111111" weight="1"/>
+			<s:SolidColorStroke caps="none" color="#CCCCCC" joints="miter" miterLimit="4" weight="1"/>
 		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="#FFFFFF"/>
+		</s:fill>
 	</s:Rect>
-	<s:DataGroup itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem" id="dataGroup" clipAndEnableScrolling="true" top="10" height="90%" width="90%" horizontalCenter="0">
+
+	<s:DataGroup itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem" id="dataGroup" clipAndEnableScrolling="true" top="10" height="305" width="215" horizontalCenter="0">
 		<s:layout>
-			<s:VerticalLayout paddingBottom="10" gap="10"/>
+			<s:VerticalLayout paddingBottom="10" gap="0"/>
 		</s:layout>
 	</s:DataGroup>
 	<s:VScrollBar fixedThumbSize="true" skinClass="gapdesktoprx.components.catalyst.ExampleListScroll" viewport="{dataGroup}" buttonMode.normal="false" alpha.disabled="0.5" id="vscrollbar1" right="0"/>

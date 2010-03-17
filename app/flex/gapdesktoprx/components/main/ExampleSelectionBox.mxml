@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/halo" width="600" height="500"
+		 xmlns:mx="library://ns.adobe.com/flex/halo" width="600" height="400"
 		 creationComplete="group1_creationCompleteHandler(event)"
 		 xmlns:ns="library://ns.adobe.com/flex/mx">
 	<fx:Script>
@@ -82,21 +82,21 @@
 			<s:SolidColor color="#FFFFFF"/>
 		</s:fill>
 	</s:Rect>
-	<s:Group id="main" x="0" y="0" width="600" height="500">
+	<s:Group id="main" x="0" y="0">
 		<s:layout><s:VerticalLayout/></s:layout>
 		
 		<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
 		<s:Group id="lists">
 			<s:layout><s:HorizontalLayout gap="30" horizontalAlign="center" verticalAlign="contentJustify"/></s:layout>
-			<s:Group id="gapexamples" width="100%">
+			<s:Group id="gapexamples">
 				<s:layout><s:VerticalLayout horizontalAlign="contentJustify"/></s:layout>
-				<s:Label id="gapGraphsLabel" text="Gapminder graphs" width="100%"/>				
-				<ns:Tree id="gapGraphs" dataProvider="{catalyst.models.usedMainTags}" change="gapGraphs_changeHandler(event)" width="100%"/>
+				<s:Label fontFamily="Avenir-heavy"  fontSize="16" id="gapGraphsLabel" text="Gapminder graphs" width="100%"/>				
+				<ns:Tree width="200" height="350" id="gapGraphs" dataProvider="{catalyst.models.usedMainTags}" change="gapGraphs_changeHandler(event)"/>
 			</s:Group>
-			<s:Group id="userexamples" width="100%">
+			<s:Group id="userexamples">
 				<s:layout><s:VerticalLayout/></s:layout>
-				<s:Label id="userGraphsLabel" text="Your own graphs"/>				
-				<s:List id="userGraphList" width="300" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)"/>
+				<s:Label id="userGraphsLabel" fontFamily="Avenir-heavy"  fontSize="16" text="Your own graphs"/>				
+				<s:List id="userGraphList" height="350" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)"/>
 			</s:Group>
 		</s:Group>
 	</s:Group>
