@@ -71,6 +71,13 @@ global{
 	font-size: 16;
 }
 
+.iconButtonStyle{
+	skinClass: ClassReference('gapdesktoprx.skins.IconButtonSkin');
+	font-family: Avenir;
+	font-size: 16;
+}
+
+
 .splashButtonStyle{
 	skinClass: ClassReference('gapdesktoprx.components.catalyst.SplashButton');
 	font-family: Avenir-light;

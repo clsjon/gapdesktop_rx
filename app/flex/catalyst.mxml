@@ -314,7 +314,7 @@
 		</s:layout>
 		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
 			<s:layout><s:HorizontalLayout/></s:layout>
-			
+			<extensions:IconButton styleName="iconButtonStyle" label="Home" iconUp="/assets/icons/button/home.png"/>
 			<s:Button id="homeButton" click="currentState='MainState'" styleName="mainButtonStyle" label="Home" width="100"/>
 			<s:Button id="tlzGraphListButton" click="launchExamplesList()" styleName="mainButtonStyle" label="Open list of graphs" width="150"/>
 			<s:Button id="bookmarkButton" styleName="mainButtonStyle" click="bookmarkButton_clickHandler(event)" label="Bookmark this graph" width="150"/>
