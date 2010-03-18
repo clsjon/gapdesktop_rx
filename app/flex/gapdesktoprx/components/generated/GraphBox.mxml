@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" label="Graph"
+<ns:HBox xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:ns="library://ns.adobe.com/flex/mx" width="100%" label="Graph"
   xmlns:rx="org.restfulx.components.rx.*">
-  <mx:Script><![CDATA[
+  <fx:Script><![CDATA[
     import org.restfulx.Rx;
     import org.restfulx.utils.RxUtils;
     import gapdesktoprx.models.Graph;
@@ -53,49 +53,49 @@
     private function onGraphDestroy(result:Graph):void {
       onGraphCreate(result);
     }
-  ]]></mx:Script>
-  <mx:Panel id="graphsPanel"
-    title="Graphs" cornerRadius="0" borderStyle="solid" 
+  ]]></fx:Script>
+  <s:Panel id="graphsPanel"
+    title="Graphs" cornerRadius="0" 
     backgroundColor="#EEEEEE" width="25%" height="100%">
-    <mx:List id="graphsList"
+    <s:List id="graphsList"
       width="100%" height="100%"
       dataProvider="{Rx.models.index(Graph)}"
       change="onGraphSelect()"/>
-    <mx:ControlBar width="100%">
+    <ns:ControlBar width="100%">
       <mx:Button label="New Graph" width="100%" height="30"
         click="newGraph()"/>
-    </mx:ControlBar>
-  </mx:Panel>
-  <mx:Panel title="Edit Graph" cornerRadius="0" borderStyle="solid" 
+    </ns:ControlBar>
+  </s:Panel>
+  <s:Panel title="Edit Graph" cornerRadius="0" 
     backgroundColor="#EEEEEE" width="75%" height="100%">
     <mx:Form width="100%" height="100%">
       <mx:FormItem label="Name" width="100%">
-        <mx:TextInput id="nameTextInput" width="100%" text="{graph.name}"/>
+        <s:TextInput id="nameTextInput" width="100%" text="{graph.name}"/>
       </mx:FormItem>
       <mx:FormItem label="Collection key" width="100%">
-        <mx:TextInput id="collectionKeyTextInput" width="100%" text="{graph.collectionKey}"/>
+        <s:TextInput id="collectionKeyTextInput" width="100%" text="{graph.collectionKey}"/>
       </mx:FormItem>
       <mx:FormItem label="Downloaded date" width="100%">
-        <mx:DateField id="downloadedDateDateField" selectedDate="{graph.downloadedDate}"/>
+        <ns:DateField id="downloadedDateDateField" selectedDate="{graph.downloadedDate}"/>
       </mx:FormItem>
 		<mx:FormItem label="Short name" width="100%">
-			<mx:TextInput id="shortNameTextInput" width="100%" text="{graph.shortName}"/>
+			<s:TextInput id="shortNameTextInput" width="100%" text="{graph.shortName}"/>
 		</mx:FormItem>
 		<mx:FormItem label="Default graph" width="100%">
-			<mx:TextInput id="defaultGraphTextInput" width="100%" text="{graph.defaultGraph}"/>
+			<s:TextInput id="defaultGraphTextInput" width="100%" text="{graph.defaultGraph}"/>
 		</mx:FormItem>
 		<mx:FormItem label="Skin color" width="100%">
-			<mx:TextInput id="skinColorTextInput" width="100%" text="{graph.skinColor}"/>
+			<s:TextInput id="skinColorTextInput" width="100%" text="{graph.skinColor}"/>
 		</mx:FormItem>
 		
       
     </mx:Form>
-    <mx:ControlBar width="100%">
+    <ns:ControlBar width="100%">
       <mx:Button label="Save Graph" width="50%" height="30"
         click="saveGraph()"/>
       <mx:Button label="Delete Graph" width="50%" height="30"
         enabled="{RxUtils.canDeleteModel(graph)}"
         click="destroyGraph()"/>
-    </mx:ControlBar>
-  </mx:Panel>
-</mx:HBox>
+    </ns:ControlBar>
+  </s:Panel>
+</ns:HBox>

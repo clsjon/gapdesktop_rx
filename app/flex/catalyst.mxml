@@ -291,10 +291,9 @@
 		protected function settingsbutton_clickHandler(event:MouseEvent):void
 		{
 			if (event.altKey) { //open db admin interface
-				var gdrx:GapdesktopRx;
-				gdrx = new GapdesktopRx;
-				gdrx.open();
-			
+				var win:Admin = PopUpManager.createPopUp(this,Admin,true) as Admin;
+				PopUpManager.centerPopUp(win);
+				
 			} else {
 				currentState = "SettingsState";
 			}

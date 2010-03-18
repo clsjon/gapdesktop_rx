@@ -121,9 +121,9 @@
 		}
 		
 		private function admin_clickHandler(event:MouseEvent):void {
-			var gdrx:GapdesktopRx;
-			gdrx = new GapdesktopRx;
-			gdrx.open();
+//			var gdrx:GapdesktopRx;
+//			gdrx = new GapdesktopRx;
+//			gdrx.open();
 		}
 		
 		
