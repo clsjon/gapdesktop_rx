@@ -16,11 +16,11 @@
   <mx:ViewStack id="mainViewStack" width="100%" height="100%">
     <!-- For a simple demo, put all the components here. -->
     <generated:ExampleBox/>
-    <generated:GraphBox/>
+<!--    <generated:GraphBox/>
     <generated:SubmitterBox/>
 	<generated:TagBox/>
 	<generated:ExampleTagBox/>
-  </mx:ViewStack>
+-->  </mx:ViewStack>
 	</mx:HBox>
 <mx:Button label="Populate DB" click="FirstRunUtilities.populateDatabase()"/>
 		

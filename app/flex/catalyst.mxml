@@ -366,7 +366,7 @@
 			</s:layout>
 			<s:Group id="bigbuttoncolumn" width="50%">
 				<s:Group id="bigbuttongroup" excludeFrom="SettingsState,TlzState,TosState">
-					<s:Button id="splashButton" styleName="splashButtonStyle"/>		
+					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()"/>		
 				</s:Group>
 			</s:Group>
 			<s:Group id="explanationcolumn" width="350" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">

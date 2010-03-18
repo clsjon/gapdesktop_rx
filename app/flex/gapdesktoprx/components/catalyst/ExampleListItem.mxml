@@ -66,7 +66,6 @@
 			<s:SolidColor color="0xCED7EE"/>
 		</s:fill>
 	</s:Rect>
-	<ns:Image id="deleteButton" visible="{_example.userGenerated}" source="@Embed(source='assets/icons/trash.png')" includeIn="hovered,selected" click="deleteButton_clickHandler(event)" width="10" right="0"/>
 	<s:Group x="0" y="0" rollOver="group_rollOverHandler()" rollOut="group_rollOutHandler()">
 		<s:filters>
 			<s:GlowFilter includeIn="hovered" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
@@ -116,6 +115,7 @@
 				<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#9796969" distance="2" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
 			</s:filters>
 		</s:Path>
+		<ns:Image id="deleteButton" visible="{_example.userGenerated}" source="@Embed(source='assets/icons/trash.png')" includeIn="hovered,selected" click="deleteButton_clickHandler(event)" width="10" right="0"/>
 	</s:Group>
 	<s:transitions>
 		<s:Transition fromState="selected" toState="normal" autoReverse="true">

@@ -61,8 +61,10 @@
 				var item:Object = Tree(event.currentTarget).selectedItem;
 				if (tree.dataDescriptor.isBranch(item)) {
 					tree.expandItem(item, !tree.isItemOpen(item), true);
+					tree.selectedItem = null;
 				} else {
 					this.dispatchEvent(new ExampleSelectEvent(item as Example,true));
+					tree.selectedItem = null;
 					PopUpManager.removePopUp(this);
 				}
 				
@@ -92,12 +94,12 @@
 			<s:Group id="gapexamples">
 				<s:layout><s:VerticalLayout horizontalAlign="contentJustify"/></s:layout>
 				<s:Label fontFamily="Avenir-heavy"  fontSize="16" id="gapGraphsLabel" text="Gapminder graphs" width="100%"/>				
-				<ns:Tree width="200" height="300" id="gapGraphs" dataProvider="{catalyst.models.usedMainTags}" itemClick="gapGraphs_itemClickHandler(event)" styleName="gapGraphsStyle"/>
+				<ns:Tree width="300" height="300" id="gapGraphs" dataProvider="{catalyst.models.usedMainTags}" itemClick="gapGraphs_itemClickHandler(event)" styleName="gapGraphsStyle"/>
 			</s:Group>
 			<s:Group id="userexamples">
 				<s:layout><s:VerticalLayout/></s:layout>
 				<s:Label id="userGraphsLabel" fontFamily="Avenir-heavy"  fontSize="16" text="Your own graphs" width="100%"/>				
-				<s:List id="userGraphList" width="200" height="300" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)"/>
+				<s:List id="userGraphList" width="300" height="300" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)"/>
 			</s:Group>
 		</s:Group>
 	</s:Group>

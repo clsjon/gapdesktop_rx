@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" label="Example"
-  xmlns:rx="org.restfulx.components.rx.*">
+  xmlns:rx="org.restfulx.components.rx.*" xmlns:s="library://ns.adobe.com/flex/spark">
   <mx:Script><![CDATA[
   	import gapdesktoprx.models.Example;
   	import gapdesktoprx.models.Graph;
