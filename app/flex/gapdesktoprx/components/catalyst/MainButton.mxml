@@ -31,5 +31,5 @@
 			<s:SolidColor color="#FFFFFF"/>
 		</s:fill.over>
 	</s:Rect>
-	<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="14" tabStops="S0" x="6" y="7" id="labelDisplay"/>
+	<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="14" tabStops="S0" x="6" y="7" paddingRight="7" width="100%" id="labelDisplay"/>
 </s:Skin>

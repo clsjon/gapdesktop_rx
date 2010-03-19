@@ -252,7 +252,8 @@
 		}
 		
 		private function launchDefaultGraph():void {
-			if (navigator.numChildren < 2) {
+			
+			if (!navigator || navigator.numChildren < 2) {
 				this.dispatchEvent(new ExampleSelectEvent( models.defaultExample));
 			} else {
 				currentState = 'TlzState';
@@ -349,7 +350,7 @@
 			-->
 		</s:Group>
 		
-		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="30" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)">
+		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="38" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)">
 			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)"/>
 		</containers:SuperTabNavigator>
 		
@@ -419,19 +420,13 @@
 				
 				
 			</s:Group>
-			<s:Line id="line1" top="0" left="0" right="120" bottom="0">
-				<s:stroke>
-					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
-				</s:stroke>
-			</s:Line>
 			
 		</s:Group>
 		
 		<s:Group id="tosgroup" includeIn="TosState">
-			<s:RichText color="#000000" fontSize="16" height="13" id="richtext6" includeIn="TosState" tabStops="S0 S50 S100 S150 S200 S250 S300 S350 S400" tabStops.TosState="S0 S50 S100 S150 S200 S250 S300 S350" text="Settings" text.TosState="Terms of use for Gapminder Desktop and the Gapminder website" width="313" width.TosState="604" x="23" y="89"/>
-			<s:SkinnableContainer id="skinnablecontainer1" skinClass="gapdesktoprx.components.catalyst.ScrollPanel2" x="22" y="120"/>
-			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="24" y="465"/>
-			
+			<s:layout><s:BasicLayout/></s:layout>
+			<main:TermsofUse x="0" y="0" width="100%" height="100%"/>
+			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.Button3"/>		
 		</s:Group>
 		<s:Group id="settingsgroup" includeIn="SettingsState" x="100">
 			<s:CheckBox id="checkbox2" label="Check for updates automatically" skinClass="gapdesktoprx.components.catalyst.Checkbox1" x="26" y="114"/>
@@ -441,9 +436,9 @@
 		</s:Group>
 		
 		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%" height="40">
-			<s:layout><s:HorizontalLayout/></s:layout>
-			<s:Button id="settingsbutton" click="settingsbutton_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Settings..."/>
+			<s:layout><s:HorizontalLayout paddingLeft="12"/></s:layout>
 			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Terms of use..."/>
+			<s:Button id="settingsbutton" click="settingsbutton_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Settings..."/>
 		</s:Group>
 		
 		
@@ -502,9 +497,6 @@
 				<s:Parallel target="{explanationtext}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{line1}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
 				<s:Parallel target="{splashButton}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
@@ -521,9 +513,6 @@
 				<s:Parallel target="{explanationtext}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{line1}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
 				<s:Parallel target="{tooltip}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
@@ -534,13 +523,7 @@
 				<s:Parallel target="{bigbuttongroup}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{richtext6}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
 				<s:Parallel target="{closeSettingsButton}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{skinnablecontainer1}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{explanationcolumn}">
@@ -562,15 +545,6 @@
 				<s:Parallel target="{bigbuttongroup}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{richtext6}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{closeSettingsButton}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{skinnablecontainer1}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
 				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
@@ -585,9 +559,6 @@
 		<s:Transition autoReverse="true" fromState="SettingsState" toState="MainState">
 			<s:Parallel>
 				<s:Parallel target="{bigbuttongroup}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{richtext6}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{checkbox2}">
@@ -616,15 +587,35 @@
 				</s:Parallel>
 			</s:Parallel>
 		</s:Transition>
+		<s:Transition fromState="MainState" toState="TlzState" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{headinggroup}">					
+					<s:Fade duration="500"/>
+				</s:Parallel>
+				<s:Parallel target="{maingroup}">
+					<s:Fade duration="500"/>
+				</s:Parallel>
+				<s:Parallel target="{tlzgroup}">
+					<s:Fade duration="500"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+		<s:Transition fromState="TlzState" toState="MainState" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{headinggroup}">					
+					<s:Fade duration="500"/>
+				</s:Parallel>
+				<s:Parallel target="{maingroup}">
+					<s:Fade duration="500"/>
+				</s:Parallel>
+				<s:Parallel target="{tlzgroup}">
+					<s:Fade duration="500"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
 		<s:Transition fromState="TosState" toState="TooltipState" autoReverse="true">
 			<s:Parallel>
 				<s:Parallel target="{bigbuttongroup}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{skinnablecontainer1}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{richtext6}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{closeSettingsButton}">

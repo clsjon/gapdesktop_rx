@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin width="20"
+		height="20"
+		xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:ns="library://ns.adobe.com/flex/mx">
+	
+	
+	
+	<s:states>  
+		<s:State name="up" />  
+		<s:State name="over" />  
+		<s:State name="down"/>  
+		<s:State name="disabled"/>  
+	</s:states>
+	<ns:Image id="trash_img"
+			  source="@Embed('/assets/icons/button/trash.png')"
+			  width="16"
+			  height="16"
+			  alpha.up=".5"
+			  alpha.over="1"
+			  verticalCenter="0"
+			  horizontalCenter="0"/>
+	
+</s:Skin>

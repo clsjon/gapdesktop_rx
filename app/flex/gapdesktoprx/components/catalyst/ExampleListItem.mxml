@@ -1,66 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:ItemRenderer xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009"
-				toolTip="{_example.content}"
-				xmlns:ns="library://ns.adobe.com/flex/mx">
+				xmlns:ns="library://ns.adobe.com/flex/mx"
+				width="100%"
+				height="100%"
+			
+				>
 	<fx:Script>
 		<![CDATA[
-			import mx.events.FlexEvent;
 			import flash.events.MouseEvent;
 			
-			import gapdesktoprx.events.ExampleRolloutEvent;
+			import gapdesktoprx.events.ExampleSelectEvent;
 			import gapdesktoprx.models.Example;
+			import gapdesktoprx.skins.TrashButtonSkin;
+			
+			import mx.core.IFlexDisplayObject;
+			import mx.managers.PopUpManager;
+			
 			[Bindable]
 			private var _example:Example;
-			
-			[Embed(source="assets/icons/gapgen.png")]
-			private var gapgen:Class;
-			
-			[Embed(source="assets/icons/usergen.png")]
-			private var usergen:Class;
-			
-			[Bindable]
-			private var logo:Class;
 			
 			override public function set data(value:Object) : void {
 				super.data = value;
 				if (value is Example) {
 					_example = Example(value);
-					if (_example.userGenerated) {
-						logo = usergen;
-					}
-					else
-					{
-						logo=gapgen;
-					}
 				}
+				
 			}
-			
-			import gapdesktoprx.events.ExampleRolloverEvent;
-			protected function group_rollOverHandler():void
-			{
-				dispatchEvent(new ExampleRolloverEvent(_example,true));
-			}
-			
-			protected function group_rollOutHandler():void
-			{
-				dispatchEvent(new ExampleRolloutEvent(true));
-			}
-			
 			
 			protected function deleteButton_clickHandler(event:MouseEvent):void
 			{
-				/* Alert.show('Delete ' + _example.name,"Delete example placeholder"); */
-				event.preventDefault();
+				//Alert.show('Delete ' + _example.name,"Delete example placeholder");
 				_example.destroy();
+				event.stopImmediatePropagation();
+				event.preventDefault();
 			}
 			
 			
-			protected function deleteButton_creationCompleteHandler(event:FlexEvent):void
+
+
+		
+			protected function labelDisplay1_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
+				parent.dispatchEvent(new ExampleSelectEvent(_example,true));
 			}
-			
-		]]>
+
+			]]>
 		
 	</fx:Script>
 	<s:states>
@@ -68,74 +52,16 @@
 		<s:State name="hovered"/>
 		<s:State name="selected"/>
 	</s:states>
-	<s:Rect d:userLabel="Item Highlight" width="100%" height="25" alpha.normal="0" alpha.hovered="0.4" alpha.selected="0.8" id="rect1">
+	<s:Rect d:userLabel="Item Highlight" width="100%" height="20" alpha.normal="0" alpha.hovered="0.4" alpha.selected="0.8" id="higlightRect">
 		<s:fill>
 			<s:SolidColor color="0xCED7EE"/>
 		</s:fill>
 	</s:Rect>
-	<s:Group x="0" y="0" rollOver="group_rollOverHandler()" rollOut="group_rollOutHandler()">
+	<s:RichText fontFamily="Avenir" fontSize="12" id="labelDisplay1" text="{_example.name}" left="5" top="8" right="20" textAlign="left" click="labelDisplay1_clickHandler(event)">
 		<s:filters>
-			<s:GlowFilter includeIn="hovered" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
-			<s:GlowFilter includeIn="selected" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
+			<s:DropShadowFilter alpha="0.5" angle="45.0" blurX="4.0" blurY="4.0" color="#636D78" distance="4.0" hideObject="false" inner="true" knockout="false" quality="2" strength="1"/>
 		</s:filters>
-		<s:Rect height="24" radiusX="0" width="200" x="0.5" y="0.5">
-			<s:stroke>
-				<s:LinearGradientStroke caps="none" joints="miter" miterLimit="4" rotation="90" weight="1">
-					<s:GradientEntry alpha="1.0" color="#EAEAEA" ratio="0"/>
-					<s:GradientEntry alpha="1.0" color="#969797" ratio="1"/>
-				</s:LinearGradientStroke>
-			</s:stroke>
-			<s:fill>
-				<s:LinearGradient rotation="90">
-					<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0"/>
-					<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0.07058823529411765"/>
-					<s:GradientEntry alpha="1.0" color="#EAE4E4" ratio="0.7764705882352941" ratio.hovered="0.6666666666666666"/>
-					<s:GradientEntry alpha="1.0" color="#CECECE" ratio="0.9333333333333333"/>
-					<s:GradientEntry alpha="1.0" color="#CECECE" ratio="1"/>
-				</s:LinearGradient>
-			</s:fill>
-			<s:filters>
-				<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#969797" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
-			</s:filters>
-		</s:Rect>
-		<s:RichText fontFamily="Avenir" fontSize="12" id="labelDisplay1" text="{data}" x="30" y="8" color="#333333" tabStops="S0 S50" color.hovered="#000000">
-			<s:filters>
-				<s:DropShadowFilter alpha="0.5" angle="45.0" blurX="4.0" blurY="4.0" color="#636D78" distance="4.0" hideObject="false" inner="true" knockout="false" quality="2" strength="1"/>
-			</s:filters>
-		</s:RichText>
-		
-		<s:Rect alpha="0" height="25" includeIn="normal" d:userLabel="Item Highlight Rectangle" width="90">
-			<s:fill>
-				<s:SolidColor color="0xCED7EE"/>
-			</s:fill>
-		</s:Rect>
-		<s:Path data="M 8.70 15.00 L 0.04 0.00 17.36 -0.01 Z " height="11.379" includeIn="selected" width="26.707" x="31.179" y="28.494">
-			<s:stroke>
-				<s:SolidColorStroke caps="none" color="#979696" joints="miter" miterLimit="4" weight="1"/>
-			</s:stroke>
-			<s:fill>
-				<s:SolidColor color="0xD0D0D0"/>
-			</s:fill>
-			<s:filters>
-				<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#9796969" distance="2" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
-			</s:filters>
-		</s:Path>
-		<ns:Image id="deleteButton" visible="{_example.userGenerated}" source="@Embed(source='assets/icons/trash.png')" includeIn="hovered,selected" click="deleteButton_clickHandler(event)" creationComplete="deleteButton_creationCompleteHandler(event)" width="10" right="0"/>
-	</s:Group>
-	<s:transitions>
-		<s:Transition fromState="selected" toState="normal" autoReverse="true">
-			<s:Parallel>
-				<s:Parallel target="{rect1}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-			</s:Parallel>
-		</s:Transition>
-		<s:Transition fromState="normal" toState="hovered" autoReverse="true">
-			<s:Parallel>
-				<s:Parallel target="{rect1}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-			</s:Parallel>
-		</s:Transition>
-	</s:transitions>
+	</s:RichText>
+	
+	<s:Button id="deleteButton" buttonMode="true" skinClass="gapdesktoprx.skins.TrashButtonSkin" verticalCenter="true" right="4" click="deleteButton_clickHandler(event)"/>
 </s:ItemRenderer>

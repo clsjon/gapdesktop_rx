@@ -60,7 +60,7 @@
 				<s:SolidColor color="#FFFFFF"/>
 			</s:fill.over>
 		</s:Rect>
-		<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="14" x="28" verticalCenter="2" id="labelDisplay"/>
+		<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="14" x="28" verticalCenter="2" id="labelDisplay" paddingRight="7"/>
 		<ns:Image
 			id="icon" x="7"
 			source="{hostComponent.getStyle('iconUp')}"

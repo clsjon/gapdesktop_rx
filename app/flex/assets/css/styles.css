@@ -86,7 +86,9 @@ global{
 }
 
 .exampleListStyle{
-	skinClass: ClassReference('gapdesktoprx.components.catalyst.ExampleList');
+	font-family: Avenir-light;
+	font-size: 12;
+	border-color: #CCCCCC;
 }
 
 .gapGraphsStyle{
@@ -95,6 +97,7 @@ global{
 	folderOpenIcon: ClassReference(null);
 	font-family: Avenir-light;
 	font-size: 12;
+	border-color: #CCCCCC;
 }
 
 

@@ -95,6 +95,7 @@
 				trace ('is the same: ' + (value.url()==_example.url()));					
 				_example = value;
 				this.label = example.name;
+				unsavedHash = value.hash;
 				//var urlReq:URLRequest = new URLRequest(example.url());
 				if (graphHTML) {
 					graphHTML.location = example.url();
@@ -105,19 +106,14 @@
 			}
 			
 			public function bookmarkExample(name:String):void {
-				if (_example.hash == unsavedHash) {
-					trace ('same hash as existing');
-				} else {
-					saveNewExample(name,unsavedHash);
-				}
+		
+				saveNewExample(name,unsavedHash);
 				
 			}
 			
 		]]>
 	</mx:Script>
-	<!--<s:RichText fontSize="8" text="{graphHTML.location}" width="100%" height="10" />
-	<s:RichText fontSize="8" text="{example.id}" height="10"/>
-	-->	<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" locationChange="graphHTML_locationChangeHandler(event)"/>
+	<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" location="" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" locationChange="graphHTML_locationChangeHandler(event)"/>
 </mx:VBox>
 
 
