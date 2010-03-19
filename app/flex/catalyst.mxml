@@ -76,11 +76,6 @@
 		}
 		
 		
-		protected function tosbutton_clickHandler():void
-		{
-			currentState='TosState';
-		}
-		
 		protected function list1_clickHandler(event:MouseEvent):void
 		{
 			currentState='TlzState';
@@ -302,17 +297,24 @@
 			
 		}
 		
+		protected function tosbutton_clickHandler(event:MouseEvent):void
+		{
+			if (event.altKey) { //open db admin interface
+				if (event.shiftKey) {
+					var win:Admin = PopUpManager.createPopUp(this,Admin,true) as Admin;
+					PopUpManager.centerPopUp(win);
+				} else {
+					currentState = 'SettingsState';
+				}
+			} else {
+				currentState='TosState';
+				
+			}
+		}
 		
 		
 		protected function settingsbutton_clickHandler(event:MouseEvent):void
 		{
-			if (event.altKey) { //open db admin interface
-				var win:Admin = PopUpManager.createPopUp(this,Admin,true) as Admin;
-				PopUpManager.centerPopUp(win);
-				
-			} else {
-				currentState = "SettingsState";
-			}
 		}
 		
 		
@@ -423,10 +425,10 @@
 			
 		</s:Group>
 		
-		<s:Group id="tosgroup" includeIn="TosState">
-			<s:layout><s:BasicLayout/></s:layout>
-			<main:TermsofUse x="0" y="0" width="100%" height="100%"/>
-			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.Button3"/>		
+		<s:Group id="tosgroup" includeIn="TosState" >
+			<s:layout><s:VerticalLayout paddingLeft="10"/></s:layout>
+			<main:TermsofUse x="10" y="0" width="680" height="280"/>
+			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.MainButton"/>		
 		</s:Group>
 		<s:Group id="settingsgroup" includeIn="SettingsState" x="100">
 			<s:CheckBox id="checkbox2" label="Check for updates automatically" skinClass="gapdesktoprx.components.catalyst.Checkbox1" x="26" y="114"/>
@@ -437,9 +439,8 @@
 		
 		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%" height="40">
 			<s:layout><s:HorizontalLayout paddingLeft="12"/></s:layout>
-			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Terms of use..."/>
-			<s:Button id="settingsbutton" click="settingsbutton_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Settings..."/>
-		</s:Group>
+			<s:Button id="tosbutton" click="tosbutton_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Terms of use..."/>
+			</s:Group>
 		
 		
 		

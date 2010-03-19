@@ -28,6 +28,6 @@
 	</fx:Declarations>
 	<s:Scroller x="0" y="0" width="100%" height="100%">
 		
-	<s:RichEditableText id="tosDisplay" editable="false" creationComplete="tosDisplay_creationCompleteHandler(event)" multiline="true" height="100%" width="100%" selectable="false" clipAndEnableScrolling="true"/>
+	<s:RichEditableText id="tosDisplay" editable="false" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" multiline="true" height="100%" width="100%" selectable="false" clipAndEnableScrolling="true"/>
 	</s:Scroller>
 </s:Group>
