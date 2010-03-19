@@ -6,6 +6,7 @@
 	height="100%"
 	width="100%"
 	label="{example.name}"
+	activate="graphviewer_activateHandler(event)"
 	>
 	<mx:Metadata>
 		[Event(name="exampleChanged", type="events.ExampleChangeEvent")]
@@ -42,7 +43,8 @@
 				//			_htmlLoader.
 				trace("graphBrowser_completeHandler");
 				graphHTML.htmlLoader.window.updateHash = updateHash;
-				graphHTML.setFocus();
+				this.stage.focus = graphHTML.htmlLoader;
+				//this.graphHTML.htmlLoader.window.setFocus();
 			}
 			
 			
@@ -116,6 +118,12 @@
 				}
 				
 			}
+
+			protected function graphviewer_activateHandler(event:Event):void
+			{
+				trace('activate: ' + event.currentTarget.toString());
+			}
+
 		]]>
 	</mx:Script>
 	<!--<s:RichText fontSize="8" text="{graphHTML.location}" width="100%" height="10" />
