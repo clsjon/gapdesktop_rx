@@ -84,11 +84,17 @@
 		<s:fill>
 			<s:SolidColor color="#FFFFFF"/>
 		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke weight="2" color="0x222222"/>
+		</s:stroke>
+		<s:filters>
+			<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#969797" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
+		</s:filters>
 	</s:Rect>
 	<s:Group id="main" x="0" y="0">
 		<s:layout><s:VerticalLayout/></s:layout>
 		
-		<s:Button id="closeButton" click="closeButton_clickHandler(event)" label="Close"/>
+		<mx:Image id="closeButton" click="closeButton_clickHandler(event)" source="@Embed('assets/icons/button/x.png')"/>
 		<s:Group id="lists">
 			<s:layout><s:HorizontalLayout gap="30" horizontalAlign="center" verticalAlign="contentJustify"/></s:layout>
 			<s:Group id="gapexamples">
@@ -98,8 +104,9 @@
 			</s:Group>
 			<s:Group id="userexamples">
 				<s:layout><s:VerticalLayout/></s:layout>
-				<s:Label id="userGraphsLabel" fontFamily="Avenir-heavy"  fontSize="16" text="Your own graphs" width="100%"/>				
-				<s:List id="userGraphList" width="300" height="300" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)"/>
+				<s:Label id="userGraphsLabel" fontFamily="Avenir-heavy"  fontSize="16" text="Your own graphs" width="100%"/>		
+				<s:RichText fontFamily="Avenir" color="0x888888" width="300" fontSize="12" text="To create your own graphs, select a starting graph to the left, change settings and then click  the ”Add bookmark” button." visible="{catalyst.models.userExamples.length == 0}"/>
+				<s:List id="userGraphList" width="300" height="300" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)" visible="{catalyst.models.userExamples.length > 0}"/>
 			</s:Group>
 		</s:Group>
 	</s:Group>
