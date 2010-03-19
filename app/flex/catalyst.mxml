@@ -187,9 +187,9 @@
 		
 		protected function navigator_clickHandler(event:MouseEvent):void {
 			//add tab functionality
-/* 			trace('--------------');
+			/* 			trace('--------------');
 			trace (getQualifiedClassName(event.target));
- */			var bar:SuperTabBar = null;
+			*/			var bar:SuperTabBar = null;
 			
 			var obj:Object = event.target;
 			var parent:Object = obj.parent;
@@ -214,8 +214,8 @@
 						viewer.example = models.defaultExample;
 						navigator.addChildAt(viewer,navigator.numChildren - 1);
 						navigator.selectedChild = viewer;
-	/* 					invalidateDisplayList();
-	 */				}
+						/* 					invalidateDisplayList();
+					*/				}
 				}
 			}
 		}
@@ -252,7 +252,11 @@
 		}
 		
 		private function launchDefaultGraph():void {
-			this.dispatchEvent(new ExampleSelectEvent( models.defaultExample));
+			if (navigator.numChildren < 2) {
+				this.dispatchEvent(new ExampleSelectEvent( models.defaultExample));
+			} else {
+				currentState = 'TlzState';
+			}
 			//			trace('mc:' + ObjectUtil.toString(models.examples));
 			//			trace('-------------------------------------------------------------------------------------');
 			//			trace('idx:' + ObjectUtil.toString( Rx.models.index(Example)));
@@ -289,16 +293,16 @@
 			viewer.graphHTML.setFocus();
 			this.stage.focus = viewer.graphHTML.htmlLoader;
 		}
-	
+		
 		protected function navigator_creationCompleteHandler(event:FlexEvent):void
 		{
 			SuperTabNavigator(event.currentTarget).addEventListener(MouseEvent.CLICK,navigator_clickHandler,true);
 			SuperTabNavigator(event.currentTarget).addEventListener(IndexChangedEvent.CHANGE,navigator_indexChangedHandler);
-
+			
 		}
-
-
-	
+		
+		
+		
 		protected function settingsbutton_clickHandler(event:MouseEvent):void
 		{
 			if (event.altKey) { //open db admin interface
@@ -309,8 +313,8 @@
 				currentState = "SettingsState";
 			}
 		}
-
-
+		
+		
 		protected function addTabCanvas_creationCompleteHandler(event:FlexEvent):void
 		{
 			var nav:SuperTabNavigator = event.currentTarget.parent as SuperTabNavigator;
@@ -318,7 +322,7 @@
 			trace ('atc creatiomcomplete');
 			nav.setClosePolicyForTab(selectedIndex,SuperTab.CLOSE_NEVER);
 		}
-
+		
 	]]></fx:Script>
 	<s:states>
 		<s:State name="MainState"/>
@@ -333,7 +337,7 @@
 			<s:BasicLayout/>
 		</s:layout>
 		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
-			<s:layout><s:HorizontalLayout/></s:layout>
+			<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4"/></s:layout>
 			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="Home" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
 			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open graph menu" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
 			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark this graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
@@ -382,12 +386,12 @@
 			<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date().toLocaleDateString()} (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 		</s:Group>
 		
-		<s:Group id="gwgroup" width="100%" x="0">	
+		<s:Group id="gwgroup" width="100%" x="0" excludeFrom="SettingsState,TlzState,TosState">	
 			<s:layout>
 				<s:HorizontalLayout gap="20" paddingLeft="10"/>
 			</s:layout>
 			<s:Group id="bigbuttoncolumn" width="50%">
-				<s:Group id="bigbuttongroup" excludeFrom="SettingsState,TlzState,TosState">
+				<s:Group id="bigbuttongroup">
 					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()"/>		
 				</s:Group>
 			</s:Group>
@@ -396,11 +400,11 @@
 				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%">
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
-						
-					<s:RichText alpha.TooltipState="0.4" textAlign="justify" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paragraphSpaceAfter="0" paragraphSpaceBefore="0">
+					
+					<s:RichText alpha.TooltipState="0.4" textAlign="justify" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
 						<s:content><s:p >Lets you have the world's most important data with you at all times. Features include:</s:p></s:content>
 					</s:RichText>
-					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15">
+					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
 						<s:content><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	No internet required</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
 					</s:RichText>
 				</s:Group>
@@ -438,14 +442,14 @@
 		
 		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%" height="40">
 			<s:layout><s:HorizontalLayout/></s:layout>
-			<s:Button id="settingsbutton" click="settingsbutton_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Settings"/>
-			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Termsofuse_Button"/>
+			<s:Button id="settingsbutton" click="settingsbutton_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Settings..."/>
+			<s:Button id="tosbutton" click="tosbutton_clickHandler()" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Terms of use..."/>
 		</s:Group>
 		
 		
 		
 	</s:Group>
-	<s:Group id="updatenotificationgroup" x="0" bottom="0" height="50" width="100%" includeIn="MainState">
+	<s:Group id="updatenotificationgroup" x="0" bottom="0" height="30" width="100%" includeIn="MainState">
 		<s:layout>
 			<s:BasicLayout/>
 		</s:layout>
