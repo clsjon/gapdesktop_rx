@@ -127,8 +127,10 @@ global{
 	themeColor: #939393;
 }
 
-containers|SuperTabNavigator {
+.tlzNavigator {
 	tabStyleName: customTab;
+	font-family: Avenir;
+	font-size: 9;
 }
 
 .customTab {
