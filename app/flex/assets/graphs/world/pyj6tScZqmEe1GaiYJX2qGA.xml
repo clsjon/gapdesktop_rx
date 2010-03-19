@@ -1,4 +1,4 @@
-<indicator id="pyj6tScZqmEe1GaiYJX2qGA" closestAboveZero="1.0" closestBelowZero="0.0" min="1.0" max="5719672.0" firstTime="1979" lastTime="2007" scale="log" dataCollectionUrl="http://spreadsheets.google.com/pub?key=pyj6tScZqmEe1GaiYJX2qGA" providerUrl="http://www.gapminder.org/gapminder-world/documentation/#gd006" providerSourceName="Gapminder">
+<indicator id="pyj6tScZqmEe1GaiYJX2qGA" closestAboveZero="1.0" closestBelowZero="0.0" min="1.0" max="5719672.0" firstTime="1979" lastTime="2007" scale="log" dataCollectionUrl="http://spreadsheets.google.com/pub?key=pyj6tScZqmEe1GaiYJX2qGA" providerUrl="http://spreadsheets.google.com/pub?key=pyj6tScZqmEe1GaiYJX2qGA&amp;gid=1" providerSourceName="UNAIDS with additions">
   <data>
     <t1 m="i179,1052.0,33699.0,1979" d="1052.0,1283.0,1565.0,1909.0,2327.0,2838.0,3461.0,4221.0,5148.0,6278.0,7655.0,9296.0,11483.0,13824.0,16228.0,18579.0,20753.0,22690.0,24369.0,25837.0,27102.0,28194.0,29149.0,29988.0,30779.0,31525.0,32246.0,32919.0,33699.0"/>
     <t1 m="i20,467.0,13364.0,1991" d="467.0,856.0,1543.0,2646.0,4234.0,6195.0,8182.0,9877.0,11119.0,11968.0,12540.0,12910.0,13148.0,13291.0,13360.0,13364.0,13337.0"/>

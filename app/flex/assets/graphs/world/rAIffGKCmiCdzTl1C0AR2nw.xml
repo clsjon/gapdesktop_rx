@@ -1,4 +1,4 @@
-<indicator id="rAIffGKCmiCdzTl1C0AR2nw" closestAboveZero="0.228" closestBelowZero="-0.513" min="-51.75" max="78.0" firstTime="1700" lastTime="2030" scale="lin" dataCollectionUrl="http://spreadsheets.google.com/pub?key=rAIffGKCmiCdzTl1C0AR2nw" providerUrl="http://spreadsheets.google.com/pub?key=rAIffGKCmiCdzTl1C0AR2nw&amp;gid=2" providerSourceName="Various sources">
+<indicator id="rAIffGKCmiCdzTl1C0AR2nw" closestAboveZero="0.228" closestBelowZero="-0.513" min="-51.75" max="78.0" firstTime="1700" lastTime="2030" scale="lin" dataCollectionUrl="http://spreadsheets.google.com/pub?key=rAIffGKCmiCdzTl1C0AR2nw" providerUrl="http://spreadsheets.google.com/pub?key=rAIffGKCmiCdzTl1C0AR2nw&amp;gid=1" providerSourceName="Various sources">
   <data>
     <t1 m="i20,53.54709,53.54709,1700" d="53.54709,n199,53.54709,n129,53.54709"/>
     <t1 m="i176,13.922,13.922,1700" d="13.922,n199,13.922,n129,13.922"/>
