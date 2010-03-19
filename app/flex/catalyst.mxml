@@ -286,7 +286,8 @@
 		protected function navigator_indexChangedHandler(event:IndexChangedEvent):void {
 			var viewer:GraphViewer = event.relatedObject as GraphViewer;
 			trace ('inch');
-			viewer.stage.focus = viewer.graphHTML.htmlLoader;
+			viewer.graphHTML.setFocus();
+			this.stage.focus = viewer.graphHTML.htmlLoader;
 		}
 	
 		protected function navigator_creationCompleteHandler(event:FlexEvent):void
@@ -326,7 +327,7 @@
 		<s:State name="TosState"/>
 		<s:State name="TlzState"/>
 	</s:states>
-	
+	<s:DataGroup dataProvider="{models.examples}" width="0" height="0"/>
 	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState">
 		<s:layout>
 			<s:BasicLayout/>
