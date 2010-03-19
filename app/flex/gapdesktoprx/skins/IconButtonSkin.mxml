@@ -36,7 +36,6 @@
 		]]>
 	</fx:Script>
 
-	<s:Group x="0" y="0" id="buttondef">
 		<s:Rect height="28" radiusX="6" width="100%" x="0.5" y="0.5">
 			<s:stroke>
 				<s:LinearGradientStroke caps="none" joints="miter" miterLimit="4" rotation="90" weight="1">
@@ -61,12 +60,12 @@
 				<s:SolidColor color="#FFFFFF"/>
 			</s:fill.over>
 		</s:Rect>
-		<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="14" tabStops="S0" x="20" y="7" id="labelDisplay"/>
+		<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="14" tabStops="S0" x="25" y="7" id="labelDisplay"/>
 		<ns:Image
-			id="icon"
+			id="icon" x="7"
 			source="{hostComponent.getStyle('iconUp')}"
 			verticalCenter="0"
 			alpha="{(this.currentState == 'up')?.5:1}"
 			/>
-	</s:Group>
+	
 </s:Skin>
