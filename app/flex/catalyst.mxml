@@ -17,7 +17,7 @@
 	
 	backgroundColor="#ffffff" 
 	
-	height="450" 
+	height="400" 
 	width="700" 
 	minHeight="450"
 	minWidth="700"
@@ -38,6 +38,7 @@
 	<fx:Script><![CDATA[
 		import air.update.events.UpdateEvent;
 		
+		import flash.display.DisplayObject;
 		import flash.display.StageDisplayState;
 		import flash.events.FullScreenEvent;
 		import flash.events.MouseEvent;
@@ -58,6 +59,7 @@
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
 		import mx.events.FlexEvent;
+		import mx.events.IndexChangedEvent;
 		import mx.events.StateChangeEvent;
 		import mx.managers.PopUpManager;
 		
@@ -184,6 +186,7 @@
 		
 		
 		protected function navigator_clickHandler(event:MouseEvent):void {
+			//add tab functionality
 /* 			trace('--------------');
 			trace (getQualifiedClassName(event.target));
  */			var bar:SuperTabBar = null;
@@ -203,13 +206,14 @@
 			}
 			if (bar) {
 				var selectedIndex:uint = bar.getChildIndex(child);
-				if (selectedIndex == (bar.numChildren - 1 )) {
+				if (selectedIndex == (bar.numChildren - 1)) {
 					event.stopImmediatePropagation();
 					event.preventDefault();
 					if (event.target is SuperTab) {
 						var viewer:GraphViewer = new GraphViewer();
 						viewer.example = models.defaultExample;
-						navigator.addChildAt(viewer,navigator.numChildren - 2);
+						navigator.addChildAt(viewer,navigator.numChildren - 1);
+						navigator.selectedChild = viewer;
 	/* 					invalidateDisplayList();
 	 */				}
 				}
@@ -278,11 +282,17 @@
 			}
 		}
 		
-
+		
+		protected function navigator_indexChangedHandler(event:IndexChangedEvent):void {
+			var viewer:GraphViewer = event.relatedObject as GraphViewer;
+			trace ('inch');
+			viewer.stage.focus = viewer.graphHTML.htmlLoader;
+		}
 	
 		protected function navigator_creationCompleteHandler(event:FlexEvent):void
 		{
 			SuperTabNavigator(event.currentTarget).addEventListener(MouseEvent.CLICK,navigator_clickHandler,true);
+			SuperTabNavigator(event.currentTarget).addEventListener(IndexChangedEvent.CHANGE,navigator_indexChangedHandler);
 
 		}
 
@@ -297,6 +307,15 @@
 			} else {
 				currentState = "SettingsState";
 			}
+		}
+
+
+		protected function addTabCanvas_creationCompleteHandler(event:FlexEvent):void
+		{
+			var nav:SuperTabNavigator = event.currentTarget.parent as SuperTabNavigator;
+			var selectedIndex:uint = nav.getChildIndex(event.currentTarget as DisplayObject);
+			trace ('atc creatiomcomplete');
+			nav.setClosePolicyForTab(selectedIndex,SuperTab.CLOSE_NEVER);
 		}
 
 	]]></fx:Script>
@@ -314,20 +333,23 @@
 		</s:layout>
 		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
 			<s:layout><s:HorizontalLayout/></s:layout>
-			<extensions:IconButton styleName="iconButtonStyle" label="Home" iconUp="/assets/icons/button/home.png"/>
-			<s:Button id="homeButton" click="currentState='MainState'" styleName="mainButtonStyle" label="Home" width="100"/>
+			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="Home" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
+			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open graph menu" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
+			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark this graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
+			<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
+			<!--<s:Button id="homeButton" click="currentState='MainState'" styleName="mainButtonStyle" label="Home" width="100"/>
 			<s:Button id="tlzGraphListButton" click="launchExamplesList()" styleName="mainButtonStyle" label="Open list of graphs" width="150"/>
 			<s:Button id="bookmarkButton" styleName="mainButtonStyle" click="bookmarkButton_clickHandler(event)" label="Bookmark this graph" width="150"/>
 			<s:Button id="fullScreenButton" styleName="mainButtonStyle" label="Full screen" width="150" click="fullScreenButton_clickHandler(event)"/>
-			
+			-->
 		</s:Group>
 		
-		<containers:SuperTabNavigator id="navigator" bottom="0" top="30" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)">
-			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+"/>
+		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="30" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)">
+			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)"/>
 		</containers:SuperTabNavigator>
 		
 	</s:Group>
-	<s:Group id="maingroup" width="100%" x="0">
+	<s:Group id="maingroup" width="100%" x="0" height="100%">
 		<s:layout>
 			<s:VerticalLayout gap="10"/>
 		</s:layout>
@@ -374,18 +396,18 @@
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
 						
-					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paragraphSpaceAfter="0" paragraphSpaceBefore="0">
+					<s:RichText alpha.TooltipState="0.4" textAlign="justify" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paragraphSpaceAfter="0" paragraphSpaceBefore="0">
 						<s:content><s:p >Lets you have the world's most important data with you at all times. Features include:</s:p></s:content>
 					</s:RichText>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15">
 						<s:content><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	No internet required</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
 					</s:RichText>
 				</s:Group>
-				<s:Button id="mainGwButton" styleName="mainButtonStyle" useHandCursor="true" buttonMode="true" label="Open Gapminder World" width="200" click="launchDefaultGraph()"/>
+				<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="220" click="launchDefaultGraph()"/>
 				<s:RichText color="0x000000" fontFamily="Avenir-book" fontSize="14" id="or" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
 					<s:content><s:p>or</s:p></s:content>
 				</s:RichText>
-				<s:Button styleName="mainButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="200" click="launchExamplesList()"/>
+				<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="200" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
 				
 				<!--<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{models.examples}" change="exampleList_changeHandler(event)" width="100%" height="400"/>-->
 				
