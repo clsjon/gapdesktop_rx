@@ -4,6 +4,7 @@
 				xmlns:ns="library://ns.adobe.com/flex/mx">
 	<fx:Script>
 		<![CDATA[
+			import mx.events.FlexEvent;
 			import flash.events.MouseEvent;
 			
 			import gapdesktoprx.events.ExampleRolloutEvent;
@@ -51,6 +52,12 @@
 				/* Alert.show('Delete ' + _example.name,"Delete example placeholder"); */
 				event.preventDefault();
 				_example.destroy();
+			}
+
+
+			protected function deleteButton_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
 			}
 
 		]]>
@@ -115,7 +122,7 @@
 				<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#9796969" distance="2" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
 			</s:filters>
 		</s:Path>
-		<ns:Image id="deleteButton" visible="{_example.userGenerated}" source="@Embed(source='assets/icons/trash.png')" includeIn="hovered,selected" click="deleteButton_clickHandler(event)" width="10" right="0"/>
+		<ns:Image id="deleteButton" visible="{_example.userGenerated}" source="@Embed(source='assets/icons/trash.png')" includeIn="hovered,selected" click="deleteButton_clickHandler(event)" creationComplete="deleteButton_creationCompleteHandler(event)" width="10" right="0"/>
 	</s:Group>
 	<s:transitions>
 		<s:Transition fromState="selected" toState="normal" autoReverse="true">
