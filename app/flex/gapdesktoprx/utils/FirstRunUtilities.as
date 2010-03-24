@@ -1,5 +1,11 @@
 package gapdesktoprx.utils
 {
+	import com.adobe.serialization.json.JSON;
+	
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
+	
 	import gapdesktoprx.models.Example;
 	import gapdesktoprx.models.ExampleTag;
 	import gapdesktoprx.models.Graph;
@@ -24,23 +30,31 @@ package gapdesktoprx.utils
 			submitter.email = "claes.johansson@gapminder.org";
 			submitter.create();
 			
-			var tagNames:ArrayCollection = new ArrayCollection(["Global Trends", "Child Health", "Climate", "Disasters", "Economy", "Education", "HIV", "Population", "Poverty", "Technology"]);
 			var tag:Tag;
 			var example:Example;
-			for each (var tagName:String in tagNames) {
-				trace ('tagName: ' + tagName);
+			
+			var file:File = File.applicationDirectory.resolvePath('assets/initialcontent/tags.json');
+			var fileStream:FileStream = new FileStream();
+			fileStream.open(file,FileMode.READ);
+			var str:String = fileStream.readUTFBytes(fileStream.bytesAvailable);
+			var tagArray:Array =  JSON.decode(str) as Array;
+			fileStream.close();
+			
+			
+			for each (var inTag:Object in tagArray) {
 				tag = new Tag();
-				tag.name = tagName;
+				tag.name = inTag.name;
 				tag.create();
-				i=0;
-				for (var i:uint; i<4; i++) {
-					example=new Example();
-					example.graph = worldGraph;
-					example.submitter = submitter;
+				for each (var inExample:Object in inTag.examples) {
+					example = new Example();
+					example.name = inExample.name;
+					example.hash = inExample.hash;
+					example.userGenerated = false;
 					example.mainTag = tag;
-					example.name = tag.name + " example graph " + i;
-					example.hash = "$majorMode=chart$is;shi=t;ly=2003;lb=f;il=t;fs=11;al=30;stl=t;st=t;nsl=t;se=t$wst;tts=C$ts;sp=6;ti=2007$zpv;v=0$inc_x;mmid=XCOORDS;iid=phAwcNAVuyj0TAlJeCEzcGQ;by=ind$inc_y;mmid=YCOORDS;iid=phAwcNAVuyj2tPLxKvvnNPA;by=ind$inc_s;uniValue=8.21;iid=phAwcNAVuyj0XOoBL_n5tAQ;by=ind$inc_c;uniValue=255;gid=CATID0;by=grp$map_x;scale=lin;dataMin=0.855;dataMax=8.7$map_y;scale=lin;dataMin=23;dataMax=86$map_s;sma=49;smi=2.65$cd;bd=0$inds=";
-					example.create();					
+					example.graph = worldGraph
+					example.submitter = submitter;
+					
+					example.create();
 				}
 			}
 			
