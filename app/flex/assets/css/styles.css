@@ -135,6 +135,7 @@ global{
 	tabStyleName: customTab;
 	font-family: Avenir;
 	font-size: 11;
+	paddingTop: 0;
 }
 
 .customTab {
