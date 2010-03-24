@@ -2,13 +2,14 @@
 <s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/halo" 
-		 width="400" 
+		 width="300" 
 		 height="120"
 		 title="Enter a name for this graph:"
-		 creationComplete="panel1_creationCompleteHandler(event)"
+		 creationComplete="panel1_creationCompleteHandler(event)" xmlns:mx1="library://ns.adobe.com/flex/mx"
+		 defaultButton="{okButton}"
 		 >
 	<s:layout>
-		<s:VerticalLayout/>
+		<s:VerticalLayout gap="10" paddingBottom="10" paddingTop="10" paddingLeft="10" paddingRight="10"/>
 	</s:layout>
 	<fx:Metadata>
 		[Event(name="nameExample", type="events.NameExampleEvent")]
@@ -25,35 +26,36 @@
 			
 			import mx.managers.PopUpManager;
 			
-
-
+			
+			
 			protected function okButton_clickHandler(event:MouseEvent):void
 			{
 				dispatchEvent(new NameExampleEvent(graphName.text,true));
 				PopUpManager.removePopUp(this);
 			}
-
-
+			
+			
 			protected function cancelButton_clickHandler(event:MouseEvent):void
 			{
 				PopUpManager.removePopUp(this);
 			}
-
-
+			
+			
 			protected function panel1_creationCompleteHandler(event:FlexEvent):void
 			{
 				graphName.setFocus();
 			}
-
+			
 		]]>
 	</fx:Script>
-	
-	<s:TextInput id="graphName"/>
-	<s:Group id="buttons">
-		<s:layout>
-		<s:HorizontalLayout/></s:layout>
-		<s:Button id="cancelButton" label="Cancel" click="cancelButton_clickHandler(event)"/>
-		<s:Button id="okButton" label="Save bookmark" click="okButton_clickHandler(event)"/>
-	</s:Group>
+			<s:TextInput id="graphName" width="100%"/>
+		<s:Group id="buttons">
+			<s:layout>
+				<s:HorizontalLayout gap="10" horizontalAlign="right"/></s:layout>
+		
+				<s:Button id="cancelButton" label="Cancel" click="cancelButton_clickHandler(event)"/>
+				<s:Button id="okButton" label="Create bookmark" click="okButton_clickHandler(event)"/>
+				
+		</s:Group>
 	
 </s:Panel>
