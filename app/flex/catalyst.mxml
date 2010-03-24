@@ -58,10 +58,12 @@
 		import gapdesktoprx.events.NameExampleEvent;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
+		import mx.core.FlexGlobals;
 		import mx.events.FlexEvent;
 		import mx.events.IndexChangedEvent;
 		import mx.events.StateChangeEvent;
 		import mx.managers.PopUpManager;
+		import mx.utils.ObjectUtil;
 		
 		import org.restfulx.Rx;
 		import org.restfulx.services.air.AIRServiceProvider;
@@ -94,9 +96,11 @@
 		protected function fullScreenStateChange(event:FullScreenEvent):void {
 			if (event.fullScreen) {
 				fullScreenButton.label = "Exit full screen";
+				fullScreenButton.setStyle("iconUp", "assets/icons/button/fullscreen_exit.png");
 			}
 			else {
 				fullScreenButton.label = "Full screen";
+				fullScreenButton.setStyle("iconUp", "assets/icons/button/fullscreen.png");
 			}
 		}
 		
@@ -177,7 +181,14 @@
 			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
 			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
 			updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
+			//this.addEventListener(FocusEvent.FOCUS_IN,myFocusInHandler,true);
+			
 		}
+		
+		protected function myFocusInHandler(event:FocusEvent):void {
+			trace ("Focus in on:" + ObjectUtil.toString(event.target).slice(0,100));
+		}
+		
 		
 		
 		protected function navigator_clickHandler(event:MouseEvent):void {
@@ -286,8 +297,10 @@
 		protected function navigator_indexChangedHandler(event:IndexChangedEvent):void {
 			var viewer:GraphViewer = event.relatedObject as GraphViewer;
 			trace ('inch');
+			trace ("Oldfocus: " + this.stage.focus.toString());
 			viewer.graphHTML.setFocus();
 			this.stage.focus = viewer.graphHTML.htmlLoader;
+			trace ("Newfocus: " + ObjectUtil.toString(this.stage.focus.toString()));
 		}
 		
 		protected function navigator_creationCompleteHandler(event:FlexEvent):void
@@ -299,11 +312,11 @@
 		
 		protected function tosbutton_clickHandler(event:MouseEvent):void
 		{
-			if (event.altKey) { //open db admin interface
-				if (event.shiftKey) {
+			if (event.altKey) { 
+				if (event.shiftKey) { //open db admin interface
 					var win:Admin = PopUpManager.createPopUp(this,Admin,true) as Admin;
 					PopUpManager.centerPopUp(win);
-				} else {
+				} else { //open Settings
 					currentState = 'SettingsState';
 				}
 			} else {
