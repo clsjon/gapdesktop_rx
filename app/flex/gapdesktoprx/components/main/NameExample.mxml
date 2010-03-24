@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/halo" 
 		 width="300" 
@@ -7,6 +7,10 @@
 		 title="Enter a name for this graph:"
 		 creationComplete="panel1_creationCompleteHandler(event)" xmlns:mx1="library://ns.adobe.com/flex/mx"
 		 defaultButton="{okButton}"
+		 closeButton="{null}"
+		 moveArea="{null}"
+		 close="titlewindow1_closeHandler(event)"
+		 keyDown="titlewindow1_keyDownHandler(event)"
 		 >
 	<s:layout>
 		<s:VerticalLayout gap="10" paddingBottom="10" paddingTop="10" paddingLeft="10" paddingRight="10"/>
@@ -19,26 +23,33 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import mx.events.FlexEvent;
 			import flash.events.MouseEvent;
 			
 			import gapdesktoprx.events.NameExampleEvent;
 			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			
+			private function titlewindow1_keyDownHandler(event:KeyboardEvent):void {
+				if (event.charCode == Keyboard.ESCAPE) {
+					this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+				}
+			}
+
 			
 			
 			protected function okButton_clickHandler(event:MouseEvent):void
 			{
 				dispatchEvent(new NameExampleEvent(graphName.text,true));
-				PopUpManager.removePopUp(this);
-			}
+				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+					}
 			
 			
 			protected function cancelButton_clickHandler(event:MouseEvent):void
 			{
-				PopUpManager.removePopUp(this);
-			}
+				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+				}
 			
 			
 			protected function panel1_creationCompleteHandler(event:FlexEvent):void
@@ -46,6 +57,12 @@
 				graphName.setFocus();
 			}
 			
+
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
 		]]>
 	</fx:Script>
 			<s:TextInput id="graphName" width="100%"/>
@@ -58,4 +75,4 @@
 				
 		</s:Group>
 	
-</s:Panel>
+</s:TitleWindow>

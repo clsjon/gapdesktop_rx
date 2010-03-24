@@ -59,6 +59,7 @@
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
 		import mx.core.FlexGlobals;
+		import mx.events.CloseEvent;
 		import mx.events.FlexEvent;
 		import mx.events.IndexChangedEvent;
 		import mx.events.StateChangeEvent;
@@ -171,9 +172,6 @@
 			}
 		}
 		
-		
-		
-		
 		protected function windowedapplication1_applicationCompleteHandler(event:FlexEvent):void
 		{
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN,fullScreenStateChange);
@@ -181,22 +179,17 @@
 			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
 			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
 			updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
-			//this.addEventListener(FocusEvent.FOCUS_IN,myFocusInHandler,true);
-			
 		}
 		
 		protected function myFocusInHandler(event:FocusEvent):void {
 			trace ("Focus in on:" + ObjectUtil.toString(event.target).slice(0,100));
 		}
 		
-		
-		
 		protected function navigator_clickHandler(event:MouseEvent):void {
-			//add tab functionality
-			/* 			trace('--------------');
-			trace (getQualifiedClassName(event.target));
-			*/			var bar:SuperTabBar = null;
 			
+			//add tab functionality
+			
+			var bar:SuperTabBar = null;			
 			var obj:Object = event.target;
 			var parent:Object = obj.parent;
 			var child:DisplayObject = null;
@@ -220,13 +213,12 @@
 						viewer.example = models.defaultExample;
 						navigator.addChildAt(viewer,navigator.numChildren - 1);
 						navigator.selectedChild = viewer;
-						/* 					invalidateDisplayList();
-					*/				}
+					}
 				}
 			}
 		}
+
 		private function checkForUpdateEventHandler(event:UpdateEvent):void {
-			
 			trace ('update check authorized');
 		}
 		
@@ -234,10 +226,9 @@
 			GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
 		}
 		
-		private function exampleRolloverEventHandler(event:ExampleRolloverEvent):void {
-			
+		private function exampleRolloverEventHandler(event:ExampleRolloverEvent):void {	
 			currentState="TooltipState";
-			exampleDesc.textFlow = TextConverter.importToFlow( event.example.content,TextConverter.TEXT_FIELD_HTML_FORMAT);
+			exampleDesc.textFlow = TextConverter.importToFlow(event.example.content,TextConverter.TEXT_FIELD_HTML_FORMAT);
 			exampleName.textFlow = TextConverter.importToFlow(event.example.name,TextConverter.PLAIN_TEXT_FORMAT);
 		}
 		
@@ -247,9 +238,6 @@
 			exampleDesc.textFlow = null;
 			exampleName.textFlow = null;
 		}
-		
-		
-		
 		
 		private function launchExamplesList():void {
 			var win:ExampleSelectionBox = PopUpManager.createPopUp(this,ExampleSelectionBox,true) as ExampleSelectionBox;
@@ -264,15 +252,18 @@
 			} else {
 				currentState = 'TlzState';
 			}
-			//			trace('mc:' + ObjectUtil.toString(models.examples));
-			//			trace('-------------------------------------------------------------------------------------');
-			//			trace('idx:' + ObjectUtil.toString( Rx.models.index(Example)));
+		}
+		
+		protected function nameExampleCloseHandler(event:CloseEvent):void {
+			navigator.visible = true;
 		}
 		
 		protected function bookmarkButton_clickHandler(event:MouseEvent):void
 		{
+			navigator.visible = false;
 			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
+			nameExampleWindow.addEventListener(CloseEvent.CLOSE,nameExampleCloseHandler);
 			PopUpManager.centerPopUp(nameExampleWindow);
 			nameExampleWindow.y = this.y;
 		}
@@ -429,13 +420,7 @@
 					<s:content><s:p>or</s:p></s:content>
 				</s:RichText>
 				<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="200" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
-				
-				<!--<s:List id="exampleList" skinClass="gapdesktoprx.components.catalyst.ExampleList" dataProvider="{models.examples}" change="exampleList_changeHandler(event)" width="100%" height="400"/>-->
-				
-				
-				
 			</s:Group>
-			
 		</s:Group>
 		
 		<s:Group id="tosgroup" includeIn="TosState" >
@@ -443,6 +428,7 @@
 			<main:TermsofUse x="10" y="0" width="680" height="280"/>
 			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.MainButton"/>		
 		</s:Group>
+		
 		<s:Group id="settingsgroup" includeIn="SettingsState" x="100">
 			<s:CheckBox id="checkbox2" label="Check for updates automatically" skinClass="gapdesktoprx.components.catalyst.Checkbox1" x="26" y="114"/>
 			<s:Button id="button2" label="Check for updates now…" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="143"/>
@@ -453,11 +439,10 @@
 		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%" height="40">
 			<s:layout><s:HorizontalLayout paddingLeft="12"/></s:layout>
 			<s:Button id="tosbutton" click="tosbutton_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Terms of use..."/>
-			</s:Group>
-		
-		
+		</s:Group>
 		
 	</s:Group>
+	
 	<s:Group id="updatenotificationgroup" x="0" bottom="0" height="30" width="100%" includeIn="MainState">
 		<s:layout>
 			<s:BasicLayout/>
@@ -466,7 +451,7 @@
 		<ws:ApplicationUpdaterUI
 			id="updater" 
 			width="100%" 
-			height="50"
+			height="30"
 			configurationFile="{File.applicationDirectory.resolvePath('config/updaterConfig.xml')}"
 			skinClass="gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin"
 			invisibleCheck="false"
