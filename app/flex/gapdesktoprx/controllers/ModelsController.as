@@ -5,6 +5,7 @@ package gapdesktoprx.controllers {
 	import gapdesktoprx.utils.FirstRunUtilities;
 	
 	import org.restfulx.Rx;
+	import org.restfulx.collections.ModelsCollection;
 	import org.restfulx.collections.RxCollection;
 	import org.restfulx.events.CacheUpdateEvent;
 	import org.restfulx.utils.RxUtils;
@@ -43,8 +44,13 @@ package gapdesktoprx.controllers {
 				FirstRunUtilities.populateDatabase();
 			}
 			userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
-			gapExamples = Rx.filter(Rx.models.cached(Example), filterGapExamples);
-			defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
+			gapExamples =  Rx.filter(Rx.models.cached(Example), filterGapExamples);
+			var defaultExamples:RxCollection = gapExamples.itemsWithPropertyValue("name","Wealth & Health of Nations");
+			if (defaultExamples.length > 0) {
+				defaultExample = defaultExamples[0];
+			} else {
+				defaultExample = gapExamples[0] as Example;
+			}
 		}
 		
 		private function refreshTagCollections(obj:Object = null):void {
@@ -53,7 +59,7 @@ package gapdesktoprx.controllers {
 		}
 		
 		private function onCacheUpdate(event:CacheUpdateEvent):void {
-			trace('cache update for ' + event.fqn);
+//			trace('cache update for ' + event.fqn);
 			if (event.isFor(Example)) {
 				refreshExampleCollections();
 				//defaultExample = Rx.filter(Rx.models.cached(Example), filterGapExamples)[0] as Example;
@@ -78,6 +84,10 @@ package gapdesktoprx.controllers {
 		
 		private function filterGapExamples(example:Example):Boolean {
 			return !example.userGenerated;
+		}
+		
+		private function filterDefaultExample(example:Example):Boolean {
+			return (example.name.slice(0,5) == "Wealt");
 		}
 		
 		
