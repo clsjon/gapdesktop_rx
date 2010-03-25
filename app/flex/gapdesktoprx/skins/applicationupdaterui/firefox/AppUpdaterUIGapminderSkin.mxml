@@ -76,25 +76,25 @@
 		<s:fill>
 			<s:LinearGradient rotation="90">
 				<s:GradientEntry 
-					color="#606060"
 					
-					color.updateAvailable="#99FF00"
-					color.downloadProgress="#99FF00"
-					color.installUpdate="#99FF00"
+					color="#EFEFEF"
+					color.updateAvailable="#FF8863"
+					color.downloadProgress="#EFEFEF"
+					color.installUpdate="#EFEFEF"
 					
-					color.noUpdateAvailable="#FFE13E"
+					color.noUpdateAvailable="#EFEFEF"
 					
 					color.errorState="#FF3377"
 					ratio="0"
 					/>
 				<s:GradientEntry 
-					color="#414141" 
+					color="#888888" 
 					
-					color.updateAvailable="#83DA01"
-					color.downloadProgress="#83DA01"
-					color.installUpdate="#83DA01"
+					color.updateAvailable="#FFEED6"
+					color.downloadProgress="#888888"
+					color.installUpdate="#888888"
 					
-					color.noUpdateAvailable="#FFC703"
+					color.noUpdateAvailable="#888888"
 					
 					color.errorState="#DE2C69"
 					
