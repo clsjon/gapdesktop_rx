@@ -5,6 +5,10 @@
 				height="100%"
 			
 				>
+	
+	<fx:Metadata>
+		[Event(name="exampleSelected", type="gapdesktoprx.events.ExampleSelectEvent")]
+	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
 			import flash.events.MouseEvent;
