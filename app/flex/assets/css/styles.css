@@ -6,14 +6,6 @@
 
 
 @font-face {
-	src:url("/assets/fonts/Garamond/AGaramondPro-Regular.otf");
-	fontFamily: Garamond;
-	fontStyle: normal;
-	fontWeight: normal;
-}
-
-
-@font-face {
 	src:url("/assets/fonts/Avenir/AvenirLTStd-Medium.otf");
 	fontFamily: Avenir;
 	fontStyle: normal;
@@ -44,20 +36,6 @@
 	fontFamily: Avenir-black;
 	fontStyle: normal;
 	fontWeight: normal;
-}
-
-@font-face {
-  src: url("/assets/fonts/MyriadWebPro.ttf");
-  fontFamily: MyriadWebPro;
-  fontStyle: normal;
-  fontWeight: normal;
-}
-
-@font-face {
-  src: url("/assets/fonts/MyriadWebPro-Bold.ttf");
-  fontFamily: MyriadWebPro;
-  fontStyle: normal;
-  fontWeight: bold;
 }
 
 global{
@@ -136,6 +114,13 @@ global{
 	font-family: Avenir;
 	font-size: 11;
 	paddingTop: 0;
+}
+
+.graphListTitleWindowStyle {
+	skinClass: ClassReference('gapdesktoprx.skins.TitleWindowBareSkin');
+	borderVisible: false;
+	backgroundAlpha: 0;
+	dropShadowVisible: false;
 }
 
 .customTab {
