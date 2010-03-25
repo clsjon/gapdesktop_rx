@@ -58,15 +58,19 @@
 		import gapdesktoprx.events.NameExampleEvent;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
+		import mx.controls.SWFLoader;
 		import mx.core.FlexGlobals;
+		import mx.core.UIComponent;
 		import mx.events.CloseEvent;
 		import mx.events.FlexEvent;
 		import mx.events.IndexChangedEvent;
 		import mx.events.StateChangeEvent;
+		import mx.graphics.ImageSnapshot;
 		import mx.managers.PopUpManager;
 		import mx.utils.ObjectUtil;
 		
 		import org.restfulx.Rx;
+		import org.restfulx.events.CacheUpdateEvent;
 		import org.restfulx.services.air.AIRServiceProvider;
 		
 		private var oldTlzHeight:Number;
@@ -138,7 +142,6 @@
 		{
 			ApplicationController.initialize([AIRServiceProvider], 
 				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
-			Rx.enableLogging();
 		}
 		
 		public static function get models():ModelsController {
@@ -148,14 +151,12 @@
 		
 		protected function exampleSelectEventHandler(event:ExampleSelectEvent):void
 		{
-			
+			trace (event.example.hash);
 			var viewer:GraphViewer = new GraphViewer();
 			viewer.example = event.example;
 			currentState = 'TlzState';
 			navigator.addChildAt(viewer,navigator.numChildren - 1);
-			
 			navigator.selectedChild = viewer;
-			
 		}
 		
 		
@@ -181,9 +182,6 @@
 			updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
 		}
 		
-		protected function myFocusInHandler(event:FocusEvent):void {
-			trace ("Focus in on:" + ObjectUtil.toString(event.target).slice(0,100));
-		}
 		
 		protected function navigator_clickHandler(event:MouseEvent):void {
 			
@@ -217,7 +215,7 @@
 				}
 			}
 		}
-
+		
 		private function checkForUpdateEventHandler(event:UpdateEvent):void {
 			trace ('update check authorized');
 		}
@@ -239,14 +237,33 @@
 			exampleName.textFlow = null;
 		}
 		
+		protected function examplesListCloseEventHandler(event:CloseEvent):void {
+			turnOffScreenshotMode();
+		}			
+		
+		protected function nameExampleCloseHandler(event:CloseEvent):void {
+			turnOffScreenshotMode();
+			
+		}
+		
+		protected function turnOffScreenshotMode():void {
+			if(navigator && navigator.selectedChild) {
+				GraphViewer(navigator.selectedChild).currentState = '';
+			}
+		}
+		
 		private function launchExamplesList():void {
+			if (navigator && navigator.selectedChild && navigator.selectedChild is GraphViewer) {
+				//var viewer:GraphViewer = navigator.selectedChild as GraphViewer;
+				//viewer.currentState = 'ScreenshotState';
+			}
 			var win:ExampleSelectionBox = PopUpManager.createPopUp(this,ExampleSelectionBox,true) as ExampleSelectionBox;
 			win.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler);
+			win.addEventListener(CloseEvent.CLOSE,examplesListCloseEventHandler);
 			PopUpManager.centerPopUp(win);
 		}
 		
 		private function launchDefaultGraph():void {
-			
 			if (!navigator || navigator.numChildren < 2) {
 				this.dispatchEvent(new ExampleSelectEvent( models.defaultExample));
 			} else {
@@ -254,13 +271,14 @@
 			}
 		}
 		
-		protected function nameExampleCloseHandler(event:CloseEvent):void {
-			navigator.visible = true;
-		}
 		
 		protected function bookmarkButton_clickHandler(event:MouseEvent):void
-		{
-			navigator.visible = false;
+		{	
+			/* if (navigator && navigator.selectedChild) {
+				var viewer:GraphViewer = navigator.selectedChild as GraphViewer;
+				viewer.currentState = 'ScreenshotState';
+			}
+			 */
 			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			nameExampleWindow.addEventListener(CloseEvent.CLOSE,nameExampleCloseHandler);
@@ -286,19 +304,16 @@
 		
 		
 		protected function navigator_indexChangedHandler(event:IndexChangedEvent):void {
-			var viewer:GraphViewer = event.relatedObject as GraphViewer;
-			trace ('inch');
-			trace ("Oldfocus: " + this.stage.focus.toString());
-			viewer.graphHTML.setFocus();
-			this.stage.focus = viewer.graphHTML.htmlLoader;
-			trace ("Newfocus: " + ObjectUtil.toString(this.stage.focus.toString()));
+			trace (event.relatedObject.toString());
+			
+			UIComponent(event.relatedObject).setFocus();
+			
 		}
 		
 		protected function navigator_creationCompleteHandler(event:FlexEvent):void
 		{
 			SuperTabNavigator(event.currentTarget).addEventListener(MouseEvent.CLICK,navigator_clickHandler,true);
-			SuperTabNavigator(event.currentTarget).addEventListener(IndexChangedEvent.CHANGE,navigator_indexChangedHandler);
-			
+			SuperTabNavigator(event.currentTarget).addEventListener(IndexChangedEvent.CHANGE,navigator_indexChangedHandler);		
 		}
 		
 		protected function tosbutton_clickHandler(event:MouseEvent):void
@@ -326,10 +341,8 @@
 		{
 			var nav:SuperTabNavigator = event.currentTarget.parent as SuperTabNavigator;
 			var selectedIndex:uint = nav.getChildIndex(event.currentTarget as DisplayObject);
-			trace ('atc creatiomcomplete');
 			nav.setClosePolicyForTab(selectedIndex,SuperTab.CLOSE_NEVER);
 		}
-		
 	]]></fx:Script>
 	<s:states>
 		<s:State name="MainState"/>
@@ -346,19 +359,17 @@
 		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
 			<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4"/></s:layout>
 			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="Home" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
-			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open graph menu" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
+			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
 			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark this graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
 			<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
-			<!--<s:Button id="homeButton" click="currentState='MainState'" styleName="mainButtonStyle" label="Home" width="100"/>
-			<s:Button id="tlzGraphListButton" click="launchExamplesList()" styleName="mainButtonStyle" label="Open list of graphs" width="150"/>
-			<s:Button id="bookmarkButton" styleName="mainButtonStyle" click="bookmarkButton_clickHandler(event)" label="Bookmark this graph" width="150"/>
-			<s:Button id="fullScreenButton" styleName="mainButtonStyle" label="Full screen" width="150" click="fullScreenButton_clickHandler(event)"/>
-			-->
 		</s:Group>
 		
 		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="38" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)">
 			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)"/>
 		</containers:SuperTabNavigator>
+		
+		
+		
 		
 	</s:Group>
 	<s:Group id="maingroup" width="100%" x="0" height="100%">
@@ -390,7 +401,7 @@
 			<s:RichText color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p whiteSpaceCollapse="collapse"><s:span>no internet required</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date().toLocaleDateString()} (v 1.0b3)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+			<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date().toLocaleDateString()} (v 1.0b10_internal)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 		</s:Group>
 		
 		<s:Group id="gwgroup" width="100%" x="0" excludeFrom="SettingsState,TlzState,TosState">	
@@ -409,7 +420,7 @@
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
 					
 					<s:RichText alpha.TooltipState="0.4" textAlign="justify" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
-						<s:content><s:p >Lets you have the world's most important data with you at all times. Features include:</s:p></s:content>
+						<s:content><s:p >Brings all of the data from gapminder.org to your computer. Features include:</s:p></s:content>
 					</s:RichText>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
 						<s:content><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	No internet required</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
