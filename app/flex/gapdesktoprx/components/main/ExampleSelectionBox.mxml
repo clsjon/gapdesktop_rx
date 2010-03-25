@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:TitleWindow
+	
+ xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/halo" width="600" height="350"
+		 xmlns:mx="library://ns.adobe.com/flex/halo" width="600" height="355"
 		 creationComplete="group1_creationCompleteHandler(event)"
-		 xmlns:ns="library://ns.adobe.com/flex/mx">
+		 xmlns:ns="library://ns.adobe.com/flex/mx"
+		 styleName="graphListTitleWindowStyle"
+		 close="titlewindow1_closeHandler(event)"
+		 keyDown="titlewindow1_keyDownHandler(event)"
+		 >
 	<fx:Script>
 		<![CDATA[
 			import gapdesktoprx.events.ExampleSelectEvent;
 			import gapdesktoprx.models.Example;
+			import gapdesktoprx.skins.TitleWindowBareSkin;
 			
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
@@ -19,37 +26,20 @@
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
 				userexamples.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectedHandler);
-				if (catalyst.models.userExamples.length == 0) {
-					currentState = "NoUserExamplesState";
-				} else {
-					currentState = "DefaultState";
-				}
+				this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectedHandler);
 			}
 			
 			private function exampleSelectedHandler(event:ExampleSelectEvent):void {
-				PopUpManager.removePopUp(this);
+				trace ('example select caught');
+				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 			}
 			
-			private function titleWindow_close(evt:CloseEvent):void {
-				PopUpManager.removePopUp(this);
-			}
-			
-			
-			
-			protected function closeButton_clickHandler(event:MouseEvent):void
-			{
-				PopUpManager.removePopUp(this);
+			protected function myCloseButton_clickHandler(event:MouseEvent):void {
+				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 			}
 			
 			
-			protected function graphList_changeHandler(event:Event):void
-			{
-				trace(event.target.toString());
- 				//this.dispatchEvent(new ExampleSelectEvent(event.currentTarget.selectedItem as Example,true));
-				//PopUpManager.removePopUp(this);				
-			}
-			
-			
+
 			protected function gapGraphs_renderHandler(event:Event):void
 			{
 				var tree:Tree = event.currentTarget as Tree;
@@ -70,18 +60,25 @@
 				} else {
 					this.dispatchEvent(new ExampleSelectEvent(item as Example,true));
 					tree.selectedItem = null;
-					PopUpManager.removePopUp(this);
 				}
 				
 			}
 			
+			private function titlewindow1_keyDownHandler(event:KeyboardEvent):void {
+				if (event.charCode == Keyboard.ESCAPE) {
+					this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+				}
+			}
+
+
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
 		]]>
 	</fx:Script>
-	<s:states>
-		<s:State name="DefaultState"/>
-		<s:State name="NoUserExamplesState"/>
-	</s:states>
-	
+
 	<fx:Metadata>
 		[Event(name="exampleSelected", type="gapdesktoprx.events.ExampleSelectEvent")]
 	</fx:Metadata>
@@ -89,7 +86,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Rect x="6" y="6" width="588" height="388">
+	<s:Rect left="6" right="6" top="6" bottom="6">
 		<s:fill>
 			<s:SolidColor color="#FFFFFF"/>
 		</s:fill>
@@ -100,7 +97,7 @@
 			<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#888888" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="5"/>
 		</s:filters>
 	</s:Rect>
-	<mx:Image id="closeButton" click="closeButton_clickHandler(event)" x="0" y="0" source="@Embed('assets/icons/button/x.png')"/>
+	<mx:Image id="myCloseButton" click="myCloseButton_clickHandler(event)" x="0" y="0" source="@Embed('assets/icons/button/x.png')"/>
 	<s:Group id="main" x="20" y="20">
 		<s:layout><s:VerticalLayout/></s:layout>
 		
@@ -113,10 +110,10 @@
 			</s:Group>
 			<s:Group id="userexamples">
 				<s:layout><s:VerticalLayout horizontalAlign="contentJustify"/></s:layout>
-				<s:Label id="userGraphsLabel" fontFamily="Avenir-heavy"  fontSize="16" text="Your own graphs" width="100%"/>		
-				<s:RichText fontFamily="Avenir" color="0x888888" width="200" fontSize="12" text="To create your own graphs, select a starting graph to the left, change settings and then click  the ”Add bookmark” button." includeIn="NoUserExamplesState"/>
-				<s:List id="userGraphList" width="200" height="300" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" change="graphList_changeHandler(event)" visible="{catalyst.models.userExamples.length > 0}" includeIn="DefaultState" itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem"/>
+				<s:Label id="userGraphsLabel" fontFamily="Avenir-heavy"  fontSize="16" text="Your own graphs" width="100%"/>
+				<s:RichText fontFamily="Avenir" color="0x888888" width="200" fontSize="12" text="To create your own graphs, select a starting graph to the left, change settings and then click  the ”Add bookmark” button." includeInLayout="{catalyst.models.userExamples.length==0}" />
+				<s:List id="userGraphList" width="200" height="300" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" visible="{catalyst.models.userExamples.length > 0}" includeInLayout="{catalyst.models.userExamples.length>0}" itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem"/>
 			</s:Group>
 		</s:Group>
 	</s:Group>
-</s:Group>
+</s:TitleWindow>
