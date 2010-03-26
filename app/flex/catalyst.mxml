@@ -56,6 +56,7 @@
 		import gapdesktoprx.events.ExampleRolloverEvent;
 		import gapdesktoprx.events.ExampleSelectEvent;
 		import gapdesktoprx.events.NameExampleEvent;
+		import gapdesktoprx.models.Graph;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		
 		import mx.controls.SWFLoader;
@@ -305,8 +306,11 @@
 		
 		protected function navigator_indexChangedHandler(event:IndexChangedEvent):void {
 			trace (event.relatedObject.toString());
-			
-			UIComponent(event.relatedObject).setFocus();
+			var viewer:GraphViewer = event.relatedObject as GraphViewer;
+			if (viewer && viewer.graphHTML) {
+				this.stage.focus = viewer.graphHTML.htmlLoader; 
+				viewer.graphHTML.htmlLoader.window.setFocus();
+			}
 			
 		}
 		
