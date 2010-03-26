@@ -7,23 +7,25 @@
 		<s:State name="down"/>
 		<s:State name="disabled"/>
 	</s:states>
-	<s:Rect height="260" d:id="3" ai:objID="5f2ef500" width="390" x="0.5" y="0.5">
+	<s:Rect height="270" d:id="3" ai:objID="5f2ef500" width="390" x="0.5" y="0.5" radiusX="6">
 		<s:fill>
 			<s:LinearGradient rotation="270" scaleX="374.302" x="178.5" y="374.803">
-				<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.164834995269775" ratio="0" color.down="#666666" alpha.down="1.0"/>
-				<s:GradientEntry color="0xEFEFEF" flm:midpoint="0.708332977294922" ratio="0.564417" ratio.down="0.5254901960784314" color.down="#999999" alpha.down="1.0"/>
-				<s:GradientEntry color="0xEEEEEE" ratio="1" color.down="#666666" alpha.down="1.0"/>
+				<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.164834995269775" ratio="0" color.down="#EEEEEE" alpha.down="1.0"/>
+				<s:GradientEntry color="0xEFEFEF" flm:midpoint="0.708332977294922" ratio="0.564417" ratio.down="0.5254901960784314" color.down="#DDDDDD" alpha.down="1.0"/>
+				<s:GradientEntry color="0xEEEEEE" ratio="1" color.down="#EEEEEE" alpha.down="1.0"/>
 			</s:LinearGradient>
 		</s:fill>
 		<s:stroke>
 			<s:SolidColorStroke caps="none" color="0xBDCCD4" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 		</s:stroke>
 		<s:filters>
-			<s:GlowFilter includeIn="over" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
-			<s:GlowFilter includeIn="down" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="3" alpha="1.0" quality="2" knockout="false"/>
+			<s:GlowFilter includeIn="over" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="2" alpha="0.7" quality="2" knockout="false"/>
+			<s:GlowFilter includeIn="down" blurX="6.0" blurY="6.0" color="#ee0202" inner="true" strength="2" alpha="0.7" quality="2" knockout="false"/>
+			<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#969797" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
+			<s:DropShadowFilter includeIn="down" hideObject="false" knockout="false" distance="2" color="#333333" strength="1" inner="true" blurX="2" angle="45.0" blurY="2" alpha="0.5" quality="2"/>
 		</s:filters>
 	</s:Rect>
-	<s:Rect height="239" d:id="7" ai:objID="5f2f0020" width="388" x="1.5" y="6">
+	<s:Rect height="255" d:id="7" ai:objID="5f2f0020" width="388" x="1.5" y="6" radiusX="6">
 		<s:fill>
 			<s:LinearGradient rotation="270" scaleX="226.255" x="177.5" y="226.255">
 				<s:GradientEntry alpha="0" color="0xFFFFFF" flm:midpoint="0.2" ratio="0"/>
