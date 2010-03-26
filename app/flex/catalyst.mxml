@@ -143,6 +143,7 @@
 		{
 			ApplicationController.initialize([AIRServiceProvider], 
 				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
+			Rx.enableLogging();
 		}
 		
 		public static function get models():ModelsController {
@@ -362,13 +363,13 @@
 		</s:layout>
 		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
 			<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4"/></s:layout>
-			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="Home" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
+			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
 			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
 			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark this graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
 			<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
 		</s:Group>
 		
-		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="38" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)">
+		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)">
 			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)"/>
 		</containers:SuperTabNavigator>
 		
@@ -427,7 +428,7 @@
 						<s:content><s:p >Brings all of the data from gapminder.org to your computer. Features include:</s:p></s:content>
 					</s:RichText>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
-						<s:content><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	No internet required</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
+						<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
 					</s:RichText>
 				</s:Group>
 				<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="220" click="launchDefaultGraph()"/>
