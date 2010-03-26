@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:mx="library://ns.adobe.com/flex/mx"	xmlns:s="library://ns.adobe.com/flex/spark" 
-	height="100%"
-	width="100%"
-	backgroundColor="#EFEFEF"
-	currentStateChanging="vbox1_currentStateChangingHandler(event)"
-	>
+		 height="100%"
+		 width="100%"
+		 backgroundColor="#EFEFEF"
+		 currentStateChanging="vbox1_currentStateChangingHandler(event)"
+		 >
 	<fx:Metadata>	
 		[Event(name="exampleChanged", type="events.ExampleChangeEvent")]
 	</fx:Metadata>
@@ -29,7 +29,16 @@
 			private function updateHash(newHash:String):void {
 				if (unsavedHash != newHash) {
 					unsavedHash = newHash;
-					this.label = "[New example]";
+					if (_example.hashIsNewGraph(newHash)) {
+						this.label = "[New example]";
+					} else {
+						if (newHash != _example.hash) {
+							this.label = _example.name + "*";
+							trace('oldh:' + _example.hash);
+							trace('newh:' + newHash);
+							
+						}
+					}
 				}
 			}
 			
@@ -40,7 +49,7 @@
 				trace("graphBrowser_completeHandler");
 				var html:HTML = event.currentTarget as HTML;
 				html.htmlLoader.window.updateHash = updateHash;
-				html.location = _example.url();
+				html.location = _example.url;
 				this.stage.focus = graphHTML.htmlLoader;
 				//this.graphHTML.htmlLoader.window.setFocus();
 			}
@@ -93,14 +102,14 @@
 			public function set example(value:Example):void
 			{
 				
-				trace ('is the same: ' + (value.url()==_example.url()));
+				trace ('is the same: ' + (value.url==_example.url));
 				trace ('incoming hash: ' + value.hash);
 				_example = value;
 				this.label = example.name;
 				unsavedHash = value.hash;
 				//var urlReq:URLRequest = new URLRequest(example.url());
 				if (graphHTML) {
-					graphHTML.location = example.url();
+					graphHTML.location = example.url;
 				}
 				//		graphHTML.htmlLoader.load(urlReq);
 				invalidateProperties();
