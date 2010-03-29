@@ -30,7 +30,6 @@
 			}
 			
 			private function exampleSelectedHandler(event:ExampleSelectEvent):void {
-				trace ('example select caught');
 				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 			}
 			
@@ -44,7 +43,6 @@
 			{
 				var tree:Tree = event.currentTarget as Tree;
 				var dp:RxCollection = tree.dataProvider as RxCollection;
-				
 				tree.expandChildrenOf(dp,true);
 			}
 			
