@@ -60,12 +60,20 @@
 				<s:SolidColor color="#FFFFFF"/>
 			</s:fill.over>
 		</s:Rect>
-		<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="14" x="28" verticalCenter="2" id="labelDisplay" paddingRight="7"/>
-		<ns:Image
-			id="icon" x="7"
+	<s:Group id="content" verticalCenter="0">
+		<s:layout>
+			
+<s:HorizontalLayout paddingLeft="7" paddingRight="7" gap="7" verticalAlign="middle"	/>
+		</s:layout>
+		
+	
+	<ns:Image
+			id="icon" left="7"
 			source="{hostComponent.getStyle('iconUp')}"
 			verticalCenter="0"
 			alpha="{(this.currentState == 'up')?.5:1}"
 			/>
+		<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="14" x="28" verticalCenter="2" id="labelDisplay" paddingRight="7" includeInLayout="{hostComponent.label.length>0}"/>
+	</s:Group>
 	
 </s:Skin>
