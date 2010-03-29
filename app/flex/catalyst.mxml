@@ -19,19 +19,16 @@
 	
 	height="400" 
 	width="700" 
-	minHeight="450"
-	minWidth="700"
-	maxHeight="450"
-	maxWidth="700"
-	height.TlzState="600"
-	width.TlzState="800"
-	maxHeight.TlzState="1200"
-	maxWidth.TlzState="1900"
+	width.FixedSize="700"
+	height.FixedSize="400"
+	
 	resizing="windowedapplication1_resizingHandler(event)"
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)" 
 	xmlns:ns="library://ns.adobe.com/flex/mx" 
-	xmlns:extensions="gapdesktoprx.components.extensions.*">
+	xmlns:extensions="gapdesktoprx.components.extensions.*"
+	currentStateChange="windowedapplication1_currentStateChangeHandler(event)"
+	>
 	
 	<fx:Style source="/assets/css/styles.css"/>
 	
@@ -48,6 +45,7 @@
 		
 		import flexlib.controls.SuperTabBar;
 		import flexlib.controls.tabBarClasses.SuperTab;
+		import flexlib.events.TabReorderEvent;
 		
 		import gapdesktoprx.components.main.*;
 		import gapdesktoprx.controllers.ApplicationController;
@@ -63,19 +61,24 @@
 		import mx.core.FlexGlobals;
 		import mx.core.UIComponent;
 		import mx.events.CloseEvent;
+		import mx.events.DragEvent;
 		import mx.events.FlexEvent;
 		import mx.events.IndexChangedEvent;
 		import mx.events.StateChangeEvent;
 		import mx.graphics.ImageSnapshot;
 		import mx.managers.PopUpManager;
+		import mx.states.State;
 		import mx.utils.ObjectUtil;
 		
 		import org.restfulx.Rx;
 		import org.restfulx.events.CacheUpdateEvent;
 		import org.restfulx.services.air.AIRServiceProvider;
 		
-		private var oldTlzHeight:Number;
-		private var oldTlzWidth:Number;
+		private var oldTlzHeight:Number = 600;
+		private var oldTlzWidth:Number = 800;
+		private var oldTlzX:Number = 0;
+		private var oldTlzY:Number = 0;
+		
 		
 		
 		protected function closeSettingsButton_clickHandler():void
@@ -113,37 +116,20 @@
 		
 		protected function windowedapplication1_initializeHandler(event:FlexEvent):void
 		{
-			this.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE,stateChangeHandler);
 			oldTlzHeight = this.height;
 			oldTlzWidth = this.width;
 			
 		}
 		
-		private function stateChangeHandler(event:StateChangeEvent):void {
-			switch (event.oldState) {
-				case 'TlzState':
-					oldTlzHeight = this.height;
-					oldTlzWidth = this.width;
-			}
-			switch (event.newState) {
-				case 'MainState':
-				case 'SettingsState':
-				case 'TosState':
-					stage.displayState = StageDisplayState.NORMAL;
-					break;
-				case 'TlzState':
-					this.height = oldTlzHeight;
-					this.width = oldTlzWidth;
-					
-			}
-		}
-		
-		
 		protected function windowedapplication1_preinitializeHandler(event:FlexEvent):void
 		{
+			var descriptor:XML = FlexGlobals.topLevelApplication.nativeApplication.applicationDescriptor;
+			var ns:Namespace = descriptor.namespaceDeclarations()[0];
+			var version:String = descriptor.ns::version;
+			trace ('version: ' + version);
 			ApplicationController.initialize([AIRServiceProvider], 
-				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
-			Rx.enableLogging();
+				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx-"+version).nativePath);
+			//Rx.enableLogging();
 		}
 		
 		public static function get models():ModelsController {
@@ -182,6 +168,10 @@
 			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
 			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
 			updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
+			oldTlzHeight = Capabilities.screenResolutionY;
+			oldTlzWidth = Capabilities.screenResolutionX;
+			oldTlzX = 0;
+			oldTlzY = 0;
 		}
 		
 		
@@ -277,10 +267,10 @@
 		protected function bookmarkButton_clickHandler(event:MouseEvent):void
 		{	
 			/* if (navigator && navigator.selectedChild) {
-				var viewer:GraphViewer = navigator.selectedChild as GraphViewer;
-				viewer.currentState = 'ScreenshotState';
+			var viewer:GraphViewer = navigator.selectedChild as GraphViewer;
+			viewer.currentState = 'ScreenshotState';
 			}
-			 */
+			*/
 			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			nameExampleWindow.addEventListener(CloseEvent.CLOSE,nameExampleCloseHandler);
@@ -306,13 +296,13 @@
 		
 		
 		protected function navigator_indexChangedHandler(event:IndexChangedEvent):void {
-			trace (event.relatedObject.toString());
+			/* 		trace (event.relatedObject.toString());
 			var viewer:GraphViewer = event.relatedObject as GraphViewer;
 			if (viewer && viewer.graphHTML) {
-				this.stage.focus = viewer.graphHTML.htmlLoader; 
-				viewer.graphHTML.htmlLoader.window.setFocus();
+			this.stage.focus = viewer.graphHTML.htmlLoader; 
+			viewer.graphHTML.htmlLoader.window.setFocus();
 			}
-			
+			*/			
 		}
 		
 		protected function navigator_creationCompleteHandler(event:FlexEvent):void
@@ -320,6 +310,16 @@
 			SuperTabNavigator(event.currentTarget).addEventListener(MouseEvent.CLICK,navigator_clickHandler,true);
 			SuperTabNavigator(event.currentTarget).addEventListener(IndexChangedEvent.CHANGE,navigator_indexChangedHandler);		
 		}
+		
+		protected function navigator_tabsReorderedHandler(event:TabReorderEvent):void
+		{
+			trace (event.currentTarget.toString());
+			var nav:SuperTabNavigator = event.currentTarget as SuperTabNavigator;
+			if (event.newIndex == nav.length) {
+				event.preventDefault();
+			}
+		}
+		
 		
 		protected function tosbutton_clickHandler(event:MouseEvent):void
 		{
@@ -336,24 +336,69 @@
 			}
 		}
 		
-		
-		protected function settingsbutton_clickHandler(event:MouseEvent):void
-		{
-		}
-		
-		
 		protected function addTabCanvas_creationCompleteHandler(event:FlexEvent):void
 		{
 			var nav:SuperTabNavigator = event.currentTarget.parent as SuperTabNavigator;
 			var selectedIndex:uint = nav.getChildIndex(event.currentTarget as DisplayObject);
 			nav.setClosePolicyForTab(selectedIndex,SuperTab.CLOSE_NEVER);
 		}
+		
+		protected function resetButton_clickHandler(event:MouseEvent):void
+		{
+			var viewer:GraphViewer = navigator.selectedChild as GraphViewer;
+			if (viewer) {
+				this.dispatchEvent(new ExampleSelectEvent( models.defaultExample));
+			}
+		}
+		
+		protected function stateInGroup(stateName:String,groupName:String):Boolean {
+			for each (var state:State in this.states) {
+				if (state.name == stateName) {
+					for each (var group:String in state.stateGroups) {
+						if (groupName == group) {
+							return true;
+						}
+					}		
+				}			
+			}
+			return false;
+		}
+		
+		protected function windowedapplication1_currentStateChangeHandler(event:StateChangeEvent):void
+		{
+			trace ('state ' + event.oldState + ' was exited and is ' + (stateInGroup(event.oldState,'FixedSize') ? 'certainly ' : 'not ') + 'in group ');
+			switch (event.oldState) {
+				case 'TlzState':
+					oldTlzHeight = this.height;
+					oldTlzWidth = this.width;
+			}
+			if (stage) {
+				
+				switch (event.newState) {
+					case 'MainState':
+					case 'SettingsState':
+					case 'TosState':
+						this.stage.displayState = StageDisplayState.NORMAL;
+						
+						break;
+					case 'TlzState':
+						/* 						this.maxHeight = oldTlzHeight;
+						this.maxWidth = oldTlzWidth;
+						*/						this.height = oldTlzHeight;
+						this.width = oldTlzWidth;
+						this.move(0,0);
+						break;
+				}
+			}
+			
+		}
+		
 	]]></fx:Script>
 	<s:states>
-		<s:State name="MainState"/>
-		<s:State name="SettingsState"/>
-		<s:State name="TooltipState"/>
-		<s:State name="TosState"/>
+		<s:State name="MainState" stateGroups="FixedSize"/>
+		<s:State name="SettingsState" stateGroups="FixedSize"/>
+		<s:State name="TooltipState" stateGroups="FixedSize"/>
+		<s:State name="TosState" stateGroups="FixedSize"/>
 		<s:State name="TlzState"/>
 	</s:states>
 	<s:DataGroup dataProvider="{models.examples}" width="0" height="0"/>
@@ -364,12 +409,13 @@
 		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
 			<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4"/></s:layout>
 			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
+			<extensions:IconButton id="resetButton" styleName="iconButtonStyle" label="Reset graph" iconUp="assets/icons/button/reload.png" click="resetButton_clickHandler(event)" />
 			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
 			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark this graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
 			<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
 		</s:Group>
 		
-		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)">
+		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)">
 			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)"/>
 		</containers:SuperTabNavigator>
 		
@@ -406,7 +452,7 @@
 			<s:RichText color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
 				<s:content><s:p whiteSpaceCollapse="collapse"><s:span>no internet required</s:span></s:p></s:content>
 			</s:RichText>
-			<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date().toLocaleDateString()} (v 1.0b10_internal)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+			<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date().toLocaleDateString()} (v 1.0b11_internal)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 		</s:Group>
 		
 		<s:Group id="gwgroup" width="100%" x="0" excludeFrom="SettingsState,TlzState,TosState">	
@@ -470,8 +516,8 @@
 			height="30"
 			configurationFile="{File.applicationDirectory.resolvePath('config/updaterConfig.xml')}"
 			skinClass="gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin"
-			invisibleCheck="false"
-			useWindow="false"
+			invisibleCheck="true"
+			useWindow="true"
 			
 			/>
 	</s:Group>
