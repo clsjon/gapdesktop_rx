@@ -4,6 +4,8 @@ package gapdesktoprx.controllers {
 	import gapdesktoprx.models.Tag;
 	import gapdesktoprx.utils.FirstRunUtilities;
 	
+	import mx.collections.ArrayCollection;
+	
 	import org.restfulx.Rx;
 	import org.restfulx.collections.ModelsCollection;
 	import org.restfulx.collections.RxCollection;
@@ -26,7 +28,7 @@ package gapdesktoprx.controllers {
 		
 		public var tags:RxCollection;
 		
-		public var usedMainTags:RxCollection;
+		public var usedMainTags:ArrayCollection;
 		
 		public var graphs:RxCollection;
 		
@@ -48,14 +50,21 @@ package gapdesktoprx.controllers {
 			var defaultExamples:RxCollection = gapExamples.itemsWithPropertyValue("name","Wealth & Health of Nations");
 			if (defaultExamples.length > 0) {
 				defaultExample = defaultExamples[0];
+				gapExamples.addItemAt(defaultExample,0);
+				
+				
 			} else {
 				defaultExample = gapExamples[0] as Example;
+				gapExamples.addItemAt(defaultExample,0);
 			}
 		}
 		
 		private function refreshTagCollections(obj:Object = null):void {
 			tags = Rx.models.cached(Tag);
-			usedMainTags = Rx.filter(Rx.models.cached(Tag), filterUsedMainTags);
+			
+			usedMainTags = new ArrayCollection( Rx.filter(Rx.models.cached(Tag), filterUsedMainTags).source);
+			 
+			usedMainTags.addItemAt(defaultExample,0);
 		}
 		
 		private function onCacheUpdate(event:CacheUpdateEvent):void {
