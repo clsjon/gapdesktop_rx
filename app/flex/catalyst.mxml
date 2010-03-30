@@ -17,29 +17,33 @@
 	
 	backgroundColor="#ffffff" 
 	
-	height="400" 
+	height="420" 
 	width="700" 
-	width.FixedSize="700"
-	height.FixedSize="400"
 	
 	resizing="windowedapplication1_resizingHandler(event)"
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
-	applicationComplete="windowedapplication1_applicationCompleteHandler(event)" 
+	applicationComplete="windowedapplication1_applicationCompleteHandler(event)"
+	networkChange="windowedapplication1_networkChangeHandler(event)"
 	xmlns:ns="library://ns.adobe.com/flex/mx" 
 	xmlns:extensions="gapdesktoprx.components.extensions.*"
-	currentStateChange="windowedapplication1_currentStateChangeHandler(event)"
+	currentStateChange="windowedapplication1_currentStateChangeHandler(event)" 
+	currentStateChanging="windowedapplication1_currentStateChangingHandler(event)"
 	>
 	
 	<fx:Style source="/assets/css/styles.css"/>
 	
 	<fx:Script><![CDATA[
+		import air.net.URLMonitor;
 		import air.update.events.UpdateEvent;
+		
+		import de.websector.utils.updater.ui.ApplicationUpdaterUI;
 		
 		import flash.display.DisplayObject;
 		import flash.display.StageDisplayState;
 		import flash.events.FullScreenEvent;
 		import flash.events.MouseEvent;
 		import flash.events.NativeWindowBoundsEvent;
+		import flash.sampler.NewObjectSample;
 		
 		import flashx.textLayout.conversion.TextConverter;
 		
@@ -55,7 +59,9 @@
 		import gapdesktoprx.events.ExampleSelectEvent;
 		import gapdesktoprx.events.NameExampleEvent;
 		import gapdesktoprx.models.Graph;
+		import gapdesktoprx.skins.ButtonSkin;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
+		import gapdesktoprx.skins.applicationupdaterui.firefox.ButtonSkin;
 		
 		import mx.controls.SWFLoader;
 		import mx.core.FlexGlobals;
@@ -74,12 +80,15 @@
 		import org.restfulx.events.CacheUpdateEvent;
 		import org.restfulx.services.air.AIRServiceProvider;
 		
-		private var oldTlzHeight:Number = 600;
-		private var oldTlzWidth:Number = 800;
-		private var oldTlzX:Number = 0;
-		private var oldTlzY:Number = 0;
+		private var fixedSizeRect:Rectangle = new Rectangle();
 		
+		private var resizableRect:Rectangle = new Rectangle();
+		private var resizableDisplayState:String = StageDisplayState.NORMAL;
 		
+		private var updater:ApplicationUpdaterUI;
+		
+		[Bindable]
+		public static var online:Boolean = true;
 		
 		protected function closeSettingsButton_clickHandler():void
 		{
@@ -111,14 +120,6 @@
 				fullScreenButton.label = "Full screen";
 				fullScreenButton.setStyle("iconUp", "assets/icons/button/fullscreen.png");
 			}
-		}
-		
-		
-		protected function windowedapplication1_initializeHandler(event:FlexEvent):void
-		{
-			oldTlzHeight = this.height;
-			oldTlzWidth = this.width;
-			
 		}
 		
 		protected function windowedapplication1_preinitializeHandler(event:FlexEvent):void
@@ -167,11 +168,9 @@
 			this.addEventListener(ExampleRolloverEvent.EXAMPLE_ROLLOVER,exampleRolloverEventHandler);
 			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
 			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
-			updater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, checkForUpdateEventHandler);
-			oldTlzHeight = Capabilities.screenResolutionY;
-			oldTlzWidth = Capabilities.screenResolutionX;
-			oldTlzX = 0;
-			oldTlzY = 0;
+			launchMonitor();
+			updater = new ApplicationUpdaterUI(File.applicationDirectory.resolvePath('config/updaterConfig.xml'),true,true);
+			
 		}
 		
 		
@@ -321,7 +320,7 @@
 		}
 		
 		
-		protected function tosbutton_clickHandler(event:MouseEvent):void
+		protected function tosButton_clickHandler(event:MouseEvent):void
 		{
 			if (event.altKey) { 
 				if (event.shiftKey) { //open db admin interface
@@ -366,40 +365,91 @@
 		
 		protected function windowedapplication1_currentStateChangeHandler(event:StateChangeEvent):void
 		{
-			trace ('state ' + event.oldState + ' was exited and is ' + (stateInGroup(event.oldState,'FixedSize') ? 'certainly ' : 'not ') + 'in group ');
-			switch (event.oldState) {
-				case 'TlzState':
-					oldTlzHeight = this.height;
-					oldTlzWidth = this.width;
-			}
-			if (stage) {
-				
-				switch (event.newState) {
-					case 'MainState':
-					case 'SettingsState':
-					case 'TosState':
-						this.stage.displayState = StageDisplayState.NORMAL;
-						
-						break;
-					case 'TlzState':
-						/* 						this.maxHeight = oldTlzHeight;
-						this.maxWidth = oldTlzWidth;
-						*/						this.height = oldTlzHeight;
-						this.width = oldTlzWidth;
+			if (stateInGroup(event.oldState,"FixedSize")) {
+				if (stateInGroup(event.newState,"Resizable")) {
+					//transition from fixed to resizable
+					this.stage.displayState = resizableDisplayState;
+					if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)) {
 						this.move(0,0);
-						break;
+						this.nativeWindow.width = Capabilities.screenResolutionX;
+						this.nativeWindow.height = Capabilities.screenResolutionY;
+					}
+					
 				}
+			}
+			if (stateInGroup(event.oldState,"Resizable")) {
+				
+				if (stateInGroup(event.newState,"FixedSize")) {
+					//transition from resizable to fixed		
+					stage.displayState = StageDisplayState.NORMAL;
+		/* 			this.width = fixedSizeRect.width;
+					this.height = fixedSizeRect.height;
+					this.move(fixedSizeRect.x,fixedSizeRect.y); */
+					this.nativeWindow.width = fixedSizeRect.width;
+					this.nativeWindow.height = fixedSizeRect.height;
+					this.nativeWindow.x = fixedSizeRect.x;
+					this.nativeWindow.y = fixedSizeRect.y;
+				}	
 			}
 			
 		}
 		
+		
+		protected function updateCheckButton_clickHandler(event:MouseEvent):void
+		{
+			updater.checkNow();
+		}
+		
+		
+		protected function windowedapplication1_currentStateChangingHandler(event:StateChangeEvent):void
+		{
+			if (stateInGroup(event.oldState,"FixedSize")) {
+				if (stateInGroup(event.newState,"Resizable")) {
+					//transition from fixed to resizable
+					fixedSizeRect.x = this.nativeWindow.x;
+					fixedSizeRect.y = this.nativeWindow.y;
+					fixedSizeRect.width = this.nativeWindow.width;
+					fixedSizeRect.height = this.nativeWindow.height;
+					
+				}
+			}
+			if (stateInGroup(event.oldState,"Resizable")) {
+				
+				if (stateInGroup(event.newState,"FixedSize")) {
+					//transition from resizable to fixed	
+					resizableDisplayState = this.stage.displayState;
+					resizableRect.x = this.nativeWindow.x;
+					resizableRect.y = this.nativeWindow.y;
+					resizableRect.width = this.nativeWindow.width;
+					resizableRect.height = this.nativeWindow.height;
+				}	
+			}
+			
+		}
+		
+		private function launchMonitor():void {
+			var monitor:URLMonitor;
+			monitor = new URLMonitor(new URLRequest('http://www.gapminder.org'));
+			monitor.addEventListener(StatusEvent.STATUS, networkStatusChangeHandler);
+			monitor.start();
+		}
+
+		protected function windowedapplication1_networkChangeHandler(event:Event):void
+		{
+			launchMonitor();			
+		}
+		
+		private function networkStatusChangeHandler(event:StatusEvent):void {
+			online = (event.code == "Service.available"); 
+		}
+
 	]]></fx:Script>
 	<s:states>
 		<s:State name="MainState" stateGroups="FixedSize"/>
 		<s:State name="SettingsState" stateGroups="FixedSize"/>
 		<s:State name="TooltipState" stateGroups="FixedSize"/>
 		<s:State name="TosState" stateGroups="FixedSize"/>
-		<s:State name="TlzState"/>
+		<s:State name="TlzState" stateGroups="Resizable"/>
 	</s:states>
 	<s:DataGroup dataProvider="{models.examples}" width="0" height="0"/>
 	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState">
@@ -407,12 +457,18 @@
 			<s:BasicLayout/>
 		</s:layout>
 		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
-			<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4"/></s:layout>
+			<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4" paddingRight="4"/></s:layout>
 			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
 			<extensions:IconButton id="resetButton" styleName="iconButtonStyle" label="Reset graph" iconUp="assets/icons/button/reload.png" click="resetButton_clickHandler(event)" />
 			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
 			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark this graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
+			<s:Group id="tlzbuttonrowright" width="100%">
+				<s:layout>
+					<s:HorizontalLayout horizontalAlign="right"/>
+				</s:layout>
 			<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
+				
+			</s:Group>
 		</s:Group>
 		
 		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)">
@@ -461,7 +517,7 @@
 			</s:layout>
 			<s:Group id="bigbuttoncolumn" width="50%">
 				<s:Group id="bigbuttongroup">
-					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()"/>		
+					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true"/>		
 				</s:Group>
 			</s:Group>
 			<s:Group id="explanationcolumn" width="350" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">
@@ -471,7 +527,7 @@
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
 					
 					<s:RichText alpha.TooltipState="0.4" textAlign="justify" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
-						<s:content><s:p >Brings all of the data from gapminder.org to your computer. Features include:</s:p></s:content>
+						<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
 					</s:RichText>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
 						<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
@@ -481,7 +537,7 @@
 				<s:RichText color="0x000000" fontFamily="Avenir-book" fontSize="14" id="or" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%">
 					<s:content><s:p>or</s:p></s:content>
 				</s:RichText>
-				<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="200" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
+				<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="220" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
 			</s:Group>
 		</s:Group>
 		
@@ -500,26 +556,11 @@
 		
 		<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%" height="40">
 			<s:layout><s:HorizontalLayout paddingLeft="12"/></s:layout>
-			<s:Button id="tosbutton" click="tosbutton_clickHandler(event)" skinClass="gapdesktoprx.components.catalyst.Settings_Button" label="Terms of use..."/>
+			<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
+			<s:Button id="updateCheckButton" click="updateCheckButton_clickHandler(event)" styleName="settingsButtonStyle" label="Check for updates..."/>
+			<s:Label text="{online}"/>
 		</s:Group>
 		
-	</s:Group>
-	
-	<s:Group id="updatenotificationgroup" x="0" bottom="0" height="30" width="100%" includeIn="MainState">
-		<s:layout>
-			<s:BasicLayout/>
-		</s:layout>
-		
-		<ws:ApplicationUpdaterUI
-			id="updater" 
-			width="100%" 
-			height="30"
-			configurationFile="{File.applicationDirectory.resolvePath('config/updaterConfig.xml')}"
-			skinClass="gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin"
-			invisibleCheck="true"
-			useWindow="true"
-			
-			/>
 	</s:Group>
 	
 	<s:Group id="tooltip" includeIn="TooltipState" x="100" y="10" width="255" height="{parentApplication.height - 20}">
@@ -643,9 +684,6 @@
 				<s:Parallel target="{introtextgroup}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
-				<s:Parallel target="{updatenotificationgroup}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
 			</s:Parallel>
 		</s:Transition>
 		<s:Transition fromState="MainState" toState="TlzState" autoReverse="true">
@@ -683,9 +721,6 @@
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{explanationcolumn}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{updatenotificationgroup}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{settingsbuttonsgroup}">

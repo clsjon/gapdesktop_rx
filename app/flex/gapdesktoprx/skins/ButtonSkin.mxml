@@ -11,13 +11,39 @@
 	<s:states>
 		<s:State name="up"/>
 		<s:State name="down"/>
+		<s:State name="over"/>
+		<s:State name="disabled"/>
 	</s:states>
 	
 	
-	 <s:Rect left="0" right="0" top="0" bottom="0" width="69" height="20" radiusX="4" radiusY="4">
-        <s:stroke>
-            <s:SolidColorStroke color="0x000000" weight="1"/>
-        </s:stroke>
-    </s:Rect>
-
+	<s:Rect height="14" radiusX="6" width="100%" x="0.5" y="0.5">
+		<s:stroke>
+			<s:LinearGradientStroke caps="none" joints="miter" miterLimit="4" rotation="90" weight="1">
+				<s:GradientEntry alpha="1.0" color="#EAEAEA" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color="#969797" ratio="1" color.down="#FFFFFF"/>
+			</s:LinearGradientStroke>
+		</s:stroke>
+		<s:fill>
+			<s:LinearGradient rotation="90" rotation.down="270">
+				<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0"/>
+				<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0.07058823529411765"/>
+				<s:GradientEntry alpha="1.0" color="#E1E1E1" ratio="0.6"/>
+				<s:GradientEntry alpha="1.0" color="#CECECE" ratio="0.9333333333333333"/>
+				<s:GradientEntry alpha="1.0" color="#CECECE" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+		<s:filters>
+			<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#969797" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
+			<s:DropShadowFilter includeIn="down" hideObject="false" knockout="false" distance="2" color="#333333" strength="1" inner="true" blurX="2" angle="45.0" blurY="2" alpha="0.5" quality="2"/>
+		</s:filters>
+		<s:fill.over>
+			<s:SolidColor color="#FFFFFF"/>
+		</s:fill.over>
+	</s:Rect>
+	<s:Group id="content" verticalCenter="0">
+		<s:layout>
+			<s:HorizontalLayout paddingLeft="7" paddingRight="7" gap="7" verticalAlign="middle"	/>
+		</s:layout>
+		<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="{hostComponent.getStyle('fontSize')}" x="28" verticalCenter="2" id="labelDisplay" paddingRight="7" includeInLayout="{hostComponent.label.length>0}"/>
+	</s:Group>
 </s:SparkSkin>

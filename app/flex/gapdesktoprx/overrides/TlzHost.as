@@ -6,6 +6,11 @@ package gapdesktoprx.overrides
 	import flash.html.HTMLHost;
 	import flash.html.HTMLLoader;
 	import flash.html.HTMLWindowCreateOptions;
+	import flash.net.URLRequest;
+	
+	import mx.utils.ObjectUtil;
+	
+	import org.restfulx.services.air.AIRServiceProvider;
 
 	public class TlzHost extends HTMLHost
 	{
@@ -13,9 +18,20 @@ package gapdesktoprx.overrides
 		{
 			super(defaultBehaviors);
 		}
+		
+		public const touURL:String = "http://www.gapminder.org/world/tou.html";
+		
+		override public function updateLocation(locationURL:String):void {
+			if (locationURL == touURL) {
+				htmlLoader.load(new URLRequest("app:/assets/text/tou2.html"));
+			}
+		}
+			
 		override public function createWindow(windowCreateOptions:HTMLWindowCreateOptions) : HTMLLoader
 		{
-			//trace (windowCreateOptions.toString());
+			
+			trace (htmlLoader.location);
+			trace (ObjectUtil.toString(windowCreateOptions));
             var initOptions:NativeWindowInitOptions = new NativeWindowInitOptions(); 
             var bounds:Rectangle = new Rectangle(windowCreateOptions.x, 
                                                 windowCreateOptions.y, 
