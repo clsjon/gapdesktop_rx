@@ -22,7 +22,7 @@ package gapdesktoprx.overrides
 		public const touURL:String = "http://www.gapminder.org/world/tou.html";
 		
 		override public function updateLocation(locationURL:String):void {
-			if (locationURL == touURL) {
+			if (!(catalyst.online) && locationURL == touURL) {
 				htmlLoader.load(new URLRequest("app:/assets/text/tou2.html"));
 			}
 		}
