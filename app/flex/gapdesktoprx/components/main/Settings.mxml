@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" 
+		 width="300" 
+		 height="120"
+		 title="Gapminder Desktop preferences"
+		 xmlns:mx1="library://ns.adobe.com/flex/mx"
+		 closeButton="{null}"
+		 moveArea="{null}"
+		 close="titlewindow1_closeHandler(event)"
+		 keyDown="titlewindow1_keyDownHandler(event)"
+		 creationComplete="titlewindow1_creationCompleteHandler(event)"
+		 >
+	<s:layout>
+		<s:VerticalLayout gap="10" paddingBottom="10" paddingTop="10" paddingLeft="10" paddingRight="10"/>
+	</s:layout>
+	<fx:Metadata>
+		[Event(name="nameExample", type="events.NameExampleEvent")]
+	</fx:Metadata>
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import gapdesktoprx.events.NameExampleEvent;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			private function titlewindow1_keyDownHandler(event:KeyboardEvent):void {
+				if (event.charCode == Keyboard.ESCAPE) {
+					this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+				}
+			}
+
+			
+			
+			protected function myCloseButton_clickHandler(event:MouseEvent):void
+			{
+				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+				}
+			
+			
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+
+			protected function autoUpdateCheck_changeHandler(event:Event):void
+			{
+				catalyst.prefs.autocheck = ((event.currentTarget as CheckBox).selected);
+			}
+
+
+			protected function titlewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				PopUpManager.centerPopUp(this);
+			}
+
+
+			protected function checkUpdateButton_clickHandler(event:MouseEvent):void
+			{
+				catalyst.updater.checkNow();
+				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+			}
+
+		]]>
+	</fx:Script>
+			<s:Button id="checkUpdateButton" label="Check for updates now..." styleName="settingsButtonStyle" click="checkUpdateButton_clickHandler(event)"/>
+			<s:CheckBox id="autoUpdateCheck" label="Check for updates automatically" selected="{catalyst.prefs.autocheck}" styleName="checkboxStyle" change="autoUpdateCheck_changeHandler(event)"/>
+		<s:Group id="buttons">
+			<s:layout><s:HorizontalLayout gap="10" horizontalAlign="right"/></s:layout>		
+				<s:Button id="myCloseButton" label="Close settings" styleName="settingsButtonStyle" click="myCloseButton_clickHandler(event)"/>								
+		</s:Group>
+	
+</s:TitleWindow>

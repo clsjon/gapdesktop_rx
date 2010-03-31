@@ -17,7 +17,7 @@
 	
 	backgroundColor="#ffffff" 
 	
-	height="420" 
+	height="415" 
 	width="700" 
 	
 	resizing="windowedapplication1_resizingHandler(event)"
@@ -37,6 +37,7 @@
 		import air.update.events.UpdateEvent;
 		
 		import de.websector.utils.updater.ui.ApplicationUpdaterUI;
+		import de.websector.utils.updater.ui.skins.silver.AppUpdaterUISilverSkin;
 		
 		import flash.display.DisplayObject;
 		import flash.display.StageDisplayState;
@@ -66,6 +67,7 @@
 		
 		import mx.controls.SWFLoader;
 		import mx.core.FlexGlobals;
+		import mx.core.IFlexDisplayObject;
 		import mx.core.UIComponent;
 		import mx.events.CloseEvent;
 		import mx.events.DragEvent;
@@ -86,7 +88,7 @@
 		private var resizableRect:Rectangle = new Rectangle();
 		private var resizableDisplayState:String = StageDisplayState.NORMAL;
 		
-		private var updater:ApplicationUpdaterUI;
+		public static var updater:ApplicationUpdaterUI;
 		
 		[Bindable]
 		public static var online:Boolean = true;
@@ -175,13 +177,16 @@
 			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
 			launchMonitor();
 			updater = new ApplicationUpdaterUI(File.applicationDirectory.resolvePath('config/updaterConfig.xml'),false,true);
-			
+			updater.setStyle('skinClass', de.websector.utils.updater.ui.skins.silver.AppUpdaterUISilverSkin);
+			if (prefs.firstRun) {
+				var firstRunWindow :IFlexDisplayObject = PopUpManager.createPopUp(this,FirstRunAlert,false);
+				
+			}
 		}
-		
 		
 		protected function navigator_clickHandler(event:MouseEvent):void {
 			
-			//add tab functionality
+			//'add new tab' functionality
 			
 			var bar:SuperTabBar = null;			
 			var obj:Object = event.target;
@@ -449,15 +454,14 @@
 		}
 		
 
-		protected function autoupdate_changeHandler(event:Event):void
+		protected function settingsButton_clickHandler(event:MouseEvent):void
 		{
-			prefs.autocheck = ((event.currentTarget as CheckBox).selected);  
+			var settingsWindow:IFlexDisplayObject = PopUpManager.createPopUp(this,Settings,false);
 		}
 
 	]]></fx:Script>
 	<s:states>
 		<s:State name="MainState" stateGroups="FixedSize"/>
-		<s:State name="SettingsState" stateGroups="FixedSize"/>
 		<s:State name="TooltipState" stateGroups="FixedSize"/>
 		<s:State name="TosState" stateGroups="FixedSize"/>
 		<s:State name="TlzState" stateGroups="Resizable"/>
@@ -522,7 +526,7 @@
 			<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date().toLocaleDateString()} (v 1.0b11_internal)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 		</s:Group>
 		
-		<s:Group id="gwgroup" width="100%" x="0" excludeFrom="SettingsState,TlzState,TosState">	
+		<s:Group id="gwgroup" width="100%" x="0" excludeFrom="TlzState,TosState">	
 			<s:layout>
 				<s:HorizontalLayout gap="20" paddingLeft="10"/>
 			</s:layout>
@@ -531,13 +535,13 @@
 					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true"/>		
 				</s:Group>
 			</s:Group>
-			<s:Group id="explanationcolumn" width="350" excludeFrom="SettingsState,TosState,TlzState" alpha.TooltipState="0.4">
+			<s:Group id="explanationcolumn" width="350" excludeFrom="TosState,TlzState" alpha.TooltipState="0.4">
 				<s:layout><s:VerticalLayout/></s:layout>
-				<s:Group id="introtextgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%">
+				<s:Group id="introtextgroup" excludeFrom="TosState,TlzState" width="100%">
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
 					
-					<s:RichText id="explanationtext" alpha.TooltipState="0.4" textAlign="justify" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
+					<s:RichText id="explanationtext" alpha.TooltipState="0.4" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
 						<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
 					</s:RichText>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
@@ -549,14 +553,14 @@
 			</s:Group>
 		</s:Group>
 		
-		<s:Group id="settingsbuttonsbar" excludeFrom="SettingsState,TosState,TlzState" width="100%" height="26">
+		<s:Group id="settingsbuttonsbar" excludeFrom="TosState,TlzState" width="100%" height="26" bottom="0">
 			<s:layout>
 				<s:BasicLayout/>
 			</s:layout>
 			<s:Group id="settingsbuttonsbackground" top="0" left="0" right="0" bottom="0">
 				<s:Rect top="0" left="0" right="0" bottom="0">
 					<s:fill>
-						<s:SolidColor color="0x888888"/>
+						<s:SolidColor color="0xCCCCCC"/>
 					</s:fill>
 				</s:Rect>				
 			</s:Group>
@@ -564,8 +568,8 @@
 				
 				<s:layout><s:HorizontalLayout paddingLeft="12" paddingTop="6"/></s:layout>
 				<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
-				<s:Button id="updateCheckButton" click="updateCheckButton_clickHandler(event)" styleName="settingsButtonStyle" label="Check for updates..."/>
-				<s:CheckBox id="autoupdate" label="Auto update" change="autoupdate_changeHandler(event)" selected="{prefs.autocheck}"/>
+				<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
+				
 			</s:Group>
 			
 
@@ -574,17 +578,8 @@
 		<s:Group id="tosgroup" includeIn="TosState" >
 			<s:layout><s:VerticalLayout paddingLeft="10"/></s:layout>
 			<main:TermsofUse x="10" y="0" width="680" height="280"/>
-			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" skinClass="gapdesktoprx.components.catalyst.MainButton"/>		
+			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" styleName="settingsButtonStyle"/>		
 		</s:Group>
-		
-		<s:Group id="settingsgroup" includeIn="SettingsState" x="100">
-			<s:CheckBox id="checkbox2" label="Check for updates automatically" skinClass="gapdesktoprx.components.catalyst.Checkbox1" x="26" y="114"/>
-			<s:Button id="button2" label="Check for updates now…" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="143"/>
-			<s:Button id="button0" label="Restore default graphs…" skinClass="gapdesktoprx.components.catalyst.Button3" x="25" y="186"/>
-			<s:Button id="closeSettingsButton" click="closeSettingsButton_clickHandler()" label="Close settings" label.TosState="Close" skinClass="gapdesktoprx.components.catalyst.Button3" x="26" y="232"/>
-		</s:Group>
-		
-		
 		
 	</s:Group>
 	
@@ -650,9 +645,6 @@
 				<s:Parallel target="{bigbuttongroup}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{closeSettingsButton}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
 				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
@@ -686,18 +678,6 @@
 		<s:Transition autoReverse="true" fromState="SettingsState" toState="MainState">
 			<s:Parallel>
 				<s:Parallel target="{bigbuttongroup}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{checkbox2}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{button2}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{button0}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{closeSettingsButton}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{explanationcolumn}">
@@ -740,9 +720,6 @@
 		<s:Transition fromState="TosState" toState="TooltipState" autoReverse="true">
 			<s:Parallel>
 				<s:Parallel target="{bigbuttongroup}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{closeSettingsButton}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{explanationcolumn}">

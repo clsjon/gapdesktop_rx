@@ -7,16 +7,18 @@ package gapdesktoprx.controllers {
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	
+	import gapdesktoprx.events.NameExampleEvent;
 	import gapdesktoprx.prefs.Preferences;
 	
 	import mx.utils.ObjectUtil;
-	
 	public class PrefsController extends EventDispatcher {
 		
 		private static var controller:PrefsController;
 		
+		public var firstRun:Boolean = false;
+		
 		public function PrefsController(enforcer:SingletonEnforcer) {
-			loadPrefs();
+			firstRun = loadPrefs();
 		}
 		
 		private var _prefs:Preferences;
@@ -34,11 +36,11 @@ package gapdesktoprx.controllers {
 				_prefs = new Preferences;
 				_prefs.autocheck = objPrefs.autocheck;
 				_prefs.username = objPrefs.username;
-				return true;
+				return false;
 			} else {
 				_prefs = new Preferences();
 				savePrefs();
-				return false;
+				return true;
 			}
 		}
 		

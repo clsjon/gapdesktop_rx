@@ -16,7 +16,7 @@
 	</s:states>
 	
 	
-	<s:Rect height="14" radiusX="6" width="100%" x="0.5" y="0.5">
+	<s:Rect height="18" radiusX="6" width="100%" x="0.5" y="0.5">
 		<s:stroke>
 			<s:LinearGradientStroke caps="none" joints="miter" miterLimit="4" rotation="90" weight="1">
 				<s:GradientEntry alpha="1.0" color="#EAEAEA" ratio="0"/>
@@ -44,6 +44,6 @@
 		<s:layout>
 			<s:HorizontalLayout paddingLeft="7" paddingRight="7" gap="7" verticalAlign="middle"	/>
 		</s:layout>
-		<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="{hostComponent.getStyle('fontSize')}" x="28" verticalCenter="2" id="labelDisplay" paddingRight="7" includeInLayout="{hostComponent.label.length>0}"/>
+		<s:RichText color="#222222" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="{hostComponent.getStyle('fontSize')}" x="28" verticalCenter="2" id="labelDisplay" paddingRight="7" includeInLayout="{hostComponent.label.length>0}"/>
 	</s:Group>
 </s:SparkSkin>

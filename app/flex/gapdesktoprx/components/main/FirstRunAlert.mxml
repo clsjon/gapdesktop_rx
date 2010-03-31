@@ -4,19 +4,19 @@
 		 xmlns:mx="library://ns.adobe.com/flex/halo" 
 		 width="300" 
 		 height="120"
-		 title="Enter a name for this graph:"
-		 creationComplete="panel1_creationCompleteHandler(event)" xmlns:mx1="library://ns.adobe.com/flex/mx"
-		 defaultButton="{okButton}"
+		 title="Welcome to Gapminder Desktop"
+		 xmlns:mx1="library://ns.adobe.com/flex/mx"
 		 closeButton="{null}"
 		 moveArea="{null}"
 		 close="titlewindow1_closeHandler(event)"
 		 keyDown="titlewindow1_keyDownHandler(event)"
+		 creationComplete="titlewindow1_creationCompleteHandler(event)"
 		 >
 	<s:layout>
 		<s:VerticalLayout gap="10" paddingBottom="10" paddingTop="10" paddingLeft="10" paddingRight="10"/>
 	</s:layout>
 	<fx:Metadata>
-		[Event(name="nameExample", type="gapdesktoprx.events.NameExampleEvent")]
+		[Event(name="nameExample", type="events.NameExampleEvent")]
 	</fx:Metadata>
 	<fx:Declarations>
 		
@@ -39,39 +39,38 @@
 
 			
 			
-			protected function okButton_clickHandler(event:MouseEvent):void
-			{
-				dispatchEvent(new NameExampleEvent(graphName.text,true));
-				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
-					}
-			
-			
-			protected function cancelButton_clickHandler(event:MouseEvent):void
+			protected function myCloseButton_clickHandler(event:MouseEvent):void
 			{
 				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 				}
 			
 			
-			protected function panel1_creationCompleteHandler(event:FlexEvent):void
-			{
-				graphName.setFocus();
-			}
-			
-
 			protected function titlewindow1_closeHandler(event:CloseEvent):void
 			{
 				PopUpManager.removePopUp(this);
 			}
 
+
+			protected function autoUpdateCheck_changeHandler(event:Event):void
+			{
+				catalyst.prefs.autocheck = ((event.currentTarget as CheckBox).selected);
+			}
+
+
+			protected function titlewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				PopUpManager.centerPopUp(this);
+			}
+
 		]]>
 	</fx:Script>
-			<s:TextInput id="graphName" width="100%"/>
+			<s:CheckBox id="autoUpdateCheck" label="Check for updates automatically" selected="{catalyst.prefs.autocheck}" change="autoUpdateCheck_changeHandler(event)"/>
 		<s:Group id="buttons">
 			<s:layout>
 				<s:HorizontalLayout gap="10" horizontalAlign="right"/></s:layout>
 		
-				<s:Button id="cancelButton" label="Cancel" click="cancelButton_clickHandler(event)"/>
-				<s:Button id="okButton" label="Create bookmark" click="okButton_clickHandler(event)"/>
+				<s:Button id="myCloseButton" label="Start using Gapminder Desktop" click="myCloseButton_clickHandler(event)"/>
+				
 				
 		</s:Group>
 	

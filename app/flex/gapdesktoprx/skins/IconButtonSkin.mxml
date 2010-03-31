@@ -73,7 +73,7 @@
 			verticalCenter="0"
 			alpha="{(this.currentState == 'up')?.5:1}"
 			/>
-		<s:RichText color="#333333" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="{hostComponent.getStyle('fontSize')}" x="28" verticalCenter="2" id="labelDisplay" paddingRight="7" includeInLayout="{hostComponent.label.length>0}"/>
+		<s:RichText color="#222222" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="{hostComponent.getStyle('fontSize')}" x="28" verticalCenter="2" id="labelDisplay" paddingRight="7" includeInLayout="{hostComponent.label.length>0}"/>
 	</s:Group>
 	
 </s:Skin>
