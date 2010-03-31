@@ -54,6 +54,7 @@
 		import gapdesktoprx.components.main.*;
 		import gapdesktoprx.controllers.ApplicationController;
 		import gapdesktoprx.controllers.ModelsController;
+		import gapdesktoprx.controllers.PrefsController;
 		import gapdesktoprx.events.ExampleRolloutEvent;
 		import gapdesktoprx.events.ExampleRolloverEvent;
 		import gapdesktoprx.events.ExampleSelectEvent;
@@ -135,6 +136,10 @@
 		
 		public static function get models():ModelsController {
 			return ModelsController.instance;
+		}
+		
+		public static function get prefs():PrefsController {
+			return PrefsController.instance;
 		}
 		
 		
@@ -382,7 +387,7 @@
 				if (stateInGroup(event.newState,"FixedSize")) {
 					//transition from resizable to fixed		
 					stage.displayState = StageDisplayState.NORMAL;
-		/* 			this.width = fixedSizeRect.width;
+					/* 			this.width = fixedSizeRect.width;
 					this.height = fixedSizeRect.height;
 					this.move(fixedSizeRect.x,fixedSizeRect.y); */
 					this.nativeWindow.width = fixedSizeRect.width;
@@ -433,7 +438,7 @@
 			monitor.addEventListener(StatusEvent.STATUS, networkStatusChangeHandler);
 			monitor.start();
 		}
-
+		
 		protected function windowedapplication1_networkChangeHandler(event:Event):void
 		{
 			launchMonitor();			
@@ -441,6 +446,12 @@
 		
 		private function networkStatusChangeHandler(event:StatusEvent):void {
 			online = (event.code == "Service.available"); 
+		}
+		
+
+		protected function autoupdate_changeHandler(event:Event):void
+		{
+			prefs.autocheck = ((event.currentTarget as CheckBox).selected);  
 		}
 
 	]]></fx:Script>
@@ -466,7 +477,7 @@
 				<s:layout>
 					<s:HorizontalLayout horizontalAlign="right"/>
 				</s:layout>
-			<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
+				<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
 				
 			</s:Group>
 		</s:Group>
@@ -526,7 +537,7 @@
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
 					
-					<s:RichText alpha.TooltipState="0.4" textAlign="justify" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationtext" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
+					<s:RichText id="explanationtext" alpha.TooltipState="0.4" textAlign="justify" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
 						<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
 					</s:RichText>
 					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
@@ -535,12 +546,29 @@
 				</s:Group>
 				<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="220" click="launchDefaultGraph()"/>
 				<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="220" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
-				<s:Group id="settingsbuttonsgroup" excludeFrom="SettingsState,TosState,TlzState" width="100%" height="40">
-					<s:layout><s:HorizontalLayout paddingLeft="12"/></s:layout>
-					<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
-					<s:Button id="updateCheckButton" click="updateCheckButton_clickHandler(event)" styleName="settingsButtonStyle" label="Check for updates..."/>
-				</s:Group>
 			</s:Group>
+		</s:Group>
+		
+		<s:Group id="settingsbuttonsbar" excludeFrom="SettingsState,TosState,TlzState" width="100%" height="26">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+			<s:Group id="settingsbuttonsbackground" top="0" left="0" right="0" bottom="0">
+				<s:Rect top="0" left="0" right="0" bottom="0">
+					<s:fill>
+						<s:SolidColor color="0x888888"/>
+					</s:fill>
+				</s:Rect>				
+			</s:Group>
+			<s:Group id="settingsbuttons" top="0" left="0" right="0" bottom="0">
+				
+				<s:layout><s:HorizontalLayout paddingLeft="12" paddingTop="6"/></s:layout>
+				<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
+				<s:Button id="updateCheckButton" click="updateCheckButton_clickHandler(event)" styleName="settingsButtonStyle" label="Check for updates..."/>
+				<s:CheckBox id="autoupdate" label="Auto update" change="autoupdate_changeHandler(event)" selected="{prefs.autocheck}"/>
+			</s:Group>
+			
+
 		</s:Group>
 		
 		<s:Group id="tosgroup" includeIn="TosState" >
@@ -628,7 +656,7 @@
 				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{settingsbuttonsgroup}">
+				<s:Parallel target="{settingsbuttonsbar}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{introtextgroup}">
@@ -647,7 +675,7 @@
 				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{settingsbuttonsgroup}">
+				<s:Parallel target="{settingsbuttonsbar}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{introtextgroup}">
@@ -675,7 +703,7 @@
 				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
-				<s:Parallel target="{settingsbuttonsgroup}">
+				<s:Parallel target="{settingsbuttonsbar}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{introtextgroup}">
@@ -720,7 +748,7 @@
 				<s:Parallel target="{explanationcolumn}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
-				<s:Parallel target="{settingsbuttonsgroup}">
+				<s:Parallel target="{settingsbuttonsbar}">
 					<s:Fade duration="0"/>
 				</s:Parallel>
 				<s:Parallel target="{introtextgroup}">
