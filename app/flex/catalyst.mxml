@@ -453,12 +453,12 @@
 			online = (event.code == "Service.available"); 
 		}
 		
-
+		
 		protected function settingsButton_clickHandler(event:MouseEvent):void
 		{
 			var settingsWindow:IFlexDisplayObject = PopUpManager.createPopUp(this,Settings,false);
 		}
-
+		
 	]]></fx:Script>
 	<s:states>
 		<s:State name="MainState" stateGroups="FixedSize"/>
@@ -485,15 +485,11 @@
 				
 			</s:Group>
 		</s:Group>
-		
 		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)">
 			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)"/>
 		</containers:SuperTabNavigator>
-		
-		
-		
-		
 	</s:Group>
+	
 	<s:Group id="maingroup" width="100%" x="0" height="100%">
 		<s:layout>
 			<s:VerticalLayout gap="10"/>
@@ -560,19 +556,19 @@
 			<s:Group id="settingsbuttonsbackground" top="0" left="0" right="0" bottom="0">
 				<s:Rect top="0" left="0" right="0" bottom="0">
 					<s:fill>
-						<s:SolidColor color="0xCCCCCC"/>
+						<s:LinearGradient rotation="270" y="10">
+							<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.208790988922119" ratio="0"/>
+							<s:GradientEntry color="0xEFEFEF" flm:midpoint="0.694443969726563" ratio="0.564417"/>
+							<s:GradientEntry color="0xEEEEEE" ratio="1"/>
+						</s:LinearGradient>
 					</s:fill>
 				</s:Rect>				
 			</s:Group>
 			<s:Group id="settingsbuttons" top="0" left="0" right="0" bottom="0">
-				
 				<s:layout><s:HorizontalLayout paddingLeft="12" paddingTop="6"/></s:layout>
 				<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
 				<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
-				
 			</s:Group>
-			
-
 		</s:Group>
 		
 		<s:Group id="tosgroup" includeIn="TosState" >
@@ -694,13 +690,13 @@
 		<s:Transition fromState="MainState" toState="TlzState" autoReverse="true">
 			<s:Parallel>
 				<s:Parallel target="{headinggroup}">					
-					<s:Fade duration="500"/>
+					<s:Fade duration="100"/>
 				</s:Parallel>
 				<s:Parallel target="{maingroup}">
-					<s:Fade duration="500"/>
+					<s:Fade duration="100"/>
 				</s:Parallel>
 				<s:Parallel target="{tlzgroup}">
-					<s:Fade duration="500"/>
+					<s:Fade duration="100"/>
 				</s:Parallel>
 			</s:Parallel>
 		</s:Transition>
