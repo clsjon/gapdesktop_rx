@@ -1,4 +1,4 @@
-package
+package gapdesktoprx.interpolators
 {
 import spark.effects.interpolation.IInterpolator;
 import flash.geom.Rectangle;

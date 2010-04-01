@@ -1,10 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <s:WindowedApplication
 	xmlns:lib="assets.graphics.Desktop_mockup_091104_copy.*" 
-	xmlns:ATE="http://ns.adobe.com/ate/2009" 
-	xmlns:ai="http://ns.adobe.com/ai/2009" 
-	xmlns:fc="http://ns.adobe.com/flashcatalyst/2009" 
-	xmlns:d="http://ns.adobe.com/fxg/2008/dt" 
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:flm="http://ns.adobe.com/flame/2008" 
@@ -14,6 +10,8 @@
 	xmlns:local="*" 
 	xmlns:mx="library://ns.adobe.com/flex/halo"
 	xmlns:ws="http://websector.de"
+	xmlns:interpolators="gapdesktoprx.interpolators.*"
+	
 	
 	backgroundColor="#ffffff" 
 	
@@ -26,8 +24,7 @@
 	networkChange="windowedapplication1_networkChangeHandler(event)"
 	xmlns:ns="library://ns.adobe.com/flex/mx" 
 	xmlns:extensions="gapdesktoprx.components.extensions.*"
-	currentStateChange="windowedapplication1_currentStateChangeHandler(event)" 
-	currentStateChanging="windowedapplication1_currentStateChangingHandler(event)"
+	currentStateChanging="windowedapplication1_currentStateChangingHandler(event)" 
 	>
 	
 	<fx:Style source="/assets/css/styles.css"/>
@@ -60,6 +57,7 @@
 		import gapdesktoprx.events.ExampleRolloverEvent;
 		import gapdesktoprx.events.ExampleSelectEvent;
 		import gapdesktoprx.events.NameExampleEvent;
+		import gapdesktoprx.interpolators.RectInterpolator;
 		import gapdesktoprx.models.Graph;
 		import gapdesktoprx.skins.ButtonSkin;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
@@ -373,37 +371,6 @@
 			return false;
 		}
 		
-		protected function windowedapplication1_currentStateChangeHandler(event:StateChangeEvent):void
-		{
-			if (stateInGroup(event.oldState,"FixedSize")) {
-				if (stateInGroup(event.newState,"Resizable")) {
-					//transition from fixed to resizable
-					this.stage.displayState = resizableDisplayState;
-					if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)) {
-						this.move(resizableRect.left,resizableRect.top);
-						this.nativeWindow.width = resizableRect.width;
-						this.nativeWindow.height = resizableRect.height;
-					}
-					
-				}
-			}
-			if (stateInGroup(event.oldState,"Resizable")) {
-				
-				if (stateInGroup(event.newState,"FixedSize")) {
-					//transition from resizable to fixed		
-					stage.displayState = StageDisplayState.NORMAL;
-					/* 			this.width = fixedSizeRect.width;
-					this.height = fixedSizeRect.height;
-					this.move(fixedSizeRect.x,fixedSizeRect.y); */
-					this.nativeWindow.width = fixedSizeRect.width;
-					this.nativeWindow.height = fixedSizeRect.height;
-					this.nativeWindow.x = fixedSizeRect.x;
-					this.nativeWindow.y = fixedSizeRect.y;
-				}	
-			}
-			
-		}
-		
 		
 		protected function updateCheckButton_clickHandler(event:MouseEvent):void
 		{
@@ -460,6 +427,9 @@
 		}
 		
 	]]></fx:Script>
+	<fx:Declarations>
+		<interpolators:RectInterpolator id="rectInterp"/>
+	</fx:Declarations>
 	<s:states>
 		<s:State name="MainState" stateGroups="FixedSize"/>
 		<s:State name="TooltipState" stateGroups="FixedSize"/>
@@ -688,17 +658,21 @@
 			</s:Parallel>
 		</s:Transition>
 		<s:Transition fromState="MainState" toState="TlzState" autoReverse="true">
-			<s:Parallel>
-				<s:Parallel target="{headinggroup}">					
-					<s:Fade duration="100"/>
+			<s:Sequence target="{this}" duration="500">
+				
+				<s:Parallel>
+					<s:Fade duration="100" target="{headinggroup}"/>
+					<s:Fade duration="100" target="{maingroup}"/>
 				</s:Parallel>
-				<s:Parallel target="{maingroup}">
-					<s:Fade duration="100"/>
-				</s:Parallel>
-				<s:Parallel target="{tlzgroup}">
-					<s:Fade duration="100"/>
-				</s:Parallel>
-			</s:Parallel>
+				<s:Animate>
+					<s:SimpleMotionPath property="nativeWindow.bounds" interpolator="{rectInterp}"
+										valueFrom="{this.nativeWindow.bounds}" valueTo="{resizableRect}"/>
+				</s:Animate>
+				
+				<s:Fade duration="100" target="{tlzgroup}"/>
+				
+				
+			</s:Sequence>
 		</s:Transition>
 		<s:Transition fromState="TlzState" toState="MainState" autoReverse="true">
 			<s:Parallel>
