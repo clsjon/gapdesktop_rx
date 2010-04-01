@@ -85,7 +85,7 @@
 		
 		private var fixedSizeRect:Rectangle = new Rectangle();
 		
-		private var resizableRect:Rectangle = new Rectangle();
+		private var resizableRect:Rectangle = new Rectangle(0,0,Capabilities.screenResolutionX,Capabilities.screenResolutionY);
 		private var resizableDisplayState:String = StageDisplayState.NORMAL;
 		
 		public static var updater:ApplicationUpdaterUI;
@@ -380,9 +380,9 @@
 					//transition from fixed to resizable
 					this.stage.displayState = resizableDisplayState;
 					if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)) {
-						this.move(0,0);
-						this.nativeWindow.width = Capabilities.screenResolutionX;
-						this.nativeWindow.height = Capabilities.screenResolutionY;
+						this.move(resizableRect.left,resizableRect.top);
+						this.nativeWindow.width = resizableRect.width;
+						this.nativeWindow.height = resizableRect.height;
 					}
 					
 				}
