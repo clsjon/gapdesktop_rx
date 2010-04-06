@@ -82,6 +82,8 @@
 		import org.restfulx.events.CacheUpdateEvent;
 		import org.restfulx.services.air.AIRServiceProvider;
 		
+		import spark.utils.TextFlowUtil;
+		
 		private var fixedSizeRect:Rectangle = new Rectangle();
 		
 		[Bindable]
@@ -455,6 +457,20 @@
 			nativeWindow.bounds = value;
 		}
 		
+		protected function tosDisplay_creationCompleteHandler(event:FlexEvent):void
+		{
+			var touFile:File = File.applicationDirectory.resolvePath('assets/text/tou.xml');
+			var touFileStream:FileStream = new FileStream();
+			
+			touFileStream.open(touFile,FileMode.READ);
+			
+			var str:String = touFileStream.readMultiByte(touFileStream.bytesAvailable,"utf-8");
+			
+			tosDisplay.content = TextFlowUtil.importFromString(str);
+			
+		}
+
+		
 		
 	]]></fx:Script>
 	<fx:Declarations>
@@ -529,28 +545,28 @@
 		
 		<s:Group id="gwgroup" width="100%" x="0">	
 			<s:layout>
-				<s:HorizontalLayout gap="20" paddingLeft="10"/>
+				<s:HorizontalLayout gap="20" paddingLeft="15" paddingRight="15" paddingTop="10" paddingBottom="15"/>
 			</s:layout>
 			<s:Group id="bigbuttoncolumn" width="50%">
 				<s:Group id="bigbuttongroup">
 					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true"/>		
 				</s:Group>
 			</s:Group>
-			<s:Group id="explanationcolumn" width="350">
+			<s:Group id="explanationcolumn" width="50%">
 				<s:layout><s:VerticalLayout/></s:layout>
 				<s:Group id="introtextgroup" width="100%">
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
 					<s:RichText color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
 					
-					<s:RichText id="explanationtext" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
+					<s:RichText id="explanationtext" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
 						<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
 					</s:RichText>
-					<s:RichText color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
+					<s:RichText color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
 						<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
 					</s:RichText>
 				</s:Group>
-				<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="220" click="launchDefaultGraph()"/>
-				<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="220" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
+				<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="100%" click="launchDefaultGraph()"/>
+				<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="100%" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
 			</s:Group>
 		</s:Group>
 		
@@ -577,9 +593,11 @@
 		</s:Group>
 	</s:Group>
 	
-	<s:Group id="tosgroup" includeInLayout="false" visible="false">
-		<s:layout><s:VerticalLayout paddingLeft="10"/></s:layout>
-		<main:TermsofUse x="10" y="0" width="680" height="280"/>
+	<s:Group id="tosgroup" includeInLayout="false" visible="false" width="100%" height="100%">
+		<s:layout><s:VerticalLayout gap="10" paddingLeft="10" paddingBottom="10" paddingRight="10" paddingTop="10"/></s:layout>
+		<s:Scroller width="100%" height="100%">
+				<s:RichEditableText id="tosDisplay" editable="false" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" multiline="true" height="100%" width="100%" selectable="false" clipAndEnableScrolling="true"/>
+		</s:Scroller>
 		<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" styleName="settingsButtonStyle"/>		
 	</s:Group>
 	
@@ -606,7 +624,7 @@
 				<s:SetAction property="includeInLayout" value="true" target="{maingroup}"/>
 				<s:Fade duration="200" target="{maingroup}"/>
 			</s:Sequence>
-				</s:Transition>
+		</s:Transition>
 		
 		<s:Transition fromState="MainState" toState="TlzState" autoReverse="false">
 			<s:Sequence>
@@ -618,8 +636,8 @@
 				<s:SetAction property="includeInLayout" value="false" target="{headinggroup}"/>
 				<s:Fade duration="200" target="{maingroup}"/>
 				<s:Animate target="{this}" duration="200">
-						<s:SimpleMotionPath property="nativeBounds" interpolator="{rectInterp}"
-									valueTo="{resizableRect}"/>
+					<s:SimpleMotionPath property="nativeBounds" interpolator="{rectInterp}"
+										valueTo="{resizableRect}"/>
 				</s:Animate>
 				
 				<s:SetAction property="includeInLayout" value="true" target="{tlzgroup}"/>
