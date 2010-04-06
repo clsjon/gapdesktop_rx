@@ -24,7 +24,8 @@
 	networkChange="windowedapplication1_networkChangeHandler(event)"
 	xmlns:ns="library://ns.adobe.com/flex/mx" 
 	xmlns:extensions="gapdesktoprx.components.extensions.*"
-	currentStateChanging="windowedapplication1_currentStateChangingHandler(event)" 
+	currentStateChanging="windowedapplication1_currentStateChangingHandler(event)"
+	
 	>
 	
 	<fx:Style source="/assets/css/styles.css"/>
@@ -83,6 +84,7 @@
 		
 		private var fixedSizeRect:Rectangle = new Rectangle();
 		
+		[Bindable]
 		private var resizableRect:Rectangle = new Rectangle(0,0,Capabilities.screenResolutionX,Capabilities.screenResolutionY);
 		private var resizableDisplayState:String = StageDisplayState.NORMAL;
 		
@@ -170,8 +172,6 @@
 		protected function windowedapplication1_applicationCompleteHandler(event:FlexEvent):void
 		{
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN,fullScreenStateChange);
-			this.addEventListener(ExampleRolloverEvent.EXAMPLE_ROLLOVER,exampleRolloverEventHandler);
-			this.addEventListener(ExampleRolloutEvent.EXAMPLE_ROLLOUT,exampleRolloutEventHandler);
 			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
 			launchMonitor();
 			updater = new ApplicationUpdaterUI(File.applicationDirectory.resolvePath('config/updaterConfig.xml'),false,true);
@@ -223,18 +223,6 @@
 			GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
 		}
 		
-		private function exampleRolloverEventHandler(event:ExampleRolloverEvent):void {	
-			currentState="TooltipState";
-			exampleDesc.textFlow = TextConverter.importToFlow(event.example.content,TextConverter.TEXT_FIELD_HTML_FORMAT);
-			exampleName.textFlow = TextConverter.importToFlow(event.example.name,TextConverter.PLAIN_TEXT_FORMAT);
-		}
-		
-		
-		private function exampleRolloutEventHandler(event:ExampleRolloutEvent):void {
-			currentState="MainState";	
-			exampleDesc.textFlow = null;
-			exampleName.textFlow = null;
-		}
 		
 		protected function examplesListCloseEventHandler(event:CloseEvent):void {
 			turnOffScreenshotMode();
@@ -377,6 +365,37 @@
 			updater.checkNow();
 		}
 		
+		/* 	protected function windowedapplication1_currentStateChangeHandler(event:StateChangeEvent):void
+		{
+		if (stateInGroup(event.oldState,"FixedSize")) {
+		if (stateInGroup(event.newState,"Resizable")) {
+		//transition from fixed to resizable
+		this.stage.displayState = resizableDisplayState;
+		if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)) {
+		this.move(resizableRect.left,resizableRect.top);
+		this.nativeWindow.width = resizableRect.width;
+		this.nativeWindow.height = resizableRect.height;
+		}
+		
+		}
+		}
+		if (stateInGroup(event.oldState,"Resizable")) {
+		
+		if (stateInGroup(event.newState,"FixedSize")) {
+		//transition from resizable to fixed        
+		stage.displayState = StageDisplayState.NORMAL;
+		this.width = fixedSizeRect.width;
+		this.height = fixedSizeRect.height;
+		this.move(fixedSizeRect.x,fixedSizeRect.y); 
+		this.nativeWindow.width = fixedSizeRect.width;
+		this.nativeWindow.height = fixedSizeRect.height;
+		this.nativeWindow.x = fixedSizeRect.x;
+		this.nativeWindow.y = fixedSizeRect.y;
+		}    
+		}
+		
+		} */
+		
 		
 		protected function windowedapplication1_currentStateChangingHandler(event:StateChangeEvent):void
 		{
@@ -394,7 +413,7 @@
 				
 				if (stateInGroup(event.newState,"FixedSize")) {
 					//transition from resizable to fixed	
-					resizableDisplayState = this.stage.displayState;
+					//resizableDisplayState = this.stage.displayState;
 					resizableRect.x = this.nativeWindow.x;
 					resizableRect.y = this.nativeWindow.y;
 					resizableRect.width = this.nativeWindow.width;
@@ -426,13 +445,23 @@
 			var settingsWindow:IFlexDisplayObject = PopUpManager.createPopUp(this,Settings,false);
 		}
 		
+		[Bindable]
+		public function get nativeBounds():Rectangle
+		{
+			return nativeWindow.bounds;
+		}
+		public function set nativeBounds(value:Rectangle):void
+		{
+			nativeWindow.bounds = value;
+		}
+		
+		
 	]]></fx:Script>
 	<fx:Declarations>
 		<interpolators:RectInterpolator id="rectInterp"/>
 	</fx:Declarations>
 	<s:states>
 		<s:State name="MainState" stateGroups="FixedSize"/>
-		<s:State name="TooltipState" stateGroups="FixedSize"/>
 		<s:State name="TosState" stateGroups="FixedSize"/>
 		<s:State name="TlzState" stateGroups="Resizable"/>
 	</s:states>
@@ -460,12 +489,12 @@
 		</containers:SuperTabNavigator>
 	</s:Group>
 	
-	<s:Group id="maingroup" width="100%" x="0" height="100%">
+	<s:Group id="maingroup" width="100%" x="0" height="100%" excludeFrom="TlzState">
 		<s:layout>
 			<s:VerticalLayout gap="10"/>
 		</s:layout>
 		
-		<s:Group id="headinggroup" excludeFrom="TlzState">
+		<s:Group id="headinggroup">
 			<s:Rect height="74" width="100%" x="0" y="0">
 				<s:fill>
 					<s:LinearGradient rotation="270" scaleX="74" x="327.5" y="74">
@@ -501,16 +530,16 @@
 					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true"/>		
 				</s:Group>
 			</s:Group>
-			<s:Group id="explanationcolumn" width="350" excludeFrom="TosState,TlzState" alpha.TooltipState="0.4">
+			<s:Group id="explanationcolumn" width="350" excludeFrom="TosState,TlzState">
 				<s:layout><s:VerticalLayout/></s:layout>
 				<s:Group id="introtextgroup" excludeFrom="TosState,TlzState" width="100%">
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
-					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
+					<s:RichText color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
 					
-					<s:RichText id="explanationtext" alpha.TooltipState="0.4" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
+					<s:RichText id="explanationtext" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
 						<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
 					</s:RichText>
-					<s:RichText alpha.TooltipState="0.4" color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
+					<s:RichText color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="200" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
 						<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
 					</s:RichText>
 				</s:Group>
@@ -549,127 +578,34 @@
 		
 	</s:Group>
 	
-	<s:Group id="tooltip" includeIn="TooltipState" x="100" y="10" width="255" height="{parentApplication.height - 20}">
-		<s:layout><s:BasicLayout/></s:layout>
-		<s:Rect width="100%" height="100%">
-			<s:fill>
-				<s:LinearGradient x="178.5" y="374.803" scaleX="374.302" rotation="-90">
-					<s:GradientEntry color="#f3f3f3" ratio="0"/>
-					<s:GradientEntry color="#ffffff" ratio="0.564417"/>
-					<s:GradientEntry color="#f3f3f3" ratio="1"/>
-				</s:LinearGradient>
-			</s:fill>
-			<s:stroke>
-				<s:SolidColorStroke color="#FFFFFF" weight="2" miterLimit="128" alpha="0.5"/>
-				
-				
-			</s:stroke>
-			<s:filters>
-				<s:DropShadowFilter alpha="0.75" blurX="10" blurY="10" distance="10" quality="3"/>
-			</s:filters>
-		</s:Rect>
-		<s:RichText id="exampleName" top="10" left="15" height="20" right="15" kerning="on" fontSize="14" textAlign="left"/>
-		<s:Line left="15" right="15" y="25">
-			<s:stroke>
-				<s:SolidColorStroke color="#888888" weight="1"/>
-			</s:stroke>
-		</s:Line>
-		<s:RichText id="exampleDesc" top="30" left="15" bottom="15" right="15" kerning="on" fontSize="14" textAlign="justify" textAlignLast="justify"/>
-	</s:Group>		
 	
 	
 	
 	<s:transitions>
-		<s:Transition autoReverse="true" fromState="MainState" toState="TooltipState">
-			<s:Parallel>
-				<s:Parallel target="{explanationtext}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{splashButton}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{tooltip}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-			</s:Parallel>
-		</s:Transition>
-		<s:Transition autoReverse="true" fromState="TooltipState" toState="MainState">
-			<s:Parallel>
-				<s:Parallel target="{splashButton}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{explanationtext}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{tooltip}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-			</s:Parallel>
-		</s:Transition>
 		<s:Transition autoReverse="true" fromState="MainState" toState="TosState">
-			<s:Parallel>
-				<s:Parallel target="{bigbuttongroup}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{explanationcolumn}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{settingsbuttonsbar}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{introtextgroup}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{splashButton}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-			</s:Parallel>
+			<s:Sequence>				
+				<s:Fade duration="200" target="{gwgroup}"/>
+				<s:Fade duration="200" target="{tosgroup}"/>			
+			</s:Sequence>
 		</s:Transition>
 		<s:Transition autoReverse="true" fromState="TosState" toState="MainState">
-			<s:Parallel>
-				<s:Parallel target="{bigbuttongroup}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{explanationcolumn}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{settingsbuttonsbar}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-				<s:Parallel target="{introtextgroup}">
-					<s:Fade duration="500"/>
-				</s:Parallel>
-			</s:Parallel>
+			<s:Sequence>				
+				<s:Fade duration="200" target="{tosgroup}"/>
+				<s:Fade duration="200" target="{gwgroup}"/>			
+			</s:Sequence>
 		</s:Transition>
-		<s:Transition autoReverse="true" fromState="SettingsState" toState="MainState">
-			<s:Parallel>
-				<s:Parallel target="{bigbuttongroup}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{explanationcolumn}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{settingsbuttonsbar}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{introtextgroup}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-			</s:Parallel>
-		</s:Transition>
-		<s:Transition fromState="MainState" toState="TlzState" autoReverse="true">
-			<s:Sequence target="{this}" duration="500">
+
+		<s:Transition fromState="MainState" toState="TlzState" autoReverse="false">
+			<s:Sequence>
 				
-				<s:Parallel>
-					<s:Fade duration="100" target="{headinggroup}"/>
-					<s:Fade duration="100" target="{maingroup}"/>
-				</s:Parallel>
-				<s:Animate>
-					<s:SimpleMotionPath property="nativeWindow.bounds" interpolator="{rectInterp}"
-										valueFrom="{this.nativeWindow.bounds}" valueTo="{resizableRect}"/>
+				<s:Fade duration="1000" target="{maingroup}"/>
+				<!--		<s:Animate duration="1000">
+				<s:SimpleMotionPath property="nativeBounds" interpolator="{rectInterp}"
+				valueTo="{resizableRect}"/>
 				</s:Animate>
 				
-				<s:Fade duration="100" target="{tlzgroup}"/>
+				-->			
+				<s:Fade duration="1000" target="{tlzgroup}"/>
 				
 				
 			</s:Sequence>
@@ -679,7 +615,7 @@
 				<s:Parallel target="{headinggroup}">					
 					<s:Fade duration="500"/>
 				</s:Parallel>
-				<s:Parallel target="{maingroup}">
+				<s:Parallel target="{gwgroup}">
 					<s:Fade duration="500"/>
 				</s:Parallel>
 				<s:Parallel target="{tlzgroup}">
@@ -687,24 +623,6 @@
 				</s:Parallel>
 			</s:Parallel>
 		</s:Transition>
-		<s:Transition fromState="TosState" toState="TooltipState" autoReverse="true">
-			<s:Parallel>
-				<s:Parallel target="{bigbuttongroup}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{explanationcolumn}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{settingsbuttonsbar}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{introtextgroup}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-				<s:Parallel target="{tooltip}">
-					<s:Fade duration="0"/>
-				</s:Parallel>
-			</s:Parallel>
-		</s:Transition>
+		
 	</s:transitions>
 </s:WindowedApplication>
