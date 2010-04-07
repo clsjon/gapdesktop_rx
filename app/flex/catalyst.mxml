@@ -180,8 +180,8 @@
 			updater.setStyle('skinClass', de.websector.utils.updater.ui.skins.silver.AppUpdaterUISilverSkin);
 			if (prefs.firstRun) {
 				var firstRunWindow :IFlexDisplayObject = PopUpManager.createPopUp(this,FirstRunAlert,false);
-				
 			}
+			this.nativeWindow.addEventListener(NativeWindowBoundsEvent.RESIZING,windowedapplication1_resizingHandler);
 		}
 		
 		protected function navigator_clickHandler(event:MouseEvent):void {
@@ -236,7 +236,7 @@
 		}
 		
 		protected function turnOffScreenshotMode():void {
-			if(navigator && navigator.selectedChild) {
+			if(navigator && navigator.selectedChild && navigator.selectedChild is GraphViewer) {
 				GraphViewer(navigator.selectedChild).currentState = '';
 			}
 		}
@@ -286,7 +286,10 @@
 		
 		protected function windowedapplication1_resizingHandler(event:NativeWindowBoundsEvent):void
 		{
+			trace (event.toString());
 			if (this.fixedSizeState()) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
 				trace ('now resizing should have been prevented');
 			}
 		}
@@ -404,10 +407,8 @@
 			if (stateInGroup(event.oldState,"FixedSize")) {
 				if (stateInGroup(event.newState,"Resizable")) {
 					//transition from fixed to resizable
-					fixedSizeRect.x = this.nativeWindow.x;
-					fixedSizeRect.y = this.nativeWindow.y;
-					fixedSizeRect.width = this.nativeWindow.width;
-					fixedSizeRect.height = this.nativeWindow.height;
+					fixedSizeRect = this.nativeWindow.bounds;
+			
 					
 				}
 			}
@@ -416,10 +417,7 @@
 				if (stateInGroup(event.newState,"FixedSize")) {
 					//transition from resizable to fixed	
 					//resizableDisplayState = this.stage.displayState;
-					resizableRect.x = this.nativeWindow.x;
-					resizableRect.y = this.nativeWindow.y;
-					resizableRect.width = this.nativeWindow.width;
-					resizableRect.height = this.nativeWindow.height;
+					resizableRect = this.nativeWindow.bounds;
 				}	
 			}
 			
@@ -596,7 +594,12 @@
 	<s:Group id="tosgroup" includeInLayout="false" visible="false" width="100%" height="100%">
 		<s:layout><s:VerticalLayout gap="10" paddingLeft="10" paddingBottom="10" paddingRight="10" paddingTop="10"/></s:layout>
 		<s:Scroller width="100%" height="100%">
-				<s:RichEditableText id="tosDisplay" editable="false" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" multiline="true" height="100%" width="100%" selectable="false" clipAndEnableScrolling="true"/>
+			<s:Group width="100%">
+				<s:layout>
+					<s:BasicLayout/>
+				</s:layout>
+				<s:RichText id="tosDisplay" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" width="100%"/>
+			</s:Group>
 		</s:Scroller>
 		<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" styleName="settingsButtonStyle"/>		
 	</s:Group>
