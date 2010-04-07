@@ -17,6 +17,8 @@
 
         <systemChrome>standard</systemChrome>
         <maximizable>false</maximizable>
+        <height>415</height>
+        <width>690</width>
 
     </initialWindow>
 

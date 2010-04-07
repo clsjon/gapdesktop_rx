@@ -11,19 +11,18 @@
 	xmlns:mx="library://ns.adobe.com/flex/halo"
 	xmlns:ws="http://websector.de"
 	xmlns:interpolators="gapdesktoprx.interpolators.*"
+	xmlns:ns="library://ns.adobe.com/flex/mx" 
+	xmlns:extensions="gapdesktoprx.components.extensions.*"
 	
+	width="100%"
+	height="100%"
 	
 	backgroundColor="#ffffff" 
-	
-	height="415" 
-	width="700" 
 	
 	resizing="windowedapplication1_resizingHandler(event)"
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)"
 	networkChange="windowedapplication1_networkChangeHandler(event)"
-	xmlns:ns="library://ns.adobe.com/flex/mx" 
-	xmlns:extensions="gapdesktoprx.components.extensions.*"
 	currentStateChanging="windowedapplication1_currentStateChangingHandler(event)"
 	
 	>
@@ -84,6 +83,7 @@
 		
 		import spark.utils.TextFlowUtil;
 		
+		[Bindable]
 		private var fixedSizeRect:Rectangle = new Rectangle();
 		
 		[Bindable]
@@ -182,6 +182,7 @@
 				var firstRunWindow :IFlexDisplayObject = PopUpManager.createPopUp(this,FirstRunAlert,false);
 			}
 			this.nativeWindow.addEventListener(NativeWindowBoundsEvent.RESIZING,windowedapplication1_resizingHandler);
+			
 		}
 		
 		protected function navigator_clickHandler(event:MouseEvent):void {
@@ -288,9 +289,9 @@
 		{
 			trace (event.toString());
 			if (this.fixedSizeState()) {
-				event.preventDefault();
+		/* 		event.preventDefault();
 				event.stopImmediatePropagation();
-				trace ('now resizing should have been prevented');
+		 */		trace ('now resizing should have been prevented');
 			}
 		}
 		
@@ -453,6 +454,7 @@
 		public function set nativeBounds(value:Rectangle):void
 		{
 			nativeWindow.bounds = value;
+			//trace ('setting window bounds to: ' + value.toString());
 		}
 		
 		protected function tosDisplay_creationCompleteHandler(event:FlexEvent):void
@@ -480,7 +482,7 @@
 		<s:State name="TlzState" stateGroups="Resizable"/>
 	</s:states>
 	<s:layout>
-		<s:VerticalLayout gap="7"/>
+		<s:VerticalLayout gap="0" paddingRight="0" paddingLeft="0"/>
 	</s:layout>
 	<s:DataGroup dataProvider="{models.examples}" width="0" height="0" includeInLayout="false"/>
 	
@@ -507,48 +509,46 @@
 		</containers:SuperTabNavigator>
 	</s:Group>
 	
-	<s:Group id="headinggroup">
-		<s:Rect height="74" width="100%" x="0" y="0">
+	<s:Group id="headinggroup" bottom="74" top="0" left="0" right="0" width="100%">
+		<s:Rect width="100%" height="100%">
 			<s:fill>
-				<s:LinearGradient rotation="270" scaleX="74" x="327.5" y="74">
+				<s:LinearGradient rotation="270" scaleX="74" y="74">
 					<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.208790988922119" ratio="0"/>
 					<s:GradientEntry color="0xEFEFEF" flm:midpoint="0.694443969726563" ratio="0.564417"/>
 					<s:GradientEntry color="0xEEEEEE" ratio="1"/>
 				</s:LinearGradient>
 			</s:fill>
 		</s:Rect>
-		<s:Line x="0" xTo="{this.width}" y="74.5">
+		<s:Line left="0" right="0" top="74.5">
 			<s:stroke>
 				<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
 			</s:stroke>
 		</s:Line>
-		<s:RichText color="#000000" fontFamily="Avenir-black" fontWeight="normal" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" left="0" right="0" x="0" y="14">
+		<s:RichText id="headingtext" color="#000000" fontFamily="Avenir-black" fontWeight="normal" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" top="14">
 			<s:content><s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span></s:p></s:content>
 		</s:RichText>
 		
-		<s:RichText color="#444444" rotation="45" fontFamily="Avenir-light" fontWeight="normal" fontSize="14" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" x="520" y="5" text="beta"/>
+		<s:RichText color="#444444" rotation="45" fontFamily="Avenir-light" fontWeight="normal" fontSize="14" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" x="{headingtext.x + headingtext.width}" y="5" text="beta"/>
 		
-		<s:RichText color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" width="{this.width}" x="0" y="49">
-			<s:content><s:p whiteSpaceCollapse="collapse"><s:span>no internet required</s:span></s:p></s:content>
+		<s:RichText color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" y="49">
+			<s:content><s:p>no internet required</s:p></s:content>
 		</s:RichText>
 		<s:RichText color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date().toLocaleDateString()} (v 1.0b11_internal)" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 	</s:Group>
 	
 	
-	<s:Group id="maingroup" width="100%" x="0" height="100%">
+	<s:Group id="maingroup" top="0" bottom="0" right="0" left="0">
 		<s:layout>
 			<s:VerticalLayout gap="10"/>
 		</s:layout>
 		
 		
-		<s:Group id="gwgroup" width="100%" x="0">	
+		<s:Group id="gwgroup" width="100%">	
 			<s:layout>
 				<s:HorizontalLayout gap="20" paddingLeft="15" paddingRight="15" paddingTop="10" paddingBottom="15"/>
 			</s:layout>
-			<s:Group id="bigbuttoncolumn" width="50%">
-				<s:Group id="bigbuttongroup">
-					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true"/>		
-				</s:Group>
+			<s:Group id="bigbuttoncolumn" width="350">
+				<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true" width="100%"/>		
 			</s:Group>
 			<s:Group id="explanationcolumn" width="50%">
 				<s:layout><s:VerticalLayout/></s:layout>
@@ -583,8 +583,8 @@
 					</s:fill>
 				</s:Rect>				
 			</s:Group>
-			<s:Group id="settingsbuttons" top="0" left="0" right="0" bottom="0">
-				<s:layout><s:HorizontalLayout paddingLeft="12" paddingTop="6"/></s:layout>
+			<s:Group id="settingsbuttons" left="6" right="6" height="100%" verticalCenter="0">
+				<s:layout><s:HorizontalLayout verticalAlign="middle"/></s:layout>
 				<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
 				<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
 			</s:Group>
@@ -638,7 +638,7 @@
 				<s:SetAction property="visible" value="false" target="{headinggroup}"/>
 				<s:SetAction property="includeInLayout" value="false" target="{headinggroup}"/>
 				<s:Fade duration="200" target="{maingroup}"/>
-				<s:Animate target="{this}" duration="200">
+				<s:Animate target="{this}" duration="1000">
 					<s:SimpleMotionPath property="nativeBounds" interpolator="{rectInterp}"
 										valueTo="{resizableRect}"/>
 				</s:Animate>

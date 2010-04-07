@@ -38,12 +38,6 @@
 	fontWeight: normal;
 }
 
-global{
-	modal-transparency-blur: 0;
-	modal-transparency: 0.5;
-
-}
-
 .mainButtonStyle{
 	skinClass: ClassReference('gapdesktoprx.components.catalyst.MainButton');
 	font-family: Avenir;
