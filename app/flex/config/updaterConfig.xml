@@ -3,6 +3,7 @@
      <url>http://www.gapminder.org/GapminderMedia/Desktop/update.xml</url>
      <delay>1</delay>
      <defaultUI>
-     	<dialog name="checkForUpdate" visible="true"/>
+     	<dialog name="checkForUpdate" visible="false"/>
+     	
      </defaultUI>
   </configuration>

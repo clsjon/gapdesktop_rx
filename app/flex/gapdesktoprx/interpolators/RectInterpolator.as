@@ -11,6 +11,7 @@ public class RectInterpolator implements IInterpolator
     
     public function interpolate(fraction:Number, startValue:Object, endValue:Object):Object
     {
+		trace (fraction);
         return new Rectangle(startValue.x + fraction * (endValue.x - startValue.x),
             startValue.y + fraction * (endValue.y - startValue.y),
             startValue.width + fraction * (endValue.width - startValue.width),

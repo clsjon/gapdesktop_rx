@@ -141,3 +141,9 @@
 	downSkin:Embed(source="/assets/icons/supertab/close_up.png");
 	disabled-skin:Embed(source="/assets/icons/supertab/close_up.png");
 }
+
+.settingsWindowStyle
+{
+	skinClass: ClassReference('gapdesktoprx.skins.TitleWindowSkin');
+	font-family: Avenir;
+}

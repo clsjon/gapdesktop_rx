@@ -11,7 +11,7 @@
 		 close="titlewindow1_closeHandler(event)"
 		 keyDown="titlewindow1_keyDownHandler(event)"
 		 creationComplete="titlewindow1_creationCompleteHandler(event)"
-		 skinClass="gapdesktoprx.skins.TitleWindowSkin"
+		 styleName="settingsWindowStyle"
 		 >
 	<s:layout>
 		<s:VerticalLayout gap="10" paddingBottom="10" paddingTop="10" paddingLeft="10" paddingRight="10"/>

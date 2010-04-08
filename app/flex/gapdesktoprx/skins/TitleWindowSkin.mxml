@@ -219,9 +219,9 @@
                 
                 <!-- layer 3: text -->
                 <!--- @copy spark.components.Panel#titleDisplay -->
-                <s:Label id="titleDisplay" maxDisplayedLines="1"
+                <s:Label id="titleDisplay" maxDisplayedLines="1" fontFamily="{hostComponent.getStyle('fontFamily')}"
                          left="9" right="36" top="1" bottom="0" minHeight="30"
-                         verticalAlign="middle" fontWeight="bold" />
+                         verticalAlign="middle"/>
                 
                 <!-- layer 4: moveArea -->
                 <!--- @copy spark.components.TitleWindow#moveArea -->
