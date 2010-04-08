@@ -24,7 +24,7 @@
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)"
 	networkChange="windowedapplication1_networkChangeHandler(event)"
 	currentStateChanging="windowedapplication1_currentStateChangingHandler(event)"
-	
+	currentStateChange="windowedapplication1_currentStateChangeHandler(event)"	
 	>
 	
 	<fx:Style source="/assets/css/styles.css"/>
@@ -69,6 +69,7 @@
 		import mx.core.UIComponent;
 		import mx.events.CloseEvent;
 		import mx.events.DragEvent;
+		import mx.events.EffectEvent;
 		import mx.events.FlexEvent;
 		import mx.events.IndexChangedEvent;
 		import mx.events.StateChangeEvent;
@@ -289,9 +290,9 @@
 		{
 			trace (event.toString());
 			if (this.fixedSizeState()) {
-		/* 		event.preventDefault();
+				/* 		event.preventDefault();
 				event.stopImmediatePropagation();
-		 */		trace ('now resizing should have been prevented');
+				*/		trace ('now resizing should have been prevented');
 			}
 		}
 		
@@ -371,36 +372,34 @@
 			updater.checkNow();
 		}
 		
-		/* 	protected function windowedapplication1_currentStateChangeHandler(event:StateChangeEvent):void
+		
+		protected function windowedapplication1_currentStateChangeHandler(event:StateChangeEvent):void
 		{
-		if (stateInGroup(event.oldState,"FixedSize")) {
-		if (stateInGroup(event.newState,"Resizable")) {
-		//transition from fixed to resizable
-		this.stage.displayState = resizableDisplayState;
-		if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)) {
-		this.move(resizableRect.left,resizableRect.top);
-		this.nativeWindow.width = resizableRect.width;
-		this.nativeWindow.height = resizableRect.height;
-		}
-		
-		}
-		}
-		if (stateInGroup(event.oldState,"Resizable")) {
-		
-		if (stateInGroup(event.newState,"FixedSize")) {
-		//transition from resizable to fixed        
-		stage.displayState = StageDisplayState.NORMAL;
-		this.width = fixedSizeRect.width;
-		this.height = fixedSizeRect.height;
-		this.move(fixedSizeRect.x,fixedSizeRect.y); 
-		this.nativeWindow.width = fixedSizeRect.width;
-		this.nativeWindow.height = fixedSizeRect.height;
-		this.nativeWindow.x = fixedSizeRect.x;
-		this.nativeWindow.y = fixedSizeRect.y;
-		}    
-		}
-		
-		} */
+			if (stateInGroup(event.oldState,"FixedSize")) {
+				if (stateInGroup(event.newState,"Resizable")) {
+					//transition from fixed to resizable
+					
+					this.nativeWindow.visible = false;
+					this.nativeWindow.bounds = resizableRect;
+					stage.displayState = resizableDisplayState;
+					this.nativeWindow.visible = true;
+							
+				}
+			}
+			if (stateInGroup(event.oldState,"Resizable")) {
+				
+				if (stateInGroup(event.newState,"FixedSize")) {
+					//transition from resizable to fixed        
+					this.nativeWindow.visible = false;
+					stage.displayState = StageDisplayState.NORMAL;
+					//this.move(fixedSizeRect.x,fixedSizeRect.y); 
+					this.nativeWindow.bounds = fixedSizeRect;
+					this.nativeWindow.visible = true;
+					
+				}    
+			}
+			
+		} 
 		
 		
 		protected function windowedapplication1_currentStateChangingHandler(event:StateChangeEvent):void
@@ -409,15 +408,13 @@
 				if (stateInGroup(event.newState,"Resizable")) {
 					//transition from fixed to resizable
 					fixedSizeRect = this.nativeWindow.bounds;
-			
 					
 				}
 			}
-			if (stateInGroup(event.oldState,"Resizable")) {
-				
+			if (stateInGroup(event.oldState,"Resizable")) {	
 				if (stateInGroup(event.newState,"FixedSize")) {
 					//transition from resizable to fixed	
-					//resizableDisplayState = this.stage.displayState;
+					resizableDisplayState = this.stage.displayState;
 					resizableRect = this.nativeWindow.bounds;
 				}	
 			}
@@ -469,13 +466,33 @@
 			tosDisplay.content = TextFlowUtil.importFromString(str);
 			
 		}
+		
+		
+		
 
-		
-		
+		protected function animate1_effectEndHandler(event:EffectEvent):void
+		{
+			this.stage.displayState = resizableDisplayState;
+			if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)) {
+				this.move(resizableRect.left,resizableRect.top);
+				this.nativeWindow.width = resizableRect.width;
+				this.nativeWindow.height = resizableRect.height;
+			}
+			
+		}
+
+
+		protected function explanationtext_clickHandler(event:MouseEvent):void
+		{
+			trace (event.target.toString());
+		}
+
 	]]></fx:Script>
+	
 	<fx:Declarations>
-		<interpolators:RectInterpolator id="rectInterp"/>
+		<interpolators:RectInterpolator id="rectInterp"/> 
 	</fx:Declarations>
+	
 	<s:states>
 		<s:State name="MainState" stateGroups="FixedSize"/>
 		<s:State name="TosState" stateGroups="FixedSize"/>
@@ -486,7 +503,7 @@
 	</s:layout>
 	<s:DataGroup dataProvider="{models.examples}" width="0" height="0" includeInLayout="false"/>
 	
-	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeInLayout="false" visible="false">
+	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState">
 		<s:layout>
 			<s:BasicLayout/>
 		</s:layout>
@@ -509,7 +526,7 @@
 		</containers:SuperTabNavigator>
 	</s:Group>
 	
-	<s:Group id="headinggroup" bottom="74" top="0" left="0" right="0" width="100%">
+	<s:Group id="headinggroup" bottom="74" top="0" left="0" right="0" width="100%" excludeFrom="TlzState">
 		<s:Rect width="100%" height="100%">
 			<s:fill>
 				<s:LinearGradient rotation="270" scaleX="74" y="74">
@@ -537,7 +554,7 @@
 	</s:Group>
 	
 	
-	<s:Group id="maingroup" top="0" bottom="0" right="0" left="0">
+	<s:Group id="maingroup" top="0" bottom="0" right="0" left="0" includeIn="MainState">
 		<s:layout>
 			<s:VerticalLayout gap="10"/>
 		</s:layout>
@@ -556,7 +573,7 @@
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
 					<s:RichText color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
 					
-					<s:RichText id="explanationtext" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
+					<s:RichText id="explanationtext" click="explanationtext_clickHandler(event)" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
 						<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
 					</s:RichText>
 					<s:RichText color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
@@ -629,52 +646,7 @@
 			</s:Sequence>
 		</s:Transition>
 		
-		<s:Transition fromState="MainState" toState="TlzState" autoReverse="false">
-			<s:Sequence>
-				
-				<s:SetAction property="visible" value="false" target="{maingroup}"/>
-				<s:SetAction property="includeInLayout" value="false" target="{maingroup}"/>
-				<s:Fade duration="200" target="{maingroup}"/>
-				<s:SetAction property="visible" value="false" target="{headinggroup}"/>
-				<s:SetAction property="includeInLayout" value="false" target="{headinggroup}"/>
-				<s:Fade duration="200" target="{maingroup}"/>
-				<s:Animate target="{this}" duration="1000">
-					<s:SimpleMotionPath property="nativeBounds" interpolator="{rectInterp}"
-										valueTo="{resizableRect}"/>
-				</s:Animate>
-				
-				<s:SetAction property="includeInLayout" value="true" target="{tlzgroup}"/>
-				<s:SetAction property="visible" value="true" target="{tlzgroup}"/>
-				<s:Fade duration="200" target="{tlzgroup}"/>
-				
-				<s:Fade duration="1000" target="{tlzgroup}"/>
-				
-				
-			</s:Sequence>
-		</s:Transition>
-		<s:Transition fromState="TlzState" toState="MainState" autoReverse="true">
-			<s:Sequence>
-				
-				<s:SetAction property="includeInLayout" value="false" target="{tlzgroup}"/>
-				<s:SetAction property="visible" value="false" target="{tlzgroup}"/>
-				<s:Fade duration="200" target="{tlzgroup}"/>
-				
-				<s:Animate target="{this}" duration="200">
-					<s:SimpleMotionPath property="nativeBounds" interpolator="{rectInterp}"
-										valueTo="{fixedSizeRect}"/>
-				</s:Animate>
-				
-				<s:SetAction property="visible" value="true" target="{maingroup}"/>
-				<s:SetAction property="includeInLayout" value="true" target="{maingroup}"/>
-				<s:Fade duration="200" target="{maingroup}"/>
-				
-				<s:SetAction property="visible" value="true" target="{headinggroup}"/>
-				<s:SetAction property="includeInLayout" value="true" target="{headinggroup}"/>
-				<s:Fade duration="200" target="{maingroup}"/>
-				
-				
-			</s:Sequence>
-		</s:Transition>
+		
 		
 	</s:transitions>
 </s:WindowedApplication>
