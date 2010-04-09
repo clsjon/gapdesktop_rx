@@ -276,15 +276,14 @@
 			nameExampleWindow.y = this.y;
 		}
 		
-		private function fixedSizeState():Boolean {
+		private function get fixedSizeState():Boolean {
 			return (stateInGroup(this.currentState,"FixedSize"))
-			
 		}
 		
 		protected function windowedapplication1_resizingHandler(event:NativeWindowBoundsEvent):void
 		{
 			
-			if (this.fixedSizeState()) {
+			if (this.fixedSizeState) {
 				event.preventDefault();
 				event.stopImmediatePropagation();
 			}
@@ -462,15 +461,26 @@
 				this.nativeWindow.width = resizableRect.width;
 				this.nativeWindow.height = resizableRect.height;
 			}
-			
 		}
 		
+		protected function tosDisplay_creationCompleteHandler(event:FlexEvent):void
+		{
+			var touFile:File = File.applicationDirectory.resolvePath('assets/text/tou.xml');
+			var touFileStream:FileStream = new FileStream();
+			
+			touFileStream.open(touFile,FileMode.READ);
+			var str:String = touFileStream.readMultiByte(touFileStream.bytesAvailable,"utf-8");	
+			tosDisplay.content = TextFlowUtil.importFromString(str);	
+		}
+		
+
+		protected function helpButton_clickHandler(event:MouseEvent):void
+		{
+			var helpWin:HelpWindow = new HelpWindow();
+			helpWin.open(true);
+		}
+
 	]]></fx:Script>
-	
-	<fx:Declarations>
-		<interpolators:RectInterpolator id="rectInterp"/>
-		<fx:String id="tou" source="assets/text/tou.xml"/>
-	</fx:Declarations>
 	
 	<s:states>
 		<s:State name="MainState" stateGroups="FixedSize"/>
@@ -492,6 +502,8 @@
 			<extensions:IconButton id="resetButton" styleName="iconButtonStyle" label="Reset graph" iconUp="assets/icons/button/reload.png" click="resetButton_clickHandler(event)" />
 			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
 			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark this graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
+			<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use Gapminder World" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
+			
 			<s:Group id="tlzbuttonrowright" width="100%">
 				<s:layout>
 					<s:HorizontalLayout horizontalAlign="right"/>
@@ -562,9 +574,9 @@
 				<s:Group id="gwbuttongroup" height="100%">
 					<s:layout>
 						<s:VerticalLayout verticalAlign="bottom"/>
-					</s:layout>					
-				<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="100%" click="launchDefaultGraph()"/>
-				<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="100%" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
+					</s:layout>	
+					<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="100%" click="launchDefaultGraph()"/>
+					<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="100%" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
 				</s:Group>
 			</s:Group>
 		</s:Group>
@@ -588,6 +600,7 @@
 				<s:layout><s:HorizontalLayout verticalAlign="middle"/></s:layout>
 				<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
 				<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
+			
 			</s:Group>
 		</s:Group>
 	</s:Group>
@@ -599,7 +612,7 @@
 				<s:layout>
 					<s:BasicLayout/>
 				</s:layout>
-				<s:RichText id="tosDisplay" fontFamily="Avenir-light" textFlow="{TextFlowUtil.importFromString(tou,WhiteSpaceCollapse.PRESERVE)}" width="100%"/>
+				<s:RichText id="tosDisplay" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" width="100%"/>
 			</s:Group>
 		</s:Scroller>
 		<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" styleName="settingsButtonStyle"/>		

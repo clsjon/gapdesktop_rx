@@ -47,7 +47,7 @@ package gapdesktoprx.controllers {
 			}
 			userExamples = Rx.filter(Rx.models.cached(Example), filterUserExamples);
 			gapExamples =  Rx.filter(Rx.models.cached(Example), filterGapExamples);
-			var defaultExamples:RxCollection = gapExamples.itemsWithPropertyValue("name","Wealth & Health of Nations");
+			var defaultExamples:RxCollection = gapExamples.itemsWithPropertyValue("name","Basic Gapminder World graph");
 			if (defaultExamples.length > 0) {
 				defaultExample = defaultExamples[0];
 				gapExamples.addItemAt(defaultExample,0);

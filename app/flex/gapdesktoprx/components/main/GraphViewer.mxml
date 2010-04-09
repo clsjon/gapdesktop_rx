@@ -34,8 +34,6 @@
 					} else {
 						if (newHash != _example.hash) {
 							this.label = _example.name + "*";
-							trace('oldh:' + _example.hash);
-							trace('newh:' + newHash);
 							
 						}
 					}
@@ -46,7 +44,6 @@
 			{
 				//			_htmlLoader = new HTMLLoader();
 				//			_htmlLoader.
-				trace("graphBrowser_completeHandler");
 				var html:HTML = event.currentTarget as HTML;
 				html.htmlLoader.window.updateHash = updateHash;
 				html.location = _example.url;
@@ -88,12 +85,7 @@
 			
 			
 			
-			protected function graphHTML_locationChangeHandler(event:Event):void
-			{		
-				trace('Location: ' + event.currentTarget.location);
-			}
-			
-			public function get example():Example
+				public function get example():Example
 			{
 				return _example;
 			}
@@ -101,9 +93,6 @@
 			
 			public function set example(value:Example):void
 			{
-				
-				trace ('is the same: ' + (value.url==_example.url));
-				trace ('incoming hash: ' + value.hash);
 				_example = value;
 				this.label = example.name;
 				unsavedHash = value.hash;
@@ -117,7 +106,6 @@
 			}
 			
 			public function bookmarkExample(name:String):void {
-				trace ("The unsavedHash is: " + unsavedHash);
 				saveNewExample(name,unsavedHash);	
 			}
 			
@@ -140,5 +128,5 @@
 		<s:State name="ScreenshotState"/>		
 	</mx:states>
 	<mx:Image id="screenshotLoader" includeIn="ScreenshotState" width="100%" height="100%"/>
-	<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" locationChange="graphHTML_locationChangeHandler(event)" includeIn="MainState"/>
+	<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" includeIn="MainState"/>
 </mx:VBox>
