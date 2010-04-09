@@ -184,11 +184,11 @@
                 <!--- layer 0: title bar fill @private -->
                 <s:Rect id="tbFill" left="0" right="0" top="0" bottom="1">
                     <s:fill>
-                        <s:LinearGradient rotation="90">
-                            <s:GradientEntry color="0xD2D2D2"
-                                             color.inactiveGroup="0xEAEAEA"/>
-                            <s:GradientEntry color="0x9A9A9A"
-                                             color.inactiveGroup="0xCECECE"/>
+                        <s:LinearGradient rotation="270">
+							<s:GradientEntry color="0xD9D9D9" ratio="0"/>
+							<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
+							<s:GradientEntry color="0xEEEEEE" ratio="1"/>
+                            
                         </s:LinearGradient>
                     </s:fill>
                 </s:Rect>

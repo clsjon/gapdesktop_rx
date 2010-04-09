@@ -3,7 +3,6 @@
 	xmlns:lib="assets.graphics.Desktop_mockup_091104_copy.*" 
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
-	xmlns:flm="http://ns.adobe.com/flame/2008" 
 	xmlns:components="gapdesktoprx.components.catalyst.*" 
 	xmlns:main="gapdesktoprx.components.main.*"
 	xmlns:containers="flexlib.containers.*"
@@ -268,11 +267,10 @@
 		
 		protected function windowedapplication1_resizingHandler(event:NativeWindowBoundsEvent):void
 		{
-			trace (event.toString());
+
 			if (this.fixedSizeState()) {
-				/* 		event.preventDefault();
+				event.preventDefault();
 				event.stopImmediatePropagation();
-				*/		trace ('now resizing should have been prevented');
 			}
 		}
 		
@@ -420,7 +418,7 @@
 		
 		protected function settingsButton_clickHandler(event:MouseEvent):void
 		{
-			var settingsWindow:IFlexDisplayObject = PopUpManager.createPopUp(this,Settings,false);
+			var settingsWindow:IFlexDisplayObject = PopUpManager.createPopUp(this,Settings,true);
 		}
 		
 		[Bindable]
@@ -497,8 +495,8 @@
 		<s:Rect width="100%" height="100%">
 			<s:fill>
 				<s:LinearGradient rotation="270" scaleX="74" y="74">
-					<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.208790988922119" ratio="0"/>
-					<s:GradientEntry color="0xEFEFEF" flm:midpoint="0.694443969726563" ratio="0.564417"/>
+					<s:GradientEntry color="0xD9D9D9" ratio="0"/>
+					<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
 					<s:GradientEntry color="0xEEEEEE" ratio="1"/>
 				</s:LinearGradient>
 			</s:fill>
@@ -560,8 +558,8 @@
 				<s:Rect top="0" left="0" right="0" bottom="0">
 					<s:fill>
 						<s:LinearGradient rotation="270" y="10">
-							<s:GradientEntry color="0xD9D9D9" flm:midpoint="0.208790988922119" ratio="0"/>
-							<s:GradientEntry color="0xEFEFEF" flm:midpoint="0.694443969726563" ratio="0.564417"/>
+							<s:GradientEntry color="0xD9D9D9" ratio="0"/>
+							<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
 							<s:GradientEntry color="0xEEEEEE" ratio="1"/>
 						</s:LinearGradient>
 					</s:fill>
