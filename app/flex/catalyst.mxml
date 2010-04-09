@@ -30,10 +30,9 @@
 	
 	<fx:Script><![CDATA[
 		import air.net.URLMonitor;
+		import air.update.ApplicationUpdater;
+		import air.update.ApplicationUpdaterUI;
 		import air.update.events.UpdateEvent;
-		
-		import de.websector.utils.updater.ui.ApplicationUpdaterUI;
-		import de.websector.utils.updater.ui.skins.silver.AppUpdaterUISilverSkin;
 		
 		import flash.display.DisplayObject;
 		import flash.display.StageDisplayState;
@@ -178,8 +177,8 @@
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN,fullScreenStateChange);
 			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
 			launchMonitor();
-			updater = new ApplicationUpdaterUI(File.applicationDirectory.resolvePath('config/updaterConfig.xml'),false,true);
-			updater.setStyle('skinClass', de.websector.utils.updater.ui.skins.silver.AppUpdaterUISilverSkin);
+			//updater = new ApplicationUpdaterUI();
+			//updater.configurationFile = File.applicationDirectory.resolvePath('config/updaterConfig.xml');
 			if (prefs.firstRun) {
 				var firstRunWindow :IFlexDisplayObject = PopUpManager.createPopUp(this,FirstRunAlert,false);
 			}

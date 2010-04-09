@@ -13,11 +13,8 @@
 	<![CDATA[
 		import air.update.events.UpdateEvent;
 		
-		import de.websector.utils.updater.ui.ApplicationUpdaterUI;
-		
 		import gapdesktoprx.components.main.*;
 		import gapdesktoprx.controllers.ApplicationController;
-		import gapdesktoprx.controllers.UpdateController;
 		import gapdesktoprx.utils.FirstRunUtilities;
 		
 		import mx.collections.XMLListCollection;
@@ -33,7 +30,6 @@
 			
       	}
 
-//		[Embed(source="config/initialgraphs.xml")]
 		[Bindable]
 		private var initialGraphs:XMLListCollection;
 		
@@ -45,10 +41,6 @@
 		[Embed(source="assets/icons/fourbig.png")]
 		public var fourbig:Class;
 		
-		public static function get upd():UpdateController {
-			return UpdateController.instance;
-		}
-
 		private var initialWidth:Number;
 		private var initialHeight:Number;
 		private var initialX:Number;
