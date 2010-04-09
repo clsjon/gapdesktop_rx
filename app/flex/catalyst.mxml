@@ -44,6 +44,8 @@
 		import flash.sampler.NewObjectSample;
 		
 		import flashx.textLayout.conversion.TextConverter;
+		import flashx.textLayout.events.FlowElementMouseEvent;
+		import flashx.textLayout.formats.WhiteSpaceCollapse;
 		
 		import flexlib.controls.SuperTabBar;
 		import flexlib.controls.tabBarClasses.SuperTab;
@@ -227,30 +229,9 @@
 			GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
 		}
 		
-		
-		protected function examplesListCloseEventHandler(event:CloseEvent):void {
-			turnOffScreenshotMode();
-		}			
-		
-		protected function nameExampleCloseHandler(event:CloseEvent):void {
-			turnOffScreenshotMode();
-			
-		}
-		
-		protected function turnOffScreenshotMode():void {
-			if(navigator && navigator.selectedChild && navigator.selectedChild is GraphViewer) {
-				GraphViewer(navigator.selectedChild).currentState = '';
-			}
-		}
-		
 		private function launchExamplesList():void {
-			if (navigator && navigator.selectedChild && navigator.selectedChild is GraphViewer) {
-				//var viewer:GraphViewer = navigator.selectedChild as GraphViewer;
-				//viewer.currentState = 'ScreenshotState';
-			}
 			var win:ExampleSelectionBox = PopUpManager.createPopUp(this,ExampleSelectionBox,true) as ExampleSelectionBox;
 			win.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler);
-			win.addEventListener(CloseEvent.CLOSE,examplesListCloseEventHandler);
 			PopUpManager.centerPopUp(win);
 		}
 		
@@ -272,7 +253,6 @@
 			*/
 			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
-			nameExampleWindow.addEventListener(CloseEvent.CLOSE,nameExampleCloseHandler);
 			PopUpManager.centerPopUp(nameExampleWindow);
 			nameExampleWindow.y = this.y;
 		}
@@ -454,22 +434,6 @@
 			//trace ('setting window bounds to: ' + value.toString());
 		}
 		
-		protected function tosDisplay_creationCompleteHandler(event:FlexEvent):void
-		{
-			var touFile:File = File.applicationDirectory.resolvePath('assets/text/tou.xml');
-			var touFileStream:FileStream = new FileStream();
-			
-			touFileStream.open(touFile,FileMode.READ);
-			
-			var str:String = touFileStream.readMultiByte(touFileStream.bytesAvailable,"utf-8");
-			
-			tosDisplay.content = TextFlowUtil.importFromString(str);
-			
-		}
-		
-		
-		
-
 		protected function animate1_effectEndHandler(event:EffectEvent):void
 		{
 			this.stage.displayState = resizableDisplayState;
@@ -482,15 +446,18 @@
 		}
 
 
-		protected function explanationtext_clickHandler(event:MouseEvent):void
+		
+
+		protected function linkelement1_clickHandler(event:FlowElementMouseEvent):void
 		{
-			trace (event.target.toString());
+			trace (ObjectUtil.toString(event.flowElement));
 		}
 
 	]]></fx:Script>
 	
 	<fx:Declarations>
-		<interpolators:RectInterpolator id="rectInterp"/> 
+		<interpolators:RectInterpolator id="rectInterp"/>
+		<fx:String id="tou" source="assets/text/tou.xml" />
 	</fx:Declarations>
 	
 	<s:states>
@@ -573,8 +540,8 @@
 					<s:layout><s:VerticalLayout gap="0"/></s:layout>
 					<s:RichText color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
 					
-					<s:RichText id="explanationtext" click="explanationtext_clickHandler(event)" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
-						<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
+					<s:RichText id="explanationtext" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
+						<s:content><s:p >Brings all of the data from <s:a click="linkelement1_clickHandler(event)" href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
 					</s:RichText>
 					<s:RichText color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
 						<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
@@ -615,7 +582,7 @@
 				<s:layout>
 					<s:BasicLayout/>
 				</s:layout>
-				<s:RichText id="tosDisplay" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" width="100%"/>
+				<s:RichText id="tosDisplay" fontFamily="Avenir-light" textFlow="{TextFlowUtil.importFromString(tou,WhiteSpaceCollapse.PRESERVE)}" width="100%"/>
 			</s:Group>
 		</s:Scroller>
 		<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" styleName="settingsButtonStyle"/>		
