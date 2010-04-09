@@ -13,9 +13,6 @@
 	xmlns:ns="library://ns.adobe.com/flex/mx" 
 	xmlns:extensions="gapdesktoprx.components.extensions.*"
 	
-	width="100%"
-	height="100%"
-	
 	backgroundColor="#ffffff" 
 	
 	resizing="windowedapplication1_resizingHandler(event)"
@@ -32,6 +29,7 @@
 		import air.net.URLMonitor;
 		import air.update.ApplicationUpdater;
 		import air.update.ApplicationUpdaterUI;
+		import air.update.events.StatusUpdateEvent;
 		import air.update.events.UpdateEvent;
 		
 		import flash.display.DisplayObject;
@@ -63,6 +61,7 @@
 		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
 		import gapdesktoprx.skins.applicationupdaterui.firefox.ButtonSkin;
 		
+		import mx.controls.Alert;
 		import mx.controls.SWFLoader;
 		import mx.core.FlexGlobals;
 		import mx.core.IFlexDisplayObject;
@@ -92,6 +91,8 @@
 		private var resizableDisplayState:String = StageDisplayState.NORMAL;
 		
 		public static var updater:ApplicationUpdaterUI;
+		
+		private var manualUpdateCheck:Boolean = false;
 		
 		[Bindable]
 		public static var online:Boolean = true;
@@ -172,18 +173,44 @@
 			}
 		}
 		
+		protected function initializeUpdater():void {
+			trace ('initalizing updater');
+			updater = new ApplicationUpdaterUI();
+			updater.configurationFile = File.applicationDirectory.resolvePath('config/updaterConfig.xml');
+			if (!prefs.autocheck)
+			{
+				updater.delay = 0;
+			}
+			updater.initialize();
+			updater.addEventListener(StatusUpdateEvent.UPDATE_STATUS,updateStatusEventHandler);
+		}
+		
+		protected function firstRunCloseHandler(event:CloseEvent):void {
+			initializeUpdater();
+		}
+		
 		protected function windowedapplication1_applicationCompleteHandler(event:FlexEvent):void
 		{
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN,fullScreenStateChange);
 			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
 			launchMonitor();
-			//updater = new ApplicationUpdaterUI();
-			//updater.configurationFile = File.applicationDirectory.resolvePath('config/updaterConfig.xml');
 			if (prefs.firstRun) {
 				var firstRunWindow :IFlexDisplayObject = PopUpManager.createPopUp(this,FirstRunAlert,false);
+				firstRunWindow.addEventListener(CloseEvent.CLOSE,firstRunCloseHandler);
+			} else {
+				initializeUpdater();
 			}
 			this.nativeWindow.addEventListener(NativeWindowBoundsEvent.RESIZING,windowedapplication1_resizingHandler);
 			
+		}
+		
+		
+		
+		protected function updateStatusEventHandler(event:StatusUpdateEvent):void {
+			if (manualUpdateCheck && !event.available) {
+				Alert.show('No update available','There is currently no update available for Gapminder Desktop.');
+			}
+			manualUpdateCheck = false;
 		}
 		
 		protected function navigator_clickHandler(event:MouseEvent):void {
@@ -219,10 +246,6 @@
 			}
 		}
 		
-		private function checkForUpdateEventHandler(event:UpdateEvent):void {
-			trace ('update check authorized');
-		}
-		
 		private function nameExampleHandler(event:NameExampleEvent):void {
 			GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
 		}
@@ -244,11 +267,6 @@
 		
 		protected function bookmarkButton_clickHandler(event:MouseEvent):void
 		{	
-			/* if (navigator && navigator.selectedChild) {
-			var viewer:GraphViewer = navigator.selectedChild as GraphViewer;
-			viewer.currentState = 'ScreenshotState';
-			}
-			*/
 			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			PopUpManager.centerPopUp(nameExampleWindow);
@@ -256,20 +274,16 @@
 		}
 		
 		private function fixedSizeState():Boolean {
-			if (this.currentState == "MainState") {
-				return true;
-			}
-			else {
-				return false;
-			}
+			return (stateInGroup(this.currentState,"FixedSize"))
+			
 		}
 		
 		protected function windowedapplication1_resizingHandler(event:NativeWindowBoundsEvent):void
 		{
-
+			
 			if (this.fixedSizeState()) {
-				event.preventDefault();
-				event.stopImmediatePropagation();
+				/* event.preventDefault();
+				event.stopImmediatePropagation(); */
 			}
 		}
 		
@@ -360,7 +374,7 @@
 					this.nativeWindow.bounds = resizableRect;
 					stage.displayState = resizableDisplayState;
 					this.nativeWindow.visible = true;
-							
+					
 				}
 			}
 			if (stateInGroup(event.oldState,"Resizable")) {
@@ -418,6 +432,12 @@
 		protected function settingsButton_clickHandler(event:MouseEvent):void
 		{
 			var settingsWindow:IFlexDisplayObject = PopUpManager.createPopUp(this,Settings,true);
+			settingsWindow.addEventListener("manualUpdateCheck",manualUpdateCheckEventHandler);
+		}
+		
+		protected function manualUpdateCheckEventHandler(event:Event):void {
+			manualUpdateCheck=true;
+			updater.checkNow();
 		}
 		
 		[Bindable]
@@ -441,20 +461,20 @@
 			}
 			
 		}
-
-
 		
-
+		
+		
+		
 		protected function linkelement1_clickHandler(event:FlowElementMouseEvent):void
 		{
 			trace (ObjectUtil.toString(event.flowElement));
 		}
-
+		
 	]]></fx:Script>
 	
 	<fx:Declarations>
 		<interpolators:RectInterpolator id="rectInterp"/>
-		<fx:String id="tou" source="assets/text/tou.xml" />
+		<fx:String id="tou" source="assets/text/tou.xml"/>
 	</fx:Declarations>
 	
 	<s:states>
@@ -518,7 +538,7 @@
 	</s:Group>
 	
 	
-	<s:Group id="maingroup" top="0" bottom="0" right="0" left="0" includeIn="MainState">
+	<s:Group id="maingroup" top="0" bottom="0" width="100%" height="100%" includeIn="MainState">
 		<s:layout>
 			<s:VerticalLayout gap="10"/>
 		</s:layout>
@@ -528,7 +548,7 @@
 			<s:layout>
 				<s:HorizontalLayout gap="20" paddingLeft="15" paddingRight="15" paddingTop="10" paddingBottom="15"/>
 			</s:layout>
-			<s:Group id="bigbuttoncolumn" width="350">
+			<s:Group id="bigbuttoncolumn" width="50%">
 				<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true" width="100%"/>		
 			</s:Group>
 			<s:Group id="explanationcolumn" width="50%">
@@ -568,11 +588,12 @@
 				<s:layout><s:HorizontalLayout verticalAlign="middle"/></s:layout>
 				<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
 				<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
+				<s:Button id="checkUpdateButton" click="updater.checkNow()" label="Check upd" styleName="settingsButtonStyle"/>
 			</s:Group>
 		</s:Group>
 	</s:Group>
 	
-	<s:Group id="tosgroup" includeInLayout="false" visible="false" width="100%" height="100%">
+	<s:Group id="tosgroup" includeIn="TosState" width="100%" height="100%">
 		<s:layout><s:VerticalLayout gap="10" paddingLeft="10" paddingBottom="10" paddingRight="10" paddingTop="10"/></s:layout>
 		<s:Scroller width="100%" height="100%">
 			<s:Group width="100%">
@@ -590,24 +611,16 @@
 	
 	<s:transitions>
 		<s:Transition autoReverse="true" fromState="MainState" toState="TosState">
-			<s:Sequence>
-				<s:SetAction property="visible" value="false" target="{maingroup}"/>
-				<s:SetAction property="includeInLayout" value="false" target="{maingroup}"/>
-				<s:Fade duration="200" target="{maingroup}"/>
-				<s:SetAction property="includeInLayout" value="true" target="{tosgroup}"/>
-				<s:SetAction property="visible" value="true" target="{tosgroup}"/>
-				<s:Fade duration="200" target="{tosgroup}"/>
-			</s:Sequence>
+			<s:Parallel>
+				<s:Fade duration="500" target="{maingroup}" disableLayout="true"/>
+				<s:Fade duration="500" target="{tosgroup}" disableLayout="true"/>
+			</s:Parallel>
 		</s:Transition>
 		<s:Transition autoReverse="true" fromState="TosState" toState="MainState">
-			<s:Sequence>
-				<s:SetAction property="includeInLayout" value="false" target="{tosgroup}"/>
-				<s:SetAction property="visible" value="false" target="{tosgroup}"/>
-				<s:Fade duration="200" target="{tosgroup}"/>
-				<s:SetAction property="visible" value="true" target="{maingroup}"/>
-				<s:SetAction property="includeInLayout" value="true" target="{maingroup}"/>
-				<s:Fade duration="200" target="{maingroup}"/>
-			</s:Sequence>
+			<s:Parallel>
+				<s:Fade duration="500" target="{tosgroup}" disableLayout="true"/>
+				<s:Fade duration="500" target="{maingroup}" disableLayout="true"/>
+			</s:Parallel>
 		</s:Transition>
 		
 		
