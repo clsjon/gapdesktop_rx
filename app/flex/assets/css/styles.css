@@ -86,26 +86,26 @@
 }
 
 
- .infoBox {
-  backgroundColor: #FFFFFF;
-  borderColor: #999999;
-  borderStyle: solid;
-  borderThickness: 1;
-  cornerRadius: 5;
+.infoBox {
+	backgroundColor: #FFFFFF;
+	borderColor: #999999;
+	borderStyle: solid;
+	borderThickness: 1;
+	cornerRadius: 5;
 }
 
 .appTitle {
-  fontSize: 24;
-  color: #FFFFFF;
+	fontSize: 24;
+	color: #FFFFFF;
 }
 
 .appDescription {
-  fontSize: 14;
-  color: #FFFFFF;
+	fontSize: 14;
+	color: #FFFFFF;
 }
 
 .infoTitle {
-  fontSize: 18;
+	fontSize: 18;
 }
 
 .addItemButton {
@@ -146,4 +146,9 @@
 {
 	skinClass: ClassReference('gapdesktoprx.skins.TitleWindowSkin');
 	font-family: Avenir;
+}
+
+.nameExampleStyle 
+{
+	modalTransparencyBlur: 0;
 }
