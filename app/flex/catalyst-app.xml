@@ -9,7 +9,7 @@
 
     <name>Gapminder Desktop</name>
 
-    <version>1.0beta3</version>
+    <version>1.0beta4</version>
 
     <initialWindow>
 
@@ -18,8 +18,8 @@
         <systemChrome>standard</systemChrome>
         <maximizable>false</maximizable>
         <width>650</width>
-        <height>440</height>
-        <minSize>650 440</minSize>
+        <height>455</height>
+        <minSize>650 455</minSize>
 
     </initialWindow>
 
