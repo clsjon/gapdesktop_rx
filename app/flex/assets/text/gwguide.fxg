@@ -137,52 +137,52 @@
     </Rect>
   </Group>
   <Group x="21.8833" y="24.3369" d:type="layer" d:userLabel="texts" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
-    <TextGraphic width="120" height="49.9995" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="0.116699" y="111.663">
+    <TextGraphic width="120" height="49.9995" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="0.116699" y="111.663">
       <content><p fontSize="13"><span>Y-axis</span></p><p fontSize="11"><span>Click here to select indicators for the y-axis.</span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="120" height="85.4004" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="0.116699" y="212.663">
+    <TextGraphic width="120" height="85.4004" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="0.116699" y="212.663">
       <content><p fontSize="13"><span>Name of country</span></p><p fontSize="11"><span>Hover mouse pointer over bubble to reveal the name.</span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="115" height="69.5996" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="0.116699" y="328.063">
+    <TextGraphic width="115" height="69.5996" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="0.116699" y="328.063">
       <content><p fontSize="13"><span>Sources</span></p><p fontSize="11"><span>For information about the sources, click the small text next to the axis. </span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="111" height="69.5996" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="0.116699" y="469.063">
+    <TextGraphic width="111" height="69.5996" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="0.116699" y="469.063">
       <content><p fontSize="13"><span>Play / Stop</span></p><p fontSize="11"><span>Click Play/Stop to control the animation. (How the graph changes over time.)</span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="130.668" height="50.5996" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="197.117" y="344.809">
+    <TextGraphic width="130.668" height="50.5996" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="197.117" y="344.809">
       <content><p fontSize="13"><span>Speed of animation</span></p><p fontSize="11"><span>Drag to change the speed of the animation.</span></p></content>
     </TextGraphic>
-    <TextGraphic width="173.011" height="72.5801" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="342.117" y="486.063">
+    <TextGraphic width="173.011" height="72.5801" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="342.117" y="486.063">
       <content><p fontSize="13"><span>X-axis</span></p><p fontSize="11"><span>Click here to select indicators for the x-axis. You can also choose to display time on this axis.</span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="147.365" height="72.5801" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="348.117" y="320.573">
+    <TextGraphic width="147.365" height="72.5801" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="348.117" y="320.573">
       <content><p fontSize="13"><span>Zoom tool</span></p><p fontSize="11"><span>Click here to open the zoom tool that help you zoom in or out. Click 100% to see the whole graph again.</span></p></content>
     </TextGraphic>
-    <TextGraphic width="140" height="72.5801" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="536.117" y="486.063">
+    <TextGraphic width="140" height="72.5801" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="536.117" y="486.063">
       <content><p fontSize="13"><span>Trails</span></p><p fontSize="11"><span>Click Trails to follow a selected country while the animation plays.</span></p></content>
     </TextGraphic>
-    <TextGraphic width="109.166" height="50" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="469.063">
+    <TextGraphic width="109.166" height="50" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="469.063">
       <content><p fontSize="13"><span>Bubble size</span></p><p fontSize="11"><span>Change the size of the bubbles here.</span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="109.166" height="93.6777" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="348.985">
+    <TextGraphic width="109.166" height="93.6777" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="348.985">
       <content><p fontSize="13"><span>Size indicator</span></p><p fontSize="11"><span>Bubble size typically represents the population of the country. Click here to make the size show another indicator.</span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="130" height="165.801" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="191.117" y="105.262">
+    <TextGraphic width="130" height="165.801" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="191.117" y="105.262">
       <content><p fontSize="13"><span>Lin / Log scale</span></p><p fontSize="11"><span>X- and y-axis scales can be linear or logarithmic. </span></p><p fontSize="11"><span>A log scale can make it easier to see trends.</span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="109.166" height="52.2012" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="275.862">
+    <TextGraphic width="109.166" height="52.2012" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="275.862">
       <content><p fontSize="13"><span>Opacity</span></p><p fontSize="11"><span>Drag to adjust visibility of non-selected countries.</span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="200" height="84.0898" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="432.117" y="275.019">
+    <TextGraphic width="200" height="84.0898" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="432.117" y="275.019">
       <content><p fontSize="13"><span>Deselect</span></p><p fontSize="11"><span>Deslect all countries here.</span></p></content>
     </TextGraphic>
-    <TextGraphic width="109.166" height="84.0903" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="185.74">
+    <TextGraphic width="109.166" height="84.0903" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="185.74">
       <content><p fontSize="13"><span>Select countries</span></p><p fontSize="11"><span>Click boxes to select specific countries. (You can also click the bubbles.)</span></p><p fontSize="11"/></content>
     </TextGraphic>
-    <TextGraphic width="117.002" height="50.5996" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="200.783" y="486.063">
+    <TextGraphic width="117.002" height="50.5996" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="200.783" y="486.063">
       <content><p fontSize="13"><span>Time</span></p><p fontSize="11"><span>Click and drag to change year.</span></p></content>
     </TextGraphic>
-    <TextGraphic width="109.166" height="101" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="72.4126">
+    <TextGraphic width="109.166" height="101" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="697.117" y="72.4126">
       <content><p fontSize="13"><span>Color</span></p><p fontSize="11"><span>The countries on the graph are color-coded by continent. Click to choose another indicator for color.</span></p><p fontSize="11"/></content>
     </TextGraphic>
     <Rect x="254.478" y="0.25" width="95.6387" height="61.8032">
@@ -193,17 +193,17 @@
         <SolidColorStroke color="#58595b" caps="none" weight="0.5" joints="miter" miterLimit="4"/>
       </stroke>
     </Rect>
-    <TextGraphic width="88.916" height="56.2715" fontFamily="Avenir LT Std 55 Roman" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="261.201" y="5.93848">
+    <TextGraphic width="88.916" height="56.2715" fontFamily="Avenir" lineHeight="120%" whiteSpaceCollapse="preserve" kerning="on" x="261.201" y="5.93848">
       <content><p fontSize="13"><span>Chart / Map</span></p><p fontSize="11"><span>Select between Chart view and </span></p><p fontSize="11"><span>Map view.</span></p></content>
     </TextGraphic>
   </Group>
   <Group x="697.001" y="556.688" d:type="layer" d:userLabel="Adapted from" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
-    <TextGraphic width="134.889" height="32" textAlign="right" fontFamily="Avenir LT Std 55 Roman" fontSize="8" lineHeight="120%" color="#6d6e71" whiteSpaceCollapse="preserve" kerning="on" y="0.591797">
+    <TextGraphic width="134.889" height="32" textAlign="right" fontFamily="Avenir" fontSize="8" lineHeight="120%" color="#6d6e71" whiteSpaceCollapse="preserve" kerning="on" y="0.591797">
       <content><p><span>Adapted from an original idea by wwww.juicygeography.co.uk</span></p></content>
     </TextGraphic>
   </Group>
   <Group x="17.6338" y="-47.4131" d:type="layer" d:userLabel="Heading" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
-    <TextGraphic width="301.471" height="67.2563" fontFamily="Avenir LT Std 55 Roman" lineHeight="18" whiteSpaceCollapse="preserve" kerning="on" y="72.1567">
+    <TextGraphic width="301.471" height="67.2563" fontFamily="Avenir" lineHeight="18" whiteSpaceCollapse="preserve" kerning="on" y="72.1567">
       <content><p fontSize="18"><span>Gapminder World Guide</span></p><p><span>Gapminder Desktop version</span></p><p fontSize="9"><span>(updated March, 2010)</span></p><p fontSize="9"/></content>
     </TextGraphic>
   </Group>
