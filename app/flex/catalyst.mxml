@@ -12,7 +12,7 @@
 	xmlns:interpolators="gapdesktoprx.interpolators.*"
 	xmlns:ns="library://ns.adobe.com/flex/mx" 
 	xmlns:extensions="gapdesktoprx.components.extensions.*"
-	
+   	showStatusBar="false"
 	backgroundColor="#ffffff" 
 	
 	resizing="windowedapplication1_resizingHandler(event)"
