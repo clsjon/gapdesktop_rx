@@ -3,7 +3,6 @@
 		 height="100%"
 		 width="100%"
 		 backgroundColor="#EFEFEF"
-		 currentStateChanging="vbox1_currentStateChangingHandler(event)"
 		 >
 	<fx:Metadata>	
 		[Event(name="exampleChanged", type="events.ExampleChangeEvent")]
@@ -109,24 +108,8 @@
 				saveNewExample(name,unsavedHash);	
 			}
 			
-			
-			protected function vbox1_currentStateChangingHandler(event:StateChangeEvent):void
-			{
-				if (event.newState == "ScreenshotState") {
-					var screenDPI:Number = Capabilities.screenDPI;
-					var pixCount:Number = graphHTML.height * graphHTML.width;
-					var dpi:Number = Math.min(screenDPI,screenDPI / Math.pow(pixCount/500000,1)); 
-					var tlzSnap:ImageSnapshot = ImageSnapshot.captureImage(graphHTML,dpi);
-					screenshotLoader.load(tlzSnap.data as ByteArray);
-				}
-			}
-			
+
 		]]>
 	</fx:Script>
-	<mx:states>
-		<s:State name="MainState"/>
-		<s:State name="ScreenshotState"/>		
-	</mx:states>
-	<mx:Image id="screenshotLoader" includeIn="ScreenshotState" width="100%" height="100%"/>
-	<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" includeIn="MainState"/>
+		<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)"/>
 </mx:VBox>
