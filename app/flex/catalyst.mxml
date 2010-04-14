@@ -12,7 +12,7 @@
 	xmlns:interpolators="gapdesktoprx.interpolators.*"
 	xmlns:ns="library://ns.adobe.com/flex/mx" 
 	xmlns:extensions="gapdesktoprx.components.extensions.*"
-   	showStatusBar="false"
+	showStatusBar="false"
 	backgroundColor="#ffffff" 
 	
 	resizing="windowedapplication1_resizingHandler(event)"
@@ -45,6 +45,7 @@
 		
 		import flexlib.controls.SuperTabBar;
 		import flexlib.controls.tabBarClasses.SuperTab;
+		import flexlib.events.SuperTabEvent;
 		import flexlib.events.TabReorderEvent;
 		
 		import gapdesktoprx.components.main.*;
@@ -385,9 +386,9 @@
 				if (stateInGroup(event.newState,"FixedSize")) {
 					//transition from resizable to fixed        
 					this.nativeWindow.visible = false;
-					stage.displayState = StageDisplayState.NORMAL;
 					//this.move(fixedSizeRect.x,fixedSizeRect.y); 
 					this.nativeWindow.bounds = fixedSizeRect;
+					stage.displayState = StageDisplayState.NORMAL;
 					this.nativeWindow.visible = true;
 					
 				}    
@@ -408,8 +409,8 @@
 			if (stateInGroup(event.oldState,"Resizable")) {	
 				if (stateInGroup(event.newState,"FixedSize")) {
 					//transition from resizable to fixed	
-					resizableDisplayState = this.stage.displayState;
 					resizableRect = this.nativeWindow.bounds;
+					resizableDisplayState = this.stage.displayState;
 				}	
 			}
 			
@@ -474,14 +475,14 @@
 			tosDisplay.content = TextFlowUtil.importFromString(str);	
 		}
 		
-
+		
 		protected function helpButton_clickHandler(event:MouseEvent):void
 		{
 			var helpWin:HelpWindow = new HelpWindow();
 			helpWin.open(true);
 		}
-
-
+		
+		
 		protected function printButton_clickHandler(event:MouseEvent):void
 		{
 			var job:FlexPrintJob = new FlexPrintJob();
@@ -490,7 +491,21 @@
 				job.send();
 			}
 		}
-
+		
+		
+		
+		
+		
+		protected function navigator_tabCloseHandler(event:SuperTabEvent):void
+		{
+			var nav:SuperTabNavigator = event.target as SuperTabNavigator;
+			trace (nav.length);
+			trace (event.tabIndex);
+			if (nav.length > 2 && (event.tabIndex == nav.length-2)) {
+				nav.selectedIndex = event.tabIndex - 1;
+			}
+		}
+		
 	]]></fx:Script>
 	
 	<s:states>
@@ -523,8 +538,10 @@
 				
 			</s:Group>
 		</s:Group>
-		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)">
-			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)"/>
+		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)" tabClose="navigator_tabCloseHandler(event)">
+			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)">
+				
+			</ns:Canvas>
 		</containers:SuperTabNavigator>
 	</s:Group>
 	
@@ -611,7 +628,7 @@
 				<s:layout><s:HorizontalLayout verticalAlign="middle"/></s:layout>
 				<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
 				<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
-			
+				
 			</s:Group>
 		</s:Group>
 	</s:Group>
