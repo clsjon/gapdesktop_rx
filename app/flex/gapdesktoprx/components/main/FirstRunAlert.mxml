@@ -3,7 +3,7 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/halo" 
 		 width="300" 
-		 height="120"
+		 height="179"
 		 title="Welcome to Gapminder Desktop"
 		 xmlns:mx1="library://ns.adobe.com/flex/mx"
 		 closeButton="{null}"
@@ -65,6 +65,7 @@
 
 		]]>
 	</fx:Script>
+			<s:Label fontFamily="Avenir" width="100%" text="Gapminder Desktop can automatically check Gapminder's website to see if a new version of the software with more recent statistics is available. If you don't want this behavior, please uncheck the box below."/>
 			<s:CheckBox id="autoUpdateCheck" label="Check for updates automatically" selected="{catalyst.prefs.autocheck}" change="autoUpdateCheck_changeHandler(event)"/>
 		<s:Group id="buttons">
 			<s:layout>
