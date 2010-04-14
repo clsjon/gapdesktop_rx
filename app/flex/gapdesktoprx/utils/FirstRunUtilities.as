@@ -44,9 +44,11 @@ package gapdesktoprx.utils
 			for each (var inTag:Object in tagArray) {
 				tag = new Tag();
 				tag.name = inTag.name;
+				tag.id = inTag.id;
 				tag.create();
 				for each (var inExample:Object in inTag.examples) {
 					example = new Example();
+					example.id = inExample.id;
 					example.name = inExample.name;
 					example.hash = inExample.hash;
 					example.userGenerated = false;
