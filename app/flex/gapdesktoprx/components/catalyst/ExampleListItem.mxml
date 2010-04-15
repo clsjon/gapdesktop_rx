@@ -17,7 +17,9 @@
 			import gapdesktoprx.models.Example;
 			import gapdesktoprx.skins.TrashButtonSkin;
 			
+			import mx.controls.Alert;
 			import mx.core.IFlexDisplayObject;
+			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
 			
 			[Bindable]
@@ -33,13 +35,27 @@
 			
 			protected function deleteButton_clickHandler(event:MouseEvent):void
 			{
-				//Alert.show('Delete ' + _example.name,"Delete example placeholder");
-				_example.destroy();
+				Alert.show(_example.name,"Are you sure you want to delete this graph?",Alert.YES|Alert.CANCEL,null,alert_closeHandler);
 				event.stopImmediatePropagation();
 				event.preventDefault();
 			}
 			
-			
+			protected function alert_closeHandler(event:CloseEvent):void {
+				switch(event.detail)
+				{
+					case Alert.YES:
+					case Alert.OK:
+						_example.destroy();
+						break;
+					case Alert.CANCEL:
+					case Alert.NO:
+						Object(owner).selectedIndex = -1;
+						break;
+					default:
+						break;
+					
+				}
+			}
 
 
 		
