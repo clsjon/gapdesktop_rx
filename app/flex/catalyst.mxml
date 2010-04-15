@@ -536,8 +536,8 @@
 			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
 			<extensions:IconButton id="resetButton" styleName="iconButtonStyle" label="Reset graph" iconUp="assets/icons/button/reload.png" click="resetButton_clickHandler(event)" />
 			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
-			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark this graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
-			<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use Gapminder World" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
+			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
+			<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
 			<s:Group id="tlzbuttonrowright" width="100%">
 				<s:layout>
 					<s:HorizontalLayout horizontalAlign="right"/>
@@ -607,9 +607,9 @@
 						<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
 					</s:RichText>
 				</s:Group>
-				<s:Group id="gwbuttongroup" height="100%">
+				<s:Group id="gwbuttongroup" height="100%" width="100%">
 					<s:layout>
-						<s:VerticalLayout verticalAlign="bottom"/>
+						<s:VerticalLayout verticalAlign="bottom" horizontalAlign="right"/>
 					</s:layout>	
 					<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="100%" click="launchDefaultGraph()"/>
 					<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="100%" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
@@ -617,7 +617,7 @@
 			</s:Group>
 		</s:Group>
 		
-		<s:Group id="settingsbuttonsbar" width="100%" height="26" bottom="0">
+		<s:Group id="settingsbuttonsbar" width="100%" height="30" bottom="0">
 			<s:layout>
 				<s:BasicLayout/>
 			</s:layout>
@@ -632,7 +632,7 @@
 					</s:fill>
 				</s:Rect>				
 			</s:Group>
-			<s:Group id="settingsbuttons" left="6" right="6" height="100%" verticalCenter="0">
+			<s:Group id="settingsbuttons" left="8" right="8" height="100%" verticalCenter="0">
 				<s:layout><s:HorizontalLayout verticalAlign="middle"/></s:layout>
 				<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
 				<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
