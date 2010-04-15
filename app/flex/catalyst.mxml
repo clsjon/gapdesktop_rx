@@ -579,7 +579,7 @@
 		<s:RichText id="tagline" color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" y="49">
 			<s:content><s:p>no internet required</s:p></s:content>
 		</s:RichText>
-		<s:RichText id="versioninfo" color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date(2010,3,9).toDateString()} (v {this.version})" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+		<s:RichText id="versioninfo" color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date(2010,3,15).toDateString()} (v {this.version})" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 	</s:Group>
 	
 	
