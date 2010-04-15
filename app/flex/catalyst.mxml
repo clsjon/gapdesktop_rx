@@ -93,6 +93,8 @@
 		
 		public static var updater:ApplicationUpdaterUI;
 		
+		public static const dbVersion:String = "1.0";
+		
 		private var manualUpdateCheck:Boolean = false;
 		
 		[Bindable] 
@@ -140,7 +142,7 @@
 			version = descriptor.ns::version;
 			trace ('version: ' + version);
 			ApplicationController.initialize([AIRServiceProvider], 
-				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx-"+version).nativePath);
+				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx-"+dbVersion).nativePath);
 			//Rx.enableLogging();
 		}
 		

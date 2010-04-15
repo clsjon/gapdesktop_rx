@@ -146,6 +146,7 @@
 {
 	skinClass: ClassReference('gapdesktoprx.skins.TitleWindowSkin');
 	font-family: Avenir;
+	dropShadowVisible: false;
 }
 
 .nameExampleStyle 

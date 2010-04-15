@@ -65,7 +65,7 @@
 
 		]]>
 	</fx:Script>
-			<s:Label fontFamily="Avenir" width="100%" text="Gapminder Desktop can automatically check Gapminder's website to see if a new version of the software with more recent statistics is available. If you don't want this behavior, please uncheck the box below."/>
+			<s:Label fontFamily="Avenir" fontSize="12" width="100%" text="Welcome to Gapminder Desktop. The software can automatically check Gapminder's website to see if more up-to-date statistics are available. To disable this behaviour, please uncheck the box below. "/>
 			<s:CheckBox id="autoUpdateCheck" label="Check for updates automatically" selected="{catalyst.prefs.autocheck}" change="autoUpdateCheck_changeHandler(event)"/>
 		<s:Group id="buttons">
 			<s:layout>
