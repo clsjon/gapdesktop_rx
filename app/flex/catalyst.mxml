@@ -538,7 +538,6 @@
 			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
 			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark this graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
 			<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use Gapminder World" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
-			<extensions:IconButton id="printButton" styleName="iconButtonStyle" label="Print this graph" iconUp="assets/icons/printer.png" click="printButton_clickHandler(event)"/>
 			<s:Group id="tlzbuttonrowright" width="100%">
 				<s:layout>
 					<s:HorizontalLayout horizontalAlign="right"/>
