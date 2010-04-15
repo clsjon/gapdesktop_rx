@@ -8,7 +8,6 @@
 	xmlns:containers="flexlib.containers.*"
 	xmlns:local="*" 
 	xmlns:mx="library://ns.adobe.com/flex/halo"
-	xmlns:ws="http://websector.de"
 	xmlns:interpolators="gapdesktoprx.interpolators.*"
 	xmlns:ns="library://ns.adobe.com/flex/mx" 
 	xmlns:extensions="gapdesktoprx.components.extensions.*"
@@ -206,7 +205,17 @@
 				initializeUpdater();
 			}
 			this.nativeWindow.addEventListener(NativeWindowBoundsEvent.RESIZING,windowedapplication1_resizingHandler);
+			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE,nativeApplication_activateHandler);
+			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE,nativeApplication_deactivateHandler);
 			
+		}
+		
+		protected function nativeApplication_activateHandler(event:Event):void {
+			stage.frameRate = 24;
+		}
+		
+		protected function nativeApplication_deactivateHandler(event:Event):void {
+			stage.frameRate = 1;
 		}
 		
 		
