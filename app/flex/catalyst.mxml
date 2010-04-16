@@ -157,7 +157,6 @@
 		
 		protected function exampleSelectEventHandler(event:ExampleSelectEvent):void
 		{
-			trace (event.example.hash);
 			var viewer:GraphViewer = new GraphViewer();
 			viewer.example = event.example;
 			currentState = 'TlzState';
@@ -180,7 +179,6 @@
 		}
 		
 		protected function initializeUpdater():void {
-			trace ('initalizing updater');
 			updater = new ApplicationUpdaterUI();
 			updater.configurationFile = File.applicationDirectory.resolvePath('config/updaterConfig.xml');
 			if (!prefs.autocheck)
@@ -321,7 +319,6 @@
 		
 		protected function navigator_tabsReorderedHandler(event:TabReorderEvent):void
 		{
-			trace (event.currentTarget.toString());
 			var nav:SuperTabNavigator = event.currentTarget as SuperTabNavigator;
 			if (event.newIndex == nav.length) {
 				event.preventDefault();
@@ -510,8 +507,6 @@
 		protected function navigator_tabCloseHandler(event:SuperTabEvent):void
 		{
 			var nav:SuperTabNavigator = event.target as SuperTabNavigator;
-			trace (nav.length);
-			trace (event.tabIndex);
 			if (nav.length > 2 && (event.tabIndex == nav.length-2)) {
 				nav.selectedIndex = event.tabIndex - 1;
 			}

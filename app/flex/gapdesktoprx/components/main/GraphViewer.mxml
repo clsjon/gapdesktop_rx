@@ -64,7 +64,7 @@
 					_example = newExample;
 					_example.create();
 					this.label = _example.name;
-					trace("New example: " + example.hash);
+					//trace("New example: " + example.hash);
 				}
 			}
 			
