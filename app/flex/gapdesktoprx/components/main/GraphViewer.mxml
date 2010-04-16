@@ -16,6 +16,7 @@
 			
 			import mx.events.StateChangeEvent;
 			import mx.graphics.ImageSnapshot;
+			import mx.utils.ObjectUtil;
 			
 			import org.restfulx.utils.RxUtils;
 			
@@ -109,7 +110,14 @@
 			}
 			
 
+
+			protected function graphHTML_clickHandler(event:MouseEvent):void
+			{
+				
+				trace (ObjectUtil.toString(event.target));
+			}
+
 		]]>
 	</fx:Script>
-		<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)"/>
+		<mx:HTML id="graphHTML" htmlHost="{new TlzHost()}" x="0" y="0"  width="100%" height="100%" borderColor="#FFFFFF" creationComplete="graphHTML_completeHandler(event)" click="graphHTML_clickHandler(event)"/>
 </mx:VBox>

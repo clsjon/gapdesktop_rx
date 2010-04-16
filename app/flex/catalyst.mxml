@@ -157,7 +157,7 @@
 		
 		protected function exampleSelectEventHandler(event:ExampleSelectEvent):void
 		{
-			var viewer:GraphViewer = new GraphViewer();
+			var viewer:GraphViewerSWF = new GraphViewerSWF();
 			viewer.example = event.example;
 			currentState = 'TlzState';
 			navigator.addChildAt(viewer,navigator.numChildren - 1);
