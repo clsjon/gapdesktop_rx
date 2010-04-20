@@ -114,7 +114,6 @@
 			protected function graphHTML_clickHandler(event:MouseEvent):void
 			{
 				
-				trace (ObjectUtil.toString(event.target));
 			}
 
 		]]>

@@ -14,6 +14,7 @@
 	showStatusBar="false"
 	backgroundColor="#ffffff" 
 	
+	enterFrame="windowedapplication1_enterFrameHandler(event)"
 	resizing="windowedapplication1_resizingHandler(event)"
 	preinitialize="windowedapplication1_preinitializeHandler(event)"
 	applicationComplete="windowedapplication1_applicationCompleteHandler(event)"
@@ -37,6 +38,7 @@
 		import flash.events.MouseEvent;
 		import flash.events.NativeWindowBoundsEvent;
 		import flash.sampler.NewObjectSample;
+		import flash.utils.getTimer;
 		
 		import flashx.textLayout.conversion.TextConverter;
 		import flashx.textLayout.events.FlowElementMouseEvent;
@@ -102,6 +104,20 @@
 		
 		[Bindable]
 		public static var online:Boolean = true;
+		
+		// enterFrame variables
+		private var numFrames:int = 0;
+		private var currTime:int;
+		private var startTime:int = getTimer();
+		[Bindable]
+		private var actualFps:int = 0;
+		[Bindable]
+		private var targetFps:int = 24;
+		[Bindable]
+		private var rate:uint;
+		private var lowMult:Number;
+		private var highMult:Number;
+		
 		
 		protected function closeSettingsButton_clickHandler():void
 		{
@@ -211,11 +227,11 @@
 		}
 		
 		protected function nativeApplication_activateHandler(event:Event):void {
-			stage.frameRate = 24;
+			//stage.frameRate = 24;
 		}
 		
 		protected function nativeApplication_deactivateHandler(event:Event):void {
-			stage.frameRate = 1;
+			//stage.frameRate = 1;
 		}
 		
 		
@@ -512,6 +528,28 @@
 			}
 		}
 		
+
+		protected function windowedapplication1_enterFrameHandler(event:Event):void
+		{
+			if (stage)
+				rate = stage.frameRate;
+			++numFrames;
+			currTime = getTimer();
+			if ((currTime- startTime) > 1000)
+			{
+				actualFps = int(numFrames * ((currTime- startTime) / 1000));
+				if (actualFps < (targetFps * 0.8)) {
+					targetFps = int(actualFps * 0.9);
+				} else {
+					targetFps = targetFps + 1;	
+				}
+				stage.frameRate = targetFps;
+				numFrames = 0;
+				startTime = currTime;
+			}
+		}
+
+
 	]]></fx:Script>
 	
 	<s:states>
@@ -535,6 +573,15 @@
 			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
 			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
 			<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
+			<s:Group id="fps">
+				<s:layout>
+					<s:HorizontalLayout/>
+				</s:layout>
+				<s:TextInput id="rateInput" width="40" text="24" change="{stage.frameRate = uint(rateInput.text)}"/>
+				<s:Label id="fpsReport" text="Reported FPS {rate} Actual FPS {actualFps} Target FPS {targetFps}" fontSize="8"/>
+				<s:TextInput id="lowMultInput" width="40" text="0.8" change="{lowMult = Number(rateInput.text)}"/>
+				<s:TextInput id="highMultInput" width="40" text="0.9" change="{highMult = Number(rateInput.text)}"/>
+			</s:Group>
 			<s:Group id="tlzbuttonrowright" width="100%">
 				<s:layout>
 					<s:HorizontalLayout horizontalAlign="right"/>
