@@ -284,6 +284,14 @@
 		
 		protected function bookmarkButton_clickHandler(event:MouseEvent):void
 		{	
+			var nameExampleWindowOptions:NativeWindowInitOptions = new NativeWindowInitOptions();
+			nameExampleWindowOptions.systemChrome = NativeWindowSystemChrome.NONE;
+			nameExampleWindowOptions.minimizable = false;
+			nameExampleWindowOptions.maximizable = false;
+			nameExampleWindowOptions.resizable = false;
+			
+			var win:NativeWindow = new NativeWindow(nameExampleWindowOptions);
+			
 			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			PopUpManager.centerPopUp(nameExampleWindow);
