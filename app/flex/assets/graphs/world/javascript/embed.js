@@ -11,7 +11,7 @@
 			so.setProxy(null, 'javascript/swfobject_js_gateway.swf');
 			so.addVariable('chartTitle', title);
 			so.addVariable('href', escape(window.location.href));
-            so.addParam("wmode", "opaque");
+        //    so.addParam("wmode", "opaque");
  			so.addParam("scale", "default");
 			so.write("flashcontent");
 			
