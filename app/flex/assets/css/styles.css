@@ -151,5 +151,6 @@
 
 .nameExampleStyle 
 {
+	fontFamily: Avenir;
 	modalTransparencyBlur: 0;
 }

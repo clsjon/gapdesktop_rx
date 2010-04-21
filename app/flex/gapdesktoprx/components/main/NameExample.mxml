@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/halo" 
-		 width="300" 
-		 height="120"
-		 title="Enter a name for this graph:"
+		 width="100%" 
+		 height="30"
 		 creationComplete="panel1_creationCompleteHandler(event)" xmlns:mx1="library://ns.adobe.com/flex/mx"
-		 defaultButton="{okButton}"
-		 closeButton="{null}"
-		 moveArea="{null}"
-		 close="titlewindow1_closeHandler(event)"
+		 
 		 keyDown="titlewindow1_keyDownHandler(event)"
 		 styleName="nameExampleStyle"
 		 >
-	<s:layout>
-		<s:VerticalLayout gap="10" paddingBottom="10" paddingTop="10" paddingLeft="10" paddingRight="10"/>
-	</s:layout>
 	<fx:Metadata>
 		[Event(name="nameExample", type="gapdesktoprx.events.NameExampleEvent")]
 	</fx:Metadata>
@@ -36,21 +29,27 @@
 				if (event.charCode == Keyboard.ESCAPE) {
 					this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 				}
+				if (event.charCode == Keyboard.ENTER) {
+					submitAndClose();
+				}
 			}
-
+			
+			protected function submitAndClose():void {				
+				dispatchEvent(new NameExampleEvent(graphName.text,true));
+				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+			}
 			
 			
 			protected function okButton_clickHandler(event:MouseEvent):void
 			{
-				dispatchEvent(new NameExampleEvent(graphName.text,true));
-				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
-					}
+				submitAndClose();
+			}
 			
 			
 			protected function cancelButton_clickHandler(event:MouseEvent):void
 			{
 				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
-				}
+			}
 			
 			
 			protected function panel1_creationCompleteHandler(event:FlexEvent):void
@@ -58,22 +57,26 @@
 				graphName.setFocus();
 			}
 			
-
+			
 			protected function titlewindow1_closeHandler(event:CloseEvent):void
 			{
 				PopUpManager.removePopUp(this);
 			}
-
+			
 		]]>
 	</fx:Script>
-			<s:TextInput id="graphName" width="100%"/>
-		<s:Group id="buttons">
-			<s:layout>
-				<s:HorizontalLayout gap="10" horizontalAlign="right"/></s:layout>
-		
-				<s:Button id="cancelButton" label="Cancel" click="cancelButton_clickHandler(event)"/>
-				<s:Button id="okButton" label="Create bookmark" click="okButton_clickHandler(event)"/>
-				
-		</s:Group>
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:SolidColor color="#EEEEEE"/>
+		</s:fill>
+	</s:Rect>
+	<s:Group id="content" width="100%">
+		<s:layout><s:HorizontalLayout gap="10" paddingBottom="10" paddingTop="10" paddingLeft="10" paddingRight="10" verticalAlign="middle"/></s:layout>
+		<s:Label text="Enter a name for this graph:"/>
+		<s:TextInput id="graphName" width="30%" fontSize="9"/>
+		<s:Button id="cancelButton" styleName="settingsButtonStyle" label="Cancel" click="cancelButton_clickHandler(event)"/>
+		<s:Button id="okButton" styleName="settingsButtonStyle" label="Create bookmark" click="okButton_clickHandler(event)"/>
+	</s:Group>	
 	
-</s:TitleWindow>
+	
+</s:Group>

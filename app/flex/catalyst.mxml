@@ -79,8 +79,6 @@
 		import mx.states.State;
 		import mx.utils.ObjectUtil;
 		
-		import nl.demonsters.debugger.MonsterDebugger;
-		
 		import org.restfulx.Rx;
 		import org.restfulx.events.CacheUpdateEvent;
 		import org.restfulx.services.air.AIRServiceProvider;
@@ -284,18 +282,19 @@
 		
 		protected function bookmarkButton_clickHandler(event:MouseEvent):void
 		{	
-			var nameExampleWindowOptions:NativeWindowInitOptions = new NativeWindowInitOptions();
+			/* var nameExampleWindowOptions:NativeWindowInitOptions = new NativeWindowInitOptions();
 			nameExampleWindowOptions.systemChrome = NativeWindowSystemChrome.NONE;
 			nameExampleWindowOptions.minimizable = false;
 			nameExampleWindowOptions.maximizable = false;
 			nameExampleWindowOptions.resizable = false;
 			
 			var win:NativeWindow = new NativeWindow(nameExampleWindowOptions);
-			
+			*/
 			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
 			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
 			PopUpManager.centerPopUp(nameExampleWindow);
 			nameExampleWindow.y = this.y;
+			nameExampleWindow.x = event.target.x;
 		}
 		
 		private function get fixedSizeState():Boolean {
@@ -533,22 +532,21 @@
 		<s:State name="MainState" stateGroups="FixedSize"/>
 		<s:State name="TosState" stateGroups="FixedSize"/>
 		<s:State name="TlzState" stateGroups="Resizable"/>
+		<s:State name="NameExampleState" stateGroups="Resizable"/>
 	</s:states>
 	<s:layout>
 		<s:VerticalLayout gap="0" paddingRight="0" paddingLeft="0"/>
 	</s:layout>
 	<s:DataGroup dataProvider="{models.examples}" width="0" height="0" includeInLayout="false"/>
-	
-	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState">
-		<s:layout>
-			<s:BasicLayout/>
-		</s:layout>
-		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
+	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,NameExampleState">
+		<s:layout><s:BasicLayout/></s:layout>
+		<main:NameExample id="nameExample" includeIn="NameExampleState"/> 
+		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%" includeIn="TlzState">
 			<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4" paddingRight="4"/></s:layout>
 			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
 			<extensions:IconButton id="resetButton" styleName="iconButtonStyle" label="Reset graph" iconUp="assets/icons/button/reload.png" click="resetButton_clickHandler(event)" />
 			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
-			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
+			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark graph" iconUp="assets/icons/button/plus.png" click="currentState='NameExampleState'"/>
 			<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
 			<s:Group id="tlzbuttonrowright" width="100%">
 				<s:layout>
@@ -558,14 +556,14 @@
 				
 			</s:Group>
 		</s:Group>
-		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)" tabClose="navigator_tabCloseHandler(event)">
+		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)" tabClose="navigator_tabCloseHandler(event)" includeIn="TlzState,NameExampleState" mouseEnabled.NameExampleState="false">
 			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)">
 				
 			</ns:Canvas>
 		</containers:SuperTabNavigator>
 	</s:Group>
 	
-	<s:Group id="headinggroup" bottom="74" top="0" left="0" right="0" width="100%" excludeFrom="TlzState">
+	<s:Group id="headinggroup" bottom="74" top="0" left="0" right="0" width="100%" excludeFrom="TlzState,NameExampleState">
 		<s:Rect width="100%" height="100%">
 			<s:fill>
 				<s:LinearGradient rotation="270" scaleX="74" y="74">
@@ -589,7 +587,7 @@
 		<s:RichText id="tagline" color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" y="49">
 			<s:content><s:p>no internet required</s:p></s:content>
 		</s:RichText>
-		<s:RichText id="versioninfo" color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date(2010,3,15).toDateString()} (v {this.version})" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+		<s:RichText id="versioninfo" color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date(2010,3,21).toDateString()} (v {this.version})" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
 	</s:Group>
 	
 	
@@ -683,6 +681,12 @@
 			</s:Parallel>
 		</s:Transition>
 		
+		<s:Transition autoReverse="true" fromState="TlzState" toState="NameExampleState">
+			<s:Parallel>
+				<s:Fade duration="500" target="{tlzbuttonrow}" disableLayout="true"/>
+				<s:Fade duration="500" target="{nameExample}" disableLayout="true"/>
+			</s:Parallel>
+		</s:Transition>
 		
 		
 	</s:transitions>
