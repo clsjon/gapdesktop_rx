@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <s:WindowedApplication
-	xmlns:lib="assets.graphics.Desktop_mockup_091104_copy.*" 
-	xmlns:fx="http://ns.adobe.com/mxml/2009" 
-	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:components="gapdesktoprx.components.catalyst.*" 
-	xmlns:main="gapdesktoprx.components.main.*"
 	xmlns:containers="flexlib.containers.*"
-	xmlns:local="*" 
-	xmlns:mx="library://ns.adobe.com/flex/halo"
-	xmlns:interpolators="gapdesktoprx.interpolators.*"
-	xmlns:ns="library://ns.adobe.com/flex/mx" 
 	xmlns:extensions="gapdesktoprx.components.extensions.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:interpolators="gapdesktoprx.interpolators.*"
+	xmlns:local="*" 
+	xmlns:main="gapdesktoprx.components.main.*"
+	xmlns:mx="library://ns.adobe.com/flex/halo"
+	xmlns:ns="library://ns.adobe.com/flex/mx" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	
 	showStatusBar="false"
 	backgroundColor="#ffffff" 
 	
@@ -261,9 +261,6 @@
 			}
 		}
 		
-		private function nameExampleHandler(event:NameExampleEvent):void {
-			GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
-		}
 		
 		private function launchExamplesList():void {
 			var win:ExampleSelectionBox = PopUpManager.createPopUp(this,ExampleSelectionBox,true) as ExampleSelectionBox;
@@ -280,22 +277,6 @@
 		}
 		
 		
-		protected function bookmarkButton_clickHandler(event:MouseEvent):void
-		{	
-			/* var nameExampleWindowOptions:NativeWindowInitOptions = new NativeWindowInitOptions();
-			nameExampleWindowOptions.systemChrome = NativeWindowSystemChrome.NONE;
-			nameExampleWindowOptions.minimizable = false;
-			nameExampleWindowOptions.maximizable = false;
-			nameExampleWindowOptions.resizable = false;
-			
-			var win:NativeWindow = new NativeWindow(nameExampleWindowOptions);
-			*/
-			var nameExampleWindow:NameExample = PopUpManager.createPopUp(this,NameExample,true) as NameExample;
-			nameExampleWindow.addEventListener(NameExampleEvent.NAME_EXAMPLE,nameExampleHandler);
-			PopUpManager.centerPopUp(nameExampleWindow);
-			nameExampleWindow.y = this.y;
-			nameExampleWindow.x = event.target.x;
-		}
 		
 		private function get fixedSizeState():Boolean {
 			return (stateInGroup(this.currentState,"FixedSize"))
@@ -526,6 +507,13 @@
 		
 		
 		
+		
+		protected function nameExample_nameExampleHandler(event:NameExampleEvent):void
+		{
+			GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
+			currentState = 'TlzState';
+		}
+		
 	]]></fx:Script>
 	
 	<s:states>
@@ -535,138 +523,143 @@
 		<s:State name="NameExampleState" stateGroups="Resizable"/>
 	</s:states>
 	<s:layout>
-		<s:VerticalLayout gap="0" paddingRight="0" paddingLeft="0"/>
+		<s:BasicLayout/>
 	</s:layout>
-	<s:DataGroup dataProvider="{models.examples}" width="0" height="0" includeInLayout="false"/>
-	<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,NameExampleState">
-		<s:layout><s:BasicLayout/></s:layout>
-		<main:NameExample id="nameExample" includeIn="NameExampleState"/> 
-		<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%" includeIn="TlzState">
-			<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4" paddingRight="4"/></s:layout>
-			<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
-			<extensions:IconButton id="resetButton" styleName="iconButtonStyle" label="Reset graph" iconUp="assets/icons/button/reload.png" click="resetButton_clickHandler(event)" />
-			<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
-			<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark graph" iconUp="assets/icons/button/plus.png" click="currentState='NameExampleState'"/>
-			<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
-			<s:Group id="tlzbuttonrowright" width="100%">
-				<s:layout>
-					<s:HorizontalLayout horizontalAlign="right"/>
-				</s:layout>
-				<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
-				
-			</s:Group>
-		</s:Group>
-		<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)" tabClose="navigator_tabCloseHandler(event)" includeIn="TlzState,NameExampleState" mouseEnabled.NameExampleState="false">
-			<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)">
-				
-			</ns:Canvas>
-		</containers:SuperTabNavigator>
-	</s:Group>
+	 
 	
-	<s:Group id="headinggroup" bottom="74" top="0" left="0" right="0" width="100%" excludeFrom="TlzState,NameExampleState">
-		<s:Rect width="100%" height="100%">
-			<s:fill>
-				<s:LinearGradient rotation="270" scaleX="74" y="74">
-					<s:GradientEntry color="0xD9D9D9" ratio="0"/>
-					<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
-					<s:GradientEntry color="0xEEEEEE" ratio="1"/>
-				</s:LinearGradient>
-			</s:fill>
-		</s:Rect>
-		<s:Line left="0" right="0" top="74.5">
-			<s:stroke>
-				<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
-			</s:stroke>
-		</s:Line>
-		<s:RichText id="headingtext" color="#000000" fontFamily="Avenir-black" fontWeight="normal" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" top="14">
-			<s:content><s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span></s:p></s:content>
-		</s:RichText>
-		
-		<s:RichText id="betabadge" color="#444444" rotation="45" fontFamily="Avenir-light" fontWeight="normal" fontSize="14" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" x="{headingtext.x + headingtext.width}" y="5" text="beta"/>
-		
-		<s:RichText id="tagline" color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" y="49">
-			<s:content><s:p>no internet required</s:p></s:content>
-		</s:RichText>
-		<s:RichText id="versioninfo" color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date(2010,3,21).toDateString()} (v {this.version})" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
-	</s:Group>
-	
-	
-	<s:Group id="maingroup" top="0" bottom="0" width="100%" height="100%" includeIn="MainState">
+	<s:Group id="laidoutcontent" width="100%" height="100%">
 		<s:layout>
-			<s:BasicLayout/>
+			<s:VerticalLayout gap="0" paddingRight="0" paddingLeft="0"/>
 		</s:layout>
-		
-		
-		<s:Group id="gwgroup" width="100%" top="0" left="0" bottom="30" right="0">	
-			<s:layout>
-				<s:HorizontalLayout gap="20" paddingLeft="15" paddingRight="15" paddingTop="10" paddingBottom="15"/>
-			</s:layout>
-			<s:Group id="bigbuttoncolumn" width="50%" height="100%">
-				<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true" width="100%" height="100%"/>		
-			</s:Group>
-			<s:Group id="explanationcolumn" width="50%" height="100%"> 
-				<s:layout><s:VerticalLayout/></s:layout>
-				<s:Group id="introtextgroup" width="100%">
-					<s:layout><s:VerticalLayout gap="0"/></s:layout>
-					<s:RichText color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
-					
-					<s:RichEditableText id="explanationtext" editable="false" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
-						<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
-					</s:RichEditableText>
-					<s:RichText color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
-						<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
-					</s:RichText>
-				</s:Group>
-				<s:Group id="gwbuttongroup" height="100%" width="100%">
+		<s:DataGroup dataProvider="{models.examples}" width="0" height="0" includeInLayout="false"/>
+		<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,NameExampleState">
+			<s:layout><s:BasicLayout/></s:layout>
+			<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
+				<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4" paddingRight="4"/></s:layout>
+				<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
+				<extensions:IconButton id="resetButton" styleName="iconButtonStyle" label="Reset graph" iconUp="assets/icons/button/reload.png" click="resetButton_clickHandler(event)" />
+				<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
+				<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark graph" iconUp="assets/icons/button/plus.png" click="currentState='NameExampleState'"/>
+				<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
+				<s:Group id="tlzbuttonrowright" width="100%">
 					<s:layout>
-						<s:VerticalLayout verticalAlign="bottom" horizontalAlign="right"/>
-					</s:layout>	
-					<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="100%" click="launchDefaultGraph()"/>
-					<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="100%" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
+						<s:HorizontalLayout horizontalAlign="right"/>
+					</s:layout>
+					<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
+					
 				</s:Group>
 			</s:Group>
+			<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)" tabClose="navigator_tabCloseHandler(event)" includeIn="TlzState,NameExampleState" mouseEnabled.NameExampleState="false">
+				<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)">
+					
+				</ns:Canvas>
+			</containers:SuperTabNavigator>
 		</s:Group>
 		
-		<s:Group id="settingsbuttonsbar" width="100%" height="30" bottom="0">
+		<s:Group id="headinggroup" bottom="74" top="0" left="0" right="0" width="100%" excludeFrom="TlzState,NameExampleState">
+			<s:Rect width="100%" height="100%">
+				<s:fill>
+					<s:LinearGradient rotation="270" scaleX="74" y="74">
+						<s:GradientEntry color="0xD9D9D9" ratio="0"/>
+						<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
+						<s:GradientEntry color="0xEEEEEE" ratio="1"/>
+					</s:LinearGradient>
+				</s:fill>
+			</s:Rect>
+			<s:Line left="0" right="0" top="74.5">
+				<s:stroke>
+					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
+				</s:stroke>
+			</s:Line>
+			<s:RichText id="headingtext" color="#000000" fontFamily="Avenir-black" fontWeight="normal" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" top="14">
+				<s:content><s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span></s:p></s:content>
+			</s:RichText>
+			
+			<s:RichText id="betabadge" color="#444444" rotation="45" fontFamily="Avenir-light" fontWeight="normal" fontSize="14" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" x="{headingtext.x + headingtext.width}" y="5" text="beta"/>
+			
+			<s:RichText id="tagline" color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" y="49">
+				<s:content><s:p>no internet required</s:p></s:content>
+			</s:RichText>
+			<s:RichText id="versioninfo" color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date(2010,3,21).toDateString()} (v {this.version})" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
+		</s:Group>
+		
+		
+		<s:Group id="maingroup" top="0" bottom="0" width="100%" height="100%" includeIn="MainState">
 			<s:layout>
 				<s:BasicLayout/>
 			</s:layout>
-			<s:Group id="settingsbuttonsbackground" top="0" left="0" right="0" bottom="0">
-				<s:Rect top="0" left="0" right="0" bottom="0">
-					<s:fill>
-						<s:LinearGradient rotation="270" y="10">
-							<s:GradientEntry color="0xD9D9D9" ratio="0"/>
-							<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
-							<s:GradientEntry color="0xEEEEEE" ratio="1"/>
-						</s:LinearGradient>
-					</s:fill>
-				</s:Rect>				
+			
+			
+			<s:Group id="gwgroup" width="100%" top="0" left="0" bottom="30" right="0">	
+				<s:layout>
+					<s:HorizontalLayout gap="20" paddingLeft="15" paddingRight="15" paddingTop="10" paddingBottom="15"/>
+				</s:layout>
+				<s:Group id="bigbuttoncolumn" width="50%" height="100%">
+					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true" width="100%" height="100%"/>		
+				</s:Group>
+				<s:Group id="explanationcolumn" width="50%" height="100%"> 
+					<s:layout><s:VerticalLayout/></s:layout>
+					<s:Group id="introtextgroup" width="100%">
+						<s:layout><s:VerticalLayout gap="0"/></s:layout>
+						<s:RichText color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
+						
+						<s:RichEditableText id="explanationtext" editable="false" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
+							<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
+						</s:RichEditableText>
+						<s:RichText color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
+							<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
+						</s:RichText>
+					</s:Group>
+					<s:Group id="gwbuttongroup" height="100%" width="100%">
+						<s:layout>
+							<s:VerticalLayout verticalAlign="bottom" horizontalAlign="right"/>
+						</s:layout>	
+						<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="100%" click="launchDefaultGraph()"/>
+						<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="100%" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
+					</s:Group>
+				</s:Group>
 			</s:Group>
-			<s:Group id="settingsbuttons" left="8" right="8" height="100%" verticalCenter="0">
-				<s:layout><s:HorizontalLayout verticalAlign="middle"/></s:layout>
-				<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
-				<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
-				
-			</s:Group>
-		</s:Group>
-	</s:Group>
-	
-	<s:Group id="tosgroup" includeIn="TosState" width="100%" height="100%">
-		<s:layout><s:VerticalLayout gap="10" paddingLeft="10" paddingBottom="10" paddingRight="10" paddingTop="10"/></s:layout>
-		<s:Scroller width="100%" height="100%">
-			<s:Group width="100%">
+			
+			<s:Group id="settingsbuttonsbar" width="100%" height="30" bottom="0">
 				<s:layout>
 					<s:BasicLayout/>
 				</s:layout>
-				<s:RichText id="tosDisplay" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" width="100%"/>
+				<s:Group id="settingsbuttonsbackground" top="0" left="0" right="0" bottom="0">
+					<s:Rect top="0" left="0" right="0" bottom="0">
+						<s:fill>
+							<s:LinearGradient rotation="270" y="10">
+								<s:GradientEntry color="0xD9D9D9" ratio="0"/>
+								<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
+								<s:GradientEntry color="0xEEEEEE" ratio="1"/>
+							</s:LinearGradient>
+						</s:fill>
+					</s:Rect>				
+				</s:Group>
+				<s:Group id="settingsbuttons" left="8" right="8" height="100%" verticalCenter="0">
+					<s:layout><s:HorizontalLayout verticalAlign="middle"/></s:layout>
+					<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
+					<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
+					
+				</s:Group>
 			</s:Group>
-		</s:Scroller>
-		<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" styleName="settingsButtonStyle"/>		
+		</s:Group>
+		
+		<s:Group id="tosgroup" includeIn="TosState" width="100%" height="100%">
+			<s:layout><s:VerticalLayout gap="10" paddingLeft="10" paddingBottom="10" paddingRight="10" paddingTop="10"/></s:layout>
+			<s:Scroller width="100%" height="100%">
+				<s:Group width="100%">
+					<s:layout>
+						<s:BasicLayout/>
+					</s:layout>
+					<s:RichText id="tosDisplay" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" width="100%"/>
+				</s:Group>
+			</s:Scroller>
+			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" styleName="settingsButtonStyle"/>		
+		</s:Group>
+		
+		
 	</s:Group>
-	
-	
-	
-	
+	<main:NameExample id="nameExample" includeIn="NameExampleState" cancel="currentState='TlzState'" nameExample="nameExample_nameExampleHandler(event)"/>
 	<s:transitions>
 		<s:Transition autoReverse="true" fromState="MainState" toState="TosState">
 			<s:Parallel>
@@ -683,8 +676,13 @@
 		
 		<s:Transition autoReverse="true" fromState="TlzState" toState="NameExampleState">
 			<s:Parallel>
-				<s:Fade duration="500" target="{tlzbuttonrow}" disableLayout="true"/>
-				<s:Fade duration="500" target="{nameExample}" disableLayout="true"/>
+				<s:Move duration="300" target="{nameExample}" yFrom="{nameExample.y - 40}"/>
+			</s:Parallel>
+		</s:Transition>
+		
+		<s:Transition autoReverse="true" fromState="NameExampleState" toState="TlzState">
+			<s:Parallel>
+				<s:Move duration="300" target="{nameExample}" yTo="{nameExample.y - 40}"/>
 			</s:Parallel>
 		</s:Transition>
 		
