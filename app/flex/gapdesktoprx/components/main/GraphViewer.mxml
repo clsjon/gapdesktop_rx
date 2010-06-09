@@ -42,13 +42,10 @@
 			
 			private function graphHTML_completeHandler(event:Event):void
 			{
-				//			_htmlLoader = new HTMLLoader();
-				//			_htmlLoader.
-				var html:HTML = event.currentTarget as HTML;
+					var html:HTML = event.currentTarget as HTML;
 				html.htmlLoader.window.updateHash = updateHash;
 				html.location = _example.url;
 				this.stage.focus = graphHTML.htmlLoader;
-				//this.graphHTML.htmlLoader.window.setFocus();
 			}
 			
 			
@@ -96,11 +93,9 @@
 				_example = value;
 				this.label = example.name;
 				unsavedHash = value.hash;
-				//var urlReq:URLRequest = new URLRequest(example.url());
 				if (graphHTML) {
 					graphHTML.location = example.url;
 				}
-				//		graphHTML.htmlLoader.load(urlReq);
 				invalidateProperties();
 				
 			}

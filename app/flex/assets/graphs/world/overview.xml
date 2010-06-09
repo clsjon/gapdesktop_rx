@@ -1,5 +1,5 @@
 <metadata>
-  <mapProperties imageFile="http://www.gapminder.org/GapminderMedia/wp-uploads/gapminder_world/gw-map.jpg" timeDisplayX="0" timeDisplayY="0" scaleImage="true"/>
+  <mapProperties imageFile="gw-map.jpg" timeDisplayX="0" timeDisplayY="0" scaleImage="true"/>
   <collectionInfo>
     <caption url="http://www.gapminder.org">Gapminder World</caption>
   </collectionInfo>
