@@ -8,6 +8,7 @@
 		 
 		 keyDown="titlewindow1_keyDownHandler(event)"
 		 styleName="nameExampleStyle"
+		 
 		 >
 	<fx:Metadata>
 		[Event(name="nameExample", type="gapdesktoprx.events.NameExampleEvent")]
@@ -26,7 +27,7 @@
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			
-			private function titlewindow1_keyDownHandler(event:KeyboardEvent):void {
+				private function titlewindow1_keyDownHandler(event:KeyboardEvent):void {
 				if (event.charCode == Keyboard.ESCAPE) {
 					this.dispatchEvent(new Event(Event.CANCEL));
 				}
@@ -37,8 +38,13 @@
 			
 			protected function submit():void {				
 				dispatchEvent(new NameExampleEvent(graphName.text,true));
+				graphName.text = '';
 			}
 			
+			protected function cancel():void {
+				this.dispatchEvent(new Event(Event.CANCEL));
+				graphName.text = '';
+			}	
 			
 			protected function okButton_clickHandler(event:MouseEvent):void
 			{
@@ -48,7 +54,7 @@
 			
 			protected function cancelButton_clickHandler(event:MouseEvent):void
 			{
-				this.dispatchEvent(new Event(Event.CANCEL));
+				cancel();
 			}
 			
 			
@@ -70,7 +76,7 @@
 	</s:Rect>
 	<s:Group id="content" width="100%">
 		<s:layout><s:HorizontalLayout gap="10" paddingBottom="10" paddingTop="10" paddingLeft="10" paddingRight="10" verticalAlign="middle"/></s:layout>
-		<s:Label text="Enter a name for this graph:"/>
+		<s:Label text="To bookmark this graph, enter a name:"/>
 		<s:TextInput id="graphName" width="30%" fontSize="9"/>
 		<s:Button id="cancelButton" styleName="settingsButtonStyle" label="Cancel" click="cancelButton_clickHandler(event)"/>
 		<s:Button id="okButton" styleName="settingsButtonStyle" label="Create bookmark" click="okButton_clickHandler(event)"/>

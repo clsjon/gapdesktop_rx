@@ -20,6 +20,8 @@
 	networkChange="windowedapplication1_networkChangeHandler(event)"
 	currentStateChanging="windowedapplication1_currentStateChangingHandler(event)"
 	currentStateChange="windowedapplication1_currentStateChangeHandler(event)"	
+	activate="windowedapplication1_activateHandler(event)"
+	deactivate="windowedapplication1_deactivateHandler(event)"
 	>
 	
 	<fx:Style source="/assets/css/styles.css"/>
@@ -514,6 +516,28 @@
 			currentState = 'TlzState';
 		}
 		
+
+		protected function bookmarkButton_clickHandler(event:MouseEvent):void
+		{
+			currentState='NameExampleState';
+		}
+
+
+		protected function windowedapplication1_activateHandler(event:Event):void
+		{
+			if (stage) {
+			stage.frameRate = 24;
+			}
+		}
+
+
+		protected function windowedapplication1_deactivateHandler(event:Event):void
+		{	
+			if (stage) {
+			stage.frameRate = 1;
+			}
+		}
+
 	]]></fx:Script>
 	
 	<s:states>
@@ -539,7 +563,7 @@
 				<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
 				<extensions:IconButton id="resetButton" styleName="iconButtonStyle" label="Reset graph" iconUp="assets/icons/button/reload.png" click="resetButton_clickHandler(event)" />
 				<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
-				<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark graph" iconUp="assets/icons/button/plus.png" click="currentState='NameExampleState'"/>
+				<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
 				<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
 				<s:Group id="tlzbuttonrowright" width="100%">
 					<s:layout>
@@ -659,7 +683,11 @@
 		
 		
 	</s:Group>
-	<main:NameExample id="nameExample" includeIn="NameExampleState" cancel="currentState='TlzState'" nameExample="nameExample_nameExampleHandler(event)"/>
+	
+	
+	
+	<main:NameExample id="nameExample" includeIn="NameExampleState" cancel="currentState='TlzState'" nameExample="nameExample_nameExampleHandler(event)" top="{-nameExample.height}" top.TlzState="{-nameExample.height}" top.NameExampleState="0"/>
+	
 	<s:transitions>
 		<s:Transition autoReverse="true" fromState="MainState" toState="TosState">
 			<s:Parallel>
@@ -676,13 +704,14 @@
 		
 		<s:Transition autoReverse="true" fromState="TlzState" toState="NameExampleState">
 			<s:Parallel>
-				<s:Move duration="300" target="{nameExample}" yFrom="{nameExample.y - 40}"/>
+				<s:Move duration="300" target="{nameExample}"/>
 			</s:Parallel>
 		</s:Transition>
 		
 		<s:Transition autoReverse="true" fromState="NameExampleState" toState="TlzState">
 			<s:Parallel>
-				<s:Move duration="300" target="{nameExample}" yTo="{nameExample.y - 40}"/>
+				<s:Move duration="300" target="{nameExample}"/>
+				
 			</s:Parallel>
 		</s:Transition>
 		

@@ -12,6 +12,10 @@
     <i id="pyj6tScZqmEdrsBnj2ROXAg" displayName="Literacy rate, adult total (% of people ages 15 and above)" originalName="Adult literacy rate is the percentage of people ages 15 and above who can, with understanding, read and write a short, simple statement on their everyday life."/>
     <i id="pyj6tScZqmEcqpAT2g1neRA" displayName="Agricultural land (% of land area)" originalName="Agricultural land refers to the share of land area that is arable, under permanent crops, and under permanent pastures. Includes land under temporary crops, temporary meadows for mowing or for pasture, land under market or kitchen gardens, and land temporarily fallow. It excludes land under trees grown for wood or timber."/>
     <i id="pyj6tScZqmEfFhcpJWYaKeg" displayName="Agriculture, contribution to economy (% of GDP)" originalName="Agriculture includes forestry, hunting, and fishing, as well as cultivation of crops and livestock production. Value added is the net output of a sector after adding up all outputs and subtracting intermediate inputs. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources."/>
+    <i id="t9FP3_OPrE2ug_I_iNsbePg" displayName="All causes deaths in children 1-59 months (per 1,000 births)" originalName="All causes deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="taYeez4Mkk8OvdH-q4QAxxQ" displayName="All causes deaths in children 1-59 months (total deaths)" originalName="All causes deaths in children 1-59 months (total deaths)"/>
+    <i id="tbpc_fYEqPzaE7pDWBG84Rw" displayName="All causes deaths in newborn (per 1,000 births)" originalName="All causes deaths in newborn (per 1,000 births)"/>
+    <i id="tBVcAKWEbc2s687q6D9yuYg" displayName="All causes deaths in newborn (total deaths)" originalName="All causes deaths in newborn (total deaths)"/>
     <i id="rEF20Sw6Sy7tn4DKsKSDDMQ" displayName="Hourly compensation (US$)" originalName="Amount of financial compensation for each non-working hour, counted by US$."/>
     <i id="rZrHzR__kZfmw6L_xUx7cwg" displayName="Population growth (annual %), with projections" originalName="Annual change of population in percentage, data after 2010 is based on the medium estimates from UN population division."/>
     <i id="pyj6tScZqmEcl2xDWbuJ8fg" displayName="Population growth (annual %)" originalName="Annual de facto population growth rate."/>
@@ -27,6 +31,8 @@
     <i id="pyj6tScZqmEcZjkPuMgMITg" displayName="Aviation (million ton-kilometres)" originalName="Aviation (million ton-kilometres)"/>
     <i id="pyj6tScZqmEdoP_gCwXhfKQ" displayName="Aviation (thousands of passengers carried)" originalName="Aviation (thousands of passengers carried)"/>
     <i id="pp59adS3CHWcsSl830EklJA" displayName="Biomass stock in forest (tons)" originalName="Biomass stock refers to organic material both above-ground and below-ground, and both living and dead, e.g., trees, crops, grasses, tree litter, roots etc.; including the pool definition for above- and below-ground biomass in forest; other wooded land not included."/>
+    <i id="t_0WcTuc94YT9cJVvy1tmUg" displayName="Birth asphyxia deaths in newborn (per 1,000 births)" originalName="Birth asphyxia deaths in newborn (per 1,000 births)"/>
+    <i id="twrll6eL8GeIU4P71aTakmg" displayName="Birth asphyxia deaths in newborn (total deaths)" originalName="Birth asphyxia deaths in newborn (total deaths)"/>
     <i id="pyj6tScZqmEd2yhQYTc_pcw" displayName="Children out of school, primary" originalName="Break in series between 1997 and 1998 due to change from International Standard Classification of Education (ISCED76) to ISCED97. Recent data are provisional. Children out of school are the number of primary-school-age children not enrolled in primary or secondary school."/>
     <i id="pyj6tScZqmEdKD0KpXRsKXA" displayName="Children out of school, primary, female" originalName="Break in series between 1997 and 1998 due to change from International Standard Classification of Education (ISCED76) to ISCED97. Recent data are provisional. Children out of school are the number of primary-school-age children not enrolled in primary or secondary school."/>
     <i id="pyj6tScZqmEekvNtZ5tPiMw" displayName="Children out of school, primary, male" originalName="Break in series between 1997 and 1998 due to change from International Standard Classification of Education (ISCED76) to ISCED97. Recent data are provisional. Children out of school are the number of primary-school-age children not enrolled in primary or secondary school."/>
@@ -45,6 +51,8 @@
     <i id="pyj6tScZqmEdDid2ts7KvHg" displayName="Coal production, total" originalName="Coal production, total (tonnes oil equivalent)"/>
     <i id="phAwcNAVuyj1nMH7gMN83Dw" displayName="Primary school completion (% of boys)" originalName="Completion rate in primary schooling for boys (percent of boys)."/>
     <i id="phAwcNAVuyj0uk0g3T4YLZA" displayName="Primary school completion (% of girls)" originalName="Completion rate in primary schooling for girls (percent of girls)."/>
+    <i id="tneegXfZGHA0-nLG25ypnyg" displayName="Congenital deaths in newborn (per 1,000 births)" originalName="Congenital deaths in newborn (per 1,000 births)"/>
+    <i id="tUvFsKz2lGL-GtPmw47VLdg" displayName="Congenital deaths in newborn (total deaths)" originalName="Congenital deaths in newborn (total deaths)"/>
     <i id="pyj6tScZqmEdNbX4qj9QLTA" displayName="Hydroelectricity consumption, total" originalName="Consumption of hydroelectric energy (tonnes oil equivalent)"/>
     <i id="pyj6tScZqmEfiy57wnt-tEA" displayName="Nuclear consumption, total" originalName="Consumption of nuclear energy (tonnes oil equivalent)"/>
     <i id="pyj6tScZqmEewsQOoKrtYJQ" displayName="Contraceptive use (% of women ages 15-49)" originalName="Contraceptive prevalence rate is the percentage of women who are practicing, or whose sexual partners are practicing, any form of contraception. It is usually measured for married women ages 15-49 only."/>
@@ -55,6 +63,10 @@
     <i id="p8SIY47PNEw6pJRPAS1tXPQ" displayName="Under-five mortality from CME (per 1,000 born)" originalName="Death of children under five years of age per 1,000 live births. By The Inter-Agency Child Mortality Estimation Group (WHO, UNICEF, the United Nations Population Division, the World Bank, and independent experts)"/>
     <i id="p8SIY47PNEw4TgTkrmIVIXA" displayName="Under-five mortality from IHME (per 1,000 born)" originalName="Death of children under five years of age per 1,000 live births. Estimates and projections from the Institute for Health Metrics and Evaluation, 1970-2015."/>
     <i id="phAwcNAVuyj0NpF2PTov2Cw" displayName="Infant mortality rate (per 1,000 births)" originalName="Deaths of children during first year of life (per 1000 live births)."/>
+    <i id="tADSStUzP0ADEPYqsIfVHMQ" displayName="Diarrhoeal deaths in children 1-59 months (per 1,000 births)" originalName="Diarrhoeal deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="tDzIq4iIDwNtYthN_QYZwZg" displayName="Diarrhoeal deaths in children 1-59 months (total deaths)" originalName="Diarrhoeal deaths in children 1-59 months (total deaths)"/>
+    <i id="tX7NQAP_5H4TOS1OEnxdxYw" displayName="Diarrhoeal deaths in newborn (per 1,000 births)" originalName="Diarrhoeal deaths in newborn (per 1,000 births)"/>
+    <i id="tKZcnGP_XImMXRZ4tZqtjMg" displayName="Diarrhoeal deaths in newborn (total deaths)" originalName="Diarrhoeal deaths in newborn (total deaths)"/>
     <i id="pyj6tScZqmEcKxvG4lnIreQ" displayName="Electricity consumption, per person" originalName="Electricity consumption per person (kilowatt-hours). Electric power consumption measures the production of power plants and combined heat and power plants less transmission, distribution, and transformation losses and own use by heat and power plants."/>
     <i id="pyj6tScZqmEehRG-9mMHYdg" displayName="Electricity generation, total" originalName="Electricity generation (kilowatt-hours)"/>
     <i id="pyj6tScZqmEeMtYNdMyLKOw" displayName="Electricity generation, per person" originalName="Electricity generation per person (kilowatt-hours)"/>
@@ -92,6 +104,8 @@
     <i id="pyj6tScZqmEdz8B4njtoHPA" displayName="Pump price for gasoline (US$ per liter)" originalName="Fuel prices refer to the pump prices of the most widely sold grade of gasoline."/>
     <i id="pyj6tScZqmEcjeKHnZq6RIg" displayName="Inequality index (Gini)" originalName="Gini index measures the extent to which the distribution of income (or, in some cases, consumption expenditure) among individuals or households within an economy deviates from a perfectly equal distribution. A Lorenz curve plots the cumulative percentages of total income received against the cumulative number of recipients, starting with the poorest individual or household. The Gini index measures the area between the Lorenz curve and a hypothetical line of absolute equality, expressed as a percentage of the maximum area under the line. Thus a Gini index of 0 represents perfect equality, while an index of 100 implies perfect inequality."/>
     <i id="phAwcNAVuyj1jiMAkmq1iMg" displayName="Income per person (GDP/capita, inflation-adjusted $)" originalName="Gross domestic product per person adjusted for differences in purchasing power (in international dollars, fixed 2005 prices, PPP based on 2005 ICP)."/>
+    <i id="t4C4M_ynK9Ho8tGRj6a5U5w" displayName="HIV deaths in children 1-59 months (per 1,000 births)" originalName="HIV deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="tQe6yinBBauXLvBFroZEL3Q" displayName="HIV deaths in children 1-59 months (total deaths)" originalName="HIV deaths in children 1-59 months (total deaths)"/>
     <i id="pyj6tScZqmEcRux4N5nqCXA" displayName="High-technology exports (% of manufactured exports)" originalName="High-technology exports are products with high R&amp;D intensity, such as in aerospace, computers, pharmaceuticals, scientific instruments, and electrical machinery."/>
     <i id="tyadrylIpQ1K_iHP407374Q" displayName="HDI (Human Development Index)" originalName="Human Development Index is an index used to rank countries by level of &quot;human development&quot;. It contains three dimensions: health level, educational level and living standard."/>
     <i id="pyj6tScZqmEfOm8YCRzNxIA" displayName="Hydroelectricity consumption, per person" originalName="Hydroelectricity consumption per person (tonnes oil equivalent)"/>
@@ -99,12 +113,22 @@
     <i id="pyj6tScZqmEcL6zpB3Sj1Wg" displayName="Imports unit value (index, 2000=100)" originalName="Imports unit value (index, 2000=100)"/>
     <i id="pyj6tScZqmEcSensyr0F1Jg" displayName="Industry, contribution to economy (% of GDP)" originalName="Industry comprises value added in mining, manufacturing (also reported as a separate subgroup), construction, electricity, water, and gas. Value added is the net output of a sector after adding up all outputs and subtracting intermediate inputs. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources."/>
     <i id="pyj6tScZqmEcaHt8Y6cxXQg" displayName="Inflation, GDP deflator (annual %)" originalName="Inflation as measured by the annual growth rate of the GDP implicit deflator shows the rate of price change in the economy as a whole. The GDP implicit deflator is the ratio of GDP in current local currency to GDP in constant local currency."/>
+    <i id="tfOi0Ji7pJDJbxJVqwJXj9g" displayName="Injury deaths in children 1-59 months (per 1,000 births)" originalName="Injury deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="tnRIpcH0InZUFz7f2ziXKog" displayName="Injury deaths in children 1-59 months (total deaths)" originalName="Injury deaths in children 1-59 months (total deaths)"/>
     <i id="phAwcNAVuyj0xiDjWaypQTg" displayName="Internet users (per 100 people)" originalName="Internet users are people with access to the worldwide network."/>
+    <i id="tunqKEwokfnJMDA1g7W8KwA" displayName="Malaria deaths in children 1-59 months (per 1,000 births)" originalName="Malaria deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="t1Vf-4rkGlG20pYzuGib3hw" displayName="Malaria deaths in children 1-59 months (total deaths)" originalName="Malaria deaths in children 1-59 months (total deaths)"/>
     <i id="pyj6tScZqmEfMkeuokDLVIQ" displayName="Market value of listed companies (% of GDP)" originalName="Market capitalization (also known as market value) is the share price times the number of shares outstanding. Listed domestic companies are the domestically incorporated companies listed on the country&apos;s stock exchanges at the end of the year. Listed companies does not include investment companies, mutual funds, or other collective investment vehicles."/>
+    <i id="tfyKUbGu10P_WOgHSOHhCJg" displayName="Measles deaths in children 1-59 months (per 1,000 births)" originalName="Measles deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="tYZAce4wGXEp5Jve3AI7yWQ" displayName="Measles deaths in children 1-59 months (total deaths)" originalName="Measles deaths in children 1-59 months (total deaths)"/>
     <i id="pyj6tScZqmEdWs2MSVeXfHA" displayName="CO2 intensity of economic output (kg CO2 per 2005 PPP $ of GDP)" originalName="Measures the amount of CO2 (kg) emitted for every dollar of GDP (constant purchasing power parity-adjusted) produced."/>
     <i id="phAwcNAVuyj2yo1IzJQmbZg" displayName="Medical Doctors (per 1,000 people)" originalName="Medical Doctors (physicians) working in any medical field per 1,000 people."/>
+    <i id="tZhYsw0sliDInwowT0iWTLQ" displayName="Meningitis deaths in children 1-59 months (per 1,000 births)" originalName="Meningitis deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="tX-vHLzEZ7mqfk1vf6SbUXA" displayName="Meningitis deaths in children 1-59 months (total deaths)" originalName="Meningitis deaths in children 1-59 months (total deaths)"/>
     <i id="pyj6tScZqmEfTe7DyXibwKg" displayName="Merchandise trade (% of GDP)" originalName="Merchandise trade as a share of GDP is the sum of merchandise exports and imports divided by the value of GDP, all in current U. S. dollars."/>
     <i id="thDxsgSWvLGW4M1qUBby7OQ" displayName="Data method - Maternal mortality" originalName="Method used to estimate &quot;Maternal mortality&quot;: 1-Registration; 2-Reg. but ill defined; 3-Sisterhood surveys; 4-Mortality surveys, 5-Sample reg.; 6-Census based estim.; 7-Other data; 8-No data, model used"/>
+    <i id="tqAEpy6pMtN7ULlF6uIzEog" displayName="NCD deaths in children 1-59 months (per 1,000 births)" originalName="NCD deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="tfmFGk3PIvTgimegQiHOtSQ" displayName="NCD deaths in children 1-59 months (total deaths)" originalName="NCD deaths in children 1-59 months (total deaths)"/>
     <i id="pyj6tScZqmEd1R9UmohEIaA" displayName="Poverty (% people below nationally defined poverty line)" originalName="National poverty rate is the percentage of the population living below the national poverty line. National estimates are based on population-weighted subgroup estimates from household surveys. Poverty lines vary between countries and so rates are not comparable."/>
     <i id="pyj6tScZqmEcx9pD804Q0Aw" displayName="Natural gas consumption, total" originalName="Natural gas consumption (tonnes oil equivalent)"/>
     <i id="pyj6tScZqmEdyt6bmOho5bw" displayName="Natural gas consumption, per person" originalName="Natural gas consumption per person (tonnes oil equivalent)"/>
@@ -190,6 +214,10 @@
     <i id="pyj6tScZqmEdNIa3ckVXaCQ" displayName="Oil production, total" originalName="Oil production (tonnes oil equivalent)"/>
     <i id="pyj6tScZqmEeUgUuvuJTONQ" displayName="Oil production, per person" originalName="Oil production per person (tonnes oil equivalent)"/>
     <i id="pyj6tScZqmEfrI4YlDJDUag" displayName="Oil proven reserves, per person" originalName="Oil proven reserves per person (tonnes oil equivalent)"/>
+    <i id="tiYIen5OQP0fKiQbg6g8VyA" displayName="Other deaths in newborn (per 1,000 births)" originalName="Other deaths in newborn (per 1,000 births)"/>
+    <i id="tyPO4OLCIZtK5zcdkafcHMA" displayName="Other deaths in newborn (total deaths)" originalName="Other deaths in newborn (total deaths)"/>
+    <i id="tVAqgYwCDZfcq9jSCI87SAw" displayName="Other infections deaths in children 1-59 months (per 1,000 births)" originalName="Other infections deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="tiehFos6jB-lekEAH028deA" displayName="Other infections deaths in children 1-59 months (total deaths)" originalName="Other infections deaths in children 1-59 months (total deaths)"/>
     <i id="pyj6tScZqmEeJPSN615GHYA" displayName="Gross capital formation (% of GDP)" originalName="Outlays on additions to the fixed assets of the economy plus net changes in the level of inventories. Fixed assets include land improvements (fences, ditches, drains, and so on); plant, machinery, and equipment purchases; and the construction of roads, railways, and the like, including schools, offices, hospitals, private residential dwellings, and commercial and industrial buildings. Inventories are stocks of goods held by firms to meet temporary or unexpected fluctuations in production or sales, and &quot;work in progress&quot;."/>
     <i id="p7mVTH_9OzWHQ2J6f54LXXA" displayName="Democracy score (Polity)" originalName="Overall polity score from the Polity IV dataset, calculated by subtracting an autocracy score from a democracy score. It is a summary measure of a country&apos;s democratic and free nature. -10 is the lowest value, 10 the highest."/>
     <i id="pyj6tScZqmEd5FA9xlfO9eA" displayName="Patent applications (total)" originalName="Patents are documents issued by a government office that describe an invention and create a legal situation in which the patented invention can normally be exploited only by or with the authorization of the patent holder. The protection is generally limited to 20 years."/>
@@ -274,14 +302,22 @@
     <i id="pyj6tScZqmEdIyrBS31XAaw" displayName="Income share held by lowest 20%" originalName="Percentage share of income or consumption is the share that accrues to subgroups of population indicated by deciles or quintiles. Percentage shares by quintile may not sum to 100 because of rounding."/>
     <i id="pyj6tScZqmEdFW4nUY4gQdA" displayName="Personal computers (per 100 people)" originalName="Personal computers (per 100 people)"/>
     <i id="pyj6tScZqmEfUXdC83YSzfw" displayName="Personal computers (total)" originalName="Personal computers (total)"/>
+    <i id="t4RbfeK6Dtt2srxw4REoXxQ" displayName="Pertussis deaths in children 1-59 months (per 1,000 births)" originalName="Pertussis deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="tdOlzqGxVdDnnCpfWyyGX1A" displayName="Pertussis deaths in children 1-59 months (total deaths)" originalName="Pertussis deaths in children 1-59 months (total deaths)"/>
     <i id="tdKPTXS1U5Jn3qAQICk4-Vw" displayName="———————————————————————" originalName="Placeholder"/>
     <i id="tJwP0x54AZ-X-bGL-RebrpA" displayName="———————————————————————" originalName="Placeholder"/>
     <i id="rMF2H57_Vd8TdobvtNhYuwg" displayName="———————————————————————" originalName="Placeholder"/>
     <i id="rj8WsGGNXkijP447qnY5RLg" displayName="———————————————————————" originalName="Placeholder"/>
     <i id="tnDimTzGwU_BbmtOMHOUFFQ" displayName="———————————————————————" originalName="Placeholder"/>
+    <i id="tCe8N5KXAYCJteQokAqVM_A" displayName="Pneumonia deaths in children 1-59 months (per 1,000 births)" originalName="Pneumonia deaths in children 1-59 months (per 1,000 births)"/>
+    <i id="tcYkTk6KMHsrXzcM9WyUxbw" displayName="Pneumonia deaths in children 1-59 months (total deaths)" originalName="Pneumonia deaths in children 1-59 months (total deaths)"/>
+    <i id="tOXHWd6PcUGK3Dg-k2N8Clw" displayName="Pneumonia deaths in newborn (per 1,000 births)" originalName="Pneumonia deaths in newborn (per 1,000 births)"/>
+    <i id="tjvbVGhVx7YCk1uguLrkaag" displayName="Pneumonia deaths in newborn (total deaths)" originalName="Pneumonia deaths in newborn (total deaths)"/>
     <i id="pyj6tScZqmEdwXv1tqzV4Xg" displayName="Population in urban agglomerations &gt; 1 million (% of total population)" originalName="Population in urban agglomerations &gt; 1 million (% of total population)"/>
     <i id="trbzCrl1eb6QJG5D8j1-qQw" displayName="Rural poverty (% rural people below national rural poverty line)" originalName="Poverty headcount ratio at rural poverty line (% of rural population)"/>
     <i id="tublssyj-uqIY25OoRupbCw" displayName="Urban poverty (% urban people below national urban poverty line)" originalName="Poverty headcount ratio at urban poverty line (% of urban population)"/>
+    <i id="tVMPnbOfGdvTRrtbuIbRw5w" displayName="Prematurity deaths in newborn (per 1,000 births)" originalName="Prematurity deaths in newborn (per 1,000 births)"/>
+    <i id="tVyFL3CyRTuGEnRQErDeSLQ" displayName="Prematurity deaths in newborn (total deaths)" originalName="Prematurity deaths in newborn (total deaths)"/>
     <i id="pyj6tScZqmEeUceHo3wTOaQ" displayName="Present value of debt (% of GNI)" originalName="Present value of debt (% of GNI)"/>
     <i id="pyj6tScZqmEdk2P92JFa3eg" displayName="Primary completion rate, total (% of relevant age group)" originalName="Primary completion rate is the percentage of students completing the last year of primary school. It is calculated by taking the total number of students in the last grade of primary school, minus the number of repeaters in that grade, divided by the total number of children of official graduation age."/>
     <i id="pyj6tScZqmEeTCOezV8a3HA" displayName="Energy use, total" originalName="Primary energy consumption (tonnes oil equivalent). Primary energy includs energy from coal, natural gas, oil and hydro and nuclear electricity; excludes wood, peat and animal waste and wind, geothermal and solar power generation."/>
@@ -302,6 +338,8 @@
     <i id="rYICvtvVz28fVyQuG_ote2w" displayName="All forms of TB, new cases per 100,000 - reported" originalName="Reported number of new and relapsed TB cases (all forms) among 100,000 residents during the given year."/>
     <i id="r5UikGjnZlemlelKY0NX9Pg" displayName="All forms of TB, number of new cases - reported" originalName="Reported number of new and relapsed TB cases (all forms) during the given year."/>
     <i id="pyj6tScZqmEcGvVMuBRXqGQ" displayName="Roads, paved (% of total roads)" originalName="Roads, paved (% of total roads)"/>
+    <i id="tGVRSoAJtdwQ30CqCSexKJA" displayName="Sepsis deaths in newborn (per 1,000 births)" originalName="Sepsis deaths in newborn (per 1,000 births)"/>
+    <i id="tRA1VmW2ZQ7sCsoD7AHIilg" displayName="Sepsis deaths in newborn (total deaths)" originalName="Sepsis deaths in newborn (total deaths)"/>
     <i id="pyj6tScZqmEc2Hr4fjvQ6ew" displayName="Services, contribution to economy (% of GDP)" originalName="Services include wholesale and retail trade (including hotels and restaurants), transport, and government, financial, professional, and personal services such as education, health care, and real estate services. Also included are imputed bank service charges, import duties, and any statistical discrepancies noted by national compilers as well as discrepancies arising from rescaling."/>
     <i id="tQP1KnoWcjjtz3wmq0bnGNA" displayName="Sex ratio (above 50 years)" originalName="Sex ratio (male divided by female, per 100) among population above 50 years old."/>
     <i id="tfWSVJPJHn3u7e_7MUaCbnw" displayName="Sex ratio (0-14 years)" originalName="Sex ratio (male divided by female, per 100) among population between 0 and 14 years old."/>
@@ -310,6 +348,8 @@
     <i id="tAQ31_cAELrHqNc2qa13uHw" displayName="Sex ratio (all age groups)" originalName="Sex ratio (male divided by female, per 100) among total population of all age groups."/>
     <i id="phAwcNAVuyj0uBndTxZAXNQ" displayName="Sulfur emissions per person (kg)" originalName="Sulfur emissions per person. Associated with acid rain. (Kilograms of sulfur per person and year)."/>
     <i id="pyj6tScZqmEdChOzYcy2fBA" displayName="Tax revenue (% of GDP)" originalName="Tax revenue refers to compulsory transfers to the central government for public purposes. Certain compulsory transfers such as fines, penalties, and most social security contributions are excluded. Refunds and corrections of erroneously collected tax revenue are treated as negative revenue."/>
+    <i id="t1E7e32tlIxtJU9UhnR9nJg" displayName="Tetanus deaths in newborn (per 1,000 births)" originalName="Tetanus deaths in newborn (per 1,000 births)"/>
+    <i id="tB6Gkh4rLC9yB2TXfHSApIA" displayName="Tetanus deaths in newborn (total deaths)" originalName="Tetanus deaths in newborn (total deaths)"/>
     <i id="rcTO3doih5lvJCjgLSvlajA" displayName="GDP per employee (constant 1990 US$)" originalName="The average Gross Domestic Products per each employee during the given year, counted by constant 1990 US$."/>
     <i id="rB5qLRdhKNmtty7f21kdI_w" displayName="GDP per working hour (constant 1990 US$)" originalName="The average Gross Domestic Products per hour per person, counted by constant 1990 US$."/>
     <i id="r6kTHMinnVedj8gPsUtfZ0g" displayName="GDP per working hour (constant 1990 US$)" originalName="The average Gross Domestic Products per hour per person, counted by constant 1990 US$."/>
@@ -328,6 +368,7 @@
     <i id="tH113JLeGr5DhWgtqN2FxWg" displayName="Median age (years)" originalName="The median age of total population (years)."/>
     <i id="pyj6tScZqmEdIphYUHxcdLg" displayName="Adolescent fertility rate (births per 1,000 women ages 15-19)" originalName="The number of births per 1,000 women ages 15-19."/>
     <i id="pyj6tScZqmEcVezxiMlWaRw" displayName="Maternal mortality ratio (per 100,000 live births)" originalName="The number of maternal deaths divided by the number of live births in a given year, multiplied by 100,000. Maternal death is defined as the death of a women while pregnant or within the 42 days after termination of that pregnancy, regardless of the length and site of the pregnancy, from a cause related to or aggravated by the pregnancy."/>
+    <i id="tgJHpDEY4S7hxJpELGJueWA" displayName="Stillbirths (per 1,000 births)" originalName="The number of stillbirths per 1000 births (live births plus stillbirths)."/>
     <i id="phAwcNAVuyj2ZMli4YTn2Ag" displayName="Cell phones (per 100 people)" originalName="The number of subscribers per 100 people to a service providing access to the telephone network using cellular technology."/>
     <i id="pyj6tScZqmEcKuNdFCUo6TQ" displayName="Cell phones (total)" originalName="The number of subscribers to a service providing access to the telephone network using cellular technology."/>
     <i id="phAwcNAVuyj2tPLxKvvnNPA" displayName="Life expectancy at birth (years)" originalName="The number of years a newborn child would live if current mortality patterns were to stay the same."/>
@@ -379,6 +420,7 @@
     <i id="phAwcNAVuyj0RMyUI1QFfaA" displayName="Lung cancer, number of female deaths" originalName="Total number of female deaths due to lung cancer during the certain year."/>
     <i id="phAwcNAVuyj1o1rJNFHpQZw" displayName="Stomach cancer, number of female deaths" originalName="Total number of female deaths due to stomach cancer during the certain year."/>
     <i id="t6nZVbvqsF-BbyheqUxerZQ" displayName="Female population, with projections" originalName="Total number of female population, data after 2010 is based on the medium estimates from UN population division."/>
+    <i id="tdmk6CrijSfxffAYd69I_CA" displayName="Total number of live births" originalName="Total number of live births"/>
     <i id="pp59adS3CHWczfPHQMiqxCg" displayName="Malaria number of cases - reported" originalName="Total number of malaria cases reported during the given year."/>
     <i id="pp59adS3CHWfZGL9qouvTbQ" displayName="Malaria number of deaths - reported" originalName="Total number of malaria deaths reported during the given year."/>
     <i id="phAwcNAVuyj0-sqkfnD4rGA" displayName="Colon&amp;Rectum cancer, number of male deaths" originalName="Total number of male deaths due to colon&amp;rectum cancer during the certain year."/>
@@ -435,6 +477,7 @@
     <i id="rt3BaikcRwJBNC0CvQsjDCA" displayName="Desalinated water produced (billion cu meters)" originalName="Total quantity of the production of freshwater by desalination of brackish or saltwater (mostly for domestic purposes) during the given year, counted in billion cubic meters."/>
     <i id="pyj6tScZqmEc-gDsD_GmHQg" displayName="Total reserves (% of external debt)" originalName="Total reserves (% of external debt)"/>
     <i id="t9SYWh7siLJDzyZYN1R4HfQ" displayName="Total sulfur emission (kilotonnes)" originalName="Total sulfur emissions per year. Associated with acid rain. 1000 tonnes of sulfur per year."/>
+    <i id="tKOphM3UPRd94T6C6pmsuXw" displayName="Corruption Perception Index (CPI)" originalName="Transaprency International&apos;s score of perceptions of corruption. Higher values indicate less corruption."/>
     <i id="pyj6tScZqmEfH89V6UQhpZA" displayName="Urban population" originalName="Urban population is the midyear population of areas defined as urban in each country and reported to the United Nations."/>
     <i id="phAwcNAVuyj0-LE4StzCsEw" displayName="Urban population (% of total)" originalName="Urban population is the midyear population of areas defined as urban in each country and reported to the United Nations."/>
     <i id="pyj6tScZqmEcRJEN8MyV3PQ" displayName="Urban population growth (annual %)" originalName="Urban population is the midyear population of areas defined as urban in each country and reported to the United Nations."/>
@@ -746,8 +789,12 @@
   </areaCategorization>
   <indicatorCategorization indicators="phAwcNAVuyj0TAlJeCEzcGQ,phAwcNAVuyj1gkNuUEXOGag,phAwcNAVuyj1jiMAkmq1iMg,phAwcNAVuyj0NpF2PTov2Cw,phAwcNAVuyj2tPLxKvvnNPA">
     <c n="Births and deaths" id="Births and deaths" indicators="pyj6tScZqmEcl2xDWbuJ8fg">
-      <c n="Births" id="Births" indicators="pyj6tScZqmEdIphYUHxcdLg,pyj6tScZqmEfKY9bk02DBYA,pyj6tScZqmEewsQOoKrtYJQ,tUSeGJOQhafugwUvHvY-wLA"/>
-      <c n="Deaths" id="Deaths" indicators="pyj6tScZqmEcVezxiMlWaRw,tOJs331rbt36sNBXE8g5AUg,t2ha4jg1M70Le8CH3wHcPIQ,phAwcNAVuyj05ZR69usyQIg,tHyj-2jRvK3CCNJOc5Vm-HQ"/>
+      <c n="Births" id="Births" indicators="pyj6tScZqmEdIphYUHxcdLg,pyj6tScZqmEfKY9bk02DBYA,pyj6tScZqmEewsQOoKrtYJQ,tUSeGJOQhafugwUvHvY-wLA,tdmk6CrijSfxffAYd69I_CA"/>
+      <c n="Deaths" id="Deaths" indicators="pyj6tScZqmEcVezxiMlWaRw,tOJs331rbt36sNBXE8g5AUg,t2ha4jg1M70Le8CH3wHcPIQ,phAwcNAVuyj05ZR69usyQIg,tHyj-2jRvK3CCNJOc5Vm-HQ,tgJHpDEY4S7hxJpELGJueWA"/>
+      <c n="Newborn (&lt;1 month) deaths by cause (per 1,000 births)" id="Newborn (&lt;1 month) deaths by cause (per 1,000 births)" indicators="t1E7e32tlIxtJU9UhnR9nJg,tGVRSoAJtdwQ30CqCSexKJA,tVMPnbOfGdvTRrtbuIbRw5w,tOXHWd6PcUGK3Dg-k2N8Clw,tiYIen5OQP0fKiQbg6g8VyA,tX7NQAP_5H4TOS1OEnxdxYw,tneegXfZGHA0-nLG25ypnyg,t_0WcTuc94YT9cJVvy1tmUg,tbpc_fYEqPzaE7pDWBG84Rw"/>
+      <c n="Child (1-59 mos.) deaths by cause (per 1,000 births)" id="Child (1-59 mos.) deaths by cause (per 1,000 births)" indicators="tCe8N5KXAYCJteQokAqVM_A,t4RbfeK6Dtt2srxw4REoXxQ,tVAqgYwCDZfcq9jSCI87SAw,tqAEpy6pMtN7ULlF6uIzEog,tZhYsw0sliDInwowT0iWTLQ,tfyKUbGu10P_WOgHSOHhCJg,tunqKEwokfnJMDA1g7W8KwA,tfOi0Ji7pJDJbxJVqwJXj9g,t4C4M_ynK9Ho8tGRj6a5U5w,tADSStUzP0ADEPYqsIfVHMQ,t9FP3_OPrE2ug_I_iNsbePg"/>
+      <c n="Newborn (&lt;1 month) by cause (total)" id="Newborn (&lt;1 month) by cause (total)" indicators="tB6Gkh4rLC9yB2TXfHSApIA,tRA1VmW2ZQ7sCsoD7AHIilg,tVyFL3CyRTuGEnRQErDeSLQ,tjvbVGhVx7YCk1uguLrkaag,tyPO4OLCIZtK5zcdkafcHMA,tKZcnGP_XImMXRZ4tZqtjMg,tUvFsKz2lGL-GtPmw47VLdg,twrll6eL8GeIU4P71aTakmg,tBVcAKWEbc2s687q6D9yuYg"/>
+      <c n="Child (1-59 mos.) deaths by cause (total)" id="Child (1-59 mos.) deaths by cause (total)" indicators="tcYkTk6KMHsrXzcM9WyUxbw,tdOlzqGxVdDnnCpfWyyGX1A,tiehFos6jB-lekEAH028deA,tfmFGk3PIvTgimegQiHOtSQ,tX-vHLzEZ7mqfk1vf6SbUXA,tYZAce4wGXEp5Jve3AI7yWQ,t1Vf-4rkGlG20pYzuGib3hw,tnRIpcH0InZUFz7f2ziXKog,tQe6yinBBauXLvBFroZEL3Q,tDzIq4iIDwNtYthN_QYZwZg,taYeez4Mkk8OvdH-q4QAxxQ"/>
     </c>
     <c n="Disasters" id="Disasters">
       <c n="Air accidents" id="Air accidents" indicators="rhbS3kWOfMzvY4ofUFoeFJg,rSv5aMDwESiKg-yA__-tRFg,r0HMGpyQ_xYYhUJyfRAb31w,r_xohuYuHQQ4pZFgAYFun1A,rR6w8wUbY62NysMK9Gg6ZcQ,reUwXhKRZrb9Hdj3doqWKGA"/>
@@ -842,6 +889,7 @@
       <c n="Alternative data" id="Alternative data" indicators="phAwcNAVuyj0npaJxInyYDg,p8SIY47PNEw6pJRPAS1tXPQ,p8SIY47PNEw4TgTkrmIVIXA,tSUr_yZVbM6a3AGJEq_Z2Pw"/>
       <c n="Data quality (use as color)" id="Data quality (use as color)" indicators="phAwcNAVuyj0atjJIuxy-KQ,p8SIY47PNEw6vGCNzlYJ5eA,phAwcNAVuyj1ONZlWMf9KQA,p8SIY47PNEw4vx1GOsJM7bA,thlR4hyNMEnaVyV_uxRzjfQ,thDxsgSWvLGW4M1qUBby7OQ"/>
       <c n="Democracy indicators (use as color)" id="Democracy indicators (use as color)" indicators="p7mVTH_9OzWHQ2J6f54LXXA"/>
+      <c n="Corruption" id="Corruption" indicators="tKOphM3UPRd94T6C6pmsuXw"/>
       <c n="Years (use as color)" id="Years (use as color)" indicators="phAwcNAVuyj2t4ep52YXjSg,phAwcNAVuyj02SA7cGjnRbA"/>
       <c n="Projections" id="Projections" indicators="rX3Jfop_ebuY-chuMpCgmRg,tiAiXcrneZrUnnJ9dBU-PAw,tGdhNYGTGtunwzkKJ9aRhsA,tL0jLxFBF9TbXIN_39b1qcQ,t6nZVbvqsF-BbyheqUxerZQ,tZMsbTkrY0k4OkkkXEfp6pA,rZrHzR__kZfmw6L_xUx7cwg"/>
       <c n="Economic growth" id="Economic growth" indicators="tvllZwGIbhwxLD7EXFhPeXQ,tkdAnkbHJxPAlRX6P1mAh8w"/>
