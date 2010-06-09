@@ -535,7 +535,6 @@
 		{	
 			if (stage) {
 			stage.frameRate = 1;
-			}
 		}
 
 	]]></fx:Script>
