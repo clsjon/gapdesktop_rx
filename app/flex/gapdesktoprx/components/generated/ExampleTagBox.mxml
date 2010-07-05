@@ -1,94 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ns:HBox xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:ns="library://ns.adobe.com/flex/mx" width="100%" label="ExampleTag"
-  xmlns:rx="org.restfulx.components.rx.*">
-  <fx:Script><![CDATA[
-	  import gapdesktoprx.models.Example;
-	  import gapdesktoprx.models.ExampleTag;
-	  import gapdesktoprx.models.Tag;
-	  
-	  import org.restfulx.Rx;
-	  import org.restfulx.utils.RxUtils;
+<ns:HBox xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/halo"
+		 xmlns:ns="library://ns.adobe.com/flex/mx"
+		 width="100%"
+		 label="ExampleTag"
+		 xmlns:rx="org.restfulx.components.rx.*">
+	<fx:Script>
+		<![CDATA[
+			import gapdesktoprx.models.Example;
+			import gapdesktoprx.models.ExampleTag;
+			import gapdesktoprx.models.Tag;
 
-    [Bindable]
-    private var example_tag:ExampleTag = new ExampleTag();
+			import org.restfulx.Rx;
+			import org.restfulx.utils.RxUtils;
 
-    private function newExampleTag():void {
-      example_tag = new ExampleTag();
-      example_tagsList.selectedIndex = -1;
-    }
+			[Bindable]
+			private var example_tag:ExampleTag=new ExampleTag();
 
-    private function saveExampleTag():void {
-      updateModelProperties();
-      if (example_tag.id) {
-        example_tag.update({onSuccess: onExampleTagUpdate});
-      } else {
-        example_tag.create({onSuccess: onExampleTagCreate});
-      }
-    }
-  
-    private function updateModelProperties():void {
-		example_tag.example = Example(exampleComboBox.selectedItem);
-		example_tag.tag = Tag(tagComboBox.selectedItem);
-		
-		
-    }
+			private function newExampleTag():void
+			{
+				example_tag=new ExampleTag();
+				example_tagsList.selectedIndex=-1;
+			}
 
-    private function destroyExampleTag():void {
-      example_tag.destroy({onSuccess: onExampleTagDestroy});
-    }
-  
-    private function onExampleTagSelect():void {
-      example_tag = RxUtils.clone(example_tagsList.selectedItem) as ExampleTag;
-    }
-  
-    private function onExampleTagCreate(result:ExampleTag):void {
-      example_tag = new ExampleTag;
-    }
-  
-    private function onExampleTagUpdate(result:ExampleTag):void {
-      example_tagsList.selectedItem = result;
-      onExampleTagSelect();
-    }
-  
-    private function onExampleTagDestroy(result:ExampleTag):void {
-      onExampleTagCreate(result);
-    }
-  ]]></fx:Script>
-  <s:Panel id="example_tagsPanel"
-    title="ExampleTags" cornerRadius="0" 
-    backgroundColor="#EEEEEE" width="25%" height="100%">
-    <s:List id="example_tagsList"
-      width="100%" height="100%"
-      dataProvider="{Rx.models.index(ExampleTag)}"
-      change="onExampleTagSelect()"/>
-    <ns:ControlBar width="100%">
-      <mx:Button label="New ExampleTag" width="100%" height="30"
-        click="newExampleTag()"/>
-    </ns:ControlBar>
-  </s:Panel>
-  <s:Panel title="Edit ExampleTag" cornerRadius="0" 
-    backgroundColor="#EEEEEE" width="75%" height="100%">
-    <mx:Form width="100%" height="100%">
-      	<mx:FormItem label="Example" width="100%">
-			<s:ComboBox id="exampleComboBox" width="200"
-						 labelField="{Example.LABEL}"
-						 dataProvider="{Rx.models.index(Example)}"
-						 selectedItem="{example_tag.example}" />
-		</mx:FormItem>
-		<mx:FormItem label="Tag" width="100%">
-			<s:ComboBox id="tagComboBox" width="200"
-						 labelField="{Tag.LABEL}"
-						 dataProvider="{Rx.models.index(Tag)}"
-						 selectedItem="{example_tag.tag}" />
-		</mx:FormItem>
+			private function saveExampleTag():void
+			{
+				updateModelProperties();
+				if (example_tag.id)
+				{
+					example_tag.update({onSuccess: onExampleTagUpdate});
+				}
+				else
+				{
+					example_tag.create({onSuccess: onExampleTagCreate});
+				}
+			}
 
-    </mx:Form>
-    <ns:ControlBar width="100%">
-      <mx:Button label="Save ExampleTag" width="50%" height="30"
-        click="saveExampleTag()"/>
-      <mx:Button label="Delete ExampleTag" width="50%" height="30"
-        enabled="{RxUtils.canDeleteModel(example_tag)}"
-        click="destroyExampleTag()"/>
-    </ns:ControlBar>
-  </s:Panel>
+			private function updateModelProperties():void
+			{
+				example_tag.example=Example(exampleComboBox.selectedItem);
+				example_tag.tag=Tag(tagComboBox.selectedItem);
+
+
+			}
+
+			private function destroyExampleTag():void
+			{
+				example_tag.destroy({onSuccess: onExampleTagDestroy});
+			}
+
+			private function onExampleTagSelect():void
+			{
+				example_tag=RxUtils.clone(example_tagsList.selectedItem) as ExampleTag;
+			}
+
+			private function onExampleTagCreate(result:ExampleTag):void
+			{
+				example_tag=new ExampleTag;
+			}
+
+			private function onExampleTagUpdate(result:ExampleTag):void
+			{
+				example_tagsList.selectedItem=result;
+				onExampleTagSelect();
+			}
+
+			private function onExampleTagDestroy(result:ExampleTag):void
+			{
+				onExampleTagCreate(result);
+			}
+		]]>
+	</fx:Script>
+	<s:Panel id="example_tagsPanel"
+			 title="ExampleTags"
+			 cornerRadius="0"
+			 backgroundColor="#EEEEEE"
+			 width="25%"
+			 height="100%">
+		<s:List id="example_tagsList"
+				width="100%"
+				height="100%"
+				dataProvider="{Rx.models.index(ExampleTag)}"
+				change="onExampleTagSelect()"/>
+		<ns:ControlBar width="100%">
+			<mx:Button label="New ExampleTag"
+					   width="100%"
+					   height="30"
+					   click="newExampleTag()"/>
+		</ns:ControlBar>
+	</s:Panel>
+	<s:Panel title="Edit ExampleTag"
+			 cornerRadius="0"
+			 backgroundColor="#EEEEEE"
+			 width="75%"
+			 height="100%">
+		<mx:Form width="100%"
+				 height="100%">
+			<mx:FormItem label="Example"
+						 width="100%">
+				<s:ComboBox id="exampleComboBox"
+							width="200"
+							labelField="{Example.LABEL}"
+							dataProvider="{Rx.models.index(Example)}"
+							selectedItem="{example_tag.example}"/>
+			</mx:FormItem>
+			<mx:FormItem label="Tag"
+						 width="100%">
+				<s:ComboBox id="tagComboBox"
+							width="200"
+							labelField="{Tag.LABEL}"
+							dataProvider="{Rx.models.index(Tag)}"
+							selectedItem="{example_tag.tag}"/>
+			</mx:FormItem>
+
+		</mx:Form>
+		<ns:ControlBar width="100%">
+			<mx:Button label="Save ExampleTag"
+					   width="50%"
+					   height="30"
+					   click="saveExampleTag()"/>
+			<mx:Button label="Delete ExampleTag"
+					   width="50%"
+					   height="30"
+					   enabled="{RxUtils.canDeleteModel(example_tag)}"
+					   click="destroyExampleTag()"/>
+		</ns:ControlBar>
+	</s:Panel>
 </ns:HBox>

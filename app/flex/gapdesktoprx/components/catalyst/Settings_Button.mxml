@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009">
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:d="http://ns.adobe.com/fxg/2008/dt"
+		xmlns:ai="http://ns.adobe.com/ai/2009">
 	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
 	<s:states>
 		<s:State name="up"/>
@@ -7,5 +10,16 @@
 		<s:State name="down"/>
 		<s:State name="disabled"/>
 	</s:states>
-	<s:RichText color="0x808080" fontFamily="Avenir-light" height="12" id="labelDisplay" d:id="39" kerning="on" lineHeight="120%" ai:objID="5f2f23a0" textAlign="right" whiteSpaceCollapse="preserve" x="0" y="0"/>
+	<s:RichText color="0x808080"
+				fontFamily="Avenir-light"
+				height="12"
+				id="labelDisplay"
+				d:id="39"
+				kerning="on"
+				lineHeight="120%"
+				ai:objID="5f2f23a0"
+				textAlign="right"
+				whiteSpaceCollapse="preserve"
+				x="0"
+				y="0"/>
 </s:Skin>

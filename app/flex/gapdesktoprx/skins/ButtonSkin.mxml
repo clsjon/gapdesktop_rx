@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:SparkSkin 
-   xmlns:fx="http://ns.adobe.com/mxml/2009" 
-    xmlns:mx="library://ns.adobe.com/flex/halo" 
-    xmlns:s="library://ns.adobe.com/flex/spark"
-	creationComplete="sparkskin1_creationCompleteHandler(event)"
-	>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009"
+			 xmlns:mx="library://ns.adobe.com/flex/halo"
+			 xmlns:s="library://ns.adobe.com/flex/spark"
+			 creationComplete="sparkskin1_creationCompleteHandler(event)">
 	<fx:Metadata>
 		[HostComponent("spark.components.Button")]
 	</fx:Metadata>
-	
+
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
 
 			protected function sparkskin1_creationCompleteHandler(event:FlexEvent):void
 			{
-				hostComponent.useHandCursor = true;
-				hostComponent.buttonMode = true;
+				hostComponent.useHandCursor=true;
+				hostComponent.buttonMode=true;
 			}
-
 		]]>
 	</fx:Script>
 	<s:states>
@@ -27,36 +24,92 @@
 		<s:State name="over"/>
 		<s:State name="disabled"/>
 	</s:states>
-	
-	
-	<s:Rect height="18" radiusX="6" width="100%" x="0.5" y="0.5">
+
+
+	<s:Rect height="18"
+			radiusX="6"
+			width="100%"
+			x="0.5"
+			y="0.5">
 		<s:stroke>
-			<s:LinearGradientStroke caps="none" joints="miter" miterLimit="4" rotation="90" weight="1">
-				<s:GradientEntry alpha="1.0" color="#EAEAEA" ratio="0"/>
-				<s:GradientEntry alpha="1.0" color="#969797" ratio="1" color.down="#FFFFFF"/>
+			<s:LinearGradientStroke caps="none"
+									joints="miter"
+									miterLimit="4"
+									rotation="90"
+									weight="1">
+				<s:GradientEntry alpha="1.0"
+								 color="#EAEAEA"
+								 ratio="0"/>
+				<s:GradientEntry alpha="1.0"
+								 color="#969797"
+								 ratio="1"
+								 color.down="#FFFFFF"/>
 			</s:LinearGradientStroke>
 		</s:stroke>
 		<s:fill>
-			<s:LinearGradient rotation="90" rotation.down="270">
-				<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0"/>
-				<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0.07058823529411765"/>
-				<s:GradientEntry alpha="1.0" color="#E1E1E1" ratio="0.6"/>
-				<s:GradientEntry alpha="1.0" color="#CECECE" ratio="0.9333333333333333"/>
-				<s:GradientEntry alpha="1.0" color="#CECECE" ratio="1"/>
+			<s:LinearGradient rotation="90"
+							  rotation.down="270">
+				<s:GradientEntry alpha="1.0"
+								 color="#FFFFFF"
+								 ratio="0"/>
+				<s:GradientEntry alpha="1.0"
+								 color="#FFFFFF"
+								 ratio="0.07058823529411765"/>
+				<s:GradientEntry alpha="1.0"
+								 color="#E1E1E1"
+								 ratio="0.6"/>
+				<s:GradientEntry alpha="1.0"
+								 color="#CECECE"
+								 ratio="0.9333333333333333"/>
+				<s:GradientEntry alpha="1.0"
+								 color="#CECECE"
+								 ratio="1"/>
 			</s:LinearGradient>
 		</s:fill>
 		<s:filters>
-			<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#969797" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
-			<s:DropShadowFilter includeIn="down" hideObject="false" knockout="false" distance="2" color="#333333" strength="1" inner="true" blurX="2" angle="45.0" blurY="2" alpha="0.5" quality="2"/>
+			<s:DropShadowFilter alpha="0.5"
+								angle="90"
+								blurX="2"
+								blurY="2"
+								color="#969797"
+								distance="1"
+								hideObject="false"
+								inner="false"
+								knockout="false"
+								quality="2"
+								strength="1"/>
+			<s:DropShadowFilter includeIn="down"
+								hideObject="false"
+								knockout="false"
+								distance="2"
+								color="#333333"
+								strength="1"
+								inner="true"
+								blurX="2"
+								angle="45.0"
+								blurY="2"
+								alpha="0.5"
+								quality="2"/>
 		</s:filters>
 		<s:fill.over>
 			<s:SolidColor color="#FFFFFF"/>
 		</s:fill.over>
 	</s:Rect>
-	<s:Group id="content" verticalCenter="0">
+	<s:Group id="content"
+			 verticalCenter="0">
 		<s:layout>
-			<s:HorizontalLayout paddingLeft="7" paddingRight="7" gap="7" verticalAlign="middle"	/>
+			<s:HorizontalLayout paddingLeft="7"
+								paddingRight="7"
+								gap="7"
+								verticalAlign="middle"/>
 		</s:layout>
-		<s:RichText color="#222222" fontFamily="{hostComponent.getStyle('fontFamily')}" fontSize="{hostComponent.getStyle('fontSize')}" x="28" verticalCenter="2" id="labelDisplay" paddingRight="7" includeInLayout="{hostComponent.label.length>0}"/>
+		<s:RichText color="#222222"
+					fontFamily="{hostComponent.getStyle('fontFamily')}"
+					fontSize="{hostComponent.getStyle('fontSize')}"
+					x="28"
+					verticalCenter="2"
+					id="labelDisplay"
+					paddingRight="7"
+					includeInLayout="{hostComponent.label.length>0}"/>
 	</s:Group>
 </s:SparkSkin>

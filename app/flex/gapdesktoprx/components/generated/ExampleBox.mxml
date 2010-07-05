@@ -1,117 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ns:HBox xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:ns="library://ns.adobe.com/flex/mx" width="100%" label="Example"
-  xmlns:rx="org.restfulx.components.rx.*">
-  <fx:Script><![CDATA[
-  	import gapdesktoprx.models.Example;
-  	import gapdesktoprx.models.Graph;
-  	import gapdesktoprx.models.Submitter;
-  	
-  	import org.restfulx.Rx;
-  	import org.restfulx.utils.RxUtils;
+<ns:HBox xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/halo"
+		 xmlns:ns="library://ns.adobe.com/flex/mx"
+		 width="100%"
+		 label="Example"
+		 xmlns:rx="org.restfulx.components.rx.*">
+	<fx:Script>
+		<![CDATA[
+			import gapdesktoprx.models.Example;
+			import gapdesktoprx.models.Graph;
+			import gapdesktoprx.models.Submitter;
 
-    [Bindable]
-    private var example:Example = new Example();
+			import org.restfulx.Rx;
+			import org.restfulx.utils.RxUtils;
 
-    private function newExample():void {
-      example = new Example();
-      examplesList.selectedIndex = -1;
-    }
+			[Bindable]
+			private var example:Example=new Example();
 
-    private function saveExample():void {
-      updateModelProperties();
-      if (example.id) {
-        example.update({onSuccess: onExampleUpdate});
-      } else {
-        example.create({onSuccess: onExampleCreate});
-      }
-    }
-  
-    private function updateModelProperties():void {
-      example.hash = hashTextInput.text;
-      example.content = contentTextInput.text;
-      example.name = nameTextInput.text;
-      example.userGenerated = userGeneratedCheckBox.selected;
-	  example.introText = introTextTextInput.text;
-	  example.introImage = introImageTextInput.text;
-	  example.graph = Graph(graphComboBox.selectedItem);
-      example.submitter = Submitter(submitterComboBox.selectedItem);
-    }
+			private function newExample():void
+			{
+				example=new Example();
+				examplesList.selectedIndex=-1;
+			}
 
-    private function destroyExample():void {
-      example.destroy({onSuccess: onExampleDestroy});
-    }
-  
-    private function onExampleSelect():void {
-      example = RxUtils.clone(examplesList.selectedItem) as Example;
-    }
-  
-    private function onExampleCreate(result:Example):void {
-		trace('Example created');
-      example = new Example;
-    }
-  
-    private function onExampleUpdate(result:Example):void {
-		trace('Example updated');
-      examplesList.selectedItem = result;
-      onExampleSelect();
-    }
-  
-    private function onExampleDestroy(result:Example):void {
-      onExampleCreate(result);
-    }
-  ]]></fx:Script>
-  <s:Panel id="examplesPanel"
-    title="Examples" cornerRadius="0" 
-    backgroundColor="#EEEEEE" width="25%" height="100%">
-    <s:List id="examplesList"
-      width="100%" height="100%"
-      dataProvider="{catalyst.models.examples}"
-      change="onExampleSelect()"/>
-    <ns:ControlBar width="100%">
-      <mx:Button label="New Example" width="100%" height="30"
-        click="newExample()"/>
-    </ns:ControlBar>
-  </s:Panel>
-  <s:Panel title="Edit Example" cornerRadius="0" 
-    backgroundColor="#EEEEEE" width="75%" height="100%">
-    <mx:Form width="100%" height="100%">
-		<mx:FormItem label="Name" width="100%">
-			<s:TextInput id="nameTextInput" width="100%" text="{example.name}"/>
-		</mx:FormItem>
-        <mx:FormItem label="Content" width="100%">
-        <s:TextInput id="contentTextInput" width="100%" text="{example.content}"/>
-      </mx:FormItem>
-		<mx:FormItem label="Intro text" width="100%">
-			<s:TextInput id="introTextTextInput" width="100%" text="{example.introText}"/>
-		</mx:FormItem>
-		<mx:FormItem label="Intro image" width="100%">
-			<s:TextInput id="introImageTextInput" width="100%" text="{example.introImage}"/>
-		</mx:FormItem>
-		<mx:FormItem label="Hash" width="100%">
-			<s:TextInput id="hashTextInput" width="100%" text="{example.hash}"/>
-		</mx:FormItem>
-		<mx:FormItem width="100%">
-			<s:CheckBox id="userGeneratedCheckBox" label="User generated" selected="{example.userGenerated}"/>
-		</mx:FormItem>
-		   <mx:FormItem label="Graph" width="100%">
-        <s:ComboBox id="graphComboBox" width="200"
-          labelField="{Graph.LABEL}"
-          dataProvider="{Rx.models.index(Graph)}" 
-          selectedItem="{example.graph}" />
-      </mx:FormItem>
-      <mx:FormItem label="Submitter" width="100%">
-        <s:ComboBox id="submitterComboBox" width="200"
-          labelField="{Submitter.LABEL}"
-          dataProvider="{Rx.models.index(Submitter)}" 
-          selectedItem="{example.submitter}" />
-      </mx:FormItem>
-    </mx:Form>
-    <ns:ControlBar width="100%">
-      <mx:Button label="Save Example" width="50%" height="30"
-        click="saveExample()"/>
-      <mx:Button label="Delete Example" width="50%" height="30"
-        enabled="{RxUtils.canDeleteModel(example)}"
-        click="destroyExample()"/>
-    </ns:ControlBar>
-  </s:Panel>
+			private function saveExample():void
+			{
+				updateModelProperties();
+				if (example.id)
+				{
+					example.update({onSuccess: onExampleUpdate});
+				}
+				else
+				{
+					example.create({onSuccess: onExampleCreate});
+				}
+			}
+
+			private function updateModelProperties():void
+			{
+				example.hash=hashTextInput.text;
+				example.content=contentTextInput.text;
+				example.name=nameTextInput.text;
+				example.userGenerated=userGeneratedCheckBox.selected;
+				example.introText=introTextTextInput.text;
+				example.introImage=introImageTextInput.text;
+				example.graph=Graph(graphComboBox.selectedItem);
+				example.submitter=Submitter(submitterComboBox.selectedItem);
+			}
+
+			private function destroyExample():void
+			{
+				example.destroy({onSuccess: onExampleDestroy});
+			}
+
+			private function onExampleSelect():void
+			{
+				example=RxUtils.clone(examplesList.selectedItem) as Example;
+			}
+
+			private function onExampleCreate(result:Example):void
+			{
+				trace('Example created');
+				example=new Example;
+			}
+
+			private function onExampleUpdate(result:Example):void
+			{
+				trace('Example updated');
+				examplesList.selectedItem=result;
+				onExampleSelect();
+			}
+
+			private function onExampleDestroy(result:Example):void
+			{
+				onExampleCreate(result);
+			}
+		]]>
+	</fx:Script>
+	<s:Panel id="examplesPanel"
+			 title="Examples"
+			 cornerRadius="0"
+			 backgroundColor="#EEEEEE"
+			 width="25%"
+			 height="100%">
+		<s:List id="examplesList"
+				width="100%"
+				height="100%"
+				dataProvider="{catalyst.models.examples}"
+				change="onExampleSelect()"/>
+		<ns:ControlBar width="100%">
+			<mx:Button label="New Example"
+					   width="100%"
+					   height="30"
+					   click="newExample()"/>
+		</ns:ControlBar>
+	</s:Panel>
+	<s:Panel title="Edit Example"
+			 cornerRadius="0"
+			 backgroundColor="#EEEEEE"
+			 width="75%"
+			 height="100%">
+		<mx:Form width="100%"
+				 height="100%">
+			<mx:FormItem label="Name"
+						 width="100%">
+				<s:TextInput id="nameTextInput"
+							 width="100%"
+							 text="{example.name}"/>
+			</mx:FormItem>
+			<mx:FormItem label="Content"
+						 width="100%">
+				<s:TextInput id="contentTextInput"
+							 width="100%"
+							 text="{example.content}"/>
+			</mx:FormItem>
+			<mx:FormItem label="Intro text"
+						 width="100%">
+				<s:TextInput id="introTextTextInput"
+							 width="100%"
+							 text="{example.introText}"/>
+			</mx:FormItem>
+			<mx:FormItem label="Intro image"
+						 width="100%">
+				<s:TextInput id="introImageTextInput"
+							 width="100%"
+							 text="{example.introImage}"/>
+			</mx:FormItem>
+			<mx:FormItem label="Hash"
+						 width="100%">
+				<s:TextInput id="hashTextInput"
+							 width="100%"
+							 text="{example.hash}"/>
+			</mx:FormItem>
+			<mx:FormItem width="100%">
+				<s:CheckBox id="userGeneratedCheckBox"
+							label="User generated"
+							selected="{example.userGenerated}"/>
+			</mx:FormItem>
+			<mx:FormItem label="Graph"
+						 width="100%">
+				<s:ComboBox id="graphComboBox"
+							width="200"
+							labelField="{Graph.LABEL}"
+							dataProvider="{Rx.models.index(Graph)}"
+							selectedItem="{example.graph}"/>
+			</mx:FormItem>
+			<mx:FormItem label="Submitter"
+						 width="100%">
+				<s:ComboBox id="submitterComboBox"
+							width="200"
+							labelField="{Submitter.LABEL}"
+							dataProvider="{Rx.models.index(Submitter)}"
+							selectedItem="{example.submitter}"/>
+			</mx:FormItem>
+		</mx:Form>
+		<ns:ControlBar width="100%">
+			<mx:Button label="Save Example"
+					   width="50%"
+					   height="30"
+					   click="saveExample()"/>
+			<mx:Button label="Delete Example"
+					   width="50%"
+					   height="30"
+					   enabled="{RxUtils.canDeleteModel(example)}"
+					   click="destroyExample()"/>
+		</ns:ControlBar>
+	</s:Panel>
 </ns:HBox>

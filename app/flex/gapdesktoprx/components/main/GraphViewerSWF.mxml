@@ -1,125 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:mx="library://ns.adobe.com/flex/mx"	xmlns:s="library://ns.adobe.com/flex/spark" 
+<mx:VBox xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 height="100%"
 		 width="100%"
-		 backgroundColor="#EFEFEF"
-		 >
+		 backgroundColor="#EFEFEF">
 	<fx:Metadata>	
 		[Event(name="exampleChanged", type="events.ExampleChangeEvent")]
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
 			import flash.events.Event;
-			
+
 			import gapdesktoprx.models.Example;
 			import gapdesktoprx.overrides.TlzHost;
-			
+
 			import mx.events.FlexEvent;
 			import mx.events.StateChangeEvent;
 			import mx.graphics.ImageSnapshot;
 			import mx.utils.ObjectUtil;
-			
+
 			import org.restfulx.utils.RxUtils;
-			
+
 			private var _htmlLoader:HTMLLoader;
-			
-			private var _example:Example = new Example();
-			
+
+			private var _example:Example=new Example();
+
 			private var unsavedHash:String;
-			
-			private function updateHash(newHash:String):void {
-				if (unsavedHash != newHash) {
-					unsavedHash = newHash;
-					if (_example.hashIsNewGraph(newHash)) {
-						this.label = "[New example]";
-					} else {
-						if (newHash != _example.hash) {
-							this.label = _example.name + "*";
-							
+
+			private function updateHash(newHash:String):void
+			{
+				if (unsavedHash != newHash)
+				{
+					unsavedHash=newHash;
+					if (_example.hashIsNewGraph(newHash))
+					{
+						this.label="[New example]";
+					}
+					else
+					{
+						if (newHash != _example.hash)
+						{
+							this.label=_example.name + "*";
+
 						}
 					}
 				}
 			}
-			
+
 			private function graphHTML_completeHandler(event:Event):void
 			{
 				//			_htmlLoader = new HTMLLoader();
 				//			_htmlLoader.
 			/* 	var html:HTML = event.currentTarget as HTML;
-				html.htmlLoader.window.updateHash = updateHash;
-				html.location = _example.url;
-				this.stage.focus = graphHTML.htmlLoader;
-			 */	//this.graphHTML.htmlLoader.window.setFocus();
+			   html.htmlLoader.window.updateHash = updateHash;
+			   html.location = _example.url;
+			   this.stage.focus = graphHTML.htmlLoader;
+			 */ //this.graphHTML.htmlLoader.window.setFocus();
 			}
-			
-			
-			
-			
-			private function saveNewExample(name:String, hash:String):void {
-				if (!RxUtils.isEmpty(hash)) {
-					var newExample:Example = new Example;
-					newExample.hash = hash;
-					newExample.graph = _example.graph;
-					newExample.userGenerated = true;
-					newExample.name = name;
+
+
+
+
+			private function saveNewExample(name:String, hash:String):void
+			{
+				if (!RxUtils.isEmpty(hash))
+				{
+					var newExample:Example=new Example;
+					newExample.hash=hash;
+					newExample.graph=_example.graph;
+					newExample.userGenerated=true;
+					newExample.name=name;
 					invalidateDisplayList();
-					_example = newExample;
+					_example=newExample;
 					_example.create();
-					this.label = _example.name;
+					this.label=_example.name;
 					trace("New example: " + example.hash);
 				}
 			}
-			
-			private function destroyExample():void {
+
+			private function destroyExample():void
+			{
 				_example.destroy({onSuccess: onExampleDestroy});
 			}
-			
-			
-			private function onExampleCreate(result:Example):void {
-				_example = new Example;
+
+
+			private function onExampleCreate(result:Example):void
+			{
+				_example=new Example;
 			}
-			
-			
-			private function onExampleDestroy(result:Example):void {
+
+
+			private function onExampleDestroy(result:Example):void
+			{
 				//onExampleCreate(result);
 			}
-			
-			
-			
-				public function get example():Example
+
+
+
+			public function get example():Example
 			{
 				return _example;
 			}
-			
-			
+
+
 			public function set example(value:Example):void
 			{
-				_example = value;
-				this.label = example.name;
-				unsavedHash = value.hash;
+				_example=value;
+				this.label=example.name;
+				unsavedHash=value.hash;
 				//var urlReq:URLRequest = new URLRequest(example.url());
-				/* if (graphHTML) {
-					graphHTML.location = example.url;
-				} */
-				//		graphHTML.htmlLoader.load(urlReq);
-				
-				
+			/* if (graphHTML) {
+			   graphHTML.location = example.url;
+			 } */
+				 //		graphHTML.htmlLoader.load(urlReq);
+
+
 			}
-			
-			public function bookmarkExample(name:String):void {
-				saveNewExample(name,unsavedHash);	
+
+			public function bookmarkExample(name:String):void
+			{
+				saveNewExample(name, unsavedHash);
 			}
-			
+
 
 
 
 			protected function graphSWF_creationCompleteHandler(event:FlexEvent):void
 			{
-				
-			}
 
-			]]>
+			}
+		]]>
 	</fx:Script>
-		<mx:SWFLoader id="graphSWF"  x="0" y="0"  width="100%" height="100%" creationComplete="graphSWF_creationCompleteHandler(event)" source="@Embed('assets/graphs/world/trendalyzer.swf')"/> 
-		
+	<mx:SWFLoader id="graphSWF"
+				  x="0"
+				  y="0"
+				  width="100%"
+				  height="100%"
+				  creationComplete="graphSWF_creationCompleteHandler(event)"
+				  source="@Embed('assets/graphs/world/trendalyzer.swf')"/>
+
 </mx:VBox>

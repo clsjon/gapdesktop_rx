@@ -1,61 +1,74 @@
 <states>
 
- <state>
+	<state>
 
-  <datasource path="" type="xml" />
+		<datasource path=""
+					type="xml"/>
 
-  <chartdisplay mode="chart" defaulticon="bubble">
+		<chartdisplay mode="chart"
+					  defaulticon="bubble">
 
-   <chartsettings trailsshown="true" nonselectedalpha="30" backgroundlocked="false"
+			<chartsettings trailsshown="true"
+						   nonselectedalpha="30"
+						   backgroundlocked="false"
+						   lockedtime="2003"
+						   selectionenabled="true"
+						   showinterpolation="true"/>
 
-    lockedtime="2003" selectionenabled="true" showinterpolation="true" />
+			<labelsettings iconlabelsshown="true"
+						   nonselectedlabelsshown="true"
+						   valuelabelsshown="true"
+						   labelfontsize="11"/>
 
-   <labelsettings iconlabelsshown="true" nonselectedlabelsshown="true" valuelabelsshown="true"
+			<itemfilter allitemsshown="true"/>
 
-    labelfontsize="11" />
+		</chartdisplay>
 
-   <itemfilter allitemsshown="true" />
+		<propertylist property="Array">
 
-  </chartdisplay>
+			<property name="color">
 
-  <propertylist property="Array">
+				<retrieval by="grouping"
+						   grouping="*"/>
 
-   <property name="color">
+			</property>
 
-    <retrieval by="grouping" grouping="*" />
+			<property name="size">
 
-   </property>
+				<retrieval by="indicator"
+						   indicator="phAwcNAVuyj0XOoBL_n5tAQ"/>
 
-   <property name="size">
+				<intervals screenmin="2"
+						   screenmax="50"/>
 
-    <retrieval by="indicator" indicator="phAwcNAVuyj0XOoBL_n5tAQ" />
+			</property>
 
-    <intervals screenmin="2" screenmax="50" />
+			<property name="x">
 
-   </property>
+				<retrieval by="indicator"
+						   indicator="phAwcNAVuyj1jiMAkmq1iMg"
+						   mapmode="XCOORDS"/>
 
-   <property name="x">
+			</property>
 
-    <retrieval by="indicator" indicator="phAwcNAVuyj1jiMAkmq1iMg" mapmode="XCOORDS" />
+			<property name="y">
 
-   </property>
+				<retrieval by="indicator"
+						   indicator="phAwcNAVuyj05ZR69usyQIg"
+						   mapmode="YCOORDS"/>
 
-   <property name="y">
+			</property>
 
-    <retrieval by="indicator" indicator="phAwcNAVuyj05ZR69usyQIg" mapmode="YCOORDS" />
+		</propertylist>
 
-   </property>
+		<misc>
 
-  </propertylist>
+			<helpbutton url="help/gapminder_world_help.htm"/>
 
-  <misc>
+			<bubble_behaviour nr_of_bubbles="5000"/>
 
-   <helpbutton url="help/gapminder_world_help.htm" />
+		</misc>
 
-   <bubble_behaviour nr_of_bubbles="5000" />
-
-  </misc>
-
- </state>
+	</state>
 
 </states>

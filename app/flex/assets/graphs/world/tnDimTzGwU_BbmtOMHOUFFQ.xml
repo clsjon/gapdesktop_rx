@@ -1,3 +1,11 @@
-<indicator id="tnDimTzGwU_BbmtOMHOUFFQ" closestAboveZero="0.0" closestBelowZero="0.0" min="1.7976931348623157E308" max="-1.7976931348623157E308" firstTime="2147483647" lastTime="-2147483648" scale="lin" dataCollectionUrl="http://spreadsheets.google.com/pub?key=tnDimTzGwU_BbmtOMHOUFFQ">
-  <data/>
+<indicator id="tnDimTzGwU_BbmtOMHOUFFQ"
+		   closestAboveZero="0.0"
+		   closestBelowZero="0.0"
+		   min="1.7976931348623157E308"
+		   max="-1.7976931348623157E308"
+		   firstTime="2147483647"
+		   lastTime="-2147483648"
+		   scale="lin"
+		   dataCollectionUrl="http://spreadsheets.google.com/pub?key=tnDimTzGwU_BbmtOMHOUFFQ">
+	<data/>
 </indicator>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:ai="http://ns.adobe.com/ai/2009">
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:ai="http://ns.adobe.com/ai/2009">
 	<fx:Metadata>[HostComponent("spark.components.Button")]</fx:Metadata>
 	<s:states>
 		<s:State name="up"/>
@@ -7,11 +9,21 @@
 		<s:State name="down"/>
 		<s:State name="disabled"/>
 	</s:states>
-	<s:Group id="group1" ai:objID="5f2ef260" y="0" x="0" includeIn="down,over,up">
-		<s:BitmapImage ai:embed="1" ai:objID="5f2f07e0" source="@Embed('assets/images/closebutton.png')" x="0" y="0"/>
+	<s:Group id="group1"
+			 ai:objID="5f2ef260"
+			 y="0"
+			 x="0"
+			 includeIn="down,over,up">
+		<s:BitmapImage ai:embed="1"
+					   ai:objID="5f2f07e0"
+					   source="@Embed('assets/images/closebutton.png')"
+					   x="0"
+					   y="0"/>
 	</s:Group>
 	<s:transitions>
-		<s:Transition fromState="disabled" toState="up" autoReverse="true">
+		<s:Transition fromState="disabled"
+					  toState="up"
+					  autoReverse="true">
 			<s:Parallel>
 				<s:Parallel target="{group1}">
 					<s:Fade duration="0"/>

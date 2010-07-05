@@ -1,69 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow
-	
- xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/halo" width="600" height="355"
-		 creationComplete="group1_creationCompleteHandler(event)"
-		 xmlns:ns="library://ns.adobe.com/flex/mx"
-		 styleName="graphListTitleWindowStyle"
-		 close="titlewindow1_closeHandler(event)"
-		 keyDown="titlewindow1_keyDownHandler(event)"
-		 >
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/halo"
+			   width="600"
+			   height="355"
+			   creationComplete="group1_creationCompleteHandler(event)"
+			   xmlns:ns="library://ns.adobe.com/flex/mx"
+			   styleName="graphListTitleWindowStyle"
+			   close="titlewindow1_closeHandler(event)"
+			   keyDown="titlewindow1_keyDownHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import gapdesktoprx.events.ExampleSelectEvent;
 			import gapdesktoprx.models.Example;
 			import gapdesktoprx.skins.TitleWindowBareSkin;
-			
+
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
-			
+
 			import org.restfulx.collections.RxCollection;
-			
+
 			protected function group1_creationCompleteHandler(event:FlexEvent):void
 			{
-				userexamples.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectedHandler);
-				this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectedHandler);
+				userexamples.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED, exampleSelectedHandler);
+				this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED, exampleSelectedHandler);
 			}
-			
-			private function exampleSelectedHandler(event:ExampleSelectEvent):void {
+
+			private function exampleSelectedHandler(event:ExampleSelectEvent):void
+			{
 				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 			}
-			
-			protected function myCloseButton_clickHandler(event:MouseEvent):void {
+
+			protected function myCloseButton_clickHandler(event:MouseEvent):void
+			{
 				this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 			}
-			
-			
+
+
 
 			protected function gapGraphs_renderHandler(event:Event):void
 			{
-				var tree:Tree = event.currentTarget as Tree;
-				var dp:RxCollection = tree.dataProvider as RxCollection;
-				tree.expandChildrenOf(dp,true);
+				var tree:Tree=event.currentTarget as Tree;
+				var dp:RxCollection=tree.dataProvider as RxCollection;
+				tree.expandChildrenOf(dp, true);
 			}
-			
-			
-			
+
+
+
 			protected function gapGraphs_itemClickHandler(event:ListEvent):void
 			{
-				var tree:Tree = event.currentTarget as Tree;
-				var item:Object = Tree(event.currentTarget).selectedItem;
-				if (tree.dataDescriptor.isBranch(item)) {
+				var tree:Tree=event.currentTarget as Tree;
+				var item:Object=Tree(event.currentTarget).selectedItem;
+				if (tree.dataDescriptor.isBranch(item))
+				{
 					tree.expandItem(item, !tree.isItemOpen(item), true);
-					tree.selectedItem = null;
-				} else {
-					this.dispatchEvent(new ExampleSelectEvent(item as Example,true));
-					tree.selectedItem = null;
+					tree.selectedItem=null;
 				}
-				
+				else
+				{
+					this.dispatchEvent(new ExampleSelectEvent(item as Example, true));
+					tree.selectedItem=null;
+				}
+
 			}
-			
-			private function titlewindow1_keyDownHandler(event:KeyboardEvent):void {
-				if (event.charCode == Keyboard.ESCAPE) {
+
+			private function titlewindow1_keyDownHandler(event:KeyboardEvent):void
+			{
+				if (event.charCode == Keyboard.ESCAPE)
+				{
 					this.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 				}
 			}
@@ -73,44 +79,98 @@
 			{
 				PopUpManager.removePopUp(this);
 			}
-
 		]]>
 	</fx:Script>
 
 	<fx:Metadata>
 		[Event(name="exampleSelected", type="gapdesktoprx.events.ExampleSelectEvent")]
 	</fx:Metadata>
-	
+
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Rect left="6" right="6" top="6" bottom="6">
+	<s:Rect left="6"
+			right="6"
+			top="6"
+			bottom="6">
 		<s:fill>
 			<s:SolidColor color="#FFFFFF"/>
 		</s:fill>
 		<s:stroke>
-			<s:SolidColorStroke weight="2" color="0x888888"/>
+			<s:SolidColorStroke weight="2"
+								color="0x888888"/>
 		</s:stroke>
 		<s:filters>
-			<s:DropShadowFilter alpha="0.5" angle="90" blurX="2" blurY="2" color="#888888" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="5"/>
+			<s:DropShadowFilter alpha="0.5"
+								angle="90"
+								blurX="2"
+								blurY="2"
+								color="#888888"
+								distance="1"
+								hideObject="false"
+								inner="false"
+								knockout="false"
+								quality="2"
+								strength="5"/>
 		</s:filters>
 	</s:Rect>
-	<mx:Image id="myCloseButton" click="myCloseButton_clickHandler(event)" x="0" y="0" source="@Embed('assets/icons/button/x.png')"/>
-	<s:Group id="main" x="20" y="20">
-		<s:layout><s:VerticalLayout/></s:layout>
-		
+	<mx:Image id="myCloseButton"
+			  click="myCloseButton_clickHandler(event)"
+			  x="0"
+			  y="0"
+			  source="@Embed('assets/icons/button/x.png')"/>
+	<s:Group id="main"
+			 x="20"
+			 y="20">
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+
 		<s:Group id="lists">
-			<s:layout><s:HorizontalLayout gap="30" horizontalAlign="center" verticalAlign="contentJustify"/></s:layout>
+			<s:layout>
+				<s:HorizontalLayout gap="30"
+									horizontalAlign="center"
+									verticalAlign="contentJustify"/>
+			</s:layout>
 			<s:Group id="gapexamples">
-				<s:layout><s:VerticalLayout horizontalAlign="contentJustify"/></s:layout>
-				<s:Label fontFamily="Avenir-heavy"  fontSize="16" id="gapGraphsLabel" text="Gapminder graphs" width="100%"/>				
-				<ns:Tree width="300" height="300" id="gapGraphs" dataProvider="{catalyst.models.usedMainTags}" itemClick="gapGraphs_itemClickHandler(event)" styleName="gapGraphsStyle"/>
+				<s:layout>
+					<s:VerticalLayout horizontalAlign="contentJustify"/>
+				</s:layout>
+				<s:Label fontFamily="Avenir-heavy"
+						 fontSize="16"
+						 id="gapGraphsLabel"
+						 text="Gapminder graphs"
+						 width="100%"/>
+				<ns:Tree width="300"
+						 height="300"
+						 id="gapGraphs"
+						 dataProvider="{catalyst.models.usedMainTags}"
+						 itemClick="gapGraphs_itemClickHandler(event)"
+						 styleName="gapGraphsStyle"/>
 			</s:Group>
 			<s:Group id="userexamples">
-				<s:layout><s:VerticalLayout horizontalAlign="contentJustify"/></s:layout>
-				<s:Label id="userGraphsLabel" fontFamily="Avenir-heavy"  fontSize="16" text="Your own graphs" width="100%"/>
-				<s:RichText fontFamily="Avenir" color="0x888888" width="200" fontSize="12" text="To create your own graphs, select a starting graph to the left, change settings and then click  the ”Add bookmark” button." includeInLayout="{catalyst.models.userExamples.length==0}" />
-				<s:List id="userGraphList" width="200" height="300" styleName="exampleListStyle" dataProvider="{catalyst.models.userExamples}" visible="{catalyst.models.userExamples.length > 0}" includeInLayout="{catalyst.models.userExamples.length>0}" itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem"/>
+				<s:layout>
+					<s:VerticalLayout horizontalAlign="contentJustify"/>
+				</s:layout>
+				<s:Label id="userGraphsLabel"
+						 fontFamily="Avenir-heavy"
+						 fontSize="16"
+						 text="Your own graphs"
+						 width="100%"/>
+				<s:RichText fontFamily="Avenir"
+							color="0x888888"
+							width="200"
+							fontSize="12"
+							text="To create your own graphs, select a starting graph to the left, change settings and then click  the ”Add bookmark” button."
+							includeInLayout="{catalyst.models.userExamples.length==0}"/>
+				<s:List id="userGraphList"
+						width="200"
+						height="300"
+						styleName="exampleListStyle"
+						dataProvider="{catalyst.models.userExamples}"
+						visible="{catalyst.models.userExamples.length > 0}"
+						includeInLayout="{catalyst.models.userExamples.length>0}"
+						itemRenderer="gapdesktoprx.components.catalyst.ExampleListItem"/>
 			</s:Group>
 		</s:Group>
 	</s:Group>

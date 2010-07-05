@@ -1,21 +1,24 @@
-package gapdesktoprx.models {
-  import org.restfulx.collections.ModelsCollection;
-  import org.restfulx.models.RxModel;
-  
-  [Resource(name="submitters")]
-  [Bindable]
-  public class Submitter extends RxModel {
-    public static const LABEL:String = "name";
+package gapdesktoprx.models
+{
+	import org.restfulx.collections.ModelsCollection;
+	import org.restfulx.models.RxModel;
 
-    public var name:String = "";
+	[Resource(name="submitters")]
+	[Bindable]
+	public class Submitter extends RxModel
+	{
+		public static const LABEL:String="name";
 
-    public var email:String = "";
+		public var name:String="";
 
-    [HasMany]
-    public var examples:ModelsCollection;
-    
-    public function Submitter() {
-      super(LABEL);
-    }
-  }
+		public var email:String="";
+
+		[HasMany]
+		public var examples:ModelsCollection;
+
+		public function Submitter()
+		{
+			super(LABEL);
+		}
+	}
 }

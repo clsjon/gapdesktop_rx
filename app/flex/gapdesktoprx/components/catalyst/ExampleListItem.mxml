@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:ItemRenderer xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:ai="http://ns.adobe.com/ai/2009"
+<s:ItemRenderer xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:d="http://ns.adobe.com/fxg/2008/dt"
+				xmlns:ai="http://ns.adobe.com/ai/2009"
 				xmlns:ns="library://ns.adobe.com/flex/mx"
 				width="100%"
-				height="100%"
-			
-				>
-	
+				height="100%">
+
 	<fx:Metadata>
 		[Event(name="exampleSelected", type="gapdesktoprx.events.ExampleSelectEvent")]
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
 			import flash.events.MouseEvent;
-			
+
 			import gapdesktoprx.events.ExampleSelectEvent;
 			import gapdesktoprx.models.Example;
 			import gapdesktoprx.skins.TrashButtonSkin;
-			
+
 			import mx.controls.Alert;
 			import mx.core.IFlexDisplayObject;
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
-			
+
 			[Bindable]
 			private var _example:Example;
-			
-			override public function set data(value:Object) : void {
-				super.data = value;
-				if (value is Example) {
-					_example = Example(value);
+
+			override public function set data(value:Object):void
+			{
+				super.data=value;
+				if (value is Example)
+				{
+					_example=Example(value);
 				}
-				
+
 			}
-			
+
 			protected function deleteButton_clickHandler(event:MouseEvent):void
 			{
-				Alert.show(_example.name,"Are you sure you want to delete this graph?",Alert.YES|Alert.CANCEL,null,alert_closeHandler);
+				Alert.show(_example.name, "Are you sure you want to delete this graph?", Alert.YES | Alert.CANCEL, null, alert_closeHandler);
 				event.stopImmediatePropagation();
 				event.preventDefault();
 			}
-			
-			protected function alert_closeHandler(event:CloseEvent):void {
-				switch(event.detail)
+
+			protected function alert_closeHandler(event:CloseEvent):void
+			{
+				switch (event.detail)
 				{
 					case Alert.YES:
 					case Alert.OK:
@@ -49,39 +53,67 @@
 						break;
 					case Alert.CANCEL:
 					case Alert.NO:
-						Object(owner).selectedIndex = -1;
+						Object(owner).selectedIndex=-1;
 						break;
 					default:
 						break;
-					
+
 				}
 			}
 
 
-		
+
 			protected function labelDisplay1_clickHandler(event:MouseEvent):void
 			{
-				parent.dispatchEvent(new ExampleSelectEvent(_example,true));
+				parent.dispatchEvent(new ExampleSelectEvent(_example, true));
 			}
+		]]>
 
-			]]>
-		
 	</fx:Script>
 	<s:states>
 		<s:State name="normal"/>
 		<s:State name="hovered"/>
 		<s:State name="selected"/>
 	</s:states>
-	<s:Rect d:userLabel="Item Highlight" width="100%" height="20" alpha.normal="0" alpha.hovered="0.4" alpha.selected="0.8" id="higlightRect">
+	<s:Rect d:userLabel="Item Highlight"
+			width="100%"
+			height="20"
+			alpha.normal="0"
+			alpha.hovered="0.4"
+			alpha.selected="0.8"
+			id="higlightRect">
 		<s:fill>
 			<s:SolidColor color="0xCED7EE"/>
 		</s:fill>
 	</s:Rect>
-	<s:RichText fontFamily="Avenir" fontSize="12" id="labelDisplay1" text="{_example.name}" left="5" top="8" right="20" textAlign="left" click="labelDisplay1_clickHandler(event)">
+	<s:RichText fontFamily="Avenir"
+				fontSize="12"
+				id="labelDisplay1"
+				text="{_example.name}"
+				left="5"
+				top="8"
+				right="20"
+				textAlign="left"
+				click="labelDisplay1_clickHandler(event)">
 		<s:filters>
-			<s:DropShadowFilter alpha="0.5" angle="45.0" blurX="4.0" blurY="4.0" color="#636D78" distance="4.0" hideObject="false" inner="true" knockout="false" quality="2" strength="1"/>
+			<s:DropShadowFilter alpha="0.5"
+								angle="45.0"
+								blurX="4.0"
+								blurY="4.0"
+								color="#636D78"
+								distance="4.0"
+								hideObject="false"
+								inner="true"
+								knockout="false"
+								quality="2"
+								strength="1"/>
 		</s:filters>
 	</s:RichText>
-	
-	<s:Button id="deleteButton" buttonMode="true" skinClass="gapdesktoprx.skins.TrashButtonSkin" verticalCenter="true" right="4" click="deleteButton_clickHandler(event)"/>
+
+	<s:Button id="deleteButton"
+			  buttonMode="true"
+			  skinClass="gapdesktoprx.skins.TrashButtonSkin"
+			  verticalCenter="true"
+			  right="4"
+			  click="deleteButton_clickHandler(event)"/>
 </s:ItemRenderer>

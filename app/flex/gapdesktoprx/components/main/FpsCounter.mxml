@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
-		 enterFrame="group1_enterFrameHandler(event)"
-		 >
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%"
+		 height="100%"
+		 enterFrame="group1_enterFrameHandler(event)">
 	<s:layout>
 		<s:HorizontalLayout/>
 	</s:layout>
@@ -11,49 +12,54 @@
 
 	<fx:Script>
 		<![CDATA[
-			
 			// enterFrame variables
-			private var numFrames:int = 0;
+			private var numFrames:int=0;
 			private var currTime:int;
-			private var startTime:int = getTimer();
+			private var startTime:int=getTimer();
 			[Bindable]
-			private var actualFps:int = 0;
+			private var actualFps:int=0;
 			[Bindable]
-			private var targetFps:int = 24;
+			private var targetFps:int=24;
 			[Bindable]
 			private var rate:uint;
 			private var lowMult:Number;
 			private var highMult:Number;
-			
-			private var slowCounter:int = 0;
-			
-			
+
+			private var slowCounter:int=0;
+
+
 			protected function group1_enterFrameHandler(event:Event):void
 			{
-				if (stage) {
-					rate = stage.frameRate;
+				if (stage)
+				{
+					rate=stage.frameRate;
 					++numFrames;
-					currTime = getTimer();
-					if ((currTime- startTime) > 1000)
+					currTime=getTimer();
+					if ((currTime - startTime) > 1000)
 					{
-						actualFps = int(numFrames * ((currTime- startTime) / 1000));
-						if (actualFps < (targetFps * 0.8)) {
-							targetFps = int(actualFps * 0.9);
-						} else {
-							targetFps = targetFps + 1;	
+						actualFps=int(numFrames * ((currTime - startTime) / 1000));
+						if (actualFps < (targetFps * 0.8))
+						{
+							targetFps=int(actualFps * 0.9);
 						}
-						if (actualFps <= 5) {
+						else
+						{
+							targetFps=targetFps + 1;
+						}
+						if (actualFps <= 5)
+						{
 							++slowCounter;
 						}
 						/* if (slowCounter > 10 ) {
-						if (navigator && navigator.selectedChild && navigator.selectedChild is GraphViewer) {
-						var gv:GraphViewer = navigator.selectedChild as GraphViewer;
-						gv.reload();
-						}
-						}
-						*/stage.frameRate = targetFps;
-						numFrames = 0;
-						startTime = currTime;
+						   if (navigator && navigator.selectedChild && navigator.selectedChild is GraphViewer) {
+						   var gv:GraphViewer = navigator.selectedChild as GraphViewer;
+						   gv.reload();
+						   }
+						   }
+						 */
+						stage.frameRate=targetFps;
+						numFrames=0;
+						startTime=currTime;
 					}
 				}
 
@@ -64,9 +70,20 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:TextInput id="rateInput" width="40" text="24" change="{stage.frameRate = uint(rateInput.text)}"/>
-	<s:Label id="fpsReport" text="Reported FPS {rate} Actual FPS {actualFps} Target FPS {targetFps}" fontSize="8"/>
-	<s:TextInput id="lowMultInput" width="40" text="0.8" change="{lowMult = Number(rateInput.text)}"/>
-	<s:TextInput id="highMultInput" width="40" text="0.9" change="{highMult = Number(rateInput.text)}"/>
-	
+	<s:TextInput id="rateInput"
+				 width="40"
+				 text="24"
+				 change="{stage.frameRate = uint(rateInput.text)}"/>
+	<s:Label id="fpsReport"
+			 text="Reported FPS {rate} Actual FPS {actualFps} Target FPS {targetFps}"
+			 fontSize="8"/>
+	<s:TextInput id="lowMultInput"
+				 width="40"
+				 text="0.8"
+				 change="{lowMult = Number(rateInput.text)}"/>
+	<s:TextInput id="highMultInput"
+				 width="40"
+				 text="0.9"
+				 change="{highMult = Number(rateInput.text)}"/>
+
 </s:Group>

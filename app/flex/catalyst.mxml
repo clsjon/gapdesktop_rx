@@ -1,719 +1,1069 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<s:WindowedApplication
-	xmlns:components="gapdesktoprx.components.catalyst.*" 
-	xmlns:containers="flexlib.containers.*"
-	xmlns:extensions="gapdesktoprx.components.extensions.*"
-	xmlns:fx="http://ns.adobe.com/mxml/2009" 
-	xmlns:interpolators="gapdesktoprx.interpolators.*"
-	xmlns:local="*" 
-	xmlns:main="gapdesktoprx.components.main.*"
-	xmlns:mx="library://ns.adobe.com/flex/halo"
-	xmlns:ns="library://ns.adobe.com/flex/mx" 
-	xmlns:s="library://ns.adobe.com/flex/spark" 
-	
-	showStatusBar="false"
-	backgroundColor="#ffffff" 
-	
-	resizing="windowedapplication1_resizingHandler(event)"
-	preinitialize="windowedapplication1_preinitializeHandler(event)"
-	applicationComplete="windowedapplication1_applicationCompleteHandler(event)"
-	networkChange="windowedapplication1_networkChangeHandler(event)"
-	currentStateChanging="windowedapplication1_currentStateChangingHandler(event)"
-	currentStateChange="windowedapplication1_currentStateChangeHandler(event)"	
-	activate="windowedapplication1_activateHandler(event)"
-	deactivate="windowedapplication1_deactivateHandler(event)"
-	>
-	
+<s:WindowedApplication xmlns:components="gapdesktoprx.components.catalyst.*"
+					   xmlns:containers="flexlib.containers.*"
+					   xmlns:extensions="gapdesktoprx.components.extensions.*"
+					   xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:interpolators="gapdesktoprx.interpolators.*"
+					   xmlns:local="*"
+					   xmlns:main="gapdesktoprx.components.main.*"
+					   xmlns:mx="library://ns.adobe.com/flex/halo"
+					   xmlns:ns="library://ns.adobe.com/flex/mx"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   showStatusBar="false"
+					   backgroundColor="#ffffff"
+					   resizing="windowedapplication1_resizingHandler(event)"
+					   preinitialize="windowedapplication1_preinitializeHandler(event)"
+					   applicationComplete="windowedapplication1_applicationCompleteHandler(event)"
+					   networkChange="windowedapplication1_networkChangeHandler(event)"
+					   currentStateChanging="windowedapplication1_currentStateChangingHandler(event)"
+					   currentStateChange="windowedapplication1_currentStateChangeHandler(event)"
+					   activate="windowedapplication1_activateHandler(event)"
+					   deactivate="windowedapplication1_deactivateHandler(event)">
+
 	<fx:Style source="/assets/css/styles.css"/>
-	
-	<fx:Script><![CDATA[
-		import air.net.URLMonitor;
-		import air.update.ApplicationUpdater;
-		import air.update.ApplicationUpdaterUI;
-		import air.update.events.StatusUpdateEvent;
-		import air.update.events.UpdateEvent;
-		
-		import flash.display.DisplayObject;
-		import flash.display.StageDisplayState;
-		import flash.events.FullScreenEvent;
-		import flash.events.MouseEvent;
-		import flash.events.NativeWindowBoundsEvent;
-		import flash.sampler.NewObjectSample;
-		import flash.utils.getTimer;
-		
-		import flashx.textLayout.conversion.TextConverter;
-		import flashx.textLayout.events.FlowElementMouseEvent;
-		import flashx.textLayout.formats.WhiteSpaceCollapse;
-		
-		import flexlib.controls.SuperTabBar;
-		import flexlib.controls.tabBarClasses.SuperTab;
-		import flexlib.events.SuperTabEvent;
-		import flexlib.events.TabReorderEvent;
-		
-		import gapdesktoprx.components.main.*;
-		import gapdesktoprx.controllers.ApplicationController;
-		import gapdesktoprx.controllers.ModelsController;
-		import gapdesktoprx.controllers.PrefsController;
-		import gapdesktoprx.events.ExampleRolloutEvent;
-		import gapdesktoprx.events.ExampleRolloverEvent;
-		import gapdesktoprx.events.ExampleSelectEvent;
-		import gapdesktoprx.events.NameExampleEvent;
-		import gapdesktoprx.interpolators.RectInterpolator;
-		import gapdesktoprx.models.Graph;
-		import gapdesktoprx.skins.ButtonSkin;
-		import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
-		import gapdesktoprx.skins.applicationupdaterui.firefox.ButtonSkin;
-		
-		import mx.controls.Alert;
-		import mx.controls.SWFLoader;
-		import mx.core.FlexGlobals;
-		import mx.core.IFlexDisplayObject;
-		import mx.core.UIComponent;
-		import mx.events.CloseEvent;
-		import mx.events.DragEvent;
-		import mx.events.EffectEvent;
-		import mx.events.FlexEvent;
-		import mx.events.IndexChangedEvent;
-		import mx.events.StateChangeEvent;
-		import mx.graphics.ImageSnapshot;
-		import mx.managers.PopUpManager;
-		import mx.printing.FlexPrintJob;
-		import mx.states.State;
-		import mx.utils.ObjectUtil;
-		
-		import org.restfulx.Rx;
-		import org.restfulx.events.CacheUpdateEvent;
-		import org.restfulx.services.air.AIRServiceProvider;
-		
-		import spark.utils.TextFlowUtil;
-		
-		[Bindable]
-		private var fixedSizeRect:Rectangle = new Rectangle();
-		
-		[Bindable]
-		private var resizableRect:Rectangle = new Rectangle(0,0,Capabilities.screenResolutionX,Capabilities.screenResolutionY);
-		private var resizableDisplayState:String = StageDisplayState.NORMAL;
-		
-		public static var updater:ApplicationUpdaterUI;
-		
-		public static const dbVersion:String = "1.0";
-		
-		private var manualUpdateCheck:Boolean = false;
-		
-		[Bindable] 
-		public var version:String;
-		
-		[Bindable]
-		public static var online:Boolean = true;
-		
-		protected function closeSettingsButton_clickHandler():void
-		{
-			currentState='MainState';
-		}
-		
-		
-		protected function list1_clickHandler(event:MouseEvent):void
-		{
-			currentState='TlzState';
-		}
-		
-		
-		
-		/* 		protected function traceState(event:StateChangeEvent):void {
-		if (event.newState=='TlzState') {
-		this.nativeWindow.x=0;
-		this.nativeWindow.y=0;
-		}
-		trace("New state: " + event.newState);	
-		}
-		*/		
-		protected function fullScreenStateChange(event:FullScreenEvent):void {
-			if (event.fullScreen) {
-				fullScreenButton.label = "Exit full screen";
-				fullScreenButton.setStyle("iconUp", "assets/icons/button/fullscreen_exit.png");
-			}
-			else {
-				fullScreenButton.label = "Full screen";
-				fullScreenButton.setStyle("iconUp", "assets/icons/button/fullscreen.png");
-			}
-		}
-		
-		protected function windowedapplication1_preinitializeHandler(event:FlexEvent):void
-		{
-			var descriptor:XML = FlexGlobals.topLevelApplication.nativeApplication.applicationDescriptor;
-			var ns:Namespace = descriptor.namespaceDeclarations()[0];
-			version = descriptor.ns::version;
-			trace ('version: ' + version);
-			ApplicationController.initialize([AIRServiceProvider], 
-				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx-"+dbVersion).nativePath);
-			//Rx.enableLogging();
-		}
-		
-		public static function get models():ModelsController {
-			return ModelsController.instance;
-		}
-		
-		public static function get prefs():PrefsController {
-			return PrefsController.instance;
-		}
-		
-		
-		protected function exampleSelectEventHandler(event:ExampleSelectEvent):void
-		{
-			var viewer:GraphViewer = new GraphViewer();
-			viewer.example = event.example;
-			currentState = 'TlzState';
-			navigator.addChildAt(viewer,navigator.numChildren - 1);
-			navigator.selectedChild = viewer;
-		}
-		
-		
-		protected function fullScreenButton_clickHandler(event:MouseEvent):void
-		{
-			switch (stage.displayState) {
-				case StageDisplayState.FULL_SCREEN:
-				case StageDisplayState.FULL_SCREEN_INTERACTIVE:
-					stage.displayState = StageDisplayState.NORMAL;
-					break;
-				case StageDisplayState.NORMAL:
-					stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-					break;
-			}
-		}
-		
-		protected function initializeUpdater():void {
-			updater = new ApplicationUpdaterUI();
-			updater.configurationFile = File.applicationDirectory.resolvePath('config/updaterConfig.xml');
-			if (!prefs.autocheck)
+
+	<fx:Script>
+		<![CDATA[
+			import air.net.URLMonitor;
+			import air.update.ApplicationUpdater;
+			import air.update.ApplicationUpdaterUI;
+			import air.update.events.StatusUpdateEvent;
+			import air.update.events.UpdateEvent;
+
+			import flash.display.DisplayObject;
+			import flash.display.StageDisplayState;
+			import flash.events.FullScreenEvent;
+			import flash.events.MouseEvent;
+			import flash.events.NativeWindowBoundsEvent;
+			import flash.sampler.NewObjectSample;
+			import flash.utils.getTimer;
+
+			import flashx.textLayout.conversion.TextConverter;
+			import flashx.textLayout.events.FlowElementMouseEvent;
+			import flashx.textLayout.formats.WhiteSpaceCollapse;
+
+			import flexlib.controls.SuperTabBar;
+			import flexlib.controls.tabBarClasses.SuperTab;
+			import flexlib.events.SuperTabEvent;
+			import flexlib.events.TabReorderEvent;
+
+			import gapdesktoprx.components.main.*;
+			import gapdesktoprx.controllers.ApplicationController;
+			import gapdesktoprx.controllers.ModelsController;
+			import gapdesktoprx.controllers.PrefsController;
+			import gapdesktoprx.events.ExampleRolloutEvent;
+			import gapdesktoprx.events.ExampleRolloverEvent;
+			import gapdesktoprx.events.ExampleSelectEvent;
+			import gapdesktoprx.events.NameExampleEvent;
+			import gapdesktoprx.interpolators.RectInterpolator;
+			import gapdesktoprx.models.Graph;
+			import gapdesktoprx.skins.ButtonSkin;
+			import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
+			import gapdesktoprx.skins.applicationupdaterui.firefox.ButtonSkin;
+
+			import mx.controls.Alert;
+			import mx.controls.SWFLoader;
+			import mx.core.FlexGlobals;
+			import mx.core.IFlexDisplayObject;
+			import mx.core.UIComponent;
+			import mx.events.CloseEvent;
+			import mx.events.DragEvent;
+			import mx.events.EffectEvent;
+			import mx.events.FlexEvent;
+			import mx.events.IndexChangedEvent;
+			import mx.events.StateChangeEvent;
+			import mx.graphics.ImageSnapshot;
+			import mx.managers.PopUpManager;
+			import mx.printing.FlexPrintJob;
+			import mx.states.State;
+			import mx.utils.ObjectUtil;
+
+			import org.restfulx.Rx;
+			import org.restfulx.events.CacheUpdateEvent;
+			import org.restfulx.services.air.AIRServiceProvider;
+
+			import spark.utils.TextFlowUtil;
+
+			[Bindable]
+			private var fixedSizeRect:Rectangle=new Rectangle();
+
+			[Bindable]
+			private var resizableRect:Rectangle=new Rectangle(0, 0, Capabilities.screenResolutionX, Capabilities.screenResolutionY);
+			private var resizableDisplayState:String=StageDisplayState.NORMAL;
+
+			public static var updater:ApplicationUpdaterUI;
+
+			public static const dbVersion:String="1.0";
+
+			private var manualUpdateCheck:Boolean=false;
+
+			[Bindable]
+			public var version:String;
+
+			[Bindable]
+			public static var online:Boolean=true;
+
+			protected function closeSettingsButton_clickHandler():void
 			{
-				updater.delay = 0;
+				currentState='MainState';
 			}
-			updater.initialize();
-			updater.addEventListener(StatusUpdateEvent.UPDATE_STATUS,updateStatusEventHandler);
-		}
-		
-		protected function firstRunCloseHandler(event:CloseEvent):void {
-			initializeUpdater();
-		}
-		
-		protected function windowedapplication1_applicationCompleteHandler(event:FlexEvent):void
-		{
-			stage.addEventListener(FullScreenEvent.FULL_SCREEN,fullScreenStateChange);
-			this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler); //for selection of default graph
-			launchMonitor();
-			if (prefs.firstRun) {
-				var firstRunWindow :IFlexDisplayObject = PopUpManager.createPopUp(this,FirstRunAlert,false);
-				firstRunWindow.addEventListener(CloseEvent.CLOSE,firstRunCloseHandler);
-			} else {
+
+
+			protected function list1_clickHandler(event:MouseEvent):void
+			{
+				currentState='TlzState';
+			}
+
+
+
+			/* 		protected function traceState(event:StateChangeEvent):void {
+			   if (event.newState=='TlzState') {
+			   this.nativeWindow.x=0;
+			   this.nativeWindow.y=0;
+			   }
+			   trace("New state: " + event.newState);
+			   }
+			 */
+			protected function fullScreenStateChange(event:FullScreenEvent):void
+			{
+				if (event.fullScreen)
+				{
+					fullScreenButton.label="Exit full screen";
+					fullScreenButton.setStyle("iconUp", "assets/icons/button/fullscreen_exit.png");
+				}
+				else
+				{
+					fullScreenButton.label="Full screen";
+					fullScreenButton.setStyle("iconUp", "assets/icons/button/fullscreen.png");
+				}
+			}
+
+			protected function windowedapplication1_preinitializeHandler(event:FlexEvent):void
+			{
+				var descriptor:XML=FlexGlobals.topLevelApplication.nativeApplication.applicationDescriptor;
+				var ns:Namespace=descriptor.namespaceDeclarations()[0];
+				version=descriptor.ns::version;
+				trace('version: ' + version);
+				ApplicationController.initialize([AIRServiceProvider], AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx-" + dbVersion).nativePath);
+				//Rx.enableLogging();
+			}
+
+			public static function get models():ModelsController
+			{
+				return ModelsController.instance;
+			}
+
+			public static function get prefs():PrefsController
+			{
+				return PrefsController.instance;
+			}
+
+
+			protected function exampleSelectEventHandler(event:ExampleSelectEvent):void
+			{
+				var viewer:GraphViewer=new GraphViewer();
+				viewer.example=event.example;
+				currentState='TlzState';
+				navigator.addChildAt(viewer, navigator.numChildren - 1);
+				navigator.selectedChild=viewer;
+			}
+
+
+			protected function fullScreenButton_clickHandler(event:MouseEvent):void
+			{
+				switch (stage.displayState)
+				{
+					case StageDisplayState.FULL_SCREEN:
+					case StageDisplayState.FULL_SCREEN_INTERACTIVE:
+						stage.displayState=StageDisplayState.NORMAL;
+						break;
+					case StageDisplayState.NORMAL:
+						stage.displayState=StageDisplayState.FULL_SCREEN_INTERACTIVE;
+						break;
+				}
+			}
+
+			protected function initializeUpdater():void
+			{
+				updater=new ApplicationUpdaterUI();
+				updater.configurationFile=File.applicationDirectory.resolvePath('config/updaterConfig.xml');
+				if (!prefs.autocheck)
+				{
+					updater.delay=0;
+				}
+				updater.initialize();
+				updater.addEventListener(StatusUpdateEvent.UPDATE_STATUS, updateStatusEventHandler);
+			}
+
+			protected function firstRunCloseHandler(event:CloseEvent):void
+			{
 				initializeUpdater();
 			}
-			this.nativeWindow.addEventListener(NativeWindowBoundsEvent.RESIZING,windowedapplication1_resizingHandler);
-			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE,nativeApplication_activateHandler);
-			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE,nativeApplication_deactivateHandler);
-			
-		}
-		
-		protected function nativeApplication_activateHandler(event:Event):void {
-			//stage.frameRate = 24;
-		}
-		
-		protected function nativeApplication_deactivateHandler(event:Event):void {
-			//stage.frameRate = 1;
-		}
-		
-		
-		
-		protected function updateStatusEventHandler(event:StatusUpdateEvent):void {
-			if (manualUpdateCheck && !event.available) {
-				Alert.show('No update available','There is currently no update available for Gapminder Desktop.');
-			}
-			manualUpdateCheck = false;
-		}
-		
-		protected function navigator_clickHandler(event:MouseEvent):void {
-			
-			//'add new tab' functionality
-			
-			var bar:SuperTabBar = null;			
-			var obj:Object = event.target;
-			var parent:Object = obj.parent;
-			var child:DisplayObject = null;
-			for (var i:uint=0; i<4; i++) {
-				if (parent is SuperTabBar) {
-					bar = parent as SuperTabBar;
-					child = obj as DisplayObject;
-					break;
+
+			protected function windowedapplication1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreenStateChange);
+				this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED, exampleSelectEventHandler); //for selection of default graph
+				launchMonitor();
+				if (prefs.firstRun)
+				{
+					var firstRunWindow:IFlexDisplayObject=PopUpManager.createPopUp(this, FirstRunAlert, false);
+					firstRunWindow.addEventListener(CloseEvent.CLOSE, firstRunCloseHandler);
 				}
-				obj = parent;
-				parent = obj.parent;
-				
+				else
+				{
+					initializeUpdater();
+				}
+				this.nativeWindow.addEventListener(NativeWindowBoundsEvent.RESIZING, windowedapplication1_resizingHandler);
+				NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, nativeApplication_activateHandler);
+				NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, nativeApplication_deactivateHandler);
+
 			}
-			if (bar) {
-				var selectedIndex:uint = bar.getChildIndex(child);
-				if (selectedIndex == (bar.numChildren - 1)) {
-					event.stopImmediatePropagation();
-					event.preventDefault();
-					if (event.target is SuperTab) {
-						var viewer:GraphViewer = new GraphViewer();
-						viewer.example = models.defaultExample;
-						navigator.addChildAt(viewer,navigator.numChildren - 1);
-						navigator.selectedChild = viewer;
+
+			protected function nativeApplication_activateHandler(event:Event):void
+			{
+				//stage.frameRate = 24;
+			}
+
+			protected function nativeApplication_deactivateHandler(event:Event):void
+			{
+				//stage.frameRate = 1;
+			}
+
+
+
+			protected function updateStatusEventHandler(event:StatusUpdateEvent):void
+			{
+				if (manualUpdateCheck && !event.available)
+				{
+					Alert.show('No update available', 'There is currently no update available for Gapminder Desktop.');
+				}
+				manualUpdateCheck=false;
+			}
+
+			protected function navigator_clickHandler(event:MouseEvent):void
+			{
+
+				//'add new tab' functionality
+
+				var bar:SuperTabBar=null;
+				var obj:Object=event.target;
+				var parent:Object=obj.parent;
+				var child:DisplayObject=null;
+				for (var i:uint=0; i < 4; i++)
+				{
+					if (parent is SuperTabBar)
+					{
+						bar=parent as SuperTabBar;
+						child=obj as DisplayObject;
+						break;
+					}
+					obj=parent;
+					parent=obj.parent;
+
+				}
+				if (bar)
+				{
+					var selectedIndex:uint=bar.getChildIndex(child);
+					if (selectedIndex == (bar.numChildren - 1))
+					{
+						event.stopImmediatePropagation();
+						event.preventDefault();
+						if (event.target is SuperTab)
+						{
+							var viewer:GraphViewer=new GraphViewer();
+							viewer.example=models.defaultExample;
+							navigator.addChildAt(viewer, navigator.numChildren - 1);
+							navigator.selectedChild=viewer;
+						}
 					}
 				}
 			}
-		}
-		
-		
-		private function launchExamplesList():void {
-			var win:ExampleSelectionBox = PopUpManager.createPopUp(this,ExampleSelectionBox,true) as ExampleSelectionBox;
-			win.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED,exampleSelectEventHandler);
-			PopUpManager.centerPopUp(win);
-		}
-		
-		private function launchDefaultGraph():void {
-			if (!navigator || navigator.numChildren < 2) {
-				this.dispatchEvent(new ExampleSelectEvent( models.defaultExample));
-			} else {
-				currentState = 'TlzState';
+
+
+			private function launchExamplesList():void
+			{
+				var win:ExampleSelectionBox=PopUpManager.createPopUp(this, ExampleSelectionBox, true) as ExampleSelectionBox;
+				win.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED, exampleSelectEventHandler);
+				PopUpManager.centerPopUp(win);
 			}
-		}
-		
-		
-		
-		private function get fixedSizeState():Boolean {
-			return (stateInGroup(this.currentState,"FixedSize"))
-		}
-		
-		protected function windowedapplication1_resizingHandler(event:NativeWindowBoundsEvent):void
-		{
-			
-			if (this.fixedSizeState) {
-				event.preventDefault();
-				event.stopImmediatePropagation();
+
+			private function launchDefaultGraph():void
+			{
+				if (!navigator || navigator.numChildren < 2)
+				{
+					this.dispatchEvent(new ExampleSelectEvent(models.defaultExample));
+				}
+				else
+				{
+					currentState='TlzState';
+				}
 			}
-		}
-		
-		
-		protected function navigator_indexChangedHandler(event:IndexChangedEvent):void {
+
+
+
+			private function get fixedSizeState():Boolean
+			{
+				return (stateInGroup(this.currentState, "FixedSize"))
+			}
+
+			protected function windowedapplication1_resizingHandler(event:NativeWindowBoundsEvent):void
+			{
+
+				if (this.fixedSizeState)
+				{
+					event.preventDefault();
+					event.stopImmediatePropagation();
+				}
+			}
+
+
+			protected function navigator_indexChangedHandler(event:IndexChangedEvent):void
+			{
 			/* 		trace (event.relatedObject.toString());
-			var viewer:GraphViewer = event.relatedObject as GraphViewer;
-			if (viewer && viewer.graphHTML) {
-			this.stage.focus = viewer.graphHTML.htmlLoader; 
-			viewer.graphHTML.htmlLoader.window.setFocus();
+			   var viewer:GraphViewer = event.relatedObject as GraphViewer;
+			   if (viewer && viewer.graphHTML) {
+			   this.stage.focus = viewer.graphHTML.htmlLoader;
+			   viewer.graphHTML.htmlLoader.window.setFocus();
+			   }
+			 */
 			}
-			*/			
-		}
-		
-		protected function navigator_creationCompleteHandler(event:FlexEvent):void
-		{
-			SuperTabNavigator(event.currentTarget).addEventListener(MouseEvent.CLICK,navigator_clickHandler,true);
-			SuperTabNavigator(event.currentTarget).addEventListener(IndexChangedEvent.CHANGE,navigator_indexChangedHandler);		
-		}
-		
-		protected function navigator_tabsReorderedHandler(event:TabReorderEvent):void
-		{
-			var nav:SuperTabNavigator = event.currentTarget as SuperTabNavigator;
-			if (event.newIndex == nav.length) {
-				event.preventDefault();
+
+			protected function navigator_creationCompleteHandler(event:FlexEvent):void
+			{
+				SuperTabNavigator(event.currentTarget).addEventListener(MouseEvent.CLICK, navigator_clickHandler, true);
+				SuperTabNavigator(event.currentTarget).addEventListener(IndexChangedEvent.CHANGE, navigator_indexChangedHandler);
 			}
-		}
-		
-		
-		protected function tosButton_clickHandler(event:MouseEvent):void
-		{
-			if (event.altKey) { 
-				if (event.shiftKey) { //open db admin interface
-					var win:Admin = PopUpManager.createPopUp(this,Admin,true) as Admin;
-					PopUpManager.centerPopUp(win);
-				} else { //open Settings
-					currentState = 'SettingsState';
+
+			protected function navigator_tabsReorderedHandler(event:TabReorderEvent):void
+			{
+				var nav:SuperTabNavigator=event.currentTarget as SuperTabNavigator;
+				if (event.newIndex == nav.length)
+				{
+					event.preventDefault();
 				}
-			} else {
-				currentState='TosState';
-				
 			}
-		}
-		
-		protected function addTabCanvas_creationCompleteHandler(event:FlexEvent):void
-		{
-			var nav:SuperTabNavigator = event.currentTarget.parent as SuperTabNavigator;
-			var selectedIndex:uint = nav.getChildIndex(event.currentTarget as DisplayObject);
-			nav.setClosePolicyForTab(selectedIndex,SuperTab.CLOSE_NEVER);
-		}
-		
-		protected function resetButton_clickHandler(event:MouseEvent):void
-		{
-			var viewer:GraphViewer = navigator.selectedChild as GraphViewer;
-			if (viewer) {
-				this.dispatchEvent(new ExampleSelectEvent( models.defaultExample));
+
+
+			protected function tosButton_clickHandler(event:MouseEvent):void
+			{
+				if (event.altKey)
+				{
+					if (event.shiftKey)
+					{ //open db admin interface
+						var win:Admin=PopUpManager.createPopUp(this, Admin, true) as Admin;
+						PopUpManager.centerPopUp(win);
+					}
+					else
+					{ //open Settings
+						currentState='SettingsState';
+					}
+				}
+				else
+				{
+					currentState='TosState';
+
+				}
 			}
-		}
-		
-		protected function stateInGroup(stateName:String,groupName:String):Boolean {
-			for each (var state:State in this.states) {
-				if (state.name == stateName) {
-					for each (var group:String in state.stateGroups) {
-						if (groupName == group) {
-							return true;
+
+			protected function addTabCanvas_creationCompleteHandler(event:FlexEvent):void
+			{
+				var nav:SuperTabNavigator=event.currentTarget.parent as SuperTabNavigator;
+				var selectedIndex:uint=nav.getChildIndex(event.currentTarget as DisplayObject);
+				nav.setClosePolicyForTab(selectedIndex, SuperTab.CLOSE_NEVER);
+			}
+
+			protected function resetButton_clickHandler(event:MouseEvent):void
+			{
+				var viewer:GraphViewer=navigator.selectedChild as GraphViewer;
+				if (viewer)
+				{
+					this.dispatchEvent(new ExampleSelectEvent(models.defaultExample));
+				}
+			}
+
+			protected function stateInGroup(stateName:String, groupName:String):Boolean
+			{
+				for each (var state:State in this.states)
+				{
+					if (state.name == stateName)
+					{
+						for each (var group:String in state.stateGroups)
+						{
+							if (groupName == group)
+							{
+								return true;
+							}
 						}
-					}		
-				}			
+					}
+				}
+				return false;
 			}
-			return false;
-		}
-		
-		
-		protected function updateCheckButton_clickHandler(event:MouseEvent):void
-		{
-			updater.checkNow();
-		}
-		
-		
-		protected function windowedapplication1_currentStateChangeHandler(event:StateChangeEvent):void
-		{
-			if (stateInGroup(event.oldState,"FixedSize")) {
-				if (stateInGroup(event.newState,"Resizable")) {
-					//transition from fixed to resizable
-					
-					this.nativeWindow.visible = false;
-					this.nativeWindow.bounds = resizableRect;
-					stage.displayState = resizableDisplayState;
-					this.nativeWindow.visible = true;
-					
+
+
+			protected function updateCheckButton_clickHandler(event:MouseEvent):void
+			{
+				updater.checkNow();
+			}
+
+
+			protected function windowedapplication1_currentStateChangeHandler(event:StateChangeEvent):void
+			{
+				if (stateInGroup(event.oldState, "FixedSize"))
+				{
+					if (stateInGroup(event.newState, "Resizable"))
+					{
+						//transition from fixed to resizable
+
+						this.nativeWindow.visible=false;
+						this.nativeWindow.bounds=resizableRect;
+						stage.displayState=resizableDisplayState;
+						this.nativeWindow.visible=true;
+
+					}
+				}
+				if (stateInGroup(event.oldState, "Resizable"))
+				{
+
+					if (stateInGroup(event.newState, "FixedSize"))
+					{
+						//transition from resizable to fixed        
+						this.nativeWindow.visible=false;
+						//this.move(fixedSizeRect.x,fixedSizeRect.y); 
+						this.nativeWindow.bounds=fixedSizeRect;
+						stage.displayState=StageDisplayState.NORMAL;
+						this.nativeWindow.visible=true;
+
+					}
+				}
+
+			}
+
+
+			protected function windowedapplication1_currentStateChangingHandler(event:StateChangeEvent):void
+			{
+				if (stateInGroup(event.oldState, "FixedSize"))
+				{
+					if (stateInGroup(event.newState, "Resizable"))
+					{
+						//transition from fixed to resizable
+						fixedSizeRect=this.nativeWindow.bounds;
+
+					}
+				}
+				if (stateInGroup(event.oldState, "Resizable"))
+				{
+					if (stateInGroup(event.newState, "FixedSize"))
+					{
+						//transition from resizable to fixed	
+						resizableRect=this.nativeWindow.bounds;
+						resizableDisplayState=this.stage.displayState;
+					}
+				}
+
+			}
+
+			private function launchMonitor():void
+			{
+				var monitor:URLMonitor;
+				monitor=new URLMonitor(new URLRequest('http://www.gapminder.org'));
+				monitor.addEventListener(StatusEvent.STATUS, networkStatusChangeHandler);
+				monitor.start();
+			}
+
+			protected function windowedapplication1_networkChangeHandler(event:Event):void
+			{
+				launchMonitor();
+			}
+
+			private function networkStatusChangeHandler(event:StatusEvent):void
+			{
+				online=(event.code == "Service.available");
+			}
+
+
+			protected function settingsButton_clickHandler(event:MouseEvent):void
+			{
+				var settingsWindow:IFlexDisplayObject=PopUpManager.createPopUp(this, Settings, true);
+				settingsWindow.addEventListener("manualUpdateCheck", manualUpdateCheckEventHandler);
+			}
+
+			protected function manualUpdateCheckEventHandler(event:Event):void
+			{
+				manualUpdateCheck=true;
+				updater.checkNow();
+			}
+
+			[Bindable]
+			public function get nativeBounds():Rectangle
+			{
+				return nativeWindow.bounds;
+			}
+
+			public function set nativeBounds(value:Rectangle):void
+			{
+				nativeWindow.bounds=value;
+				//trace ('setting window bounds to: ' + value.toString());
+			}
+
+			protected function animate1_effectEndHandler(event:EffectEvent):void
+			{
+				this.stage.displayState=resizableDisplayState;
+				if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE))
+				{
+					this.move(resizableRect.left, resizableRect.top);
+					this.nativeWindow.width=resizableRect.width;
+					this.nativeWindow.height=resizableRect.height;
 				}
 			}
-			if (stateInGroup(event.oldState,"Resizable")) {
-				
-				if (stateInGroup(event.newState,"FixedSize")) {
-					//transition from resizable to fixed        
-					this.nativeWindow.visible = false;
-					//this.move(fixedSizeRect.x,fixedSizeRect.y); 
-					this.nativeWindow.bounds = fixedSizeRect;
-					stage.displayState = StageDisplayState.NORMAL;
-					this.nativeWindow.visible = true;
-					
-				}    
+
+			protected function tosDisplay_creationCompleteHandler(event:FlexEvent):void
+			{
+				var touFile:File=File.applicationDirectory.resolvePath('assets/text/tou.xml');
+				var touFileStream:FileStream=new FileStream();
+
+				touFileStream.open(touFile, FileMode.READ);
+				var str:String=touFileStream.readMultiByte(touFileStream.bytesAvailable, "utf-8");
+				tosDisplay.content=TextFlowUtil.importFromString(str);
 			}
-			
-		} 
-		
-		
-		protected function windowedapplication1_currentStateChangingHandler(event:StateChangeEvent):void
-		{
-			if (stateInGroup(event.oldState,"FixedSize")) {
-				if (stateInGroup(event.newState,"Resizable")) {
-					//transition from fixed to resizable
-					fixedSizeRect = this.nativeWindow.bounds;
-					
+
+
+			protected function helpButton_clickHandler(event:MouseEvent):void
+			{
+				var helpWin:HelpWindow=new HelpWindow();
+				helpWin.open(true);
+			}
+
+
+			protected function printButton_clickHandler(event:MouseEvent):void
+			{
+				var job:FlexPrintJob=new FlexPrintJob();
+				if (job.start())
+				{
+					job.addObject(GraphViewer(navigator.selectedChild));
+					job.send();
 				}
 			}
-			if (stateInGroup(event.oldState,"Resizable")) {	
-				if (stateInGroup(event.newState,"FixedSize")) {
-					//transition from resizable to fixed	
-					resizableRect = this.nativeWindow.bounds;
-					resizableDisplayState = this.stage.displayState;
-				}	
-			}
-			
-		}
-		
-		private function launchMonitor():void {
-			var monitor:URLMonitor;
-			monitor = new URLMonitor(new URLRequest('http://www.gapminder.org'));
-			monitor.addEventListener(StatusEvent.STATUS, networkStatusChangeHandler);
-			monitor.start();
-		}
-		
-		protected function windowedapplication1_networkChangeHandler(event:Event):void
-		{
-			launchMonitor();			
-		}
-		
-		private function networkStatusChangeHandler(event:StatusEvent):void {
-			online = (event.code == "Service.available"); 
-		}
-		
-		
-		protected function settingsButton_clickHandler(event:MouseEvent):void
-		{
-			var settingsWindow:IFlexDisplayObject = PopUpManager.createPopUp(this,Settings,true);
-			settingsWindow.addEventListener("manualUpdateCheck",manualUpdateCheckEventHandler);
-		}
-		
-		protected function manualUpdateCheckEventHandler(event:Event):void {
-			manualUpdateCheck=true;
-			updater.checkNow();
-		}
-		
-		[Bindable]
-		public function get nativeBounds():Rectangle
-		{
-			return nativeWindow.bounds;
-		}
-		public function set nativeBounds(value:Rectangle):void
-		{
-			nativeWindow.bounds = value;
-			//trace ('setting window bounds to: ' + value.toString());
-		}
-		
-		protected function animate1_effectEndHandler(event:EffectEvent):void
-		{
-			this.stage.displayState = resizableDisplayState;
-			if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)) {
-				this.move(resizableRect.left,resizableRect.top);
-				this.nativeWindow.width = resizableRect.width;
-				this.nativeWindow.height = resizableRect.height;
-			}
-		}
-		
-		protected function tosDisplay_creationCompleteHandler(event:FlexEvent):void
-		{
-			var touFile:File = File.applicationDirectory.resolvePath('assets/text/tou.xml');
-			var touFileStream:FileStream = new FileStream();
-			
-			touFileStream.open(touFile,FileMode.READ);
-			var str:String = touFileStream.readMultiByte(touFileStream.bytesAvailable,"utf-8");	
-			tosDisplay.content = TextFlowUtil.importFromString(str);	
-		}
-		
-		
-		protected function helpButton_clickHandler(event:MouseEvent):void
-		{
-			var helpWin:HelpWindow = new HelpWindow();
-			helpWin.open(true);
-		}
-		
-		
-		protected function printButton_clickHandler(event:MouseEvent):void
-		{
-			var job:FlexPrintJob = new FlexPrintJob();
-			if (job.start()) {
-				job.addObject(GraphViewer(navigator.selectedChild));
-				job.send();
-			}
-		}
-		
-		
-		
-		
-		
-		protected function navigator_tabCloseHandler(event:SuperTabEvent):void
-		{
-			var nav:SuperTabNavigator = event.target as SuperTabNavigator;
-			if (nav.length > 2 && (event.tabIndex == nav.length-2)) {
-				nav.selectedIndex = event.tabIndex - 1;
-			}
-		}
-		
-		
-		
-		
-		
-		
-		protected function nameExample_nameExampleHandler(event:NameExampleEvent):void
-		{
-			GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
-			currentState = 'TlzState';
-		}
-		
-
-		protected function bookmarkButton_clickHandler(event:MouseEvent):void
-		{
-			currentState='NameExampleState';
-		}
 
 
-		protected function windowedapplication1_activateHandler(event:Event):void
-		{
-			if (stage) {
-			stage.frameRate = 24;
+
+
+
+			protected function navigator_tabCloseHandler(event:SuperTabEvent):void
+			{
+				var nav:SuperTabNavigator=event.target as SuperTabNavigator;
+				if (nav.length > 2 && (event.tabIndex == nav.length - 2))
+				{
+					nav.selectedIndex=event.tabIndex - 1;
+				}
 			}
-		}
 
 
-		protected function windowedapplication1_deactivateHandler(event:Event):void
-		{	
-			if (stage) {
-			stage.frameRate = 1;
-		}
-		}
-	]]></fx:Script>
-	
+
+
+
+
+			protected function nameExample_nameExampleHandler(event:NameExampleEvent):void
+			{
+				GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
+				currentState='TlzState';
+			}
+
+
+			protected function bookmarkButton_clickHandler(event:MouseEvent):void
+			{
+				currentState='NameExampleState';
+			}
+
+
+			protected function windowedapplication1_activateHandler(event:Event):void
+			{
+				if (stage)
+				{
+					stage.frameRate=24;
+				}
+			}
+
+
+			protected function windowedapplication1_deactivateHandler(event:Event):void
+			{
+				if (stage)
+				{
+					stage.frameRate=1;
+				}
+			}
+
+			protected function videoButtonTemp_clickHandler(event:MouseEvent):void
+			{
+				var videoWin:VideoPlayer=new VideoPlayer();
+				videoWin.open(true);
+			}
+		]]>
+	</fx:Script>
+
 	<s:states>
-		<s:State name="MainState" stateGroups="FixedSize"/>
-		<s:State name="TosState" stateGroups="FixedSize"/>
-		<s:State name="TlzState" stateGroups="Resizable"/>
-		<s:State name="NameExampleState" stateGroups="Resizable"/>
+		<s:State name="MainState"
+				 stateGroups="FixedSize"/>
+		<s:State name="TosState"
+				 stateGroups="FixedSize"/>
+		<s:State name="TlzState"
+				 stateGroups="Resizable"/>
+		<s:State name="NameExampleState"
+				 stateGroups="Resizable"/>
 	</s:states>
 	<s:layout>
 		<s:BasicLayout/>
 	</s:layout>
-	 
-	
-	<s:Group id="laidoutcontent" width="100%" height="100%">
+
+
+	<s:Group id="laidoutcontent"
+			 width="100%"
+			 height="100%">
 		<s:layout>
-			<s:VerticalLayout gap="0" paddingRight="0" paddingLeft="0"/>
+			<s:VerticalLayout gap="0"
+							  paddingRight="0"
+							  paddingLeft="0"/>
 		</s:layout>
-		<s:DataGroup dataProvider="{models.examples}" width="0" height="0" includeInLayout="false"/>
-		<s:Group id="tlzgroup" x="0" y="0" width="100%" height="100%" includeIn="TlzState,NameExampleState">
-			<s:layout><s:BasicLayout/></s:layout>
-			<s:Group id="tlzbuttonrow" x="0" y="0" height="30" width="100%">
-				<s:layout><s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4" paddingRight="4"/></s:layout>
-				<extensions:IconButton id="homeButton" styleName="iconButtonStyle" label="" iconUp="assets/icons/button/home.png" click="currentState='MainState'" />
-				<extensions:IconButton id="resetButton" styleName="iconButtonStyle" label="Reset graph" iconUp="assets/icons/button/reload.png" click="resetButton_clickHandler(event)" />
-				<extensions:IconButton id="tlzGraphListButton" styleName="iconButtonStyle" label="Open list of graphs" iconUp="assets/icons/button/list.png" click="launchExamplesList()"/>
-				<extensions:IconButton id="bookmarkButton" styleName="iconButtonStyle" label="Bookmark graph" iconUp="assets/icons/button/plus.png" click="bookmarkButton_clickHandler(event)"/>
-				<extensions:IconButton id="helpButton" styleName="iconButtonStyle" label="How to use" iconUp="assets/icons/button/lightbulb.png" click="helpButton_clickHandler(event)"/>
-				<s:Group id="tlzbuttonrowright" width="100%">
-					<s:layout>
-						<s:HorizontalLayout horizontalAlign="right"/>
-					</s:layout>
-					<extensions:IconButton id="fullScreenButton" styleName="iconButtonStyle" label="Full screen" iconUp="assets/icons/button/fullscreen.png" click="fullScreenButton_clickHandler(event)"/>
-					
-				</s:Group>
-			</s:Group>
-			<containers:SuperTabNavigator styleName="tlzNavigator" id="navigator" bottom="0" top="40" left="0" right="0"  creationPolicy="all" editableTabLabels="false" popUpButtonPolicy="off" creationComplete="navigator_creationCompleteHandler(event)" tabsReordered="navigator_tabsReorderedHandler(event)" tabClose="navigator_tabCloseHandler(event)" includeIn="TlzState,NameExampleState" mouseEnabled.NameExampleState="false">
-				<ns:Canvas id="addTabCanvas" width="100%" height="100%" label="+" creationComplete="addTabCanvas_creationCompleteHandler(event)">
-					
-				</ns:Canvas>
-			</containers:SuperTabNavigator>
-		</s:Group>
-		
-		<s:Group id="headinggroup" bottom="74" top="0" left="0" right="0" width="100%" excludeFrom="TlzState,NameExampleState">
-			<s:Rect width="100%" height="100%">
-				<s:fill>
-					<s:LinearGradient rotation="270" scaleX="74" y="74">
-						<s:GradientEntry color="0xD9D9D9" ratio="0"/>
-						<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
-						<s:GradientEntry color="0xEEEEEE" ratio="1"/>
-					</s:LinearGradient>
-				</s:fill>
-			</s:Rect>
-			<s:Line left="0" right="0" top="74.5">
-				<s:stroke>
-					<s:SolidColorStroke caps="none" color="0x6C6C6C" joints="miter" miterLimit="4" scaleMode="normal" weight="1"/>
-				</s:stroke>
-			</s:Line>
-			<s:RichText id="headingtext" color="#000000" fontFamily="Avenir-black" fontWeight="normal" fontSize="36" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" top="14">
-				<s:content><s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span></s:p></s:content>
-			</s:RichText>
-			
-			<s:RichText id="betabadge" color="#444444" rotation="45" fontFamily="Avenir-light" fontWeight="normal" fontSize="14" kerning="on" textAlign="center" whiteSpaceCollapse="preserve" x="{headingtext.x + headingtext.width}" y="5" text="beta"/>
-			
-			<s:RichText id="tagline" color="0x000000" fontFamily="Avenir-book" fontSize="14" height="20" kerning="on" lineHeight="120%" textAlign="center" whiteSpaceCollapse="preserve" horizontalCenter="0" y="49">
-				<s:content><s:p>no internet required</s:p></s:content>
-			</s:RichText>
-			<s:RichText id="versioninfo" color="#000000" fontFamily="Avenir-light" fontSize="10" height="10" text="Updated {new Date(2010,3,21).toDateString()} (v {this.version})" textAlign="right" whiteSpaceCollapse="preserve" width="{this.width/3}" x="{this.width*(2/3)-5}" y="60"/>
-		</s:Group>
-		
-		
-		<s:Group id="maingroup" top="0" bottom="0" width="100%" height="100%" includeIn="MainState">
+		<s:DataGroup dataProvider="{models.examples}"
+					 width="0"
+					 height="0"
+					 includeInLayout="false"/>
+		<s:Group id="tlzgroup"
+				 x="0"
+				 y="0"
+				 width="100%"
+				 height="100%"
+				 includeIn="TlzState,NameExampleState">
 			<s:layout>
 				<s:BasicLayout/>
 			</s:layout>
-			
-			
-			<s:Group id="gwgroup" width="100%" top="0" left="0" bottom="30" right="0">	
+			<s:Group id="tlzbuttonrow"
+					 x="0"
+					 y="0"
+					 height="30"
+					 width="100%">
 				<s:layout>
-					<s:HorizontalLayout gap="20" paddingLeft="15" paddingRight="15" paddingTop="10" paddingBottom="15"/>
+					<s:HorizontalLayout paddingLeft="4"
+										paddingTop="4"
+										paddingBottom="4"
+										paddingRight="4"/>
 				</s:layout>
-				<s:Group id="bigbuttoncolumn" width="50%" height="100%">
-					<s:Button id="splashButton" styleName="splashButtonStyle" click="launchDefaultGraph()" useHandCursor="true" buttonMode="true" width="100%" height="100%"/>		
+				<extensions:IconButton id="homeButton"
+									   styleName="iconButtonStyle"
+									   label=""
+									   iconUp="assets/icons/button/home.png"
+									   click="currentState='MainState'"/>
+				<extensions:IconButton id="resetButton"
+									   styleName="iconButtonStyle"
+									   label="Reset graph"
+									   iconUp="assets/icons/button/reload.png"
+									   click="resetButton_clickHandler(event)"/>
+				<extensions:IconButton id="tlzGraphListButton"
+									   styleName="iconButtonStyle"
+									   label="Open list of graphs"
+									   iconUp="assets/icons/button/list.png"
+									   click="launchExamplesList()"/>
+				<extensions:IconButton id="bookmarkButton"
+									   styleName="iconButtonStyle"
+									   label="Bookmark graph"
+									   iconUp="assets/icons/button/plus.png"
+									   click="bookmarkButton_clickHandler(event)"/>
+				<extensions:IconButton id="helpButton"
+									   styleName="iconButtonStyle"
+									   label="How to use"
+									   iconUp="assets/icons/button/lightbulb.png"
+									   click="helpButton_clickHandler(event)"/>
+				<s:Group id="tlzbuttonrowright"
+						 width="100%">
+					<s:layout>
+						<s:HorizontalLayout horizontalAlign="right"/>
+					</s:layout>
+					<extensions:IconButton id="fullScreenButton"
+										   styleName="iconButtonStyle"
+										   label="Full screen"
+										   iconUp="assets/icons/button/fullscreen.png"
+										   click="fullScreenButton_clickHandler(event)"/>
+
 				</s:Group>
-				<s:Group id="explanationcolumn" width="50%" height="100%"> 
-					<s:layout><s:VerticalLayout/></s:layout>
-					<s:Group id="introtextgroup" width="100%">
-						<s:layout><s:VerticalLayout gap="0"/></s:layout>
-						<s:RichText color="0x000000" fontFamily="Avenir-heavy" fontSize="17" id="explanationheading" kerning="on" lineHeight="120%" whiteSpaceCollapse="preserve" width="100%" paragraphSpaceAfter="0" paragraphSpaceBefore="0" text="Gapminder World"/>
-						
-						<s:RichEditableText id="explanationtext" editable="false" textAlign="left" color="0x000000" fontSize="14" fontFamily="Avenir-book" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" whiteSpaceCollapse="preserve" paddingTop="5" paddingBottom="5">
-							<s:content><s:p >Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
+			</s:Group>
+			<containers:SuperTabNavigator styleName="tlzNavigator"
+										  id="navigator"
+										  bottom="0"
+										  top="40"
+										  left="0"
+										  right="0"
+										  creationPolicy="all"
+										  editableTabLabels="false"
+										  popUpButtonPolicy="off"
+										  creationComplete="navigator_creationCompleteHandler(event)"
+										  tabsReordered="navigator_tabsReorderedHandler(event)"
+										  tabClose="navigator_tabCloseHandler(event)"
+										  includeIn="TlzState,NameExampleState"
+										  mouseEnabled.NameExampleState="false">
+				<ns:Canvas id="addTabCanvas"
+						   width="100%"
+						   height="100%"
+						   label="+"
+						   creationComplete="addTabCanvas_creationCompleteHandler(event)">
+
+				</ns:Canvas>
+			</containers:SuperTabNavigator>
+		</s:Group>
+
+		<s:Group id="headinggroup"
+				 bottom="74"
+				 top="0"
+				 left="0"
+				 right="0"
+				 width="100%"
+				 excludeFrom="TlzState,NameExampleState">
+			<s:Rect width="100%"
+					height="100%">
+				<s:fill>
+					<s:LinearGradient rotation="270"
+									  scaleX="74"
+									  y="74">
+						<s:GradientEntry color="0xD9D9D9"
+										 ratio="0"/>
+						<s:GradientEntry color="0xEFEFEF"
+										 ratio="0.564417"/>
+						<s:GradientEntry color="0xEEEEEE"
+										 ratio="1"/>
+					</s:LinearGradient>
+				</s:fill>
+			</s:Rect>
+			<s:Line left="0"
+					right="0"
+					top="74.5">
+				<s:stroke>
+					<s:SolidColorStroke caps="none"
+										color="0x6C6C6C"
+										joints="miter"
+										miterLimit="4"
+										scaleMode="normal"
+										weight="1"/>
+				</s:stroke>
+			</s:Line>
+			<s:RichText id="headingtext"
+						color="#000000"
+						fontFamily="Avenir-black"
+						fontWeight="normal"
+						fontSize="36"
+						kerning="on"
+						textAlign="center"
+						whiteSpaceCollapse="preserve"
+						horizontalCenter="0"
+						top="14">
+				<s:content>
+					<s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span>
+					</s:p>
+				</s:content>
+			</s:RichText>
+
+			<s:RichText id="betabadge"
+						color="#444444"
+						rotation="45"
+						fontFamily="Avenir-light"
+						fontWeight="normal"
+						fontSize="14"
+						kerning="on"
+						textAlign="center"
+						whiteSpaceCollapse="preserve"
+						x="{headingtext.x + headingtext.width}"
+						y="5"
+						text="beta"/>
+
+			<s:RichText id="tagline"
+						color="0x000000"
+						fontFamily="Avenir-book"
+						fontSize="14"
+						height="20"
+						kerning="on"
+						lineHeight="120%"
+						textAlign="center"
+						whiteSpaceCollapse="preserve"
+						horizontalCenter="0"
+						y="49">
+				<s:content>
+					<s:p>no internet required</s:p>
+				</s:content>
+			</s:RichText>
+			<s:RichText id="versioninfo"
+						color="#000000"
+						fontFamily="Avenir-light"
+						fontSize="10"
+						height="10"
+						text="Updated {new Date(2010,6,9).toDateString()} (v {this.version})"
+						textAlign="right"
+						whiteSpaceCollapse="preserve"
+						width="{this.width/3}"
+						x="{this.width*(2/3)-5}"
+						y="60"/>
+		</s:Group>
+
+
+		<s:Group id="maingroup"
+				 top="0"
+				 bottom="0"
+				 width="100%"
+				 height="100%"
+				 includeIn="MainState">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+
+
+			<s:Group id="gwgroup"
+					 width="100%"
+					 top="0"
+					 left="0"
+					 bottom="30"
+					 right="0">
+				<s:layout>
+					<s:HorizontalLayout gap="20"
+										paddingLeft="15"
+										paddingRight="15"
+										paddingTop="10"
+										paddingBottom="15"/>
+				</s:layout>
+				<s:Group id="bigbuttoncolumn"
+						 width="50%"
+						 height="100%">
+					<s:Button id="splashButton"
+							  styleName="splashButtonStyle"
+							  click="launchDefaultGraph()"
+							  useHandCursor="true"
+							  buttonMode="true"
+							  width="100%"
+							  height="100%"/>
+				</s:Group>
+				<s:Group id="explanationcolumn"
+						 width="50%"
+						 height="100%">
+					<s:layout>
+						<s:VerticalLayout/>
+					</s:layout>
+					<s:Group id="introtextgroup"
+							 width="100%">
+						<s:layout>
+							<s:VerticalLayout gap="0"/>
+						</s:layout>
+						<s:RichText color="0x000000"
+									fontFamily="Avenir-heavy"
+									fontSize="17"
+									id="explanationheading"
+									kerning="on"
+									lineHeight="120%"
+									whiteSpaceCollapse="preserve"
+									width="100%"
+									paragraphSpaceAfter="0"
+									paragraphSpaceBefore="0"
+									text="Gapminder World"/>
+
+						<s:RichEditableText id="explanationtext"
+											editable="false"
+											textAlign="left"
+											color="0x000000"
+											fontSize="14"
+											fontFamily="Avenir-book"
+											lineBreak="toFit"
+											kerning="on"
+											lineHeight="120%"
+											width="100%"
+											whiteSpaceCollapse="preserve"
+											paddingTop="5"
+											paddingBottom="5">
+							<s:content>
+								<s:p>Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p>
+							</s:content>
 						</s:RichEditableText>
-						<s:RichText color="0x000000" fontSize="14" fontFamily="Avenir-book" id="explanationbullets" lineBreak="toFit" kerning="on" lineHeight="120%" width="100%" tabStops="S0 S15" whiteSpaceCollapse="preserve" paragraphStartIndent="15" textIndent="-15" paragraphSpaceAfter="3">
-							<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
+						<s:RichText color="0x000000"
+									fontSize="14"
+									fontFamily="Avenir-book"
+									id="explanationbullets"
+									lineBreak="toFit"
+									kerning="on"
+									lineHeight="120%"
+									width="100%"
+									tabStops="S0 S15"
+									whiteSpaceCollapse="preserve"
+									paragraphStartIndent="15"
+									textIndent="-15"
+									paragraphSpaceAfter="3">
+							<s:content>
+								<s:p>\u2022	No internet required</s:p>
+								<s:p>\u2022	Bookmark your own graphs</s:p>
+								<s:p>\u2022	Choose from a library of existing graphs</s:p>
+								<s:p>\u2022	Updates automatically when new data are available</s:p>
+							</s:content>
 						</s:RichText>
 					</s:Group>
-					<s:Group id="gwbuttongroup" height="100%" width="100%">
+					<s:Group id="gwbuttongroup"
+							 height="100%"
+							 width="100%">
 						<s:layout>
-							<s:VerticalLayout verticalAlign="bottom" horizontalAlign="right"/>
-						</s:layout>	
-						<extensions:IconButton id="mainGwButton" styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" iconUp="assets/icons/button/gw.png" label="Open Gapminder World" width="100%" click="launchDefaultGraph()"/>
-						<extensions:IconButton styleName="iconButtonStyle" useHandCursor="true" buttonMode="true" label="Open list of graphs" width="100%" click="launchExamplesList()" iconUp="assets/icons/button/list.png"/>
+							<s:VerticalLayout verticalAlign="bottom"
+											  horizontalAlign="right"/>
+						</s:layout>
+						<extensions:IconButton id="mainGwButton"
+											   styleName="iconButtonStyle"
+											   useHandCursor="true"
+											   buttonMode="true"
+											   iconUp="assets/icons/button/gw.png"
+											   label="Open Gapminder World"
+											   width="100%"
+											   click="launchDefaultGraph()"/>
+						<extensions:IconButton styleName="iconButtonStyle"
+											   useHandCursor="true"
+											   buttonMode="true"
+											   label="Open list of graphs"
+											   width="100%"
+											   click="launchExamplesList()"
+											   iconUp="assets/icons/button/list.png"/>
 					</s:Group>
 				</s:Group>
 			</s:Group>
-			
-			<s:Group id="settingsbuttonsbar" width="100%" height="30" bottom="0">
+
+			<s:Group id="settingsbuttonsbar"
+					 width="100%"
+					 height="30"
+					 bottom="0">
 				<s:layout>
 					<s:BasicLayout/>
 				</s:layout>
-				<s:Group id="settingsbuttonsbackground" top="0" left="0" right="0" bottom="0">
-					<s:Rect top="0" left="0" right="0" bottom="0">
+				<s:Group id="settingsbuttonsbackground"
+						 top="0"
+						 left="0"
+						 right="0"
+						 bottom="0">
+					<s:Rect top="0"
+							left="0"
+							right="0"
+							bottom="0">
 						<s:fill>
-							<s:LinearGradient rotation="270" y="10">
-								<s:GradientEntry color="0xD9D9D9" ratio="0"/>
-								<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
-								<s:GradientEntry color="0xEEEEEE" ratio="1"/>
+							<s:LinearGradient rotation="270"
+											  y="10">
+								<s:GradientEntry color="0xD9D9D9"
+												 ratio="0"/>
+								<s:GradientEntry color="0xEFEFEF"
+												 ratio="0.564417"/>
+								<s:GradientEntry color="0xEEEEEE"
+												 ratio="1"/>
 							</s:LinearGradient>
 						</s:fill>
-					</s:Rect>				
+					</s:Rect>
 				</s:Group>
-				<s:Group id="settingsbuttons" left="8" right="8" height="100%" verticalCenter="0">
-					<s:layout><s:HorizontalLayout verticalAlign="middle"/></s:layout>
-					<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
-					<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
-					
+				<s:Group id="settingsbuttons"
+						 left="8"
+						 right="8"
+						 height="100%"
+						 verticalCenter="0">
+					<s:layout>
+						<s:HorizontalLayout verticalAlign="middle"/>
+					</s:layout>
+					<s:Button id="tosButton"
+							  click="tosButton_clickHandler(event)"
+							  styleName="settingsButtonStyle"
+							  label="About..."/>
+					<s:Button id="settingsButton"
+							  click="settingsButton_clickHandler(event)"
+							  styleName="settingsButtonStyle"
+							  label="Settings..."/>
+					<s:Button id="videoButtonTemp"
+							  click="videoButtonTemp_clickHandler(event)"
+							  styleName="settingsButtonStyle"
+							  label="Video"/>
 				</s:Group>
 			</s:Group>
 		</s:Group>
-		
-		<s:Group id="tosgroup" includeIn="TosState" width="100%" height="100%">
-			<s:layout><s:VerticalLayout gap="10" paddingLeft="10" paddingBottom="10" paddingRight="10" paddingTop="10"/></s:layout>
-			<s:Scroller width="100%" height="100%">
+
+		<s:Group id="tosgroup"
+				 includeIn="TosState"
+				 width="100%"
+				 height="100%">
+			<s:layout>
+				<s:VerticalLayout gap="10"
+								  paddingLeft="10"
+								  paddingBottom="10"
+								  paddingRight="10"
+								  paddingTop="10"/>
+			</s:layout>
+			<s:Scroller width="100%"
+						height="100%">
 				<s:Group width="100%">
 					<s:layout>
 						<s:BasicLayout/>
 					</s:layout>
-					<s:RichText id="tosDisplay" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" width="100%"/>
+					<s:RichText id="tosDisplay"
+								fontFamily="Avenir-light"
+								creationComplete="tosDisplay_creationCompleteHandler(event)"
+								width="100%"/>
 				</s:Group>
 			</s:Scroller>
-			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" styleName="settingsButtonStyle"/>		
+			<s:Button id="closeTosButton"
+					  click="closeSettingsButton_clickHandler()"
+					  label="Close"
+					  styleName="settingsButtonStyle"/>
 		</s:Group>
-		
-		
+
+
 	</s:Group>
-	
-	
-	
-	<main:NameExample id="nameExample" includeIn="NameExampleState" cancel="currentState='TlzState'" nameExample="nameExample_nameExampleHandler(event)" top="{-nameExample.height}" top.TlzState="{-nameExample.height}" top.NameExampleState="0"/>
-	
+
+
+
+	<main:NameExample id="nameExample"
+					  includeIn="NameExampleState"
+					  cancel="currentState='TlzState'"
+					  nameExample="nameExample_nameExampleHandler(event)"
+					  top="{-nameExample.height}"
+					  top.TlzState="{-nameExample.height}"
+					  top.NameExampleState="0"/>
+
 	<s:transitions>
-		<s:Transition autoReverse="true" fromState="MainState" toState="TosState">
+		<s:Transition autoReverse="true"
+					  fromState="MainState"
+					  toState="TosState">
 			<s:Parallel>
-				<s:Fade duration="500" target="{maingroup}" disableLayout="true"/>
-				<s:Fade duration="500" target="{tosgroup}" disableLayout="true"/>
+				<s:Fade duration="500"
+						target="{maingroup}"
+						disableLayout="true"/>
+				<s:Fade duration="500"
+						target="{tosgroup}"
+						disableLayout="true"/>
 			</s:Parallel>
 		</s:Transition>
-		<s:Transition autoReverse="true" fromState="TosState" toState="MainState">
+		<s:Transition autoReverse="true"
+					  fromState="TosState"
+					  toState="MainState">
 			<s:Parallel>
-				<s:Fade duration="500" target="{tosgroup}" disableLayout="true"/>
-				<s:Fade duration="500" target="{maingroup}" disableLayout="true"/>
+				<s:Fade duration="500"
+						target="{tosgroup}"
+						disableLayout="true"/>
+				<s:Fade duration="500"
+						target="{maingroup}"
+						disableLayout="true"/>
 			</s:Parallel>
 		</s:Transition>
-		
-		<s:Transition autoReverse="true" fromState="TlzState" toState="NameExampleState">
+
+		<s:Transition autoReverse="true"
+					  fromState="TlzState"
+					  toState="NameExampleState">
 			<s:Parallel>
-				<s:Move duration="300" target="{nameExample}"/>
+				<s:Move duration="300"
+						target="{nameExample}"/>
 			</s:Parallel>
 		</s:Transition>
-		
-		<s:Transition autoReverse="true" fromState="NameExampleState" toState="TlzState">
+
+		<s:Transition autoReverse="true"
+					  fromState="NameExampleState"
+					  toState="TlzState">
 			<s:Parallel>
-				<s:Move duration="300" target="{nameExample}"/>
-				
+				<s:Move duration="300"
+						target="{nameExample}"/>
+
 			</s:Parallel>
 		</s:Transition>
-		
-		
+
+
 	</s:transitions>
 </s:WindowedApplication>

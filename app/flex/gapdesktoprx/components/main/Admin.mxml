@@ -1,53 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		   xmlns:s="library://ns.adobe.com/flex/spark" 
-		   xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:ns="library://ns.adobe.com/flex/mx"
-		   title="Admin interface" close="titlewindow1_closeHandler(event)"
-  xmlns:generated="gapdesktoprx.components.generated.*"
-  
-  width="600" height="600"
-  styleName="plain" xmlns:main="gapdesktoprx.components.main.*">
-  <fx:Script>
-    <![CDATA[
-		import gapdesktoprx.controllers.ApplicationController;
-		import gapdesktoprx.controllers.ModelsController;
-		import gapdesktoprx.utils.FirstRunUtilities;
-		
-		import mx.core.FlexGlobals;
-		import mx.events.CloseEvent;
-		import mx.managers.PopUpManager;
-		
-		import org.restfulx.services.air.AIRServiceProvider;
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/halo"
+			   xmlns:ns="library://ns.adobe.com/flex/mx"
+			   title="Admin interface"
+			   close="titlewindow1_closeHandler(event)"
+			   xmlns:generated="gapdesktoprx.components.generated.*"
+			   width="600"
+			   height="600"
+			   styleName="plain"
+			   xmlns:main="gapdesktoprx.components.main.*">
+	<fx:Script>
+		<![CDATA[
+			import gapdesktoprx.controllers.ApplicationController;
+			import gapdesktoprx.controllers.ModelsController;
+			import gapdesktoprx.utils.FirstRunUtilities;
 
-		protected function titlewindow1_closeHandler(event:CloseEvent):void
-		{
-			PopUpManager.removePopUp(this);
-		}
+			import mx.core.FlexGlobals;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+
+			import org.restfulx.services.air.AIRServiceProvider;
+
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
 
 
-		protected function zapDBButton_clickHandler(event:MouseEvent):void
-		{
-			File.applicationStorageDirectory.resolvePath("gapdesktoprx.db").deleteFile();
-			ApplicationController.initialize([AIRServiceProvider], 
-				AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
-			FlexGlobals.topLevelApplication.exit();
-		}
+			protected function zapDBButton_clickHandler(event:MouseEvent):void
+			{
+				File.applicationStorageDirectory.resolvePath("gapdesktoprx.db").deleteFile();
+				ApplicationController.initialize([AIRServiceProvider], AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx").nativePath);
+				FlexGlobals.topLevelApplication.exit();
+			}
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:HorizontalLayout/>
+	</s:layout>
 
-     ]]>
-  </fx:Script>
-	<s:layout><s:HorizontalLayout/></s:layout>
-	
-  <ns:LinkBar dataProvider="{mainViewStack}" direction="vertical" borderStyle="solid" backgroundColor="#EEEEEE"/>
-  <ns:ViewStack id="mainViewStack" width="100%" height="100%">
-     <generated:ExampleBox/>
-    <generated:GraphBox/>
-    <generated:SubmitterBox/>
-	<generated:TagBox/>
-	<generated:ExampleTagBox/> 
-	<main:MarshallTest/>
-</ns:ViewStack>
+	<ns:LinkBar dataProvider="{mainViewStack}"
+				direction="vertical"
+				borderStyle="solid"
+				backgroundColor="#EEEEEE"/>
+	<ns:ViewStack id="mainViewStack"
+				  width="100%"
+				  height="100%">
+		<generated:ExampleBox/>
+		<generated:GraphBox/>
+		<generated:SubmitterBox/>
+		<generated:TagBox/>
+		<generated:ExampleTagBox/>
+		<main:MarshallTest/>
+	</ns:ViewStack>
 
-<!--<mx:Button label="Populate DB" click=""/>-->
-<s:Button label="Zap DB" id="zapDBButton" click="zapDBButton_clickHandler(event)"/>
+	<!--<mx:Button label="Populate DB" click=""/>-->
+	<s:Button label="Zap DB"
+			  id="zapDBButton"
+			  click="zapDBButton_clickHandler(event)"/>
 </s:TitleWindow>

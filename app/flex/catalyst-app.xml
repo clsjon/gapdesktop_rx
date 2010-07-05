@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application xmlns="http://ns.adobe.com/air/application/1.5.3">
 
-    <id>org.gapminder.desktop</id>
+	<id>org.gapminder.desktop</id>
 
-    <publisherID>434684C0EEE0B6011903D7CB9F42374B4E5823E7.1</publisherID>
+	<publisherID>434684C0EEE0B6011903D7CB9F42374B4E5823E7.1</publisherID>
 
-    <filename>Gapminder Desktop</filename>
+	<filename>Gapminder Desktop</filename>
 
-    <name>Gapminder Desktop</name>
+	<name>Gapminder Desktop</name>
 
-    <version>1.0beta10</version>
+	<version>1.0beta10</version>
 
-    <initialWindow>
+	<initialWindow>
 
-        <content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
+		<content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
 
-        <systemChrome>standard</systemChrome>
-        <maximizable>false</maximizable>
-        <width>650</width>
-        <height>430</height>
-        <minSize>650 430</minSize>
+		<systemChrome>standard</systemChrome>
+		<maximizable>false</maximizable>
+		<width>650</width>
+		<height>430</height>
+		<minSize>650 430</minSize>
 
-    </initialWindow>
+	</initialWindow>
 
-    <icon>
+	<icon>
 
-        <image128x128>assets/icons/appIcon_128.png</image128x128>
+		<image128x128>assets/icons/appIcon_128.png</image128x128>
 
-        <image48x48>assets/icons/appIcon_48.png</image48x48>
+		<image48x48>assets/icons/appIcon_48.png</image48x48>
 
-        <image32x32>assets/icons/appIcon_32.png</image32x32>
+		<image32x32>assets/icons/appIcon_32.png</image32x32>
 
-        <image16x16>assets/icons/appIcon_16.png</image16x16>
+		<image16x16>assets/icons/appIcon_16.png</image16x16>
 
-    </icon>
-    
-    <allowBrowserInvocation>false</allowBrowserInvocation>
+	</icon>
+
+	<allowBrowserInvocation>false</allowBrowserInvocation>
 
 </application>

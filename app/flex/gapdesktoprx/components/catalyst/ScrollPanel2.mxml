@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:components="gapdesktoprx.components.catalyst.*">
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:components="gapdesktoprx.components.catalyst.*">
 	<fx:Metadata>[HostComponent("spark.components.SkinnableContainer")]</fx:Metadata>
 	<s:states>
 		<s:State name="normal"/>
 		<s:State name="disabled"/>
 	</s:states>
-	<components:ScrollingContent1 x="0" y="0" id="contentGroup" clipAndEnableScrolling="true" width="558" height="330" height.normal="483"/>
-	<s:VScrollBar fixedThumbSize="true" skinClass="gapdesktoprx.components.catalyst.ExampleListScroll" x="558" y="3" viewport="{contentGroup}" buttonMode="false" id="vscrollbar1"/>
+	<components:ScrollingContent1 x="0"
+								  y="0"
+								  id="contentGroup"
+								  clipAndEnableScrolling="true"
+								  width="558"
+								  height="330"
+								  height.normal="483"/>
+	<s:VScrollBar fixedThumbSize="true"
+				  skinClass="gapdesktoprx.components.catalyst.ExampleListScroll"
+				  x="558"
+				  y="3"
+				  viewport="{contentGroup}"
+				  buttonMode="false"
+				  id="vscrollbar1"/>
 	<s:transitions>
-		<s:Transition fromState="normal" toState="disabled" autoReverse="true">
+		<s:Transition fromState="normal"
+					  toState="disabled"
+					  autoReverse="true">
 			<s:Parallel>
 				<s:Parallel target="{contentGroup}">
 					<s:Resize duration="0"/>
