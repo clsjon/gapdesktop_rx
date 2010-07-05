@@ -24,12 +24,6 @@
 
 	<fx:Script>
 		<![CDATA[
-			import air.net.URLMonitor;
-			import air.update.ApplicationUpdater;
-			import air.update.ApplicationUpdaterUI;
-			import air.update.events.StatusUpdateEvent;
-			import air.update.events.UpdateEvent;
-
 			import flash.display.DisplayObject;
 			import flash.display.StageDisplayState;
 			import flash.events.FullScreenEvent;
@@ -37,30 +31,9 @@
 			import flash.events.NativeWindowBoundsEvent;
 			import flash.sampler.NewObjectSample;
 			import flash.utils.getTimer;
-
 			import flashx.textLayout.conversion.TextConverter;
 			import flashx.textLayout.events.FlowElementMouseEvent;
 			import flashx.textLayout.formats.WhiteSpaceCollapse;
-
-			import flexlib.controls.SuperTabBar;
-			import flexlib.controls.tabBarClasses.SuperTab;
-			import flexlib.events.SuperTabEvent;
-			import flexlib.events.TabReorderEvent;
-
-			import gapdesktoprx.components.main.*;
-			import gapdesktoprx.controllers.ApplicationController;
-			import gapdesktoprx.controllers.ModelsController;
-			import gapdesktoprx.controllers.PrefsController;
-			import gapdesktoprx.events.ExampleRolloutEvent;
-			import gapdesktoprx.events.ExampleRolloverEvent;
-			import gapdesktoprx.events.ExampleSelectEvent;
-			import gapdesktoprx.events.NameExampleEvent;
-			import gapdesktoprx.interpolators.RectInterpolator;
-			import gapdesktoprx.models.Graph;
-			import gapdesktoprx.skins.ButtonSkin;
-			import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
-			import gapdesktoprx.skins.applicationupdaterui.firefox.ButtonSkin;
-
 			import mx.controls.Alert;
 			import mx.controls.SWFLoader;
 			import mx.core.FlexGlobals;
@@ -77,31 +50,97 @@
 			import mx.printing.FlexPrintJob;
 			import mx.states.State;
 			import mx.utils.ObjectUtil;
-
+			import air.net.URLMonitor;
+			import air.update.ApplicationUpdater;
+			import air.update.ApplicationUpdaterUI;
+			import air.update.events.StatusUpdateEvent;
+			import air.update.events.UpdateEvent;
+			import flexlib.controls.SuperTabBar;
+			import flexlib.controls.tabBarClasses.SuperTab;
+			import flexlib.events.SuperTabEvent;
+			import flexlib.events.TabReorderEvent;
+			import gapdesktoprx.components.main.*;
+			import gapdesktoprx.controllers.ApplicationController;
+			import gapdesktoprx.controllers.ModelsController;
+			import gapdesktoprx.controllers.PrefsController;
+			import gapdesktoprx.events.ExampleRolloutEvent;
+			import gapdesktoprx.events.ExampleRolloverEvent;
+			import gapdesktoprx.events.ExampleSelectEvent;
+			import gapdesktoprx.events.NameExampleEvent;
+			import gapdesktoprx.interpolators.RectInterpolator;
+			import gapdesktoprx.models.Graph;
+			import gapdesktoprx.skins.ButtonSkin;
+			import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
+			import gapdesktoprx.skins.applicationupdaterui.firefox.ButtonSkin;
 			import org.restfulx.Rx;
 			import org.restfulx.events.CacheUpdateEvent;
 			import org.restfulx.services.air.AIRServiceProvider;
-
 			import spark.utils.TextFlowUtil;
-
-			[Bindable]
-			private var fixedSizeRect:Rectangle=new Rectangle();
-
-			[Bindable]
-			private var resizableRect:Rectangle=new Rectangle(0, 0, Capabilities.screenResolutionX, Capabilities.screenResolutionY);
-			private var resizableDisplayState:String=StageDisplayState.NORMAL;
-
-			public static var updater:ApplicationUpdaterUI;
 
 			public static const dbVersion:String="1.0";
 
-			private var manualUpdateCheck:Boolean=false;
+			[Bindable]
+			public static var online:Boolean=true;
+
+			public static var updater:ApplicationUpdaterUI;
+
+			public static function get models():ModelsController
+			{
+				return ModelsController.instance;
+			}
+
+			public static function get prefs():PrefsController
+			{
+				return PrefsController.instance;
+			}
 
 			[Bindable]
 			public var version:String;
 
 			[Bindable]
-			public static var online:Boolean=true;
+			private var fixedSizeRect:Rectangle=new Rectangle();
+
+			private var manualUpdateCheck:Boolean=false;
+			private var resizableDisplayState:String=StageDisplayState.NORMAL;
+
+			[Bindable]
+			private var resizableRect:Rectangle=new Rectangle(0, 0, Capabilities.screenResolutionX, Capabilities.screenResolutionY);
+
+			[Bindable]
+			public function get nativeBounds():Rectangle
+			{
+				return nativeWindow.bounds;
+			}
+
+			public function set nativeBounds(value:Rectangle):void
+			{
+				nativeWindow.bounds=value;
+				//trace ('setting window bounds to: ' + value.toString());
+			}
+
+			protected function addTabCanvas_creationCompleteHandler(event:FlexEvent):void
+			{
+				var nav:SuperTabNavigator=event.currentTarget.parent as SuperTabNavigator;
+				var selectedIndex:uint=nav.getChildIndex(event.currentTarget as DisplayObject);
+				nav.setClosePolicyForTab(selectedIndex, SuperTab.CLOSE_NEVER);
+			}
+
+			protected function animate1_effectEndHandler(event:EffectEvent):void
+			{
+				this.stage.displayState=resizableDisplayState;
+				if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE))
+				{
+					this.move(resizableRect.left, resizableRect.top);
+					this.nativeWindow.width=resizableRect.width;
+					this.nativeWindow.height=resizableRect.height;
+				}
+			}
+
+
+			protected function bookmarkButton_clickHandler(event:MouseEvent):void
+			{
+				currentState='NameExampleState';
+			}
 
 			protected function closeSettingsButton_clickHandler():void
 			{
@@ -109,9 +148,33 @@
 			}
 
 
-			protected function list1_clickHandler(event:MouseEvent):void
+			protected function exampleSelectEventHandler(event:ExampleSelectEvent):void
 			{
+				var viewer:GraphViewer=new GraphViewer();
+				viewer.example=event.example;
 				currentState='TlzState';
+				navigator.addChildAt(viewer, navigator.numChildren - 1);
+				navigator.selectedChild=viewer;
+			}
+
+			protected function firstRunCloseHandler(event:CloseEvent):void
+			{
+				initializeUpdater();
+			}
+
+
+			protected function fullScreenButton_clickHandler(event:MouseEvent):void
+			{
+				switch (stage.displayState)
+				{
+					case StageDisplayState.FULL_SCREEN:
+					case StageDisplayState.FULL_SCREEN_INTERACTIVE:
+						stage.displayState=StageDisplayState.NORMAL;
+						break;
+					case StageDisplayState.NORMAL:
+						stage.displayState=StageDisplayState.FULL_SCREEN_INTERACTIVE;
+						break;
+				}
 			}
 
 
@@ -138,49 +201,11 @@
 				}
 			}
 
-			protected function windowedapplication1_preinitializeHandler(event:FlexEvent):void
+
+			protected function helpButton_clickHandler(event:MouseEvent):void
 			{
-				var descriptor:XML=FlexGlobals.topLevelApplication.nativeApplication.applicationDescriptor;
-				var ns:Namespace=descriptor.namespaceDeclarations()[0];
-				version=descriptor.ns::version;
-				trace('version: ' + version);
-				ApplicationController.initialize([AIRServiceProvider], AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx-" + dbVersion).nativePath);
-				//Rx.enableLogging();
-			}
-
-			public static function get models():ModelsController
-			{
-				return ModelsController.instance;
-			}
-
-			public static function get prefs():PrefsController
-			{
-				return PrefsController.instance;
-			}
-
-
-			protected function exampleSelectEventHandler(event:ExampleSelectEvent):void
-			{
-				var viewer:GraphViewer=new GraphViewer();
-				viewer.example=event.example;
-				currentState='TlzState';
-				navigator.addChildAt(viewer, navigator.numChildren - 1);
-				navigator.selectedChild=viewer;
-			}
-
-
-			protected function fullScreenButton_clickHandler(event:MouseEvent):void
-			{
-				switch (stage.displayState)
-				{
-					case StageDisplayState.FULL_SCREEN:
-					case StageDisplayState.FULL_SCREEN_INTERACTIVE:
-						stage.displayState=StageDisplayState.NORMAL;
-						break;
-					case StageDisplayState.NORMAL:
-						stage.displayState=StageDisplayState.FULL_SCREEN_INTERACTIVE;
-						break;
-				}
+				var helpWin:HelpWindow=new HelpWindow();
+				helpWin.open(true);
 			}
 
 			protected function initializeUpdater():void
@@ -195,29 +220,27 @@
 				updater.addEventListener(StatusUpdateEvent.UPDATE_STATUS, updateStatusEventHandler);
 			}
 
-			protected function firstRunCloseHandler(event:CloseEvent):void
+
+			protected function list1_clickHandler(event:MouseEvent):void
 			{
-				initializeUpdater();
+				currentState='TlzState';
 			}
 
-			protected function windowedapplication1_applicationCompleteHandler(event:FlexEvent):void
+			protected function manualUpdateCheckEventHandler(event:Event):void
 			{
-				stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreenStateChange);
-				this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED, exampleSelectEventHandler); //for selection of default graph
-				launchMonitor();
-				if (prefs.firstRun)
-				{
-					var firstRunWindow:IFlexDisplayObject=PopUpManager.createPopUp(this, FirstRunAlert, false);
-					firstRunWindow.addEventListener(CloseEvent.CLOSE, firstRunCloseHandler);
-				}
-				else
-				{
-					initializeUpdater();
-				}
-				this.nativeWindow.addEventListener(NativeWindowBoundsEvent.RESIZING, windowedapplication1_resizingHandler);
-				NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, nativeApplication_activateHandler);
-				NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, nativeApplication_deactivateHandler);
+				manualUpdateCheck=true;
+				updater.checkNow();
+			}
 
+
+
+
+
+
+			protected function nameExample_nameExampleHandler(event:NameExampleEvent):void
+			{
+				GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
+				currentState='TlzState';
 			}
 
 			protected function nativeApplication_activateHandler(event:Event):void
@@ -228,17 +251,6 @@
 			protected function nativeApplication_deactivateHandler(event:Event):void
 			{
 				//stage.frameRate = 1;
-			}
-
-
-
-			protected function updateStatusEventHandler(event:StatusUpdateEvent):void
-			{
-				if (manualUpdateCheck && !event.available)
-				{
-					Alert.show('No update available', 'There is currently no update available for Gapminder Desktop.');
-				}
-				manualUpdateCheck=false;
 			}
 
 			protected function navigator_clickHandler(event:MouseEvent):void
@@ -280,41 +292,10 @@
 				}
 			}
 
-
-			private function launchExamplesList():void
+			protected function navigator_creationCompleteHandler(event:FlexEvent):void
 			{
-				var win:ExampleSelectionBox=PopUpManager.createPopUp(this, ExampleSelectionBox, true) as ExampleSelectionBox;
-				win.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED, exampleSelectEventHandler);
-				PopUpManager.centerPopUp(win);
-			}
-
-			private function launchDefaultGraph():void
-			{
-				if (!navigator || navigator.numChildren < 2)
-				{
-					this.dispatchEvent(new ExampleSelectEvent(models.defaultExample));
-				}
-				else
-				{
-					currentState='TlzState';
-				}
-			}
-
-
-
-			private function get fixedSizeState():Boolean
-			{
-				return (stateInGroup(this.currentState, "FixedSize"))
-			}
-
-			protected function windowedapplication1_resizingHandler(event:NativeWindowBoundsEvent):void
-			{
-
-				if (this.fixedSizeState)
-				{
-					event.preventDefault();
-					event.stopImmediatePropagation();
-				}
+				SuperTabNavigator(event.currentTarget).addEventListener(MouseEvent.CLICK, navigator_clickHandler, true);
+				SuperTabNavigator(event.currentTarget).addEventListener(IndexChangedEvent.CHANGE, navigator_indexChangedHandler);
 			}
 
 
@@ -329,10 +310,17 @@
 			 */
 			}
 
-			protected function navigator_creationCompleteHandler(event:FlexEvent):void
+
+
+
+
+			protected function navigator_tabCloseHandler(event:SuperTabEvent):void
 			{
-				SuperTabNavigator(event.currentTarget).addEventListener(MouseEvent.CLICK, navigator_clickHandler, true);
-				SuperTabNavigator(event.currentTarget).addEventListener(IndexChangedEvent.CHANGE, navigator_indexChangedHandler);
+				var nav:SuperTabNavigator=event.target as SuperTabNavigator;
+				if (nav.length > 2 && (event.tabIndex == nav.length - 2))
+				{
+					nav.selectedIndex=event.tabIndex - 1;
+				}
 			}
 
 			protected function navigator_tabsReorderedHandler(event:TabReorderEvent):void
@@ -342,6 +330,51 @@
 				{
 					event.preventDefault();
 				}
+			}
+
+
+			protected function printButton_clickHandler(event:MouseEvent):void
+			{
+				var job:FlexPrintJob=new FlexPrintJob();
+				if (job.start())
+				{
+					job.addObject(GraphViewer(navigator.selectedChild));
+					job.send();
+				}
+			}
+
+			protected function resetButton_clickHandler(event:MouseEvent):void
+			{
+				var viewer:GraphViewer=navigator.selectedChild as GraphViewer;
+				if (viewer)
+				{
+					this.dispatchEvent(new ExampleSelectEvent(models.defaultExample));
+				}
+			}
+
+
+			protected function settingsButton_clickHandler(event:MouseEvent):void
+			{
+				var settingsWindow:IFlexDisplayObject=PopUpManager.createPopUp(this, Settings, true);
+				settingsWindow.addEventListener("manualUpdateCheck", manualUpdateCheckEventHandler);
+			}
+
+			protected function stateInGroup(stateName:String, groupName:String):Boolean
+			{
+				for each (var state:State in this.states)
+				{
+					if (state.name == stateName)
+					{
+						for each (var group:String in state.stateGroups)
+						{
+							if (groupName == group)
+							{
+								return true;
+							}
+						}
+					}
+				}
+				return false;
 			}
 
 
@@ -366,44 +399,66 @@
 				}
 			}
 
-			protected function addTabCanvas_creationCompleteHandler(event:FlexEvent):void
+			protected function tosDisplay_creationCompleteHandler(event:FlexEvent):void
 			{
-				var nav:SuperTabNavigator=event.currentTarget.parent as SuperTabNavigator;
-				var selectedIndex:uint=nav.getChildIndex(event.currentTarget as DisplayObject);
-				nav.setClosePolicyForTab(selectedIndex, SuperTab.CLOSE_NEVER);
-			}
+				var touFile:File=File.applicationDirectory.resolvePath('assets/text/tou.xml');
+				var touFileStream:FileStream=new FileStream();
 
-			protected function resetButton_clickHandler(event:MouseEvent):void
-			{
-				var viewer:GraphViewer=navigator.selectedChild as GraphViewer;
-				if (viewer)
-				{
-					this.dispatchEvent(new ExampleSelectEvent(models.defaultExample));
-				}
-			}
-
-			protected function stateInGroup(stateName:String, groupName:String):Boolean
-			{
-				for each (var state:State in this.states)
-				{
-					if (state.name == stateName)
-					{
-						for each (var group:String in state.stateGroups)
-						{
-							if (groupName == group)
-							{
-								return true;
-							}
-						}
-					}
-				}
-				return false;
+				touFileStream.open(touFile, FileMode.READ);
+				var str:String=touFileStream.readMultiByte(touFileStream.bytesAvailable, "utf-8");
+				tosDisplay.content=TextFlowUtil.importFromString(str);
 			}
 
 
 			protected function updateCheckButton_clickHandler(event:MouseEvent):void
 			{
 				updater.checkNow();
+			}
+
+
+
+			protected function updateStatusEventHandler(event:StatusUpdateEvent):void
+			{
+				if (manualUpdateCheck && !event.available)
+				{
+					Alert.show('No update available', 'There is currently no update available for Gapminder Desktop.');
+				}
+				manualUpdateCheck=false;
+			}
+
+			protected function videoButtonTemp_clickHandler(event:MouseEvent):void
+			{
+				var videoWin:VideoPlayer=new VideoPlayer();
+				videoWin.open(true);
+			}
+
+
+			protected function windowedapplication1_activateHandler(event:Event):void
+			{
+				if (stage)
+				{
+					stage.frameRate=24;
+				}
+			}
+
+			protected function windowedapplication1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreenStateChange);
+				this.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED, exampleSelectEventHandler); //for selection of default graph
+				launchMonitor();
+				if (prefs.firstRun)
+				{
+					var firstRunWindow:IFlexDisplayObject=PopUpManager.createPopUp(this, FirstRunAlert, false);
+					firstRunWindow.addEventListener(CloseEvent.CLOSE, firstRunCloseHandler);
+				}
+				else
+				{
+					initializeUpdater();
+				}
+				this.nativeWindow.addEventListener(NativeWindowBoundsEvent.RESIZING, windowedapplication1_resizingHandler);
+				NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, nativeApplication_activateHandler);
+				NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, nativeApplication_deactivateHandler);
+
 			}
 
 
@@ -463,127 +518,6 @@
 
 			}
 
-			private function launchMonitor():void
-			{
-				var monitor:URLMonitor;
-				monitor=new URLMonitor(new URLRequest('http://www.gapminder.org'));
-				monitor.addEventListener(StatusEvent.STATUS, networkStatusChangeHandler);
-				monitor.start();
-			}
-
-			protected function windowedapplication1_networkChangeHandler(event:Event):void
-			{
-				launchMonitor();
-			}
-
-			private function networkStatusChangeHandler(event:StatusEvent):void
-			{
-				online=(event.code == "Service.available");
-			}
-
-
-			protected function settingsButton_clickHandler(event:MouseEvent):void
-			{
-				var settingsWindow:IFlexDisplayObject=PopUpManager.createPopUp(this, Settings, true);
-				settingsWindow.addEventListener("manualUpdateCheck", manualUpdateCheckEventHandler);
-			}
-
-			protected function manualUpdateCheckEventHandler(event:Event):void
-			{
-				manualUpdateCheck=true;
-				updater.checkNow();
-			}
-
-			[Bindable]
-			public function get nativeBounds():Rectangle
-			{
-				return nativeWindow.bounds;
-			}
-
-			public function set nativeBounds(value:Rectangle):void
-			{
-				nativeWindow.bounds=value;
-				//trace ('setting window bounds to: ' + value.toString());
-			}
-
-			protected function animate1_effectEndHandler(event:EffectEvent):void
-			{
-				this.stage.displayState=resizableDisplayState;
-				if (!(resizableDisplayState == StageDisplayState.FULL_SCREEN_INTERACTIVE))
-				{
-					this.move(resizableRect.left, resizableRect.top);
-					this.nativeWindow.width=resizableRect.width;
-					this.nativeWindow.height=resizableRect.height;
-				}
-			}
-
-			protected function tosDisplay_creationCompleteHandler(event:FlexEvent):void
-			{
-				var touFile:File=File.applicationDirectory.resolvePath('assets/text/tou.xml');
-				var touFileStream:FileStream=new FileStream();
-
-				touFileStream.open(touFile, FileMode.READ);
-				var str:String=touFileStream.readMultiByte(touFileStream.bytesAvailable, "utf-8");
-				tosDisplay.content=TextFlowUtil.importFromString(str);
-			}
-
-
-			protected function helpButton_clickHandler(event:MouseEvent):void
-			{
-				var helpWin:HelpWindow=new HelpWindow();
-				helpWin.open(true);
-			}
-
-
-			protected function printButton_clickHandler(event:MouseEvent):void
-			{
-				var job:FlexPrintJob=new FlexPrintJob();
-				if (job.start())
-				{
-					job.addObject(GraphViewer(navigator.selectedChild));
-					job.send();
-				}
-			}
-
-
-
-
-
-			protected function navigator_tabCloseHandler(event:SuperTabEvent):void
-			{
-				var nav:SuperTabNavigator=event.target as SuperTabNavigator;
-				if (nav.length > 2 && (event.tabIndex == nav.length - 2))
-				{
-					nav.selectedIndex=event.tabIndex - 1;
-				}
-			}
-
-
-
-
-
-
-			protected function nameExample_nameExampleHandler(event:NameExampleEvent):void
-			{
-				GraphViewer(navigator.selectedChild).bookmarkExample(event.name);
-				currentState='TlzState';
-			}
-
-
-			protected function bookmarkButton_clickHandler(event:MouseEvent):void
-			{
-				currentState='NameExampleState';
-			}
-
-
-			protected function windowedapplication1_activateHandler(event:Event):void
-			{
-				if (stage)
-				{
-					stage.frameRate=24;
-				}
-			}
-
 
 			protected function windowedapplication1_deactivateHandler(event:Event):void
 			{
@@ -593,41 +527,89 @@
 				}
 			}
 
-			protected function videoButtonTemp_clickHandler(event:MouseEvent):void
+			protected function windowedapplication1_networkChangeHandler(event:Event):void
 			{
-				var videoWin:VideoPlayer=new VideoPlayer();
-				videoWin.open(true);
+				launchMonitor();
+			}
+
+			protected function windowedapplication1_preinitializeHandler(event:FlexEvent):void
+			{
+				var descriptor:XML=FlexGlobals.topLevelApplication.nativeApplication.applicationDescriptor;
+				var ns:Namespace=descriptor.namespaceDeclarations()[0];
+				version=descriptor.ns::version;
+				trace('version: ' + version);
+				ApplicationController.initialize([AIRServiceProvider], AIRServiceProvider.ID, File.applicationStorageDirectory.resolvePath("gapdesktoprx-" + dbVersion).nativePath);
+				//Rx.enableLogging();
+			}
+
+			protected function windowedapplication1_resizingHandler(event:NativeWindowBoundsEvent):void
+			{
+
+				if (this.fixedSizeState)
+				{
+					event.preventDefault();
+					event.stopImmediatePropagation();
+				}
+			}
+
+
+
+			private function get fixedSizeState():Boolean
+			{
+				return (stateInGroup(this.currentState, "FixedSize"))
+			}
+
+			private function launchDefaultGraph():void
+			{
+				if (!navigator || navigator.numChildren < 2)
+				{
+					this.dispatchEvent(new ExampleSelectEvent(models.defaultExample));
+				}
+				else
+				{
+					currentState='TlzState';
+				}
+			}
+
+
+			private function launchExamplesList():void
+			{
+				var win:ExampleSelectionBox=PopUpManager.createPopUp(this, ExampleSelectionBox, true) as ExampleSelectionBox;
+				win.addEventListener(ExampleSelectEvent.EXAMPLE_SELECTED, exampleSelectEventHandler);
+				PopUpManager.centerPopUp(win);
+			}
+
+			private function launchMonitor():void
+			{
+				var monitor:URLMonitor;
+				monitor=new URLMonitor(new URLRequest('http://www.gapminder.org'));
+				monitor.addEventListener(StatusEvent.STATUS, networkStatusChangeHandler);
+				monitor.start();
+			}
+
+			private function networkStatusChangeHandler(event:StatusEvent):void
+			{
+				online=(event.code == "Service.available");
 			}
 		]]>
 	</fx:Script>
 
 	<s:states>
-		<s:State name="MainState"
-				 stateGroups="FixedSize"/>
-		<s:State name="TosState"
-				 stateGroups="FixedSize"/>
-		<s:State name="TlzState"
-				 stateGroups="Resizable"/>
-		<s:State name="NameExampleState"
-				 stateGroups="Resizable"/>
+		<s:State name="MainState" stateGroups="FixedSize"/>
+		<s:State name="TosState" stateGroups="FixedSize"/>
+		<s:State name="TlzState" stateGroups="Resizable"/>
+		<s:State name="NameExampleState" stateGroups="Resizable"/>
 	</s:states>
 	<s:layout>
 		<s:BasicLayout/>
 	</s:layout>
 
 
-	<s:Group id="laidoutcontent"
-			 width="100%"
-			 height="100%">
+	<s:Group id="laidoutcontent" width="100%" height="100%">
 		<s:layout>
-			<s:VerticalLayout gap="0"
-							  paddingRight="0"
-							  paddingLeft="0"/>
+			<s:VerticalLayout gap="0" paddingRight="0" paddingLeft="0"/>
 		</s:layout>
-		<s:DataGroup dataProvider="{models.examples}"
-					 width="0"
-					 height="0"
-					 includeInLayout="false"/>
+		<s:DataGroup dataProvider="{models.examples}" width="0" height="0" includeInLayout="false"/>
 		<s:Group id="tlzgroup"
 				 x="0"
 				 y="0"
@@ -643,10 +625,7 @@
 					 height="30"
 					 width="100%">
 				<s:layout>
-					<s:HorizontalLayout paddingLeft="4"
-										paddingTop="4"
-										paddingBottom="4"
-										paddingRight="4"/>
+					<s:HorizontalLayout paddingLeft="4" paddingTop="4" paddingBottom="4" paddingRight="4"/>
 				</s:layout>
 				<extensions:IconButton id="homeButton"
 									   styleName="iconButtonStyle"
@@ -673,8 +652,7 @@
 									   label="How to use"
 									   iconUp="assets/icons/button/lightbulb.png"
 									   click="helpButton_clickHandler(event)"/>
-				<s:Group id="tlzbuttonrowright"
-						 width="100%">
+				<s:Group id="tlzbuttonrowright" width="100%">
 					<s:layout>
 						<s:HorizontalLayout horizontalAlign="right"/>
 					</s:layout>
@@ -717,24 +695,16 @@
 				 right="0"
 				 width="100%"
 				 excludeFrom="TlzState,NameExampleState">
-			<s:Rect width="100%"
-					height="100%">
+			<s:Rect width="100%" height="100%">
 				<s:fill>
-					<s:LinearGradient rotation="270"
-									  scaleX="74"
-									  y="74">
-						<s:GradientEntry color="0xD9D9D9"
-										 ratio="0"/>
-						<s:GradientEntry color="0xEFEFEF"
-										 ratio="0.564417"/>
-						<s:GradientEntry color="0xEEEEEE"
-										 ratio="1"/>
+					<s:LinearGradient rotation="270" scaleX="74" y="74">
+						<s:GradientEntry color="0xD9D9D9" ratio="0"/>
+						<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
+						<s:GradientEntry color="0xEEEEEE" ratio="1"/>
 					</s:LinearGradient>
 				</s:fill>
 			</s:Rect>
-			<s:Line left="0"
-					right="0"
-					top="74.5">
+			<s:Line left="0" right="0" top="74.5">
 				<s:stroke>
 					<s:SolidColorStroke caps="none"
 										color="0x6C6C6C"
@@ -754,10 +724,7 @@
 						whiteSpaceCollapse="preserve"
 						horizontalCenter="0"
 						top="14">
-				<s:content>
-					<s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span>
-					</s:p>
-				</s:content>
+				<s:content><s:p>Gapminder <s:span fontFamily="Avenir-light">Desktop</s:span></s:p></s:content>
 			</s:RichText>
 
 			<s:RichText id="betabadge"
@@ -826,9 +793,7 @@
 										paddingTop="10"
 										paddingBottom="15"/>
 				</s:layout>
-				<s:Group id="bigbuttoncolumn"
-						 width="50%"
-						 height="100%">
+				<s:Group id="bigbuttoncolumn" width="50%" height="100%">
 					<s:Button id="splashButton"
 							  styleName="splashButtonStyle"
 							  click="launchDefaultGraph()"
@@ -837,14 +802,11 @@
 							  width="100%"
 							  height="100%"/>
 				</s:Group>
-				<s:Group id="explanationcolumn"
-						 width="50%"
-						 height="100%">
+				<s:Group id="explanationcolumn" width="50%" height="100%">
 					<s:layout>
 						<s:VerticalLayout/>
 					</s:layout>
-					<s:Group id="introtextgroup"
-							 width="100%">
+					<s:Group id="introtextgroup" width="100%">
 						<s:layout>
 							<s:VerticalLayout gap="0"/>
 						</s:layout>
@@ -873,9 +835,7 @@
 											whiteSpaceCollapse="preserve"
 											paddingTop="5"
 											paddingBottom="5">
-							<s:content>
-								<s:p>Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p>
-							</s:content>
+							<s:content><s:p>Brings all of the data from <s:a href="http://www.gapminder.org/">gapminder.org</s:a> to your computer. Features include:</s:p></s:content>
 						</s:RichEditableText>
 						<s:RichText color="0x000000"
 									fontSize="14"
@@ -890,20 +850,12 @@
 									paragraphStartIndent="15"
 									textIndent="-15"
 									paragraphSpaceAfter="3">
-							<s:content>
-								<s:p>\u2022	No internet required</s:p>
-								<s:p>\u2022	Bookmark your own graphs</s:p>
-								<s:p>\u2022	Choose from a library of existing graphs</s:p>
-								<s:p>\u2022	Updates automatically when new data are available</s:p>
-							</s:content>
+							<s:content><s:p>\u2022	No internet required</s:p><s:p>\u2022	Bookmark your own graphs</s:p><s:p>\u2022	Choose from a library of existing graphs</s:p><s:p>\u2022	Updates automatically when new data are available</s:p></s:content>
 						</s:RichText>
 					</s:Group>
-					<s:Group id="gwbuttongroup"
-							 height="100%"
-							 width="100%">
+					<s:Group id="gwbuttongroup" height="100%" width="100%">
 						<s:layout>
-							<s:VerticalLayout verticalAlign="bottom"
-											  horizontalAlign="right"/>
+							<s:VerticalLayout verticalAlign="bottom" horizontalAlign="right"/>
 						</s:layout>
 						<extensions:IconButton id="mainGwButton"
 											   styleName="iconButtonStyle"
@@ -924,10 +876,7 @@
 				</s:Group>
 			</s:Group>
 
-			<s:Group id="settingsbuttonsbar"
-					 width="100%"
-					 height="30"
-					 bottom="0">
+			<s:Group id="settingsbuttonsbar" width="100%" height="30" bottom="0">
 				<s:layout>
 					<s:BasicLayout/>
 				</s:layout>
@@ -936,19 +885,12 @@
 						 left="0"
 						 right="0"
 						 bottom="0">
-					<s:Rect top="0"
-							left="0"
-							right="0"
-							bottom="0">
+					<s:Rect top="0" left="0" right="0" bottom="0">
 						<s:fill>
-							<s:LinearGradient rotation="270"
-											  y="10">
-								<s:GradientEntry color="0xD9D9D9"
-												 ratio="0"/>
-								<s:GradientEntry color="0xEFEFEF"
-												 ratio="0.564417"/>
-								<s:GradientEntry color="0xEEEEEE"
-												 ratio="1"/>
+							<s:LinearGradient rotation="270" y="10">
+								<s:GradientEntry color="0xD9D9D9" ratio="0"/>
+								<s:GradientEntry color="0xEFEFEF" ratio="0.564417"/>
+								<s:GradientEntry color="0xEEEEEE" ratio="1"/>
 							</s:LinearGradient>
 						</s:fill>
 					</s:Rect>
@@ -961,26 +903,14 @@
 					<s:layout>
 						<s:HorizontalLayout verticalAlign="middle"/>
 					</s:layout>
-					<s:Button id="tosButton"
-							  click="tosButton_clickHandler(event)"
-							  styleName="settingsButtonStyle"
-							  label="About..."/>
-					<s:Button id="settingsButton"
-							  click="settingsButton_clickHandler(event)"
-							  styleName="settingsButtonStyle"
-							  label="Settings..."/>
-					<s:Button id="videoButtonTemp"
-							  click="videoButtonTemp_clickHandler(event)"
-							  styleName="settingsButtonStyle"
-							  label="Video"/>
+					<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
+					<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
+					<s:Button id="videoButtonTemp" click="videoButtonTemp_clickHandler(event)" styleName="settingsButtonStyle" label="Video"/>
 				</s:Group>
 			</s:Group>
 		</s:Group>
 
-		<s:Group id="tosgroup"
-				 includeIn="TosState"
-				 width="100%"
-				 height="100%">
+		<s:Group id="tosgroup" includeIn="TosState" width="100%" height="100%">
 			<s:layout>
 				<s:VerticalLayout gap="10"
 								  paddingLeft="10"
@@ -988,22 +918,15 @@
 								  paddingRight="10"
 								  paddingTop="10"/>
 			</s:layout>
-			<s:Scroller width="100%"
-						height="100%">
+			<s:Scroller width="100%" height="100%">
 				<s:Group width="100%">
 					<s:layout>
 						<s:BasicLayout/>
 					</s:layout>
-					<s:RichText id="tosDisplay"
-								fontFamily="Avenir-light"
-								creationComplete="tosDisplay_creationCompleteHandler(event)"
-								width="100%"/>
+					<s:RichText id="tosDisplay" fontFamily="Avenir-light" creationComplete="tosDisplay_creationCompleteHandler(event)" width="100%"/>
 				</s:Group>
 			</s:Scroller>
-			<s:Button id="closeTosButton"
-					  click="closeSettingsButton_clickHandler()"
-					  label="Close"
-					  styleName="settingsButtonStyle"/>
+			<s:Button id="closeTosButton" click="closeSettingsButton_clickHandler()" label="Close" styleName="settingsButtonStyle"/>
 		</s:Group>
 
 
@@ -1020,46 +943,28 @@
 					  top.NameExampleState="0"/>
 
 	<s:transitions>
-		<s:Transition autoReverse="true"
-					  fromState="MainState"
-					  toState="TosState">
+		<s:Transition autoReverse="true" fromState="MainState" toState="TosState">
 			<s:Parallel>
-				<s:Fade duration="500"
-						target="{maingroup}"
-						disableLayout="true"/>
-				<s:Fade duration="500"
-						target="{tosgroup}"
-						disableLayout="true"/>
+				<s:Fade duration="500" target="{maingroup}" disableLayout="true"/>
+				<s:Fade duration="500" target="{tosgroup}" disableLayout="true"/>
 			</s:Parallel>
 		</s:Transition>
-		<s:Transition autoReverse="true"
-					  fromState="TosState"
-					  toState="MainState">
+		<s:Transition autoReverse="true" fromState="TosState" toState="MainState">
 			<s:Parallel>
-				<s:Fade duration="500"
-						target="{tosgroup}"
-						disableLayout="true"/>
-				<s:Fade duration="500"
-						target="{maingroup}"
-						disableLayout="true"/>
+				<s:Fade duration="500" target="{tosgroup}" disableLayout="true"/>
+				<s:Fade duration="500" target="{maingroup}" disableLayout="true"/>
 			</s:Parallel>
 		</s:Transition>
 
-		<s:Transition autoReverse="true"
-					  fromState="TlzState"
-					  toState="NameExampleState">
+		<s:Transition autoReverse="true" fromState="TlzState" toState="NameExampleState">
 			<s:Parallel>
-				<s:Move duration="300"
-						target="{nameExample}"/>
+				<s:Move duration="300" target="{nameExample}"/>
 			</s:Parallel>
 		</s:Transition>
 
-		<s:Transition autoReverse="true"
-					  fromState="NameExampleState"
-					  toState="TlzState">
+		<s:Transition autoReverse="true" fromState="NameExampleState" toState="TlzState">
 			<s:Parallel>
-				<s:Move duration="300"
-						target="{nameExample}"/>
+				<s:Move duration="300" target="{nameExample}"/>
 
 			</s:Parallel>
 		</s:Transition>
