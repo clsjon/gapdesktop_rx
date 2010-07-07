@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  width="700"
+		  height="500"
+		  creationComplete="videoPlayerWindow_creationCompleteHandler(event)">
+	<s:layout>
+		<s:HorizontalLayout/>
+	</s:layout>
+
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+
+			import org.openvideoplayer.events.OvpEvent;
+			import org.openvideoplayer.net.OvpConnection;
+			import org.openvideoplayer.net.OvpNetStream;
+
+			private const HOSTNAME:String="db37dymc2vak.cloudfront.net";
+			private const STREAM:String="200-full.m4v";
+
+			private var _video:Video;
+			private var _nc:OvpConnection;
+			private var _ns:OvpNetStream;
+
+
+			protected function videoPlayerWindow_creationCompleteHandler(event:FlexEvent):void
+			{
+				_nc=new OvpConnection();
+				_nc.addEventListener(OvpEvent.ERROR, nc_errorHandler);
+				_nc.addEventListener(NetStatusEvent.NET_STATUS, nc_netStatusHandler);
+				_nc.addEventListener(OvpEvent.STREAM_LENGTH, nc_streamLengthHandler);
+
+				uic.setActualSize(480, 270);
+				_video=new Video(480, 270);
+				_video.x=0;
+				_video.y=0;
+				uic.addChild(_video);
+
+				_nc.connect(HOSTNAME);
+			}
+
+			// Handles all OvpEvent.ERROR events
+			private function nc_errorHandler(event:OvpEvent):void
+			{
+				Alert.show("Video playback error #" + event.data.errorNumber + ": " + event.data.errorDescription, "ERROR", Alert.OK);
+			}
+
+			// Handles NetStatusEvent.NET_STATUS events fired by the OvpConnection class
+			private function nc_netStatusHandler(event:NetStatusEvent):void
+			{
+				trace(event.info.code);
+				switch (event.info.code)
+				{
+					case "NetConnection.Connect.Rejected":
+						trace("Video server error. Reason is " + event.info.description);
+						break;
+					case "NetConnection.Connect.Success":
+						//			connectedHandler();
+						break;
+				}
+			}
+
+			private function nc_streamLengthHandler(event:OvpEvent):void
+			{
+				trace("Stream length is " + event.data.streamLength);
+				//scrubber.maximum = e.data.streamLength;
+				//scrubber.enabled = true;
+				//_streamLength = e.data.streamLength;
+				//playVideo(_STREAMNAME_);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Group>
+		<s:layout>
+			<s:HorizontalLayout/>
+		</s:layout>
+		<mx:UIComponent id="uic"
+						visible="false"/>
+
+		<s:List id="videolist">
+
+		</s:List>
+
+	</s:Group>
+</s:Window>
