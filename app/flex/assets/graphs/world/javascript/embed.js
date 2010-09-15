@@ -1,4 +1,4 @@
-    var title = "Gapminder World (June 1, 2010)";
+    var title = "Gapminder World (September 15, 2010)";
     		
 		function reloadPage(){
 			window.location.hash = "";

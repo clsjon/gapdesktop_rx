@@ -1,48 +1,21 @@
-<indicator id="rdBew79hTeXcIXhB1VCTPfg"
-		   closestAboveZero="1.0"
-		   closestBelowZero="0.0"
-		   min="0.0"
-		   max="165708.0"
-		   firstTime="1979"
-		   lastTime="2007"
-		   scale="lin"
-		   dataCollectionUrl="http://spreadsheets.google.com/pub?key=rdBew79hTeXcIXhB1VCTPfg"
-		   providerUrl="http://www.emdat.be/Database/terms.html"
-		   providerSourceName="CRED - Emergency Events Database">
-	<data>
-		<t1 m="i152,71.0,71.0,2004"
-			d="71.0"/>
-		<t1 m="i222,10.0,10.0,2004"
-			d="10.0"/>
-		<t1 m="i135,102.0,102.0,2004"
-			d="102.0"/>
-		<t1 m="i223,8345.0,8345.0,2004"
-			d="8345.0"/>
-		<t1 m="i102,0.0,165708.0,1979"
-			d="539.0,0.0,n22,0.0,165708.0,0.0,802.0"/>
-		<t1 m="i201,3.0,3.0,2004"
-			d="3.0"/>
-		<t1 m="i212,35399.0,35399.0,2004"
-			d="35399.0"/>
-		<t1 m="i101,16389.0,16389.0,2004"
-			d="16389.0"/>
-		<t1 m="i206,52.0,52.0,2007"
-			d="52.0"/>
-		<t1 m="i76,11.0,11.0,1979"
-			d="11.0"/>
-		<t1 m="i114,1.0,1.0,2004"
-			d="1.0"/>
-		<t1 m="i173,2182.0,2182.0,1998"
-			d="2182.0"/>
-		<t1 m="i244,100.0,100.0,1997"
-			d="100.0"/>
-		<t1 m="i134,80.0,80.0,2004"
-			d="80.0"/>
-		<t1 m="i175,7.0,7.0,1996"
-			d="7.0"/>
-		<t1 m="i18,2.0,2.0,2004"
-			d="2.0"/>
-		<t1 m="i207,298.0,298.0,2004"
-			d="298.0"/>
-	</data>
+<indicator id="rdBew79hTeXcIXhB1VCTPfg" closestAboveZero="1.0" closestBelowZero="0.0" min="0.0" max="165708.0" firstTime="1979" lastTime="2007" scale="lin" dataCollectionUrl="http://spreadsheets.google.com/pub?key=rdBew79hTeXcIXhB1VCTPfg" providerUrl="http://www.emdat.be/Database/terms.html" providerSourceName="CRED - Emergency Events Database">
+  <data>
+    <t1 m="i152,71.0,71.0,2004" d="71.0"/>
+    <t1 m="i222,10.0,10.0,2004" d="10.0"/>
+    <t1 m="i135,102.0,102.0,2004" d="102.0"/>
+    <t1 m="i223,8345.0,8345.0,2004" d="8345.0"/>
+    <t1 m="i102,0.0,165708.0,1979" d="539.0,0.0,n22,0.0,165708.0,0.0,802.0"/>
+    <t1 m="i201,3.0,3.0,2004" d="3.0"/>
+    <t1 m="i212,35399.0,35399.0,2004" d="35399.0"/>
+    <t1 m="i101,16389.0,16389.0,2004" d="16389.0"/>
+    <t1 m="i206,52.0,52.0,2007" d="52.0"/>
+    <t1 m="i76,11.0,11.0,1979" d="11.0"/>
+    <t1 m="i114,1.0,1.0,2004" d="1.0"/>
+    <t1 m="i173,2182.0,2182.0,1998" d="2182.0"/>
+    <t1 m="i244,100.0,100.0,1997" d="100.0"/>
+    <t1 m="i134,80.0,80.0,2004" d="80.0"/>
+    <t1 m="i175,7.0,7.0,1996" d="7.0"/>
+    <t1 m="i18,2.0,2.0,2004" d="2.0"/>
+    <t1 m="i207,298.0,298.0,2004" d="298.0"/>
+  </data>
 </indicator>
