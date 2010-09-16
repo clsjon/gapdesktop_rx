@@ -905,7 +905,6 @@
 					</s:layout>
 					<s:Button id="tosButton" click="tosButton_clickHandler(event)" styleName="settingsButtonStyle" label="About..."/>
 					<s:Button id="settingsButton" click="settingsButton_clickHandler(event)" styleName="settingsButtonStyle" label="Settings..."/>
-					<s:Button id="videoButtonTemp" click="videoButtonTemp_clickHandler(event)" styleName="settingsButtonStyle" label="Video"/>
 				</s:Group>
 			</s:Group>
 		</s:Group>
