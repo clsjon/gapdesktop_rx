@@ -760,7 +760,7 @@
 						fontFamily="Avenir-light"
 						fontSize="10"
 						height="10"
-						text="Updated {new Date(2010,6,9).toDateString()} (v {this.version})"
+						text="Updated {new Date(2010,9,16).toDateString()} (v {this.version})"
 						textAlign="right"
 						whiteSpaceCollapse="preserve"
 						width="{this.width/3}"
