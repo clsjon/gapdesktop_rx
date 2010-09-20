@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<update xmlns="http://ns.adobe.com/air/framework/update/description/1.0">
+	<version>1.0beta12</version>
+	<url>http://cdn.gapminder.org/gapminderdesktop10beta14.air</url>
+	<description><![CDATA[Includes the latest data on under-five mortality up to 2009.
+		]]>
+</description>
+</update>
