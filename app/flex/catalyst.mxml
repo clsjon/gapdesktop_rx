@@ -24,6 +24,12 @@
 
 	<fx:Script>
 		<![CDATA[
+			import air.net.URLMonitor;
+			import air.update.ApplicationUpdater;
+			import air.update.ApplicationUpdaterUI;
+			import air.update.events.StatusUpdateEvent;
+			import air.update.events.UpdateEvent;
+
 			import flash.display.DisplayObject;
 			import flash.display.StageDisplayState;
 			import flash.events.FullScreenEvent;
@@ -31,9 +37,30 @@
 			import flash.events.NativeWindowBoundsEvent;
 			import flash.sampler.NewObjectSample;
 			import flash.utils.getTimer;
+
 			import flashx.textLayout.conversion.TextConverter;
 			import flashx.textLayout.events.FlowElementMouseEvent;
 			import flashx.textLayout.formats.WhiteSpaceCollapse;
+
+			import flexlib.controls.SuperTabBar;
+			import flexlib.controls.tabBarClasses.SuperTab;
+			import flexlib.events.SuperTabEvent;
+			import flexlib.events.TabReorderEvent;
+
+			import gapdesktoprx.components.main.*;
+			import gapdesktoprx.controllers.ApplicationController;
+			import gapdesktoprx.controllers.ModelsController;
+			import gapdesktoprx.controllers.PrefsController;
+			import gapdesktoprx.events.ExampleRolloutEvent;
+			import gapdesktoprx.events.ExampleRolloverEvent;
+			import gapdesktoprx.events.ExampleSelectEvent;
+			import gapdesktoprx.events.NameExampleEvent;
+			import gapdesktoprx.interpolators.RectInterpolator;
+			import gapdesktoprx.models.Graph;
+			import gapdesktoprx.skins.ButtonSkin;
+			import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
+			import gapdesktoprx.skins.applicationupdaterui.firefox.ButtonSkin;
+
 			import mx.controls.Alert;
 			import mx.controls.SWFLoader;
 			import mx.core.FlexGlobals;
@@ -50,31 +77,11 @@
 			import mx.printing.FlexPrintJob;
 			import mx.states.State;
 			import mx.utils.ObjectUtil;
-			import air.net.URLMonitor;
-			import air.update.ApplicationUpdater;
-			import air.update.ApplicationUpdaterUI;
-			import air.update.events.StatusUpdateEvent;
-			import air.update.events.UpdateEvent;
-			import flexlib.controls.SuperTabBar;
-			import flexlib.controls.tabBarClasses.SuperTab;
-			import flexlib.events.SuperTabEvent;
-			import flexlib.events.TabReorderEvent;
-			import gapdesktoprx.components.main.*;
-			import gapdesktoprx.controllers.ApplicationController;
-			import gapdesktoprx.controllers.ModelsController;
-			import gapdesktoprx.controllers.PrefsController;
-			import gapdesktoprx.events.ExampleRolloutEvent;
-			import gapdesktoprx.events.ExampleRolloverEvent;
-			import gapdesktoprx.events.ExampleSelectEvent;
-			import gapdesktoprx.events.NameExampleEvent;
-			import gapdesktoprx.interpolators.RectInterpolator;
-			import gapdesktoprx.models.Graph;
-			import gapdesktoprx.skins.ButtonSkin;
-			import gapdesktoprx.skins.applicationupdaterui.firefox.AppUpdaterUIGapminderSkin;
-			import gapdesktoprx.skins.applicationupdaterui.firefox.ButtonSkin;
+
 			import org.restfulx.Rx;
 			import org.restfulx.events.CacheUpdateEvent;
 			import org.restfulx.services.air.AIRServiceProvider;
+
 			import spark.utils.TextFlowUtil;
 
 			public static const dbVersion:String="1.0";
